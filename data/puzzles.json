@@ -1,0 +1,4614 @@
+{
+  "version": 1,
+  "generatedAt": "2026-08-09",
+  "puzzles": [
+    {
+      "id": "DMAT-EASY-001",
+      "difficulty": "easy",
+      "grid": [
+        [
+          "E",
+          "A",
+          "",
+          "D",
+          "C"
+        ],
+        [
+          "B",
+          "C",
+          "A",
+          "",
+          ""
+        ],
+        [
+          "D",
+          "B",
+          "E",
+          "",
+          ""
+        ],
+        [
+          "A",
+          "D",
+          "C",
+          "",
+          ""
+        ],
+        [
+          "",
+          "E",
+          "D",
+          "A",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "E",
+          "A",
+          "B",
+          "D",
+          "C"
+        ],
+        [
+          "B",
+          "C",
+          "A",
+          "E",
+          "D"
+        ],
+        [
+          "D",
+          "B",
+          "E",
+          "C",
+          "A"
+        ],
+        [
+          "A",
+          "D",
+          "C",
+          "B",
+          "E"
+        ],
+        [
+          "C",
+          "E",
+          "D",
+          "A",
+          "B"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 16,
+        "searchNodes": 10,
+        "branchPoints": 0,
+        "maxDepth": 9,
+        "difficultyScore": 12.15,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 2,
+          "value": "B",
+          "text": "Row 1, column 3 can only be B; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EASY-002",
+      "difficulty": "easy",
+      "grid": [
+        [
+          "C",
+          "",
+          "E",
+          "A",
+          "B"
+        ],
+        [
+          "",
+          "B",
+          "A",
+          "C",
+          "E"
+        ],
+        [
+          "E",
+          "A",
+          "",
+          "B",
+          "C"
+        ],
+        [
+          "",
+          "C",
+          "",
+          "",
+          "D"
+        ],
+        [
+          "",
+          "",
+          "",
+          "D",
+          "A"
+        ]
+      ],
+      "solution": [
+        [
+          "C",
+          "D",
+          "E",
+          "A",
+          "B"
+        ],
+        [
+          "D",
+          "B",
+          "A",
+          "C",
+          "E"
+        ],
+        [
+          "E",
+          "A",
+          "D",
+          "B",
+          "C"
+        ],
+        [
+          "A",
+          "C",
+          "B",
+          "E",
+          "D"
+        ],
+        [
+          "B",
+          "E",
+          "C",
+          "D",
+          "A"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 16,
+        "searchNodes": 10,
+        "branchPoints": 0,
+        "maxDepth": 9,
+        "difficultyScore": 12.15,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 1,
+          "value": "D",
+          "text": "Row 1, column 2 can only be D; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EASY-003",
+      "difficulty": "easy",
+      "grid": [
+        [
+          "C",
+          "",
+          "",
+          "B",
+          "A"
+        ],
+        [
+          "E",
+          "C",
+          "",
+          "D",
+          ""
+        ],
+        [
+          "A",
+          "E",
+          "B",
+          "C",
+          "D"
+        ],
+        [
+          "",
+          "B",
+          "",
+          "",
+          "E"
+        ],
+        [
+          "B",
+          "A",
+          "",
+          "",
+          "C"
+        ]
+      ],
+      "solution": [
+        [
+          "C",
+          "D",
+          "E",
+          "B",
+          "A"
+        ],
+        [
+          "E",
+          "C",
+          "A",
+          "D",
+          "B"
+        ],
+        [
+          "A",
+          "E",
+          "B",
+          "C",
+          "D"
+        ],
+        [
+          "D",
+          "B",
+          "C",
+          "A",
+          "E"
+        ],
+        [
+          "B",
+          "A",
+          "D",
+          "E",
+          "C"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 16,
+        "searchNodes": 10,
+        "branchPoints": 0,
+        "maxDepth": 9,
+        "difficultyScore": 12.15,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 1,
+          "value": "D",
+          "text": "Row 1, column 2 can only be D; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EASY-004",
+      "difficulty": "easy",
+      "grid": [
+        [
+          "",
+          "B",
+          "C",
+          "",
+          "D"
+        ],
+        [
+          "D",
+          "",
+          "",
+          "C",
+          ""
+        ],
+        [
+          "B",
+          "C",
+          "",
+          "E",
+          "A"
+        ],
+        [
+          "",
+          "D",
+          "",
+          "B",
+          "E"
+        ],
+        [
+          "A",
+          "",
+          "B",
+          "D",
+          "C"
+        ]
+      ],
+      "solution": [
+        [
+          "E",
+          "B",
+          "C",
+          "A",
+          "D"
+        ],
+        [
+          "D",
+          "A",
+          "E",
+          "C",
+          "B"
+        ],
+        [
+          "B",
+          "C",
+          "D",
+          "E",
+          "A"
+        ],
+        [
+          "C",
+          "D",
+          "A",
+          "B",
+          "E"
+        ],
+        [
+          "A",
+          "E",
+          "B",
+          "D",
+          "C"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 16,
+        "searchNodes": 10,
+        "branchPoints": 0,
+        "maxDepth": 9,
+        "difficultyScore": 12.15,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 0,
+          "value": "E",
+          "text": "Row 1, column 1 can only be E; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EASY-005",
+      "difficulty": "easy",
+      "grid": [
+        [
+          "E",
+          "B",
+          "D",
+          "A",
+          "C"
+        ],
+        [
+          "D",
+          "E",
+          "A",
+          "",
+          "B"
+        ],
+        [
+          "B",
+          "",
+          "E",
+          "",
+          ""
+        ],
+        [
+          "C",
+          "A",
+          "",
+          "E",
+          "D"
+        ],
+        [
+          "",
+          "",
+          "C",
+          "",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "E",
+          "B",
+          "D",
+          "A",
+          "C"
+        ],
+        [
+          "D",
+          "E",
+          "A",
+          "C",
+          "B"
+        ],
+        [
+          "B",
+          "C",
+          "E",
+          "D",
+          "A"
+        ],
+        [
+          "C",
+          "A",
+          "B",
+          "E",
+          "D"
+        ],
+        [
+          "A",
+          "D",
+          "C",
+          "B",
+          "E"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 16,
+        "searchNodes": 10,
+        "branchPoints": 0,
+        "maxDepth": 9,
+        "difficultyScore": 12.15,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 1,
+          "column": 3,
+          "value": "C",
+          "text": "Row 2, column 4 can only be C; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EASY-006",
+      "difficulty": "easy",
+      "grid": [
+        [
+          "A",
+          "",
+          "E",
+          "C",
+          "B"
+        ],
+        [
+          "",
+          "C",
+          "D",
+          "A",
+          "E"
+        ],
+        [
+          "C",
+          "E",
+          "",
+          "",
+          "A"
+        ],
+        [
+          "",
+          "A",
+          "C",
+          "",
+          ""
+        ],
+        [
+          "",
+          "",
+          "",
+          "E",
+          "C"
+        ]
+      ],
+      "solution": [
+        [
+          "A",
+          "D",
+          "E",
+          "C",
+          "B"
+        ],
+        [
+          "B",
+          "C",
+          "D",
+          "A",
+          "E"
+        ],
+        [
+          "C",
+          "E",
+          "B",
+          "D",
+          "A"
+        ],
+        [
+          "E",
+          "A",
+          "C",
+          "B",
+          "D"
+        ],
+        [
+          "D",
+          "B",
+          "A",
+          "E",
+          "C"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 15,
+        "searchNodes": 11,
+        "branchPoints": 0,
+        "maxDepth": 10,
+        "difficultyScore": 13.5,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 1,
+          "value": "D",
+          "text": "Row 1, column 2 can only be D; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EASY-007",
+      "difficulty": "easy",
+      "grid": [
+        [
+          "D",
+          "",
+          "",
+          "B",
+          "C"
+        ],
+        [
+          "",
+          "B",
+          "",
+          "",
+          "E"
+        ],
+        [
+          "A",
+          "C",
+          "",
+          "",
+          "B"
+        ],
+        [
+          "B",
+          "E",
+          "",
+          "",
+          ""
+        ],
+        [
+          "E",
+          "D",
+          "B",
+          "C",
+          "A"
+        ]
+      ],
+      "solution": [
+        [
+          "D",
+          "A",
+          "E",
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "B",
+          "A",
+          "D",
+          "E"
+        ],
+        [
+          "A",
+          "C",
+          "D",
+          "E",
+          "B"
+        ],
+        [
+          "B",
+          "E",
+          "C",
+          "A",
+          "D"
+        ],
+        [
+          "E",
+          "D",
+          "B",
+          "C",
+          "A"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 15,
+        "searchNodes": 11,
+        "branchPoints": 0,
+        "maxDepth": 10,
+        "difficultyScore": 13.5,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 1,
+          "value": "A",
+          "text": "Row 1, column 2 can only be A; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EASY-008",
+      "difficulty": "easy",
+      "grid": [
+        [
+          "",
+          "",
+          "E",
+          "C",
+          ""
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "C"
+        ],
+        [
+          "B",
+          "",
+          "D",
+          "A",
+          ""
+        ],
+        [
+          "C",
+          "E",
+          "B",
+          "",
+          "A"
+        ],
+        [
+          "E",
+          "A",
+          "C",
+          "B",
+          "D"
+        ]
+      ],
+      "solution": [
+        [
+          "A",
+          "D",
+          "E",
+          "C",
+          "B"
+        ],
+        [
+          "D",
+          "B",
+          "A",
+          "E",
+          "C"
+        ],
+        [
+          "B",
+          "C",
+          "D",
+          "A",
+          "E"
+        ],
+        [
+          "C",
+          "E",
+          "B",
+          "D",
+          "A"
+        ],
+        [
+          "E",
+          "A",
+          "C",
+          "B",
+          "D"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 15,
+        "searchNodes": 11,
+        "branchPoints": 0,
+        "maxDepth": 10,
+        "difficultyScore": 13.5,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 4,
+          "value": "B",
+          "text": "Row 1, column 5 can only be B; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EASY-009",
+      "difficulty": "easy",
+      "grid": [
+        [
+          "C",
+          "",
+          "B",
+          "",
+          "D"
+        ],
+        [
+          "A",
+          "",
+          "D",
+          "B",
+          "E"
+        ],
+        [
+          "",
+          "B",
+          "C",
+          "",
+          "A"
+        ],
+        [
+          "B",
+          "A",
+          "",
+          "",
+          "C"
+        ],
+        [
+          "E",
+          "",
+          "A",
+          "",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "C",
+          "E",
+          "B",
+          "A",
+          "D"
+        ],
+        [
+          "A",
+          "C",
+          "D",
+          "B",
+          "E"
+        ],
+        [
+          "D",
+          "B",
+          "C",
+          "E",
+          "A"
+        ],
+        [
+          "B",
+          "A",
+          "E",
+          "D",
+          "C"
+        ],
+        [
+          "E",
+          "D",
+          "A",
+          "C",
+          "B"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 15,
+        "searchNodes": 11,
+        "branchPoints": 0,
+        "maxDepth": 10,
+        "difficultyScore": 13.5,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 1,
+          "value": "E",
+          "text": "Row 1, column 2 can only be E; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EASY-010",
+      "difficulty": "easy",
+      "grid": [
+        [
+          "D",
+          "E",
+          "A",
+          "C",
+          ""
+        ],
+        [
+          "",
+          "A",
+          "C",
+          "",
+          "E"
+        ],
+        [
+          "E",
+          "",
+          "D",
+          "",
+          "A"
+        ],
+        [
+          "",
+          "",
+          "E",
+          "A",
+          ""
+        ],
+        [
+          "A",
+          "",
+          "",
+          "E",
+          "C"
+        ]
+      ],
+      "solution": [
+        [
+          "D",
+          "E",
+          "A",
+          "C",
+          "B"
+        ],
+        [
+          "B",
+          "A",
+          "C",
+          "D",
+          "E"
+        ],
+        [
+          "E",
+          "C",
+          "D",
+          "B",
+          "A"
+        ],
+        [
+          "C",
+          "B",
+          "E",
+          "A",
+          "D"
+        ],
+        [
+          "A",
+          "D",
+          "B",
+          "E",
+          "C"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 15,
+        "searchNodes": 11,
+        "branchPoints": 0,
+        "maxDepth": 10,
+        "difficultyScore": 13.5,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 4,
+          "value": "B",
+          "text": "Row 1, column 5 can only be B; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EASY-011",
+      "difficulty": "easy",
+      "grid": [
+        [
+          "",
+          "",
+          "",
+          "",
+          "E"
+        ],
+        [
+          "E",
+          "",
+          "",
+          "C",
+          "A"
+        ],
+        [
+          "D",
+          "E",
+          "",
+          "",
+          ""
+        ],
+        [
+          "A",
+          "D",
+          "C",
+          "E",
+          "B"
+        ],
+        [
+          "B",
+          "C",
+          "E",
+          "",
+          "D"
+        ]
+      ],
+      "solution": [
+        [
+          "C",
+          "A",
+          "B",
+          "D",
+          "E"
+        ],
+        [
+          "E",
+          "B",
+          "D",
+          "C",
+          "A"
+        ],
+        [
+          "D",
+          "E",
+          "A",
+          "B",
+          "C"
+        ],
+        [
+          "A",
+          "D",
+          "C",
+          "E",
+          "B"
+        ],
+        [
+          "B",
+          "C",
+          "E",
+          "A",
+          "D"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 15,
+        "searchNodes": 11,
+        "branchPoints": 0,
+        "maxDepth": 10,
+        "difficultyScore": 13.5,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 0,
+          "value": "C",
+          "text": "Row 1, column 1 can only be C; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EASY-012",
+      "difficulty": "easy",
+      "grid": [
+        [
+          "",
+          "E",
+          "D",
+          "A",
+          ""
+        ],
+        [
+          "E",
+          "",
+          "",
+          "B",
+          "D"
+        ],
+        [
+          "",
+          "D",
+          "",
+          "E",
+          "A"
+        ],
+        [
+          "A",
+          "",
+          "C",
+          "D",
+          "E"
+        ],
+        [
+          "D",
+          "",
+          "",
+          "C",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "B",
+          "E",
+          "D",
+          "A",
+          "C"
+        ],
+        [
+          "E",
+          "C",
+          "A",
+          "B",
+          "D"
+        ],
+        [
+          "C",
+          "D",
+          "B",
+          "E",
+          "A"
+        ],
+        [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ],
+        [
+          "D",
+          "A",
+          "E",
+          "C",
+          "B"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 15,
+        "searchNodes": 11,
+        "branchPoints": 0,
+        "maxDepth": 10,
+        "difficultyScore": 13.5,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 1,
+          "column": 2,
+          "value": "A",
+          "text": "Row 2, column 3 can only be A; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EXAM-001",
+      "difficulty": "exam",
+      "grid": [
+        [
+          "",
+          "",
+          "B",
+          "",
+          ""
+        ],
+        [
+          "E",
+          "D",
+          "A",
+          "",
+          "B"
+        ],
+        [
+          "D",
+          "",
+          "",
+          "",
+          "A"
+        ],
+        [
+          "B",
+          "A",
+          "E",
+          "D",
+          "C"
+        ],
+        [
+          "A",
+          "",
+          "D",
+          "",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "C",
+          "E",
+          "B",
+          "A",
+          "D"
+        ],
+        [
+          "E",
+          "D",
+          "A",
+          "C",
+          "B"
+        ],
+        [
+          "D",
+          "B",
+          "C",
+          "E",
+          "A"
+        ],
+        [
+          "B",
+          "A",
+          "E",
+          "D",
+          "C"
+        ],
+        [
+          "A",
+          "C",
+          "D",
+          "B",
+          "E"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 14,
+        "searchNodes": 12,
+        "branchPoints": 0,
+        "maxDepth": 11,
+        "difficultyScore": 14.85,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 0,
+          "value": "C",
+          "text": "Row 1, column 1 can only be C; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EXAM-002",
+      "difficulty": "exam",
+      "grid": [
+        [
+          "C",
+          "",
+          "D",
+          "A",
+          "E"
+        ],
+        [
+          "",
+          "",
+          "B",
+          "E",
+          "D"
+        ],
+        [
+          "B",
+          "",
+          "E",
+          "C",
+          ""
+        ],
+        [
+          "",
+          "A",
+          "C",
+          "",
+          ""
+        ],
+        [
+          "D",
+          "",
+          "A",
+          "",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "C",
+          "B",
+          "D",
+          "A",
+          "E"
+        ],
+        [
+          "A",
+          "C",
+          "B",
+          "E",
+          "D"
+        ],
+        [
+          "B",
+          "D",
+          "E",
+          "C",
+          "A"
+        ],
+        [
+          "E",
+          "A",
+          "C",
+          "D",
+          "B"
+        ],
+        [
+          "D",
+          "E",
+          "A",
+          "B",
+          "C"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 14,
+        "searchNodes": 12,
+        "branchPoints": 0,
+        "maxDepth": 11,
+        "difficultyScore": 14.85,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 1,
+          "value": "B",
+          "text": "Row 1, column 2 can only be B; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EXAM-003",
+      "difficulty": "exam",
+      "grid": [
+        [
+          "D",
+          "C",
+          "",
+          "",
+          "E"
+        ],
+        [
+          "A",
+          "D",
+          "E",
+          "C",
+          "B"
+        ],
+        [
+          "",
+          "",
+          "D",
+          "",
+          "A"
+        ],
+        [
+          "",
+          "",
+          "",
+          "A",
+          "D"
+        ],
+        [
+          "",
+          "",
+          "",
+          "D",
+          "C"
+        ]
+      ],
+      "solution": [
+        [
+          "D",
+          "C",
+          "A",
+          "B",
+          "E"
+        ],
+        [
+          "A",
+          "D",
+          "E",
+          "C",
+          "B"
+        ],
+        [
+          "C",
+          "B",
+          "D",
+          "E",
+          "A"
+        ],
+        [
+          "B",
+          "E",
+          "C",
+          "A",
+          "D"
+        ],
+        [
+          "E",
+          "A",
+          "B",
+          "D",
+          "C"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 14,
+        "searchNodes": 12,
+        "branchPoints": 0,
+        "maxDepth": 11,
+        "difficultyScore": 14.85,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 3,
+          "value": "B",
+          "text": "Row 1, column 4 can only be B; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EXAM-004",
+      "difficulty": "exam",
+      "grid": [
+        [
+          "",
+          "D",
+          "E",
+          "B",
+          ""
+        ],
+        [
+          "D",
+          "E",
+          "",
+          "A",
+          "C"
+        ],
+        [
+          "",
+          "",
+          "D",
+          "",
+          "B"
+        ],
+        [
+          "",
+          "",
+          "A",
+          "C",
+          ""
+        ],
+        [
+          "B",
+          "A",
+          "",
+          "D",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "C",
+          "D",
+          "E",
+          "B",
+          "A"
+        ],
+        [
+          "D",
+          "E",
+          "B",
+          "A",
+          "C"
+        ],
+        [
+          "A",
+          "C",
+          "D",
+          "E",
+          "B"
+        ],
+        [
+          "E",
+          "B",
+          "A",
+          "C",
+          "D"
+        ],
+        [
+          "B",
+          "A",
+          "C",
+          "D",
+          "E"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 14,
+        "searchNodes": 12,
+        "branchPoints": 0,
+        "maxDepth": 11,
+        "difficultyScore": 14.85,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 4,
+          "value": "A",
+          "text": "Row 1, column 5 can only be A; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EXAM-005",
+      "difficulty": "exam",
+      "grid": [
+        [
+          "D",
+          "",
+          "B",
+          "",
+          "A"
+        ],
+        [
+          "",
+          "",
+          "",
+          "A",
+          "D"
+        ],
+        [
+          "",
+          "",
+          "A",
+          "",
+          "E"
+        ],
+        [
+          "E",
+          "A",
+          "C",
+          "D",
+          ""
+        ],
+        [
+          "A",
+          "",
+          "",
+          "E",
+          "C"
+        ]
+      ],
+      "solution": [
+        [
+          "D",
+          "E",
+          "B",
+          "C",
+          "A"
+        ],
+        [
+          "B",
+          "C",
+          "E",
+          "A",
+          "D"
+        ],
+        [
+          "C",
+          "D",
+          "A",
+          "B",
+          "E"
+        ],
+        [
+          "E",
+          "A",
+          "C",
+          "D",
+          "B"
+        ],
+        [
+          "A",
+          "B",
+          "D",
+          "E",
+          "C"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 14,
+        "searchNodes": 12,
+        "branchPoints": 0,
+        "maxDepth": 11,
+        "difficultyScore": 14.85,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 3,
+          "value": "C",
+          "text": "Row 1, column 4 can only be C; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EXAM-006",
+      "difficulty": "exam",
+      "grid": [
+        [
+          "",
+          "",
+          "B",
+          "E",
+          ""
+        ],
+        [
+          "E",
+          "D",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "E",
+          "",
+          "",
+          "A"
+        ],
+        [
+          "",
+          "C",
+          "A",
+          "B",
+          "E"
+        ],
+        [
+          "A",
+          "",
+          "E",
+          "",
+          "C"
+        ]
+      ],
+      "solution": [
+        [
+          "C",
+          "A",
+          "B",
+          "E",
+          "D"
+        ],
+        [
+          "E",
+          "D",
+          "C",
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "E",
+          "D",
+          "C",
+          "A"
+        ],
+        [
+          "D",
+          "C",
+          "A",
+          "B",
+          "E"
+        ],
+        [
+          "A",
+          "B",
+          "E",
+          "D",
+          "C"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 13,
+        "searchNodes": 13,
+        "branchPoints": 0,
+        "maxDepth": 12,
+        "difficultyScore": 16.2,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 1,
+          "value": "A",
+          "text": "Row 1, column 2 can only be A; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EXAM-007",
+      "difficulty": "exam",
+      "grid": [
+        [
+          "",
+          "",
+          "B",
+          "D",
+          "A"
+        ],
+        [
+          "D",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "A",
+          "C",
+          "E",
+          "B",
+          "D"
+        ],
+        [
+          "",
+          "",
+          "",
+          "A",
+          ""
+        ],
+        [
+          "",
+          "D",
+          "A",
+          "C",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "C",
+          "E",
+          "B",
+          "D",
+          "A"
+        ],
+        [
+          "D",
+          "A",
+          "C",
+          "E",
+          "B"
+        ],
+        [
+          "A",
+          "C",
+          "E",
+          "B",
+          "D"
+        ],
+        [
+          "E",
+          "B",
+          "D",
+          "A",
+          "C"
+        ],
+        [
+          "B",
+          "D",
+          "A",
+          "C",
+          "E"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 13,
+        "searchNodes": 13,
+        "branchPoints": 0,
+        "maxDepth": 12,
+        "difficultyScore": 16.2,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 1,
+          "value": "E",
+          "text": "Row 1, column 2 can only be E; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EXAM-008",
+      "difficulty": "exam",
+      "grid": [
+        [
+          "",
+          "C",
+          "",
+          "E",
+          "B"
+        ],
+        [
+          "D",
+          "",
+          "",
+          "B",
+          "A"
+        ],
+        [
+          "",
+          "",
+          "E",
+          "A",
+          "D"
+        ],
+        [
+          "",
+          "",
+          "",
+          "D",
+          "C"
+        ],
+        [
+          "B",
+          "D",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "A",
+          "C",
+          "D",
+          "E",
+          "B"
+        ],
+        [
+          "D",
+          "E",
+          "C",
+          "B",
+          "A"
+        ],
+        [
+          "C",
+          "B",
+          "E",
+          "A",
+          "D"
+        ],
+        [
+          "E",
+          "A",
+          "B",
+          "D",
+          "C"
+        ],
+        [
+          "B",
+          "D",
+          "A",
+          "C",
+          "E"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 13,
+        "searchNodes": 13,
+        "branchPoints": 0,
+        "maxDepth": 12,
+        "difficultyScore": 16.2,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 0,
+          "value": "A",
+          "text": "Row 1, column 1 can only be A; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EXAM-009",
+      "difficulty": "exam",
+      "grid": [
+        [
+          "",
+          "",
+          "E",
+          "C",
+          ""
+        ],
+        [
+          "",
+          "C",
+          "",
+          "E",
+          ""
+        ],
+        [
+          "E",
+          "",
+          "C",
+          "",
+          "B"
+        ],
+        [
+          "",
+          "E",
+          "",
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "B",
+          "A",
+          "",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "B",
+          "A",
+          "E",
+          "C",
+          "D"
+        ],
+        [
+          "D",
+          "C",
+          "B",
+          "E",
+          "A"
+        ],
+        [
+          "E",
+          "D",
+          "C",
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "E",
+          "D",
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "B",
+          "A",
+          "D",
+          "E"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 13,
+        "searchNodes": 13,
+        "branchPoints": 0,
+        "maxDepth": 12,
+        "difficultyScore": 16.2,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 3,
+          "column": 2,
+          "value": "D",
+          "text": "Row 4, column 3 can only be D; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EXAM-010",
+      "difficulty": "exam",
+      "grid": [
+        [
+          "",
+          "",
+          "B",
+          "",
+          "E"
+        ],
+        [
+          "",
+          "B",
+          "E",
+          "C",
+          "D"
+        ],
+        [
+          "",
+          "E",
+          "D",
+          "",
+          "A"
+        ],
+        [
+          "",
+          "D",
+          "",
+          "E",
+          "C"
+        ],
+        [
+          "",
+          "A",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "D",
+          "C",
+          "B",
+          "A",
+          "E"
+        ],
+        [
+          "A",
+          "B",
+          "E",
+          "C",
+          "D"
+        ],
+        [
+          "C",
+          "E",
+          "D",
+          "B",
+          "A"
+        ],
+        [
+          "B",
+          "D",
+          "A",
+          "E",
+          "C"
+        ],
+        [
+          "E",
+          "A",
+          "C",
+          "D",
+          "B"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 13,
+        "searchNodes": 13,
+        "branchPoints": 0,
+        "maxDepth": 12,
+        "difficultyScore": 16.2,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 1,
+          "value": "C",
+          "text": "Row 1, column 2 can only be C; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EXAM-011",
+      "difficulty": "exam",
+      "grid": [
+        [
+          "",
+          "",
+          "C",
+          "E",
+          "A"
+        ],
+        [
+          "",
+          "",
+          "D",
+          "A",
+          ""
+        ],
+        [
+          "D",
+          "",
+          "",
+          "",
+          "C"
+        ],
+        [
+          "E",
+          "B",
+          "",
+          "C",
+          ""
+        ],
+        [
+          "",
+          "",
+          "",
+          "D",
+          "E"
+        ]
+      ],
+      "solution": [
+        [
+          "B",
+          "D",
+          "C",
+          "E",
+          "A"
+        ],
+        [
+          "C",
+          "E",
+          "D",
+          "A",
+          "B"
+        ],
+        [
+          "D",
+          "A",
+          "E",
+          "B",
+          "C"
+        ],
+        [
+          "E",
+          "B",
+          "A",
+          "C",
+          "D"
+        ],
+        [
+          "A",
+          "C",
+          "B",
+          "D",
+          "E"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 12,
+        "searchNodes": 14,
+        "branchPoints": 0,
+        "maxDepth": 13,
+        "difficultyScore": 17.55,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 0,
+          "value": "B",
+          "text": "Row 1, column 1 can only be B; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EXAM-012",
+      "difficulty": "exam",
+      "grid": [
+        [
+          "C",
+          "B",
+          "",
+          "E",
+          "A"
+        ],
+        [
+          "",
+          "E",
+          "",
+          "C",
+          "B"
+        ],
+        [
+          "",
+          "D",
+          "",
+          "",
+          ""
+        ],
+        [
+          "E",
+          "A",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "C",
+          "",
+          "",
+          "E"
+        ]
+      ],
+      "solution": [
+        [
+          "C",
+          "B",
+          "D",
+          "E",
+          "A"
+        ],
+        [
+          "D",
+          "E",
+          "A",
+          "C",
+          "B"
+        ],
+        [
+          "B",
+          "D",
+          "E",
+          "A",
+          "C"
+        ],
+        [
+          "E",
+          "A",
+          "C",
+          "B",
+          "D"
+        ],
+        [
+          "A",
+          "C",
+          "B",
+          "D",
+          "E"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 12,
+        "searchNodes": 14,
+        "branchPoints": 0,
+        "maxDepth": 13,
+        "difficultyScore": 17.55,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 2,
+          "value": "D",
+          "text": "Row 1, column 3 can only be D; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-HARD-001",
+      "difficulty": "hard",
+      "grid": [
+        [
+          "B",
+          "",
+          "",
+          "",
+          "C"
+        ],
+        [
+          "",
+          "A",
+          "B",
+          "",
+          "D"
+        ],
+        [
+          "",
+          "E",
+          "C",
+          "",
+          ""
+        ],
+        [
+          "",
+          "B",
+          "",
+          "",
+          ""
+        ],
+        [
+          "A",
+          "C",
+          "D",
+          "",
+          "E"
+        ]
+      ],
+      "solution": [
+        [
+          "B",
+          "D",
+          "A",
+          "E",
+          "C"
+        ],
+        [
+          "E",
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        [
+          "D",
+          "E",
+          "C",
+          "A",
+          "B"
+        ],
+        [
+          "C",
+          "B",
+          "E",
+          "D",
+          "A"
+        ],
+        [
+          "A",
+          "C",
+          "D",
+          "B",
+          "E"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 12,
+        "searchNodes": 14,
+        "branchPoints": 0,
+        "maxDepth": 13,
+        "difficultyScore": 17.55,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 1,
+          "value": "D",
+          "text": "Row 1, column 2 can only be D; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-HARD-002",
+      "difficulty": "hard",
+      "grid": [
+        [
+          "C",
+          "B",
+          "",
+          "",
+          ""
+        ],
+        [
+          "D",
+          "C",
+          "A",
+          "",
+          ""
+        ],
+        [
+          "A",
+          "D",
+          "E",
+          "",
+          ""
+        ],
+        [
+          "B",
+          "E",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "",
+          "B",
+          "",
+          "D"
+        ]
+      ],
+      "solution": [
+        [
+          "C",
+          "B",
+          "D",
+          "A",
+          "E"
+        ],
+        [
+          "D",
+          "C",
+          "A",
+          "E",
+          "B"
+        ],
+        [
+          "A",
+          "D",
+          "E",
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "E",
+          "C",
+          "D",
+          "A"
+        ],
+        [
+          "E",
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 12,
+        "searchNodes": 14,
+        "branchPoints": 0,
+        "maxDepth": 13,
+        "difficultyScore": 17.55,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 2,
+          "value": "D",
+          "text": "Row 1, column 3 can only be D; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-HARD-003",
+      "difficulty": "hard",
+      "grid": [
+        [
+          "C",
+          "E",
+          "B",
+          "A",
+          ""
+        ],
+        [
+          "B",
+          "",
+          "E",
+          "",
+          "C"
+        ],
+        [
+          "",
+          "",
+          "",
+          "B",
+          "E"
+        ],
+        [
+          "",
+          "",
+          "",
+          "E",
+          ""
+        ],
+        [
+          "E",
+          "D",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "C",
+          "E",
+          "B",
+          "A",
+          "D"
+        ],
+        [
+          "B",
+          "A",
+          "E",
+          "D",
+          "C"
+        ],
+        [
+          "A",
+          "C",
+          "D",
+          "B",
+          "E"
+        ],
+        [
+          "D",
+          "B",
+          "C",
+          "E",
+          "A"
+        ],
+        [
+          "E",
+          "D",
+          "A",
+          "C",
+          "B"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 12,
+        "searchNodes": 14,
+        "branchPoints": 0,
+        "maxDepth": 13,
+        "difficultyScore": 17.55,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 4,
+          "value": "D",
+          "text": "Row 1, column 5 can only be D; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-HARD-004",
+      "difficulty": "hard",
+      "grid": [
+        [
+          "",
+          "A",
+          "B",
+          "",
+          ""
+        ],
+        [
+          "C",
+          "",
+          "E",
+          "",
+          "A"
+        ],
+        [
+          "",
+          "",
+          "C",
+          "",
+          ""
+        ],
+        [
+          "B",
+          "",
+          "A",
+          "",
+          ""
+        ],
+        [
+          "E",
+          "",
+          "D",
+          "A",
+          "C"
+        ]
+      ],
+      "solution": [
+        [
+          "D",
+          "A",
+          "B",
+          "C",
+          "E"
+        ],
+        [
+          "C",
+          "D",
+          "E",
+          "B",
+          "A"
+        ],
+        [
+          "A",
+          "E",
+          "C",
+          "D",
+          "B"
+        ],
+        [
+          "B",
+          "C",
+          "A",
+          "E",
+          "D"
+        ],
+        [
+          "E",
+          "B",
+          "D",
+          "A",
+          "C"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 12,
+        "searchNodes": 14,
+        "branchPoints": 0,
+        "maxDepth": 13,
+        "difficultyScore": 17.55,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 0,
+          "value": "D",
+          "text": "Row 1, column 1 can only be D; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-HARD-005",
+      "difficulty": "hard",
+      "grid": [
+        [
+          "B",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "D",
+          "",
+          "E",
+          "B",
+          "C"
+        ],
+        [
+          "E",
+          "B",
+          "",
+          "D",
+          ""
+        ],
+        [
+          "",
+          "D",
+          "A",
+          "",
+          "B"
+        ],
+        [
+          "",
+          "E",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "B",
+          "C",
+          "D",
+          "A",
+          "E"
+        ],
+        [
+          "D",
+          "A",
+          "E",
+          "B",
+          "C"
+        ],
+        [
+          "E",
+          "B",
+          "C",
+          "D",
+          "A"
+        ],
+        [
+          "C",
+          "D",
+          "A",
+          "E",
+          "B"
+        ],
+        [
+          "A",
+          "E",
+          "B",
+          "C",
+          "D"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 12,
+        "searchNodes": 14,
+        "branchPoints": 0,
+        "maxDepth": 13,
+        "difficultyScore": 17.55,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 1,
+          "column": 1,
+          "value": "A",
+          "text": "Row 2, column 2 can only be A; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-HARD-006",
+      "difficulty": "hard",
+      "grid": [
+        [
+          "E",
+          "",
+          "B",
+          "",
+          ""
+        ],
+        [
+          "A",
+          "E",
+          "",
+          "B",
+          "C"
+        ],
+        [
+          "",
+          "",
+          "",
+          "D",
+          "B"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "B",
+          "",
+          "A",
+          "E",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "E",
+          "D",
+          "B",
+          "C",
+          "A"
+        ],
+        [
+          "A",
+          "E",
+          "D",
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "A",
+          "E",
+          "D",
+          "B"
+        ],
+        [
+          "D",
+          "B",
+          "C",
+          "A",
+          "E"
+        ],
+        [
+          "B",
+          "C",
+          "A",
+          "E",
+          "D"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 11,
+        "searchNodes": 15,
+        "branchPoints": 0,
+        "maxDepth": 14,
+        "difficultyScore": 18.9,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 1,
+          "column": 2,
+          "value": "D",
+          "text": "Row 2, column 3 can only be D; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-HARD-007",
+      "difficulty": "hard",
+      "grid": [
+        [
+          "",
+          "",
+          "",
+          "D",
+          ""
+        ],
+        [
+          "",
+          "C",
+          "B",
+          "A",
+          ""
+        ],
+        [
+          "",
+          "D",
+          "",
+          "B",
+          "A"
+        ],
+        [
+          "",
+          "E",
+          "D",
+          "",
+          "B"
+        ],
+        [
+          "C",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "B",
+          "A",
+          "E",
+          "D",
+          "C"
+        ],
+        [
+          "D",
+          "C",
+          "B",
+          "A",
+          "E"
+        ],
+        [
+          "E",
+          "D",
+          "C",
+          "B",
+          "A"
+        ],
+        [
+          "A",
+          "E",
+          "D",
+          "C",
+          "B"
+        ],
+        [
+          "C",
+          "B",
+          "A",
+          "E",
+          "D"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 11,
+        "searchNodes": 15,
+        "branchPoints": 0,
+        "maxDepth": 14,
+        "difficultyScore": 18.9,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 2,
+          "column": 0,
+          "value": "E",
+          "text": "Row 3, column 1 can only be E; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-HARD-008",
+      "difficulty": "hard",
+      "grid": [
+        [
+          "",
+          "",
+          "C",
+          "",
+          "E"
+        ],
+        [
+          "B",
+          "C",
+          "",
+          "",
+          ""
+        ],
+        [
+          "E",
+          "",
+          "",
+          "A",
+          "C"
+        ],
+        [
+          "A",
+          "",
+          "E",
+          "C",
+          "D"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "D",
+          "A",
+          "C",
+          "B",
+          "E"
+        ],
+        [
+          "B",
+          "C",
+          "D",
+          "E",
+          "A"
+        ],
+        [
+          "E",
+          "D",
+          "B",
+          "A",
+          "C"
+        ],
+        [
+          "A",
+          "B",
+          "E",
+          "C",
+          "D"
+        ],
+        [
+          "C",
+          "E",
+          "A",
+          "D",
+          "B"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 11,
+        "searchNodes": 15,
+        "branchPoints": 0,
+        "maxDepth": 14,
+        "difficultyScore": 18.9,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 0,
+          "value": "D",
+          "text": "Row 1, column 1 can only be D; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-HARD-009",
+      "difficulty": "hard",
+      "grid": [
+        [
+          "",
+          "",
+          "D",
+          "B",
+          ""
+        ],
+        [
+          "",
+          "",
+          "",
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "",
+          "C",
+          "",
+          "A"
+        ],
+        [
+          "A",
+          "C",
+          "B",
+          "",
+          ""
+        ],
+        [
+          "",
+          "",
+          "A",
+          "",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "E",
+          "A",
+          "D",
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "D",
+          "E",
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "E",
+          "C",
+          "D",
+          "A"
+        ],
+        [
+          "A",
+          "C",
+          "B",
+          "E",
+          "D"
+        ],
+        [
+          "D",
+          "B",
+          "A",
+          "C",
+          "E"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 11,
+        "searchNodes": 15,
+        "branchPoints": 0,
+        "maxDepth": 14,
+        "difficultyScore": 18.9,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 1,
+          "column": 2,
+          "value": "E",
+          "text": "Row 2, column 3 can only be E; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-HARD-010",
+      "difficulty": "hard",
+      "grid": [
+        [
+          "C",
+          "",
+          "D",
+          "",
+          "B"
+        ],
+        [
+          "",
+          "D",
+          "C",
+          "",
+          ""
+        ],
+        [
+          "",
+          "C",
+          "E",
+          "",
+          ""
+        ],
+        [
+          "",
+          "B",
+          "",
+          "",
+          "E"
+        ],
+        [
+          "A",
+          "",
+          "",
+          "",
+          "C"
+        ]
+      ],
+      "solution": [
+        [
+          "C",
+          "A",
+          "D",
+          "E",
+          "B"
+        ],
+        [
+          "E",
+          "D",
+          "C",
+          "B",
+          "A"
+        ],
+        [
+          "B",
+          "C",
+          "E",
+          "A",
+          "D"
+        ],
+        [
+          "D",
+          "B",
+          "A",
+          "C",
+          "E"
+        ],
+        [
+          "A",
+          "E",
+          "B",
+          "D",
+          "C"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 11,
+        "searchNodes": 15,
+        "branchPoints": 0,
+        "maxDepth": 14,
+        "difficultyScore": 18.9,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 1,
+          "column": 4,
+          "value": "A",
+          "text": "Row 2, column 5 can only be A; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-HARD-011",
+      "difficulty": "hard",
+      "grid": [
+        [
+          "B",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "D",
+          "B",
+          "",
+          ""
+        ],
+        [
+          "",
+          "B",
+          "C",
+          "E",
+          "D"
+        ],
+        [
+          "",
+          "C",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "A",
+          "",
+          "",
+          "C"
+        ]
+      ],
+      "solution": [
+        [
+          "B",
+          "E",
+          "D",
+          "C",
+          "A"
+        ],
+        [
+          "C",
+          "D",
+          "B",
+          "A",
+          "E"
+        ],
+        [
+          "A",
+          "B",
+          "C",
+          "E",
+          "D"
+        ],
+        [
+          "E",
+          "C",
+          "A",
+          "D",
+          "B"
+        ],
+        [
+          "D",
+          "A",
+          "E",
+          "B",
+          "C"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 10,
+        "searchNodes": 16,
+        "branchPoints": 0,
+        "maxDepth": 15,
+        "difficultyScore": 20.25,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 1,
+          "value": "E",
+          "text": "Row 1, column 2 can only be E; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-HARD-012",
+      "difficulty": "hard",
+      "grid": [
+        [
+          "",
+          "",
+          "D",
+          "",
+          "A"
+        ],
+        [
+          "",
+          "",
+          "B",
+          "",
+          "C"
+        ],
+        [
+          "",
+          "B",
+          "C",
+          "",
+          ""
+        ],
+        [
+          "B",
+          "",
+          "",
+          "A",
+          "D"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "B"
+        ]
+      ],
+      "solution": [
+        [
+          "C",
+          "E",
+          "D",
+          "B",
+          "A"
+        ],
+        [
+          "D",
+          "A",
+          "B",
+          "E",
+          "C"
+        ],
+        [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ],
+        [
+          "B",
+          "C",
+          "E",
+          "A",
+          "D"
+        ],
+        [
+          "E",
+          "D",
+          "A",
+          "C",
+          "B"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 10,
+        "searchNodes": 16,
+        "branchPoints": 0,
+        "maxDepth": 15,
+        "difficultyScore": 20.25,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 2,
+          "column": 4,
+          "value": "E",
+          "text": "Row 3, column 5 can only be E; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EXTREME-001",
+      "difficulty": "extreme",
+      "grid": [
+        [
+          "D",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "B",
+          "",
+          "",
+          "",
+          "D"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "",
+          "C",
+          "E",
+          "B"
+        ],
+        [
+          "E",
+          "B",
+          "",
+          "C",
+          "A"
+        ]
+      ],
+      "solution": [
+        [
+          "D",
+          "E",
+          "A",
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "C",
+          "E",
+          "A",
+          "D"
+        ],
+        [
+          "C",
+          "A",
+          "B",
+          "D",
+          "E"
+        ],
+        [
+          "A",
+          "D",
+          "C",
+          "E",
+          "B"
+        ],
+        [
+          "E",
+          "B",
+          "D",
+          "C",
+          "A"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 10,
+        "searchNodes": 16,
+        "branchPoints": 0,
+        "maxDepth": 15,
+        "difficultyScore": 20.25,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 1,
+          "column": 3,
+          "value": "A",
+          "text": "Row 2, column 4 can only be A; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EXTREME-002",
+      "difficulty": "extreme",
+      "grid": [
+        [
+          "",
+          "",
+          "C",
+          "",
+          "B"
+        ],
+        [
+          "",
+          "C",
+          "B",
+          "E",
+          "D"
+        ],
+        [
+          "",
+          "B",
+          "D",
+          "C",
+          ""
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "",
+          "A",
+          "",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "D",
+          "E",
+          "C",
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C",
+          "B",
+          "E",
+          "D"
+        ],
+        [
+          "E",
+          "B",
+          "D",
+          "C",
+          "A"
+        ],
+        [
+          "B",
+          "A",
+          "E",
+          "D",
+          "C"
+        ],
+        [
+          "C",
+          "D",
+          "A",
+          "B",
+          "E"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 10,
+        "searchNodes": 16,
+        "branchPoints": 0,
+        "maxDepth": 15,
+        "difficultyScore": 20.25,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 1,
+          "column": 0,
+          "value": "A",
+          "text": "Row 2, column 1 can only be A; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EXTREME-003",
+      "difficulty": "extreme",
+      "grid": [
+        [
+          "A",
+          "",
+          "",
+          "C",
+          "B"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "C"
+        ],
+        [
+          "",
+          "D",
+          "",
+          "",
+          ""
+        ],
+        [
+          "C",
+          "",
+          "",
+          "D",
+          "A"
+        ],
+        [
+          "",
+          "C",
+          "",
+          "",
+          "D"
+        ]
+      ],
+      "solution": [
+        [
+          "A",
+          "E",
+          "D",
+          "C",
+          "B"
+        ],
+        [
+          "D",
+          "A",
+          "B",
+          "E",
+          "C"
+        ],
+        [
+          "B",
+          "D",
+          "C",
+          "A",
+          "E"
+        ],
+        [
+          "C",
+          "B",
+          "E",
+          "D",
+          "A"
+        ],
+        [
+          "E",
+          "C",
+          "A",
+          "B",
+          "D"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 10,
+        "searchNodes": 16,
+        "branchPoints": 0,
+        "maxDepth": 15,
+        "difficultyScore": 20.25,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 1,
+          "value": "E",
+          "text": "Row 1, column 2 can only be E; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EXTREME-004",
+      "difficulty": "extreme",
+      "grid": [
+        [
+          "",
+          "",
+          "",
+          "E",
+          ""
+        ],
+        [
+          "C",
+          "",
+          "A",
+          "",
+          "D"
+        ],
+        [
+          "A",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "C",
+          "",
+          "",
+          "B"
+        ],
+        [
+          "E",
+          "A",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "B",
+          "D",
+          "C",
+          "E",
+          "A"
+        ],
+        [
+          "C",
+          "E",
+          "A",
+          "B",
+          "D"
+        ],
+        [
+          "A",
+          "B",
+          "D",
+          "C",
+          "E"
+        ],
+        [
+          "D",
+          "C",
+          "E",
+          "A",
+          "B"
+        ],
+        [
+          "E",
+          "A",
+          "B",
+          "D",
+          "C"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 9,
+        "searchNodes": 17,
+        "branchPoints": 0,
+        "maxDepth": 16,
+        "difficultyScore": 21.6,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 1,
+          "column": 3,
+          "value": "B",
+          "text": "Row 2, column 4 can only be B; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EXTREME-005",
+      "difficulty": "extreme",
+      "grid": [
+        [
+          "E",
+          "",
+          "",
+          "D",
+          ""
+        ],
+        [
+          "D",
+          "A",
+          "E",
+          "",
+          ""
+        ],
+        [
+          "",
+          "",
+          "A",
+          "",
+          "C"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "A",
+          "",
+          "C",
+          "",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "E",
+          "C",
+          "B",
+          "D",
+          "A"
+        ],
+        [
+          "D",
+          "A",
+          "E",
+          "C",
+          "B"
+        ],
+        [
+          "B",
+          "D",
+          "A",
+          "E",
+          "C"
+        ],
+        [
+          "C",
+          "B",
+          "D",
+          "A",
+          "E"
+        ],
+        [
+          "A",
+          "E",
+          "C",
+          "B",
+          "D"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 9,
+        "searchNodes": 17,
+        "branchPoints": 0,
+        "maxDepth": 16,
+        "difficultyScore": 21.6,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 2,
+          "value": "B",
+          "text": "Row 1, column 3 can only be B; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EXTREME-006",
+      "difficulty": "extreme",
+      "grid": [
+        [
+          "",
+          "",
+          "",
+          "B",
+          ""
+        ],
+        [
+          "",
+          "D",
+          "A",
+          "",
+          ""
+        ],
+        [
+          "",
+          "C",
+          "E",
+          "",
+          "D"
+        ],
+        [
+          "A",
+          "",
+          "C",
+          "",
+          ""
+        ],
+        [
+          "",
+          "A",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "C",
+          "E",
+          "D",
+          "B",
+          "A"
+        ],
+        [
+          "E",
+          "D",
+          "A",
+          "C",
+          "B"
+        ],
+        [
+          "B",
+          "C",
+          "E",
+          "A",
+          "D"
+        ],
+        [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ],
+        [
+          "D",
+          "A",
+          "B",
+          "E",
+          "C"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 9,
+        "searchNodes": 17,
+        "branchPoints": 0,
+        "maxDepth": 16,
+        "difficultyScore": 21.6,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 1,
+          "value": "E",
+          "text": "Row 1, column 2 can only be E; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EXTREME-007",
+      "difficulty": "extreme",
+      "grid": [
+        [
+          "A",
+          "B",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "A",
+          "",
+          "",
+          "B"
+        ],
+        [
+          "E",
+          "",
+          "B",
+          "C",
+          ""
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "D"
+        ],
+        [
+          "B",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "A",
+          "B",
+          "E",
+          "D",
+          "C"
+        ],
+        [
+          "D",
+          "A",
+          "C",
+          "E",
+          "B"
+        ],
+        [
+          "E",
+          "D",
+          "B",
+          "C",
+          "A"
+        ],
+        [
+          "C",
+          "E",
+          "A",
+          "B",
+          "D"
+        ],
+        [
+          "B",
+          "C",
+          "D",
+          "A",
+          "E"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 9,
+        "searchNodes": 17,
+        "branchPoints": 0,
+        "maxDepth": 16,
+        "difficultyScore": 21.6,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 2,
+          "column": 1,
+          "value": "D",
+          "text": "Row 3, column 2 can only be D; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EXTREME-008",
+      "difficulty": "extreme",
+      "grid": [
+        [
+          "C",
+          "D",
+          "",
+          "",
+          "A"
+        ],
+        [
+          "",
+          "",
+          "B",
+          "",
+          ""
+        ],
+        [
+          "D",
+          "A",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "E",
+          "A",
+          "",
+          "C"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "C",
+          "D",
+          "E",
+          "B",
+          "A"
+        ],
+        [
+          "E",
+          "C",
+          "B",
+          "A",
+          "D"
+        ],
+        [
+          "D",
+          "A",
+          "C",
+          "E",
+          "B"
+        ],
+        [
+          "B",
+          "E",
+          "A",
+          "D",
+          "C"
+        ],
+        [
+          "A",
+          "B",
+          "D",
+          "C",
+          "E"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 9,
+        "searchNodes": 17,
+        "branchPoints": 0,
+        "maxDepth": 16,
+        "difficultyScore": 21.6,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 2,
+          "value": "E",
+          "text": "Row 1, column 3 can only be E; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EXTREME-009",
+      "difficulty": "extreme",
+      "grid": [
+        [
+          "C",
+          "B",
+          "E",
+          "",
+          ""
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "B"
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "A"
+        ],
+        [
+          "E",
+          "D",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "C",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "C",
+          "B",
+          "E",
+          "A",
+          "D"
+        ],
+        [
+          "D",
+          "A",
+          "C",
+          "E",
+          "B"
+        ],
+        [
+          "B",
+          "E",
+          "D",
+          "C",
+          "A"
+        ],
+        [
+          "E",
+          "D",
+          "A",
+          "B",
+          "C"
+        ],
+        [
+          "A",
+          "C",
+          "B",
+          "D",
+          "E"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 8,
+        "searchNodes": 18,
+        "branchPoints": 0,
+        "maxDepth": 17,
+        "difficultyScore": 22.95,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 4,
+          "value": "D",
+          "text": "Row 1, column 5 can only be D; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EXTREME-010",
+      "difficulty": "extreme",
+      "grid": [
+        [
+          "B",
+          "",
+          "E",
+          "",
+          ""
+        ],
+        [
+          "",
+          "D",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "",
+          "C",
+          "",
+          ""
+        ],
+        [
+          "D",
+          "A",
+          "",
+          "C",
+          ""
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "B"
+        ]
+      ],
+      "solution": [
+        [
+          "B",
+          "C",
+          "E",
+          "D",
+          "A"
+        ],
+        [
+          "E",
+          "D",
+          "A",
+          "B",
+          "C"
+        ],
+        [
+          "A",
+          "B",
+          "C",
+          "E",
+          "D"
+        ],
+        [
+          "D",
+          "A",
+          "B",
+          "C",
+          "E"
+        ],
+        [
+          "C",
+          "E",
+          "D",
+          "A",
+          "B"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 8,
+        "searchNodes": 18,
+        "branchPoints": 0,
+        "maxDepth": 17,
+        "difficultyScore": 22.95,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 0,
+          "column": 1,
+          "value": "C",
+          "text": "Row 1, column 2 can only be C; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EXTREME-011",
+      "difficulty": "extreme",
+      "grid": [
+        [
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "B",
+          "E",
+          "A",
+          "",
+          ""
+        ],
+        [
+          "D",
+          "",
+          "",
+          "A",
+          ""
+        ],
+        [
+          "",
+          "",
+          "",
+          "",
+          "C"
+        ],
+        [
+          "",
+          "B",
+          "E",
+          "",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "A",
+          "D",
+          "C",
+          "E",
+          "B"
+        ],
+        [
+          "B",
+          "E",
+          "A",
+          "C",
+          "D"
+        ],
+        [
+          "D",
+          "C",
+          "B",
+          "A",
+          "E"
+        ],
+        [
+          "E",
+          "A",
+          "D",
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "B",
+          "E",
+          "D",
+          "A"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 8,
+        "searchNodes": 18,
+        "branchPoints": 0,
+        "maxDepth": 17,
+        "difficultyScore": 22.95,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 1,
+          "column": 4,
+          "value": "D",
+          "text": "Row 2, column 5 can only be D; the other symbols already appear in its row or column."
+        }
+      ]
+    },
+    {
+      "id": "DMAT-EXTREME-012",
+      "difficulty": "extreme",
+      "grid": [
+        [
+          "",
+          "",
+          "",
+          "",
+          "D"
+        ],
+        [
+          "C",
+          "",
+          "",
+          "D",
+          "B"
+        ],
+        [
+          "",
+          "",
+          "A",
+          "C",
+          ""
+        ],
+        [
+          "D",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "C",
+          "",
+          "",
+          ""
+        ]
+      ],
+      "solution": [
+        [
+          "A",
+          "B",
+          "C",
+          "E",
+          "D"
+        ],
+        [
+          "C",
+          "A",
+          "E",
+          "D",
+          "B"
+        ],
+        [
+          "B",
+          "D",
+          "A",
+          "C",
+          "E"
+        ],
+        [
+          "D",
+          "E",
+          "B",
+          "A",
+          "C"
+        ],
+        [
+          "E",
+          "C",
+          "D",
+          "B",
+          "A"
+        ]
+      ],
+      "validation": {
+        "unique": true,
+        "solutionCount": 1,
+        "clues": 8,
+        "searchNodes": 18,
+        "branchPoints": 0,
+        "maxDepth": 17,
+        "difficultyScore": 22.95,
+        "generatorVersion": 1
+      },
+      "hints": [
+        {
+          "row": 1,
+          "column": 2,
+          "value": "E",
+          "text": "Row 2, column 3 can only be E; the other symbols already appear in its row or column."
+        }
+      ]
+    }
+  ]
+}
