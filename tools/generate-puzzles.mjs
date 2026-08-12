@@ -32,10 +32,21 @@ function candidates(grid, row, column) {
   return SYMBOLS.filter((symbol) => !used.has(symbol));
 }
 
+function validFilledValues(grid) {
+  for (let index = 0; index < 5; index += 1) {
+    const row = grid[index].filter(Boolean);
+    const column = grid.map((line) => line[index]).filter(Boolean);
+    if (new Set(row).size !== row.length || new Set(column).size !== column.length) return false;
+  }
+  return true;
+}
+
 function solve(grid, limit = 2) {
   const working = grid.map((row) => [...row]);
   const stats = { nodes: 0, branches: 0, maxDepth: 0, forced: 0 };
   let solutions = 0;
+
+  if (!validFilledValues(working)) return { count: 0, stats };
 
   function visit(depth) {
     if (solutions >= limit) return;
@@ -94,10 +105,11 @@ function makeUniquePuzzle(solution) {
   return { grid, solution, validation, clues, score };
 }
 
-function firstHint(grid, solution) {
+function firstHint(grid, solution, excludedPosition = null) {
   for (let row = 0; row < 5; row += 1) {
     for (let column = 0; column < 5; column += 1) {
       if (grid[row][column]) continue;
+      if (excludedPosition?.row === row && excludedPosition?.column === column) continue;
       const options = candidates(grid, row, column);
       if (options.length === 1) {
         return {
@@ -120,6 +132,32 @@ function firstHint(grid, solution) {
   };
 }
 
+function targetOptions(puzzle) {
+  const options = [];
+  for (let row = 0; row < 5; row += 1) {
+    for (let column = 0; column < 5; column += 1) {
+      if (puzzle.grid[row][column]) continue;
+      let searchNodes = 0;
+      let deepestSearch = 0;
+      for (const symbol of SYMBOLS) {
+        const trial = puzzle.grid.map((line) => [...line]);
+        trial[row][column] = symbol;
+        const result = solve(trial, 1);
+        searchNodes += result.stats.nodes;
+        deepestSearch = Math.max(deepestSearch, result.stats.maxDepth);
+      }
+      options.push({
+        row,
+        column,
+        value: puzzle.solution[row][column],
+        searchNodes,
+        score: Number((searchNodes + deepestSearch * 1.5).toFixed(2)),
+      });
+    }
+  }
+  return options.sort((a, b) => a.score - b.score);
+}
+
 const candidatesBank = [];
 for (let index = 0; index < 320; index += 1) {
   candidatesBank.push(makeUniquePuzzle(makeSolution()));
@@ -133,15 +171,34 @@ for (let levelIndex = 0; levelIndex < LEVELS.length; levelIndex += 1) {
   const bucket = candidatesBank.slice(start, end);
   for (let itemIndex = 0; itemIndex < 12; itemIndex += 1) {
     const offset = Math.floor((itemIndex * bucket.length) / 12 + bucket.length / 24);
-    selected.push({ ...bucket[Math.min(offset, bucket.length - 1)], difficulty: LEVELS[levelIndex] });
+    selected.push({ ...bucket[Math.min(offset, bucket.length - 1)], fullGridDifficulty: LEVELS[levelIndex] });
   }
 }
 
-const puzzles = selected.map((puzzle, index) => ({
-  id: `DMAT-${puzzle.difficulty.toUpperCase()}-${String((index % 12) + 1).padStart(3, '0')}`,
-  difficulty: puzzle.difficulty,
+const targeted = selected.map((puzzle) => {
+  const options = targetOptions(puzzle);
+  const target = options[Math.floor(random() * options.length)];
+  return { ...puzzle, target };
+});
+
+const targetRanked = [...targeted].sort((a, b) => a.target.score - b.target.score);
+targetRanked.forEach((puzzle, index) => {
+  puzzle.targetCellDifficulty = LEVELS[Math.min(3, Math.floor(index / 12))];
+});
+
+const puzzles = targeted.map((puzzle, index) => ({
+  id: `DMAT-${puzzle.fullGridDifficulty.toUpperCase()}-${String((index % 12) + 1).padStart(3, '0')}`,
+  difficulty: {
+    targetCell: puzzle.targetCellDifficulty,
+    fullGrid: puzzle.fullGridDifficulty,
+  },
   grid: puzzle.grid,
   solution: puzzle.solution,
+  target: {
+    row: puzzle.target.row,
+    column: puzzle.target.column,
+    value: puzzle.target.value,
+  },
   validation: {
     unique: puzzle.validation.count === 1,
     solutionCount: puzzle.validation.count,
@@ -149,24 +206,37 @@ const puzzles = selected.map((puzzle, index) => ({
     searchNodes: puzzle.validation.stats.nodes,
     branchPoints: puzzle.validation.stats.branches,
     maxDepth: puzzle.validation.stats.maxDepth,
-    difficultyScore: Number(puzzle.score.toFixed(2)),
-    generatorVersion: 1,
+    fullGridDifficultyScore: Number(puzzle.score.toFixed(2)),
+    targetDifficultyScore: puzzle.target.score,
+    targetSearchNodes: puzzle.target.searchNodes,
+    generatorVersion: 2,
   },
-  hints: [firstHint(puzzle.grid, puzzle.solution)],
+  hints: {
+    targetCell: [firstHint(puzzle.grid, puzzle.solution, puzzle.target)],
+    fullGrid: [firstHint(puzzle.grid, puzzle.solution)],
+  },
 }));
 
-if (puzzles.some((puzzle) => puzzle.validation.solutionCount !== 1)) {
-  throw new Error('Generated bank contains a non-unique puzzle.');
+if (puzzles.some((puzzle) => (
+  puzzle.validation.solutionCount !== 1
+  || puzzle.grid[puzzle.target.row][puzzle.target.column]
+  || puzzle.solution[puzzle.target.row][puzzle.target.column] !== puzzle.target.value
+))) {
+  throw new Error('Generated bank contains an invalid puzzle or target.');
 }
 
 mkdirSync(new URL('../data/', import.meta.url), { recursive: true });
 writeFileSync(
   new URL('../data/puzzles.json', import.meta.url),
-  `${JSON.stringify({ version: 1, generatedAt: '2026-08-09', puzzles }, null, 2)}\n`,
+  `${JSON.stringify({ version: 2, generatedAt: '2026-08-11', puzzles }, null, 2)}\n`,
 );
 
 console.log(`Generated and validated ${puzzles.length} unique puzzles.`);
 for (const level of LEVELS) {
-  const group = puzzles.filter((puzzle) => puzzle.difficulty === level);
-  console.log(`${level}: score ${group[0].validation.difficultyScore}–${group.at(-1).validation.difficultyScore}`);
+  const fullGrid = puzzles.filter((puzzle) => puzzle.difficulty.fullGrid === level);
+  const targetCell = puzzles
+    .filter((puzzle) => puzzle.difficulty.targetCell === level)
+    .sort((a, b) => a.validation.targetDifficultyScore - b.validation.targetDifficultyScore);
+  console.log(`${level} full grid: ${fullGrid[0].validation.fullGridDifficultyScore}–${fullGrid.at(-1).validation.fullGridDifficultyScore}`);
+  console.log(`${level} target cell: ${targetCell[0].validation.targetDifficultyScore}–${targetCell.at(-1).validation.targetDifficultyScore}`);
 }
