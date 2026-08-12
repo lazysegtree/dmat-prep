@@ -16,6 +16,7 @@ const app = document.querySelector('#app');
 const homeButton = document.querySelector('#home-button');
 const MODE_NAMES = { learn: 'Learn', drill: 'Speed Drill', mock: 'Full dMAT Mock' };
 const DIFFICULTY_NAMES = { easy: 'Easy', exam: 'Exam Standard', hard: 'Hard', extreme: 'Extreme' };
+const QUESTION_TYPE_NAMES = { target: 'Find the ?', full: 'Complete the grid' };
 
 let bank = [];
 let activeSession = null;
@@ -52,19 +53,19 @@ function renderHome() {
     <section>
       <p class="eyebrow">5 × 5 Latin squares</p>
       <h1>Train accuracy.<br />Then train speed.</h1>
-      <p class="lede">Place A–E exactly once in every row and column. Learn the deductions, practise at pace, then test yourself under dMAT timing.</p>
+      <p class="lede">Find one missing value mentally, as in the dMAT, or build your foundations by completing a full Latin square.</p>
       <div class="home-actions" aria-label="Training modes">
         <button class="mode-card" type="button" data-route="learn">
           <strong>Learn</strong>
-          <span>One puzzle, no timer, with an optional hint.</span>
+          <span>Learn exam-style targets or full-grid solving, without a timer.</span>
         </button>
         <button class="mode-card" type="button" data-route="drill">
           <strong>Speed Drill</strong>
-          <span>10 questions. Aim to finish in 12:30.</span>
+          <span>Practise 10 target questions or 10 full grids at pace.</span>
         </button>
         <button class="mode-card" type="button" data-route="mock">
           <strong>Full Mock</strong>
-          <span>20 questions in 25 minutes.</span>
+          <span>20 exam-style “Find the ?” questions in 25 minutes.</span>
         </button>
         <button class="mode-card" type="button" data-route="progress">
           <strong>Progress</strong>
@@ -90,7 +91,15 @@ function renderSetup(mode) {
     <section class="panel">
       <p class="eyebrow">${MODE_NAMES[mode]}</p>
       <h1>${isLearn ? 'Practise a deduction.' : 'Build a steady pace.'}</h1>
-      <p class="muted">${isLearn ? 'Take as long as you need. A hint is available if you get stuck.' : 'Complete 10 puzzles with no feedback until the end. The target is 12 minutes 30 seconds.'}</p>
+      <p class="muted">${isLearn ? 'Take as long as you need. A hint is available if you get stuck.' : 'Complete 10 questions with no feedback until the end.'}</p>
+      <div class="field">
+        <label for="question-type">Question type</label>
+        <select id="question-type">
+          <option value="target" selected>Find the ? — exam-style mental solving</option>
+          <option value="full">Complete the grid — foundational practice</option>
+        </select>
+        <p class="small muted" id="question-type-help">Only the ? cell can be answered. Work out intermediate cells mentally.${isLearn ? '' : ' The 10-question target is 12:30.'}</p>
+      </div>
       <div class="field">
         <label for="difficulty">Training difficulty</label>
         <select id="difficulty">
@@ -106,7 +115,13 @@ function renderSetup(mode) {
         <button class="button secondary" id="cancel-setup" type="button">Back</button>
       </div>
     </section>`;
-  app.querySelector('#start-session').addEventListener('click', () => startSession(mode, app.querySelector('#difficulty').value));
+  const questionType = app.querySelector('#question-type');
+  questionType.addEventListener('change', () => {
+    app.querySelector('#question-type-help').textContent = questionType.value === 'target'
+      ? `Only the ? cell can be answered. Work out intermediate cells mentally.${isLearn ? '' : ' The 10-question target is 12:30.'}`
+      : `Complete every empty cell. This builds foundations but is not the dMAT question format.${isLearn ? '' : ' No examination-time target applies.'}`;
+  });
+  app.querySelector('#start-session').addEventListener('click', () => startSession(mode, app.querySelector('#difficulty').value, questionType.value));
   app.querySelector('#cancel-setup').addEventListener('click', renderHome);
   focusMain();
 }
@@ -115,8 +130,8 @@ function renderMockIntro() {
   app.innerHTML = `
     <section class="panel">
       <p class="eyebrow">Full dMAT Mock</p>
-      <h1>20 questions. 25 minutes.</h1>
-      <p class="muted">The timer starts immediately. You can move between questions, but hints and feedback stay hidden until you submit.</p>
+      <h1>20 “Find the ?” questions. 25 minutes.</h1>
+      <p class="muted">Each question accepts one answer only. Intermediate cells must be worked out mentally. The timer starts immediately.</p>
       <ul>
         <li>All questions are selected before the mock begins.</li>
         <li>The mock submits automatically when time runs out.</li>
@@ -141,25 +156,31 @@ function shuffle(values) {
   return copy;
 }
 
-function choosePuzzles(mode, difficulty) {
+function puzzleDifficulty(puzzle, questionType) {
+  return questionType === 'target' ? puzzle.difficulty.targetCell : puzzle.difficulty.fullGrid;
+}
+
+function choosePuzzles(mode, difficulty, questionType) {
   if (mode !== 'mock') {
     const count = mode === 'learn' ? 1 : 10;
-    return shuffle(bank.filter((puzzle) => puzzle.difficulty === difficulty)).slice(0, count);
+    return shuffle(bank.filter((puzzle) => puzzleDifficulty(puzzle, questionType) === difficulty)).slice(0, count);
   }
   const mix = [
-    ...shuffle(bank.filter((puzzle) => puzzle.difficulty === 'easy')).slice(0, 3),
-    ...shuffle(bank.filter((puzzle) => puzzle.difficulty === 'exam')).slice(0, 11),
-    ...shuffle(bank.filter((puzzle) => puzzle.difficulty === 'hard')).slice(0, 6),
+    ...shuffle(bank.filter((puzzle) => puzzleDifficulty(puzzle, 'target') === 'easy')).slice(0, 3),
+    ...shuffle(bank.filter((puzzle) => puzzleDifficulty(puzzle, 'target') === 'exam')).slice(0, 11),
+    ...shuffle(bank.filter((puzzle) => puzzleDifficulty(puzzle, 'target') === 'hard')).slice(0, 6),
   ];
   return shuffle(mix);
 }
 
-function startSession(mode, difficulty = null) {
+function startSession(mode, difficulty = null, selectedQuestionType = 'target') {
   stopInteractiveState();
-  const puzzles = choosePuzzles(mode, difficulty);
+  const questionType = mode === 'mock' ? 'target' : selectedQuestionType;
+  const puzzles = choosePuzzles(mode, difficulty, questionType);
   activeSession = {
     mode,
     difficulty,
+    questionType,
     puzzles,
     answers: puzzles.map(emptyAnswer),
     questionTimes: puzzles.map(() => 0),
@@ -206,7 +227,7 @@ function renderPlay() {
     <section>
       <div class="play-header">
         <div>
-          <p class="eyebrow">${MODE_NAMES[session.mode]}${session.difficulty ? ` · ${DIFFICULTY_NAMES[session.difficulty]}` : ''}</p>
+          <p class="eyebrow">${MODE_NAMES[session.mode]} · ${QUESTION_TYPE_NAMES[session.questionType]}${session.difficulty ? ` · ${DIFFICULTY_NAMES[session.difficulty]}` : ''}</p>
           <h2>${session.puzzles.length === 1 ? 'Puzzle' : `Question ${session.current + 1} of ${session.puzzles.length}`}</h2>
           <p class="small muted">Puzzle ID: ${puzzle.id}</p>
         </div>
@@ -221,16 +242,19 @@ function renderPlay() {
           </div>
         </div>
         <aside class="side-panel">
+          <p class="muted">${session.questionType === 'target'
+            ? 'Answer only the ? cell. Keep intermediate deductions in your head.'
+            : 'Complete every empty cell. Select a cell, then enter A–E.'}</p>
           ${session.puzzles.length > 1 ? `
             <h3>Questions</h3>
             <div class="navigator" aria-label="Question navigator">
               ${session.puzzles.map((item, index) => {
-                const answered = editableComplete(item, session.answers[index]);
+                const answered = editableComplete(item, session.answers[index], session.questionType);
                 return `<button class="nav-question${answered ? ' answered' : ''}${index === session.current ? ' current' : ''}" type="button" data-question="${index}" aria-label="Question ${index + 1}${answered ? ', answered' : ', unanswered'}" ${index === session.current ? 'aria-current="true"' : ''}>${index + 1}</button>`;
               }).join('')}
             </div>
             <div class="legend"><span class="legend-item answered">Answered</span><span class="legend-item">Unanswered</span></div>
-          ` : '<p class="muted">Select a cell, then choose A–E. You can also type letters and use arrow keys.</p>'}
+          ` : '<p class="small muted">You can use the A–E keys. Backspace or Delete clears the answer.</p>'}
           ${session.mode === 'learn' ? '<div id="hint-area"></div>' : ''}
           <div class="session-actions">
             ${session.mode === 'learn' ? '<button class="button secondary" id="show-hint" type="button">Show a hint</button>' : ''}
@@ -239,7 +263,7 @@ function renderPlay() {
                 <button class="button secondary" id="previous-question" type="button" ${session.current === 0 ? 'disabled' : ''}>Previous</button>
                 <button class="button secondary" id="next-question" type="button" ${session.current === session.puzzles.length - 1 ? 'disabled' : ''}>Next</button>
               </div>` : ''}
-            <button class="button" id="submit-session" type="button">${session.mode === 'learn' ? 'Check puzzle' : `Submit ${MODE_NAMES[session.mode]}`}</button>
+            <button class="button" id="submit-session" type="button">${session.mode === 'learn' ? (session.questionType === 'target' ? 'Check answer' : 'Check puzzle') : `Submit ${MODE_NAMES[session.mode]}`}</button>
             <button class="button secondary" id="leave-session" type="button">Leave session</button>
           </div>
         </aside>
@@ -249,6 +273,7 @@ function renderPlay() {
   puzzleUi = new PuzzleUI(app.querySelector('#puzzle-grid'), {
     puzzle,
     values: session.answers[session.current],
+    questionType: session.questionType,
     onChange: () => updateNavigatorState(),
   });
   app.querySelectorAll('[data-symbol]').forEach((button) => button.addEventListener('click', () => puzzleUi.enter(button.dataset.symbol)));
@@ -268,7 +293,7 @@ function renderPlay() {
 function updateNavigatorState() {
   if (!activeSession || activeSession.puzzles.length === 1) return;
   const current = activeSession.current;
-  const answered = editableComplete(activeSession.puzzles[current], activeSession.answers[current]);
+  const answered = editableComplete(activeSession.puzzles[current], activeSession.answers[current], activeSession.questionType);
   const button = app.querySelector(`[data-question="${current}"]`);
   button?.classList.toggle('answered', answered);
   button?.setAttribute('aria-label', `Question ${current + 1}, ${answered ? 'answered' : 'unanswered'}`);
@@ -288,7 +313,8 @@ function changeQuestion(index) {
 
 function showHint() {
   const puzzle = activeSession.puzzles[0];
-  const hint = puzzle.hints?.[0];
+  const hintKey = activeSession.questionType === 'target' ? 'targetCell' : 'fullGrid';
+  const hint = puzzle.hints?.[hintKey]?.[0];
   if (!hint) return;
   activeSession.hintUsed = true;
   app.querySelector('#hint-area').innerHTML = `<div class="hint-box"><strong>Look at row ${hint.row + 1}, column ${hint.column + 1}.</strong><br />${hint.text}</div>`;
@@ -303,7 +329,7 @@ function finishSession(automatic) {
   const elapsed = clock ? clock.stop() : Math.floor((Date.now() - session.startedAt) / 1000);
   clock = null;
   const totalTime = session.mode === 'mock' ? Math.min(25 * 60, elapsed) : elapsed;
-  const statuses = session.puzzles.map((puzzle, index) => answerStatus(puzzle, session.answers[index]));
+  const statuses = session.puzzles.map((puzzle, index) => answerStatus(puzzle, session.answers[index], session.questionType));
   const correct = statuses.filter((status) => status === 'correct').length;
   const incorrect = statuses.filter((status) => status === 'incorrect').length;
   const unanswered = statuses.filter((status) => status === 'unanswered').length;
@@ -312,6 +338,7 @@ function finishSession(automatic) {
     date: new Date().toISOString(),
     mode: session.mode,
     difficulty: session.difficulty,
+    questionType: session.questionType,
     questionCount: session.puzzles.length,
     correct,
     incorrect,
@@ -323,6 +350,7 @@ function finishSession(automatic) {
     answers: session.answers,
     solutions: session.puzzles.map((puzzle) => puzzle.solution),
     startingGrids: session.puzzles.map((puzzle) => puzzle.grid),
+    targets: session.puzzles.map((puzzle) => puzzle.target),
     statuses,
     hintUsed: session.hintUsed,
     automatic,
@@ -341,11 +369,13 @@ function resultMetrics(result) {
     <div class="metric"><span>Unanswered</span><strong>${result.unanswered}</strong></div>
     <div class="metric"><span>Total time</span><strong>${formatTime(result.totalTime)}</strong></div>`;
   if (result.mode === 'learn') return common;
-  const slow = result.questionTimes.filter((time) => time > TARGET_SECONDS).length;
+  const targetMetrics = result.questionType === 'target'
+    ? `<div class="metric"><span>Over 75 seconds</span><strong>${result.questionTimes.filter((time) => time > TARGET_SECONDS).length}</strong></div>`
+    : '';
   return `${common}
     <div class="metric"><span>Median / question</span><strong>${formatTime(median(result.questionTimes))}</strong></div>
-    <div class="metric"><span>Over 75 seconds</span><strong>${slow}</strong></div>
-    ${result.mode === 'mock' ? `<div class="metric"><span>Time remaining</span><strong>${formatTime(result.timeRemaining)}</strong></div>` : '<div class="metric"><span>Target total</span><strong>12:30</strong></div>'}`;
+    ${targetMetrics}
+    ${result.mode === 'mock' ? `<div class="metric"><span>Time remaining</span><strong>${formatTime(result.timeRemaining)}</strong></div>` : (result.questionType === 'target' ? '<div class="metric"><span>Target total</span><strong>12:30</strong></div>' : '')}`;
 }
 
 function renderResults(result, reviewIndex = null) {
@@ -356,7 +386,7 @@ function renderResults(result, reviewIndex = null) {
     .slice(0, 3);
   app.innerHTML = `
     <section>
-      <p class="eyebrow">${MODE_NAMES[result.mode]} results</p>
+      <p class="eyebrow">${MODE_NAMES[result.mode]} · ${QUESTION_TYPE_NAMES[result.questionType || 'full']} results</p>
       <h1>${title}</h1>
       <p class="lede">${result.automatic ? 'Time expired, so the mock was submitted automatically.' : 'Review each answer and note where accuracy or time was lost.'}</p>
       <div class="results-summary">${resultMetrics(result)}</div>
@@ -389,31 +419,42 @@ function renderResults(result, reviewIndex = null) {
 function cellStatusGrid(result, index) {
   return result.answers[index].map((row, rowIndex) => row.map((value, columnIndex) => {
     if (result.startingGrids[index][rowIndex][columnIndex]) return '';
+    if (result.questionType === 'target') {
+      const target = result.targets[index];
+      if (target.row !== rowIndex || target.column !== columnIndex || !value) return '';
+      return value === target.value ? 'correct' : 'incorrect';
+    }
     if (!value) return '';
     return value === result.solutions[index][rowIndex][columnIndex] ? 'correct' : 'incorrect';
   }));
 }
 
-function readonlyGrid(values, givens, statuses = null, label = 'Latin square') {
-  return `<div class="latin-grid" role="grid" aria-label="${label}">
+function readonlyGrid(values, givens, statuses = null, label = 'Latin square', target = null, showQuestionMark = false) {
+  return `<div class="latin-grid${target ? ' target-mode' : ''}" role="grid" aria-label="${label}">
     ${values.flatMap((row, rowIndex) => row.map((value, columnIndex) => {
       const classes = ['cell'];
+      const isTarget = target?.row === rowIndex && target?.column === columnIndex;
       if (givens?.[rowIndex]?.[columnIndex]) classes.push('given');
+      if (isTarget) classes.push('target-cell');
       if (statuses?.[rowIndex]?.[columnIndex]) classes.push(statuses[rowIndex][columnIndex]);
-      return `<div class="${classes.join(' ')}" role="gridcell">${value || ''}</div>`;
+      return `<div class="${classes.join(' ')}" role="gridcell">${value || (isTarget && showQuestionMark ? '?' : '')}</div>`;
     })).join('')}
   </div>`;
 }
 
 function showReviewDetail(result, index) {
   const detail = app.querySelector('#review-detail');
+  const questionType = result.questionType || 'full';
+  const target = questionType === 'target' ? result.targets[index] : null;
+  const selectedAnswer = target ? result.answers[index][target.row][target.column] : null;
   detail.className = 'review-detail';
   detail.innerHTML = `
     <h2>Question ${index + 1}</h2>
     <p class="small muted">${result.puzzleIds[index]} · ${formatTime(result.questionTimes[index])}</p>
+    ${target ? `<p><strong>Your answer:</strong> ${selectedAnswer || 'Unanswered'} &nbsp; <strong>Correct answer:</strong> ${target.value}</p>` : ''}
     <div class="review-grids">
-      <div class="review-grid"><h3>Your answer</h3>${readonlyGrid(result.answers[index], result.startingGrids[index], cellStatusGrid(result, index), 'Your answer')}</div>
-      <div class="review-grid"><h3>Solution</h3>${readonlyGrid(result.solutions[index], result.startingGrids[index], null, 'Complete solution')}</div>
+      <div class="review-grid"><h3>Your answer</h3>${readonlyGrid(result.answers[index], result.startingGrids[index], cellStatusGrid(result, index), 'Your answer', target, true)}</div>
+      <div class="review-grid"><h3>Complete solution</h3>${readonlyGrid(result.solutions[index], result.startingGrids[index], null, 'Complete solution', target)}</div>
     </div>`;
   detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -430,14 +471,14 @@ function renderProgress() {
       <div class="metrics">
         <div class="metric"><span>Latest mock</span><strong>${summary.latestMock === null ? '—' : `${summary.latestMock}/20`}</strong></div>
         <div class="metric"><span>Best mock</span><strong>${summary.bestMock === null ? '—' : `${summary.bestMock}/20`}</strong></div>
-        <div class="metric"><span>Recent accuracy</span><strong>${value(summary.accuracy, '%')}</strong></div>
-        <div class="metric"><span>Median time</span><strong>${summary.medianTime === null ? '—' : formatTime(summary.medianTime)}</strong></div>
-        <div class="metric"><span>Within 75 seconds</span><strong>${value(summary.withinTarget, '%')}</strong></div>
+        <div class="metric"><span>Recent ? accuracy</span><strong>${value(summary.accuracy, '%')}</strong></div>
+        <div class="metric"><span>Median ? time</span><strong>${summary.medianTime === null ? '—' : formatTime(summary.medianTime)}</strong></div>
+        <div class="metric"><span>? within 75 seconds</span><strong>${value(summary.withinTarget, '%')}</strong></div>
       </div>
       <h2>Recent sessions</h2>
       ${sessions.length ? `<div class="session-list">${sessions.map((session) => `
         <div class="session-row">
-          <div><strong>${MODE_NAMES[session.mode]}</strong><br /><span class="small muted">${session.difficulty ? DIFFICULTY_NAMES[session.difficulty] : 'Internal difficulty mix'}</span></div>
+          <div><strong>${MODE_NAMES[session.mode]}</strong><br /><span class="small muted">${QUESTION_TYPE_NAMES[session.questionType || 'full']} · ${session.difficulty ? DIFFICULTY_NAMES[session.difficulty] : 'Internal difficulty mix'}</span></div>
           <strong>${session.correct}/${session.questionCount}</strong>
           <time class="small muted" datetime="${session.date}">${new Date(session.date).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })} · ${formatTime(session.totalTime)}</time>
         </div>`).join('')}</div>` : '<p class="empty">Complete a Learn puzzle, Speed Drill, or Full Mock to see progress here.</p>'}

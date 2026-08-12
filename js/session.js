@@ -6,14 +6,22 @@ export function emptyAnswer(puzzle) {
   return puzzle.grid.map((row) => [...row]);
 }
 
-export function editableComplete(puzzle, answer) {
+export function editableComplete(puzzle, answer, questionType = 'full') {
+  if (questionType === 'target') {
+    return Boolean(answer[puzzle.target.row][puzzle.target.column]);
+  }
   return puzzle.grid.every((row, rowIndex) =>
     row.every((given, columnIndex) => given || Boolean(answer[rowIndex][columnIndex])),
   );
 }
 
-export function answerStatus(puzzle, answer) {
-  if (!editableComplete(puzzle, answer)) return 'unanswered';
+export function answerStatus(puzzle, answer, questionType = 'full') {
+  if (!editableComplete(puzzle, answer, questionType)) return 'unanswered';
+  if (questionType === 'target') {
+    return answer[puzzle.target.row][puzzle.target.column] === puzzle.target.value
+      ? 'correct'
+      : 'incorrect';
+  }
   const correct = puzzle.solution.every((row, rowIndex) =>
     row.every((value, columnIndex) => answer[rowIndex][columnIndex] === value),
   );
@@ -93,10 +101,11 @@ export const progressStore = {
 };
 
 export function summarizeProgress(sessions) {
-  const mocks = sessions.filter((session) => session.mode === 'mock');
-  const questionTimes = sessions.flatMap((session) => session.questionTimes || []);
-  const totalQuestions = sessions.reduce((sum, session) => sum + (session.questionCount || 0), 0);
-  const totalCorrect = sessions.reduce((sum, session) => sum + (session.correct || 0), 0);
+  const targetSessions = sessions.filter((session) => session.questionType === 'target');
+  const mocks = targetSessions.filter((session) => session.mode === 'mock');
+  const questionTimes = targetSessions.flatMap((session) => session.questionTimes || []);
+  const totalQuestions = targetSessions.reduce((sum, session) => sum + (session.questionCount || 0), 0);
+  const totalCorrect = targetSessions.reduce((sum, session) => sum + (session.correct || 0), 0);
   return {
     latestMock: mocks[0]?.correct ?? null,
     bestMock: mocks.length ? Math.max(...mocks.map((session) => session.correct)) : null,

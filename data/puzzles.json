@@ -1,10 +1,13 @@
 {
-  "version": 1,
-  "generatedAt": "2026-08-09",
+  "version": 2,
+  "generatedAt": "2026-08-11",
   "puzzles": [
     {
       "id": "DMAT-EASY-001",
-      "difficulty": "easy",
+      "difficulty": {
+        "targetCell": "easy",
+        "fullGrid": "easy"
+      },
       "grid": [
         [
           "E",
@@ -79,6 +82,11 @@
           "B"
         ]
       ],
+      "target": {
+        "row": 3,
+        "column": 4,
+        "value": "E"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -86,21 +94,36 @@
         "searchNodes": 10,
         "branchPoints": 0,
         "maxDepth": 9,
-        "difficultyScore": 12.15,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 12.15,
+        "targetDifficultyScore": 22,
+        "targetSearchNodes": 10,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 2,
-          "value": "B",
-          "text": "Row 1, column 3 can only be B; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 2,
+            "value": "B",
+            "text": "Row 1, column 3 can only be B; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 2,
+            "value": "B",
+            "text": "Row 1, column 3 can only be B; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EASY-002",
-      "difficulty": "easy",
+      "difficulty": {
+        "targetCell": "easy",
+        "fullGrid": "easy"
+      },
       "grid": [
         [
           "C",
@@ -175,6 +198,11 @@
           "A"
         ]
       ],
+      "target": {
+        "row": 1,
+        "column": 0,
+        "value": "D"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -182,21 +210,36 @@
         "searchNodes": 10,
         "branchPoints": 0,
         "maxDepth": 9,
-        "difficultyScore": 12.15,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 12.15,
+        "targetDifficultyScore": 21,
+        "targetSearchNodes": 9,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 1,
-          "value": "D",
-          "text": "Row 1, column 2 can only be D; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "D",
+            "text": "Row 1, column 2 can only be D; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "D",
+            "text": "Row 1, column 2 can only be D; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EASY-003",
-      "difficulty": "easy",
+      "difficulty": {
+        "targetCell": "easy",
+        "fullGrid": "easy"
+      },
       "grid": [
         [
           "C",
@@ -271,6 +314,11 @@
           "C"
         ]
       ],
+      "target": {
+        "row": 1,
+        "column": 2,
+        "value": "A"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -278,21 +326,36 @@
         "searchNodes": 10,
         "branchPoints": 0,
         "maxDepth": 9,
-        "difficultyScore": 12.15,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 12.15,
+        "targetDifficultyScore": 21,
+        "targetSearchNodes": 9,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 1,
-          "value": "D",
-          "text": "Row 1, column 2 can only be D; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "D",
+            "text": "Row 1, column 2 can only be D; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "D",
+            "text": "Row 1, column 2 can only be D; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EASY-004",
-      "difficulty": "easy",
+      "difficulty": {
+        "targetCell": "easy",
+        "fullGrid": "easy"
+      },
       "grid": [
         [
           "",
@@ -367,6 +430,11 @@
           "C"
         ]
       ],
+      "target": {
+        "row": 4,
+        "column": 1,
+        "value": "E"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -374,21 +442,36 @@
         "searchNodes": 10,
         "branchPoints": 0,
         "maxDepth": 9,
-        "difficultyScore": 12.15,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 12.15,
+        "targetDifficultyScore": 21,
+        "targetSearchNodes": 9,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 0,
-          "value": "E",
-          "text": "Row 1, column 1 can only be E; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 0,
+            "value": "E",
+            "text": "Row 1, column 1 can only be E; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 0,
+            "value": "E",
+            "text": "Row 1, column 1 can only be E; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EASY-005",
-      "difficulty": "easy",
+      "difficulty": {
+        "targetCell": "easy",
+        "fullGrid": "easy"
+      },
       "grid": [
         [
           "E",
@@ -463,6 +546,11 @@
           "E"
         ]
       ],
+      "target": {
+        "row": 3,
+        "column": 2,
+        "value": "B"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -470,21 +558,36 @@
         "searchNodes": 10,
         "branchPoints": 0,
         "maxDepth": 9,
-        "difficultyScore": 12.15,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 12.15,
+        "targetDifficultyScore": 21,
+        "targetSearchNodes": 9,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 1,
-          "column": 3,
-          "value": "C",
-          "text": "Row 2, column 4 can only be C; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 1,
+            "column": 3,
+            "value": "C",
+            "text": "Row 2, column 4 can only be C; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 1,
+            "column": 3,
+            "value": "C",
+            "text": "Row 2, column 4 can only be C; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EASY-006",
-      "difficulty": "easy",
+      "difficulty": {
+        "targetCell": "easy",
+        "fullGrid": "easy"
+      },
       "grid": [
         [
           "A",
@@ -559,6 +662,11 @@
           "C"
         ]
       ],
+      "target": {
+        "row": 3,
+        "column": 4,
+        "value": "D"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -566,21 +674,36 @@
         "searchNodes": 11,
         "branchPoints": 0,
         "maxDepth": 10,
-        "difficultyScore": 13.5,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 13.5,
+        "targetDifficultyScore": 23.5,
+        "targetSearchNodes": 10,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 1,
-          "value": "D",
-          "text": "Row 1, column 2 can only be D; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "D",
+            "text": "Row 1, column 2 can only be D; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "D",
+            "text": "Row 1, column 2 can only be D; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EASY-007",
-      "difficulty": "easy",
+      "difficulty": {
+        "targetCell": "easy",
+        "fullGrid": "easy"
+      },
       "grid": [
         [
           "D",
@@ -655,6 +778,11 @@
           "A"
         ]
       ],
+      "target": {
+        "row": 2,
+        "column": 2,
+        "value": "D"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -662,21 +790,36 @@
         "searchNodes": 11,
         "branchPoints": 0,
         "maxDepth": 10,
-        "difficultyScore": 13.5,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 13.5,
+        "targetDifficultyScore": 25.5,
+        "targetSearchNodes": 12,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 1,
-          "value": "A",
-          "text": "Row 1, column 2 can only be A; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "A",
+            "text": "Row 1, column 2 can only be A; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "A",
+            "text": "Row 1, column 2 can only be A; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EASY-008",
-      "difficulty": "easy",
+      "difficulty": {
+        "targetCell": "easy",
+        "fullGrid": "easy"
+      },
       "grid": [
         [
           "",
@@ -751,6 +894,11 @@
           "D"
         ]
       ],
+      "target": {
+        "row": 0,
+        "column": 1,
+        "value": "D"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -758,21 +906,36 @@
         "searchNodes": 11,
         "branchPoints": 0,
         "maxDepth": 10,
-        "difficultyScore": 13.5,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 13.5,
+        "targetDifficultyScore": 24.5,
+        "targetSearchNodes": 11,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 4,
-          "value": "B",
-          "text": "Row 1, column 5 can only be B; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 4,
+            "value": "B",
+            "text": "Row 1, column 5 can only be B; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 4,
+            "value": "B",
+            "text": "Row 1, column 5 can only be B; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EASY-009",
-      "difficulty": "easy",
+      "difficulty": {
+        "targetCell": "easy",
+        "fullGrid": "easy"
+      },
       "grid": [
         [
           "C",
@@ -847,6 +1010,11 @@
           "B"
         ]
       ],
+      "target": {
+        "row": 2,
+        "column": 0,
+        "value": "D"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -854,21 +1022,36 @@
         "searchNodes": 11,
         "branchPoints": 0,
         "maxDepth": 10,
-        "difficultyScore": 13.5,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 13.5,
+        "targetDifficultyScore": 23.5,
+        "targetSearchNodes": 10,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 1,
-          "value": "E",
-          "text": "Row 1, column 2 can only be E; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "E",
+            "text": "Row 1, column 2 can only be E; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "E",
+            "text": "Row 1, column 2 can only be E; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EASY-010",
-      "difficulty": "easy",
+      "difficulty": {
+        "targetCell": "exam",
+        "fullGrid": "easy"
+      },
       "grid": [
         [
           "D",
@@ -943,6 +1126,11 @@
           "C"
         ]
       ],
+      "target": {
+        "row": 3,
+        "column": 1,
+        "value": "B"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -950,21 +1138,36 @@
         "searchNodes": 11,
         "branchPoints": 0,
         "maxDepth": 10,
-        "difficultyScore": 13.5,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 13.5,
+        "targetDifficultyScore": 28.5,
+        "targetSearchNodes": 15,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 4,
-          "value": "B",
-          "text": "Row 1, column 5 can only be B; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 4,
+            "value": "B",
+            "text": "Row 1, column 5 can only be B; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 4,
+            "value": "B",
+            "text": "Row 1, column 5 can only be B; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EASY-011",
-      "difficulty": "easy",
+      "difficulty": {
+        "targetCell": "easy",
+        "fullGrid": "easy"
+      },
       "grid": [
         [
           "",
@@ -1039,6 +1242,11 @@
           "D"
         ]
       ],
+      "target": {
+        "row": 0,
+        "column": 0,
+        "value": "C"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -1046,21 +1254,36 @@
         "searchNodes": 11,
         "branchPoints": 0,
         "maxDepth": 10,
-        "difficultyScore": 13.5,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 13.5,
+        "targetDifficultyScore": 23.5,
+        "targetSearchNodes": 10,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 0,
-          "value": "C",
-          "text": "Row 1, column 1 can only be C; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 1,
+            "column": 1,
+            "value": "B",
+            "text": "Row 2, column 2 can only be B; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 0,
+            "value": "C",
+            "text": "Row 1, column 1 can only be C; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EASY-012",
-      "difficulty": "easy",
+      "difficulty": {
+        "targetCell": "easy",
+        "fullGrid": "easy"
+      },
       "grid": [
         [
           "",
@@ -1135,6 +1358,11 @@
           "B"
         ]
       ],
+      "target": {
+        "row": 1,
+        "column": 2,
+        "value": "A"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -1142,21 +1370,36 @@
         "searchNodes": 11,
         "branchPoints": 0,
         "maxDepth": 10,
-        "difficultyScore": 13.5,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 13.5,
+        "targetDifficultyScore": 23.5,
+        "targetSearchNodes": 10,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 1,
-          "column": 2,
-          "value": "A",
-          "text": "Row 2, column 3 can only be A; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 2,
+            "column": 2,
+            "value": "B",
+            "text": "Row 3, column 3 can only be B; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 1,
+            "column": 2,
+            "value": "A",
+            "text": "Row 2, column 3 can only be A; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EXAM-001",
-      "difficulty": "exam",
+      "difficulty": {
+        "targetCell": "easy",
+        "fullGrid": "exam"
+      },
       "grid": [
         [
           "",
@@ -1231,6 +1474,11 @@
           "E"
         ]
       ],
+      "target": {
+        "row": 4,
+        "column": 4,
+        "value": "E"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -1238,21 +1486,36 @@
         "searchNodes": 12,
         "branchPoints": 0,
         "maxDepth": 11,
-        "difficultyScore": 14.85,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 14.85,
+        "targetDifficultyScore": 26,
+        "targetSearchNodes": 11,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 0,
-          "value": "C",
-          "text": "Row 1, column 1 can only be C; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 0,
+            "value": "C",
+            "text": "Row 1, column 1 can only be C; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 0,
+            "value": "C",
+            "text": "Row 1, column 1 can only be C; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EXAM-002",
-      "difficulty": "exam",
+      "difficulty": {
+        "targetCell": "exam",
+        "fullGrid": "exam"
+      },
       "grid": [
         [
           "C",
@@ -1327,6 +1590,11 @@
           "C"
         ]
       ],
+      "target": {
+        "row": 3,
+        "column": 0,
+        "value": "E"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -1334,21 +1602,36 @@
         "searchNodes": 12,
         "branchPoints": 0,
         "maxDepth": 11,
-        "difficultyScore": 14.85,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 14.85,
+        "targetDifficultyScore": 26,
+        "targetSearchNodes": 11,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 1,
-          "value": "B",
-          "text": "Row 1, column 2 can only be B; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "B",
+            "text": "Row 1, column 2 can only be B; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "B",
+            "text": "Row 1, column 2 can only be B; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EXAM-003",
-      "difficulty": "exam",
+      "difficulty": {
+        "targetCell": "exam",
+        "fullGrid": "exam"
+      },
       "grid": [
         [
           "D",
@@ -1423,6 +1706,11 @@
           "C"
         ]
       ],
+      "target": {
+        "row": 2,
+        "column": 0,
+        "value": "C"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -1430,21 +1718,36 @@
         "searchNodes": 12,
         "branchPoints": 0,
         "maxDepth": 11,
-        "difficultyScore": 14.85,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 14.85,
+        "targetDifficultyScore": 32,
+        "targetSearchNodes": 17,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 3,
-          "value": "B",
-          "text": "Row 1, column 4 can only be B; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 3,
+            "value": "B",
+            "text": "Row 1, column 4 can only be B; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 3,
+            "value": "B",
+            "text": "Row 1, column 4 can only be B; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EXAM-004",
-      "difficulty": "exam",
+      "difficulty": {
+        "targetCell": "exam",
+        "fullGrid": "exam"
+      },
       "grid": [
         [
           "",
@@ -1519,6 +1822,11 @@
           "E"
         ]
       ],
+      "target": {
+        "row": 3,
+        "column": 1,
+        "value": "B"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -1526,21 +1834,36 @@
         "searchNodes": 12,
         "branchPoints": 0,
         "maxDepth": 11,
-        "difficultyScore": 14.85,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 14.85,
+        "targetDifficultyScore": 26,
+        "targetSearchNodes": 11,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 4,
-          "value": "A",
-          "text": "Row 1, column 5 can only be A; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 4,
+            "value": "A",
+            "text": "Row 1, column 5 can only be A; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 4,
+            "value": "A",
+            "text": "Row 1, column 5 can only be A; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EXAM-005",
-      "difficulty": "exam",
+      "difficulty": {
+        "targetCell": "exam",
+        "fullGrid": "exam"
+      },
       "grid": [
         [
           "D",
@@ -1615,6 +1938,11 @@
           "C"
         ]
       ],
+      "target": {
+        "row": 0,
+        "column": 1,
+        "value": "E"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -1622,21 +1950,36 @@
         "searchNodes": 12,
         "branchPoints": 0,
         "maxDepth": 11,
-        "difficultyScore": 14.85,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 14.85,
+        "targetDifficultyScore": 27,
+        "targetSearchNodes": 12,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 3,
-          "value": "C",
-          "text": "Row 1, column 4 can only be C; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 3,
+            "value": "C",
+            "text": "Row 1, column 4 can only be C; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 3,
+            "value": "C",
+            "text": "Row 1, column 4 can only be C; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EXAM-006",
-      "difficulty": "exam",
+      "difficulty": {
+        "targetCell": "exam",
+        "fullGrid": "exam"
+      },
       "grid": [
         [
           "",
@@ -1711,6 +2054,11 @@
           "C"
         ]
       ],
+      "target": {
+        "row": 0,
+        "column": 4,
+        "value": "D"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -1718,21 +2066,36 @@
         "searchNodes": 13,
         "branchPoints": 0,
         "maxDepth": 12,
-        "difficultyScore": 16.2,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 16.2,
+        "targetDifficultyScore": 28.5,
+        "targetSearchNodes": 12,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 1,
-          "value": "A",
-          "text": "Row 1, column 2 can only be A; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "A",
+            "text": "Row 1, column 2 can only be A; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "A",
+            "text": "Row 1, column 2 can only be A; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EXAM-007",
-      "difficulty": "exam",
+      "difficulty": {
+        "targetCell": "exam",
+        "fullGrid": "exam"
+      },
       "grid": [
         [
           "",
@@ -1807,6 +2170,11 @@
           "E"
         ]
       ],
+      "target": {
+        "row": 3,
+        "column": 0,
+        "value": "E"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -1814,21 +2182,36 @@
         "searchNodes": 13,
         "branchPoints": 0,
         "maxDepth": 12,
-        "difficultyScore": 16.2,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 16.2,
+        "targetDifficultyScore": 32.5,
+        "targetSearchNodes": 16,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 1,
-          "value": "E",
-          "text": "Row 1, column 2 can only be E; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "E",
+            "text": "Row 1, column 2 can only be E; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "E",
+            "text": "Row 1, column 2 can only be E; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EXAM-008",
-      "difficulty": "exam",
+      "difficulty": {
+        "targetCell": "exam",
+        "fullGrid": "exam"
+      },
       "grid": [
         [
           "",
@@ -1903,6 +2286,11 @@
           "E"
         ]
       ],
+      "target": {
+        "row": 3,
+        "column": 1,
+        "value": "A"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -1910,21 +2298,36 @@
         "searchNodes": 13,
         "branchPoints": 0,
         "maxDepth": 12,
-        "difficultyScore": 16.2,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 16.2,
+        "targetDifficultyScore": 30.5,
+        "targetSearchNodes": 14,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 0,
-          "value": "A",
-          "text": "Row 1, column 1 can only be A; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 0,
+            "value": "A",
+            "text": "Row 1, column 1 can only be A; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 0,
+            "value": "A",
+            "text": "Row 1, column 1 can only be A; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EXAM-009",
-      "difficulty": "exam",
+      "difficulty": {
+        "targetCell": "exam",
+        "fullGrid": "exam"
+      },
       "grid": [
         [
           "",
@@ -1999,6 +2402,11 @@
           "E"
         ]
       ],
+      "target": {
+        "row": 2,
+        "column": 3,
+        "value": "A"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -2006,21 +2414,36 @@
         "searchNodes": 13,
         "branchPoints": 0,
         "maxDepth": 12,
-        "difficultyScore": 16.2,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 16.2,
+        "targetDifficultyScore": 29.5,
+        "targetSearchNodes": 13,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 3,
-          "column": 2,
-          "value": "D",
-          "text": "Row 4, column 3 can only be D; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 3,
+            "column": 2,
+            "value": "D",
+            "text": "Row 4, column 3 can only be D; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 3,
+            "column": 2,
+            "value": "D",
+            "text": "Row 4, column 3 can only be D; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EXAM-010",
-      "difficulty": "exam",
+      "difficulty": {
+        "targetCell": "hard",
+        "fullGrid": "exam"
+      },
       "grid": [
         [
           "",
@@ -2095,6 +2518,11 @@
           "B"
         ]
       ],
+      "target": {
+        "row": 4,
+        "column": 0,
+        "value": "E"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -2102,21 +2530,36 @@
         "searchNodes": 13,
         "branchPoints": 0,
         "maxDepth": 12,
-        "difficultyScore": 16.2,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 16.2,
+        "targetDifficultyScore": 33.5,
+        "targetSearchNodes": 17,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 1,
-          "value": "C",
-          "text": "Row 1, column 2 can only be C; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "C",
+            "text": "Row 1, column 2 can only be C; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "C",
+            "text": "Row 1, column 2 can only be C; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EXAM-011",
-      "difficulty": "exam",
+      "difficulty": {
+        "targetCell": "hard",
+        "fullGrid": "exam"
+      },
       "grid": [
         [
           "",
@@ -2191,6 +2634,11 @@
           "E"
         ]
       ],
+      "target": {
+        "row": 4,
+        "column": 0,
+        "value": "A"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -2198,21 +2646,36 @@
         "searchNodes": 14,
         "branchPoints": 0,
         "maxDepth": 13,
-        "difficultyScore": 17.55,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 17.55,
+        "targetDifficultyScore": 34,
+        "targetSearchNodes": 16,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 0,
-          "value": "B",
-          "text": "Row 1, column 1 can only be B; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 0,
+            "value": "B",
+            "text": "Row 1, column 1 can only be B; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 0,
+            "value": "B",
+            "text": "Row 1, column 1 can only be B; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EXAM-012",
-      "difficulty": "exam",
+      "difficulty": {
+        "targetCell": "hard",
+        "fullGrid": "exam"
+      },
       "grid": [
         [
           "C",
@@ -2287,6 +2750,11 @@
           "E"
         ]
       ],
+      "target": {
+        "row": 1,
+        "column": 0,
+        "value": "D"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -2294,21 +2762,36 @@
         "searchNodes": 14,
         "branchPoints": 0,
         "maxDepth": 13,
-        "difficultyScore": 17.55,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 17.55,
+        "targetDifficultyScore": 33,
+        "targetSearchNodes": 15,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 2,
-          "value": "D",
-          "text": "Row 1, column 3 can only be D; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 2,
+            "value": "D",
+            "text": "Row 1, column 3 can only be D; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 2,
+            "value": "D",
+            "text": "Row 1, column 3 can only be D; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-HARD-001",
-      "difficulty": "hard",
+      "difficulty": {
+        "targetCell": "exam",
+        "fullGrid": "hard"
+      },
       "grid": [
         [
           "B",
@@ -2383,6 +2866,11 @@
           "E"
         ]
       ],
+      "target": {
+        "row": 0,
+        "column": 1,
+        "value": "D"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -2390,21 +2878,36 @@
         "searchNodes": 14,
         "branchPoints": 0,
         "maxDepth": 13,
-        "difficultyScore": 17.55,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 17.55,
+        "targetDifficultyScore": 31,
+        "targetSearchNodes": 13,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 1,
-          "value": "D",
-          "text": "Row 1, column 2 can only be D; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 2,
+            "column": 0,
+            "value": "D",
+            "text": "Row 3, column 1 can only be D; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "D",
+            "text": "Row 1, column 2 can only be D; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-HARD-002",
-      "difficulty": "hard",
+      "difficulty": {
+        "targetCell": "exam",
+        "fullGrid": "hard"
+      },
       "grid": [
         [
           "C",
@@ -2479,6 +2982,11 @@
           "D"
         ]
       ],
+      "target": {
+        "row": 3,
+        "column": 2,
+        "value": "C"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -2486,21 +2994,36 @@
         "searchNodes": 14,
         "branchPoints": 0,
         "maxDepth": 13,
-        "difficultyScore": 17.55,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 17.55,
+        "targetDifficultyScore": 32,
+        "targetSearchNodes": 14,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 2,
-          "value": "D",
-          "text": "Row 1, column 3 can only be D; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 2,
+            "value": "D",
+            "text": "Row 1, column 3 can only be D; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 2,
+            "value": "D",
+            "text": "Row 1, column 3 can only be D; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-HARD-003",
-      "difficulty": "hard",
+      "difficulty": {
+        "targetCell": "hard",
+        "fullGrid": "hard"
+      },
       "grid": [
         [
           "C",
@@ -2575,6 +3098,11 @@
           "B"
         ]
       ],
+      "target": {
+        "row": 2,
+        "column": 0,
+        "value": "A"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -2582,21 +3110,36 @@
         "searchNodes": 14,
         "branchPoints": 0,
         "maxDepth": 13,
-        "difficultyScore": 17.55,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 17.55,
+        "targetDifficultyScore": 39,
+        "targetSearchNodes": 21,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 4,
-          "value": "D",
-          "text": "Row 1, column 5 can only be D; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 4,
+            "value": "D",
+            "text": "Row 1, column 5 can only be D; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 4,
+            "value": "D",
+            "text": "Row 1, column 5 can only be D; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-HARD-004",
-      "difficulty": "hard",
+      "difficulty": {
+        "targetCell": "exam",
+        "fullGrid": "hard"
+      },
       "grid": [
         [
           "",
@@ -2671,6 +3214,11 @@
           "C"
         ]
       ],
+      "target": {
+        "row": 2,
+        "column": 0,
+        "value": "A"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -2678,21 +3226,36 @@
         "searchNodes": 14,
         "branchPoints": 0,
         "maxDepth": 13,
-        "difficultyScore": 17.55,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 17.55,
+        "targetDifficultyScore": 32,
+        "targetSearchNodes": 14,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 0,
-          "value": "D",
-          "text": "Row 1, column 1 can only be D; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 0,
+            "value": "D",
+            "text": "Row 1, column 1 can only be D; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 0,
+            "value": "D",
+            "text": "Row 1, column 1 can only be D; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-HARD-005",
-      "difficulty": "hard",
+      "difficulty": {
+        "targetCell": "hard",
+        "fullGrid": "hard"
+      },
       "grid": [
         [
           "B",
@@ -2767,6 +3330,11 @@
           "D"
         ]
       ],
+      "target": {
+        "row": 0,
+        "column": 3,
+        "value": "A"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -2774,21 +3342,36 @@
         "searchNodes": 14,
         "branchPoints": 0,
         "maxDepth": 13,
-        "difficultyScore": 17.55,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 17.55,
+        "targetDifficultyScore": 38,
+        "targetSearchNodes": 20,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 1,
-          "column": 1,
-          "value": "A",
-          "text": "Row 2, column 2 can only be A; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 1,
+            "column": 1,
+            "value": "A",
+            "text": "Row 2, column 2 can only be A; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 1,
+            "column": 1,
+            "value": "A",
+            "text": "Row 2, column 2 can only be A; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-HARD-006",
-      "difficulty": "hard",
+      "difficulty": {
+        "targetCell": "hard",
+        "fullGrid": "hard"
+      },
       "grid": [
         [
           "E",
@@ -2863,6 +3446,11 @@
           "D"
         ]
       ],
+      "target": {
+        "row": 4,
+        "column": 4,
+        "value": "D"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -2870,21 +3458,36 @@
         "searchNodes": 15,
         "branchPoints": 0,
         "maxDepth": 14,
-        "difficultyScore": 18.9,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 18.9,
+        "targetDifficultyScore": 33.5,
+        "targetSearchNodes": 14,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 1,
-          "column": 2,
-          "value": "D",
-          "text": "Row 2, column 3 can only be D; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 1,
+            "column": 2,
+            "value": "D",
+            "text": "Row 2, column 3 can only be D; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 1,
+            "column": 2,
+            "value": "D",
+            "text": "Row 2, column 3 can only be D; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-HARD-007",
-      "difficulty": "hard",
+      "difficulty": {
+        "targetCell": "hard",
+        "fullGrid": "hard"
+      },
       "grid": [
         [
           "",
@@ -2959,6 +3562,11 @@
           "D"
         ]
       ],
+      "target": {
+        "row": 0,
+        "column": 0,
+        "value": "B"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -2966,21 +3574,36 @@
         "searchNodes": 15,
         "branchPoints": 0,
         "maxDepth": 14,
-        "difficultyScore": 18.9,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 18.9,
+        "targetDifficultyScore": 35.5,
+        "targetSearchNodes": 16,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 2,
-          "column": 0,
-          "value": "E",
-          "text": "Row 3, column 1 can only be E; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 2,
+            "column": 0,
+            "value": "E",
+            "text": "Row 3, column 1 can only be E; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 2,
+            "column": 0,
+            "value": "E",
+            "text": "Row 3, column 1 can only be E; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-HARD-008",
-      "difficulty": "hard",
+      "difficulty": {
+        "targetCell": "hard",
+        "fullGrid": "hard"
+      },
       "grid": [
         [
           "",
@@ -3055,6 +3678,11 @@
           "B"
         ]
       ],
+      "target": {
+        "row": 2,
+        "column": 2,
+        "value": "B"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -3062,21 +3690,36 @@
         "searchNodes": 15,
         "branchPoints": 0,
         "maxDepth": 14,
-        "difficultyScore": 18.9,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 18.9,
+        "targetDifficultyScore": 38.5,
+        "targetSearchNodes": 19,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 0,
-          "value": "D",
-          "text": "Row 1, column 1 can only be D; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 0,
+            "value": "D",
+            "text": "Row 1, column 1 can only be D; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 0,
+            "value": "D",
+            "text": "Row 1, column 1 can only be D; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-HARD-009",
-      "difficulty": "hard",
+      "difficulty": {
+        "targetCell": "hard",
+        "fullGrid": "hard"
+      },
       "grid": [
         [
           "",
@@ -3151,6 +3794,11 @@
           "E"
         ]
       ],
+      "target": {
+        "row": 0,
+        "column": 1,
+        "value": "A"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -3158,21 +3806,36 @@
         "searchNodes": 15,
         "branchPoints": 0,
         "maxDepth": 14,
-        "difficultyScore": 18.9,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 18.9,
+        "targetDifficultyScore": 35.5,
+        "targetSearchNodes": 16,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 1,
-          "column": 2,
-          "value": "E",
-          "text": "Row 2, column 3 can only be E; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 1,
+            "column": 2,
+            "value": "E",
+            "text": "Row 2, column 3 can only be E; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 1,
+            "column": 2,
+            "value": "E",
+            "text": "Row 2, column 3 can only be E; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-HARD-010",
-      "difficulty": "hard",
+      "difficulty": {
+        "targetCell": "hard",
+        "fullGrid": "hard"
+      },
       "grid": [
         [
           "C",
@@ -3247,6 +3910,11 @@
           "C"
         ]
       ],
+      "target": {
+        "row": 3,
+        "column": 0,
+        "value": "D"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -3254,21 +3922,36 @@
         "searchNodes": 15,
         "branchPoints": 0,
         "maxDepth": 14,
-        "difficultyScore": 18.9,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 18.9,
+        "targetDifficultyScore": 33.5,
+        "targetSearchNodes": 14,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 1,
-          "column": 4,
-          "value": "A",
-          "text": "Row 2, column 5 can only be A; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 1,
+            "column": 4,
+            "value": "A",
+            "text": "Row 2, column 5 can only be A; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 1,
+            "column": 4,
+            "value": "A",
+            "text": "Row 2, column 5 can only be A; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-HARD-011",
-      "difficulty": "hard",
+      "difficulty": {
+        "targetCell": "extreme",
+        "fullGrid": "hard"
+      },
       "grid": [
         [
           "B",
@@ -3343,6 +4026,11 @@
           "C"
         ]
       ],
+      "target": {
+        "row": 3,
+        "column": 3,
+        "value": "D"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -3350,21 +4038,36 @@
         "searchNodes": 16,
         "branchPoints": 0,
         "maxDepth": 15,
-        "difficultyScore": 20.25,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 20.25,
+        "targetDifficultyScore": 48,
+        "targetSearchNodes": 27,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 1,
-          "value": "E",
-          "text": "Row 1, column 2 can only be E; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "E",
+            "text": "Row 1, column 2 can only be E; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "E",
+            "text": "Row 1, column 2 can only be E; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-HARD-012",
-      "difficulty": "hard",
+      "difficulty": {
+        "targetCell": "extreme",
+        "fullGrid": "hard"
+      },
       "grid": [
         [
           "",
@@ -3439,6 +4142,11 @@
           "B"
         ]
       ],
+      "target": {
+        "row": 1,
+        "column": 0,
+        "value": "D"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -3446,21 +4154,36 @@
         "searchNodes": 16,
         "branchPoints": 0,
         "maxDepth": 15,
-        "difficultyScore": 20.25,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 20.25,
+        "targetDifficultyScore": 46,
+        "targetSearchNodes": 25,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 2,
-          "column": 4,
-          "value": "E",
-          "text": "Row 3, column 5 can only be E; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 2,
+            "column": 4,
+            "value": "E",
+            "text": "Row 3, column 5 can only be E; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 2,
+            "column": 4,
+            "value": "E",
+            "text": "Row 3, column 5 can only be E; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EXTREME-001",
-      "difficulty": "extreme",
+      "difficulty": {
+        "targetCell": "hard",
+        "fullGrid": "extreme"
+      },
       "grid": [
         [
           "D",
@@ -3535,6 +4258,11 @@
           "A"
         ]
       ],
+      "target": {
+        "row": 1,
+        "column": 3,
+        "value": "A"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -3542,21 +4270,36 @@
         "searchNodes": 16,
         "branchPoints": 0,
         "maxDepth": 15,
-        "difficultyScore": 20.25,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 20.25,
+        "targetDifficultyScore": 36,
+        "targetSearchNodes": 15,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 1,
-          "column": 3,
-          "value": "A",
-          "text": "Row 2, column 4 can only be A; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 3,
+            "column": 0,
+            "value": "A",
+            "text": "Row 4, column 1 can only be A; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 1,
+            "column": 3,
+            "value": "A",
+            "text": "Row 2, column 4 can only be A; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EXTREME-002",
-      "difficulty": "extreme",
+      "difficulty": {
+        "targetCell": "extreme",
+        "fullGrid": "extreme"
+      },
       "grid": [
         [
           "",
@@ -3631,6 +4374,11 @@
           "E"
         ]
       ],
+      "target": {
+        "row": 4,
+        "column": 1,
+        "value": "D"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -3638,21 +4386,36 @@
         "searchNodes": 16,
         "branchPoints": 0,
         "maxDepth": 15,
-        "difficultyScore": 20.25,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 20.25,
+        "targetDifficultyScore": 41,
+        "targetSearchNodes": 20,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 1,
-          "column": 0,
-          "value": "A",
-          "text": "Row 2, column 1 can only be A; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 1,
+            "column": 0,
+            "value": "A",
+            "text": "Row 2, column 1 can only be A; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 1,
+            "column": 0,
+            "value": "A",
+            "text": "Row 2, column 1 can only be A; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EXTREME-003",
-      "difficulty": "extreme",
+      "difficulty": {
+        "targetCell": "hard",
+        "fullGrid": "extreme"
+      },
       "grid": [
         [
           "A",
@@ -3727,6 +4490,11 @@
           "D"
         ]
       ],
+      "target": {
+        "row": 0,
+        "column": 2,
+        "value": "D"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -3734,21 +4502,36 @@
         "searchNodes": 16,
         "branchPoints": 0,
         "maxDepth": 15,
-        "difficultyScore": 20.25,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 20.25,
+        "targetDifficultyScore": 37,
+        "targetSearchNodes": 16,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 1,
-          "value": "E",
-          "text": "Row 1, column 2 can only be E; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "E",
+            "text": "Row 1, column 2 can only be E; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "E",
+            "text": "Row 1, column 2 can only be E; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EXTREME-004",
-      "difficulty": "extreme",
+      "difficulty": {
+        "targetCell": "extreme",
+        "fullGrid": "extreme"
+      },
       "grid": [
         [
           "",
@@ -3823,6 +4606,11 @@
           "C"
         ]
       ],
+      "target": {
+        "row": 2,
+        "column": 3,
+        "value": "C"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -3830,21 +4618,36 @@
         "searchNodes": 17,
         "branchPoints": 0,
         "maxDepth": 16,
-        "difficultyScore": 21.6,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 21.6,
+        "targetDifficultyScore": 49.5,
+        "targetSearchNodes": 27,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 1,
-          "column": 3,
-          "value": "B",
-          "text": "Row 2, column 4 can only be B; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 1,
+            "column": 3,
+            "value": "B",
+            "text": "Row 2, column 4 can only be B; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 1,
+            "column": 3,
+            "value": "B",
+            "text": "Row 2, column 4 can only be B; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EXTREME-005",
-      "difficulty": "extreme",
+      "difficulty": {
+        "targetCell": "extreme",
+        "fullGrid": "extreme"
+      },
       "grid": [
         [
           "E",
@@ -3919,6 +4722,11 @@
           "D"
         ]
       ],
+      "target": {
+        "row": 4,
+        "column": 1,
+        "value": "E"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -3926,21 +4734,36 @@
         "searchNodes": 17,
         "branchPoints": 0,
         "maxDepth": 16,
-        "difficultyScore": 21.6,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 21.6,
+        "targetDifficultyScore": 54.5,
+        "targetSearchNodes": 32,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 2,
-          "value": "B",
-          "text": "Row 1, column 3 can only be B; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 2,
+            "value": "B",
+            "text": "Row 1, column 3 can only be B; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 2,
+            "value": "B",
+            "text": "Row 1, column 3 can only be B; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EXTREME-006",
-      "difficulty": "extreme",
+      "difficulty": {
+        "targetCell": "extreme",
+        "fullGrid": "extreme"
+      },
       "grid": [
         [
           "",
@@ -4015,6 +4838,11 @@
           "C"
         ]
       ],
+      "target": {
+        "row": 1,
+        "column": 3,
+        "value": "C"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -4022,21 +4850,36 @@
         "searchNodes": 17,
         "branchPoints": 0,
         "maxDepth": 16,
-        "difficultyScore": 21.6,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 21.6,
+        "targetDifficultyScore": 44.5,
+        "targetSearchNodes": 22,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 1,
-          "value": "E",
-          "text": "Row 1, column 2 can only be E; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "E",
+            "text": "Row 1, column 2 can only be E; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "E",
+            "text": "Row 1, column 2 can only be E; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EXTREME-007",
-      "difficulty": "extreme",
+      "difficulty": {
+        "targetCell": "extreme",
+        "fullGrid": "extreme"
+      },
       "grid": [
         [
           "A",
@@ -4111,6 +4954,11 @@
           "E"
         ]
       ],
+      "target": {
+        "row": 1,
+        "column": 3,
+        "value": "E"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -4118,21 +4966,36 @@
         "searchNodes": 17,
         "branchPoints": 0,
         "maxDepth": 16,
-        "difficultyScore": 21.6,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 21.6,
+        "targetDifficultyScore": 43.5,
+        "targetSearchNodes": 21,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 2,
-          "column": 1,
-          "value": "D",
-          "text": "Row 3, column 2 can only be D; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 2,
+            "column": 1,
+            "value": "D",
+            "text": "Row 3, column 2 can only be D; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 2,
+            "column": 1,
+            "value": "D",
+            "text": "Row 3, column 2 can only be D; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EXTREME-008",
-      "difficulty": "extreme",
+      "difficulty": {
+        "targetCell": "extreme",
+        "fullGrid": "extreme"
+      },
       "grid": [
         [
           "C",
@@ -4207,6 +5070,11 @@
           "E"
         ]
       ],
+      "target": {
+        "row": 4,
+        "column": 4,
+        "value": "E"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -4214,21 +5082,36 @@
         "searchNodes": 17,
         "branchPoints": 0,
         "maxDepth": 16,
-        "difficultyScore": 21.6,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 21.6,
+        "targetDifficultyScore": 49.5,
+        "targetSearchNodes": 27,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 2,
-          "value": "E",
-          "text": "Row 1, column 3 can only be E; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 2,
+            "value": "E",
+            "text": "Row 1, column 3 can only be E; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 2,
+            "value": "E",
+            "text": "Row 1, column 3 can only be E; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EXTREME-009",
-      "difficulty": "extreme",
+      "difficulty": {
+        "targetCell": "extreme",
+        "fullGrid": "extreme"
+      },
       "grid": [
         [
           "C",
@@ -4303,6 +5186,11 @@
           "E"
         ]
       ],
+      "target": {
+        "row": 1,
+        "column": 2,
+        "value": "C"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -4310,21 +5198,36 @@
         "searchNodes": 18,
         "branchPoints": 0,
         "maxDepth": 17,
-        "difficultyScore": 22.95,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 22.95,
+        "targetDifficultyScore": 51,
+        "targetSearchNodes": 27,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 4,
-          "value": "D",
-          "text": "Row 1, column 5 can only be D; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 4,
+            "value": "D",
+            "text": "Row 1, column 5 can only be D; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 4,
+            "value": "D",
+            "text": "Row 1, column 5 can only be D; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EXTREME-010",
-      "difficulty": "extreme",
+      "difficulty": {
+        "targetCell": "extreme",
+        "fullGrid": "extreme"
+      },
       "grid": [
         [
           "B",
@@ -4399,6 +5302,11 @@
           "B"
         ]
       ],
+      "target": {
+        "row": 3,
+        "column": 2,
+        "value": "B"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -4406,21 +5314,36 @@
         "searchNodes": 18,
         "branchPoints": 0,
         "maxDepth": 17,
-        "difficultyScore": 22.95,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 22.95,
+        "targetDifficultyScore": 41,
+        "targetSearchNodes": 17,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 0,
-          "column": 1,
-          "value": "C",
-          "text": "Row 1, column 2 can only be C; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "C",
+            "text": "Row 1, column 2 can only be C; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 0,
+            "column": 1,
+            "value": "C",
+            "text": "Row 1, column 2 can only be C; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EXTREME-011",
-      "difficulty": "extreme",
+      "difficulty": {
+        "targetCell": "extreme",
+        "fullGrid": "extreme"
+      },
       "grid": [
         [
           "",
@@ -4495,6 +5418,11 @@
           "A"
         ]
       ],
+      "target": {
+        "row": 1,
+        "column": 3,
+        "value": "C"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -4502,21 +5430,36 @@
         "searchNodes": 18,
         "branchPoints": 0,
         "maxDepth": 17,
-        "difficultyScore": 22.95,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 22.95,
+        "targetDifficultyScore": 42,
+        "targetSearchNodes": 18,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 1,
-          "column": 4,
-          "value": "D",
-          "text": "Row 2, column 5 can only be D; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 1,
+            "column": 4,
+            "value": "D",
+            "text": "Row 2, column 5 can only be D; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 1,
+            "column": 4,
+            "value": "D",
+            "text": "Row 2, column 5 can only be D; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     },
     {
       "id": "DMAT-EXTREME-012",
-      "difficulty": "extreme",
+      "difficulty": {
+        "targetCell": "extreme",
+        "fullGrid": "extreme"
+      },
       "grid": [
         [
           "",
@@ -4591,6 +5534,11 @@
           "A"
         ]
       ],
+      "target": {
+        "row": 0,
+        "column": 3,
+        "value": "E"
+      },
       "validation": {
         "unique": true,
         "solutionCount": 1,
@@ -4598,17 +5546,29 @@
         "searchNodes": 18,
         "branchPoints": 0,
         "maxDepth": 17,
-        "difficultyScore": 22.95,
-        "generatorVersion": 1
+        "fullGridDifficultyScore": 22.95,
+        "targetDifficultyScore": 62,
+        "targetSearchNodes": 38,
+        "generatorVersion": 2
       },
-      "hints": [
-        {
-          "row": 1,
-          "column": 2,
-          "value": "E",
-          "text": "Row 2, column 3 can only be E; the other symbols already appear in its row or column."
-        }
-      ]
+      "hints": {
+        "targetCell": [
+          {
+            "row": 1,
+            "column": 2,
+            "value": "E",
+            "text": "Row 2, column 3 can only be E; the other symbols already appear in its row or column."
+          }
+        ],
+        "fullGrid": [
+          {
+            "row": 1,
+            "column": 2,
+            "value": "E",
+            "text": "Row 2, column 3 can only be E; the other symbols already appear in its row or column."
+          }
+        ]
+      }
     }
   ]
 }

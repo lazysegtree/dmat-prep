@@ -1,79 +1,109 @@
-# dMAT Latin Squares Trainer — Product Specification
+# dMAT Latin Squares Trainer — Product and Interface Specification
 
-Status: Draft v1  
-Target platform: Static GitHub Pages website  
+Status: Draft v2
+
+Target platform: Static GitHub Pages website
+
 Implementation: Plain HTML, CSS, and JavaScript
 
 ## 1. Purpose
 
-Help students progress from being able to solve a 5×5 Latin square eventually to solving 20 questions accurately within the dMAT time limit of 25 minutes.
+Help students solve the Latin-square questions used by dMAT accurately and within the examination pace of 20 questions in 25 minutes.
 
-The application must support a complete training loop:
+In the dMAT format, the student is not asked to complete the grid. One empty cell is marked with `?`, and the student answers only that cell. Other empty cells cannot be filled in. Any intermediate values needed to reach the target must therefore be deduced and retained mentally. Longer chains of such deductions are a central source of difficulty.
 
-1. Learn how to make deductions.
-2. Practise repeatedly.
-3. Improve speed without sacrificing accuracy.
-4. Attempt a realistic mock.
-5. Review slow and incorrect answers.
+Completing an entire Latin square remains useful foundational practice, so the trainer supports it as a separate practice variety. It must never be confused with the examination format.
+
+The application supports this training loop:
+
+1. Learn individual deductions and mental deduction chains.
+2. Practise either the real target-cell format or full-grid completion.
+3. Improve target-cell speed without sacrificing accuracy.
+4. Attempt a realistic target-cell mock.
+5. Review slow and incorrect answers with the complete solution.
 
 This is a focused dMAT Latin-square trainer, not a general puzzle platform or general GRE-preparation website.
 
-## 2. Puzzle format
+## 2. Latin-square rules
 
-Every puzzle uses the same fixed format:
+Every puzzle uses the same fixed rules:
 
 - A 5×5 grid.
 - Symbols A, B, C, D, and E.
 - Each symbol appears exactly once in every row.
 - Each symbol appears exactly once in every column.
 - No Sudoku regions or additional constraints.
-- Every published puzzle has exactly one solution.
+- Every published starting grid has exactly one complete solution.
 - Candidate notes or pencil marks are not available.
 
-The fixed format is intentional. Users do not configure grid size, symbols, rules, or question count.
+Users do not configure grid size, symbols, rules, or session length.
 
-## 3. Training modes
+## 3. Question types
 
-### 3.1 Learn
+### 3.1 Find the `?`
 
-Purpose: Develop solving technique without time pressure.
+This is the examination-style question type and the default in practice modes.
+
+- Exactly one non-given cell is designated as the target and displayed as `?`.
+- The user can enter A–E only in the target cell.
+- All other empty cells remain visible but cannot be filled.
+- The target can require deductions about several other cells before its value is known.
+- Difficulty is based on the work required to determine the target, including intermediate deductions and search effort, not merely the total number of empty cells.
+
+### 3.2 Complete the grid
+
+This is supplementary foundational practice, not the dMAT examination format.
+
+- Every non-given cell is editable.
+- The user completes the entire 5×5 Latin square.
+- Difficulty is based on the work required to complete the grid, not merely the number of empty cells.
+
+## 4. Training modes
+
+### 4.1 Learn
+
+Purpose: develop solving technique without time pressure.
 
 - One puzzle at a time.
 - No visible timer.
+- The user selects `Find the ?` or `Complete the grid`.
 - The user selects a training difficulty.
-- Optional hints are available.
-- The user submits the puzzle when ready.
-- Correctness and incorrect cells are shown immediately after submission.
-- The user can inspect the completed solution.
-- Where supported by the puzzle data, the application explains a useful deduction rather than showing only the answer.
+- An optional hint is available.
+- In target-cell practice, a hint may expose a useful intermediate deduction rather than the target answer itself.
+- The user submits when ready.
+- Correctness is shown immediately after submission.
+- The submitted answer and complete solution open automatically for review.
 
-### 3.2 Speed Drill
+### 4.2 Speed Drill
 
-Purpose: Develop consistent speed over multiple questions.
+Purpose: develop consistent speed over 10 questions.
 
-- A fixed set of 10 puzzles.
+- The user selects `Find the ?` or `Complete the grid`.
 - The user selects a training difficulty.
+- All 10 puzzles are selected before the drill begins.
 - A timer counts upward.
-- The target completion time is 12 minutes 30 seconds.
+- The target for `Find the ?` is 12 minutes 30 seconds: 75 seconds per question.
+- `Complete the grid` has no claimed examination-time target because it is supplementary practice.
 - No correctness feedback is shown during the drill.
 - Users can move between questions.
 - Results and solutions are shown only after submission.
 
-The results include:
+Results include:
 
 - Correct, incorrect, and unanswered counts.
 - Total time.
 - Median time per question.
-- Number of questions taking more than 75 seconds.
+- For `Find the ?`, the number of questions taking more than 75 seconds.
 - The three slowest questions.
-- Per-question answers and solutions.
+- Per-question answers and complete solutions.
 
-### 3.3 Full dMAT Mock
+### 4.3 Full dMAT Mock
 
-Purpose: Simulate the Latin-square portion of the examination.
+Purpose: simulate the Latin-square portion of the examination.
 
-- Exactly 20 questions.
+- Exactly 20 `Find the ?` questions.
 - Exactly 25 minutes.
+- The question type and difficulty are controlled internally and cannot be configured.
 - All questions are selected before the mock begins.
 - The timer counts down and remains visible.
 - Users can move forward and backward between questions.
@@ -89,75 +119,140 @@ Mock results include:
 - Correct, incorrect, and unanswered counts.
 - Total time used and time remaining.
 - Per-question time.
-- Answers and complete solutions for every question.
+- The selected answer, target answer, and complete solution for every question.
 
-Mock difficulty is controlled internally and is not configurable. Its question mixture should eventually be calibrated against official dMAT examples.
+The mock mixture must not be described as officially calibrated until sufficient official dMAT examples have been analysed.
 
-## 4. Training difficulty
+## 5. Training difficulty
 
 Practice modes provide four levels:
 
-- **Easy:** Frequent immediately forced placements; intended for learning the rules.
-- **Exam Standard:** Intended to approximate the official examination level after calibration.
-- **Hard:** Fewer obvious placements and longer chains of deductions.
-- **Extreme:** Deliberate overtraining above expected examination difficulty.
+- **Easy:** frequent immediately forced placements; intended for learning the rules.
+- **Exam Standard:** intended to approximate official examination difficulty after calibration.
+- **Hard:** fewer obvious placements and longer deduction chains.
+- **Extreme:** deliberate overtraining above expected examination difficulty.
 
-Difficulty must not be determined only by the number of blank cells. It should consider the deductions or search effort required to solve the puzzle.
+Each puzzle has separate difficulty metadata for `Find the ?` and `Complete the grid`, because a target cell can be easy to determine even when completing the remaining grid is difficult, or vice versa.
 
-The application must not imply that a level is officially calibrated until it has been compared with sufficient official examples.
+Difficulty considers solver deductions or search effort. It is not determined only by blank-cell count. The current `Exam Standard` label is provisional.
 
-## 5. Puzzle source and validation
+## 6. Puzzle source and validation
 
-Version one uses a static, pre-generated puzzle bank rather than generating puzzles in the user's browser.
+Version one uses a static, pre-generated puzzle bank rather than generating puzzles in the browser.
 
 Each puzzle record contains:
 
 - Stable puzzle ID.
 - Starting grid.
 - Complete solution.
-- Training difficulty.
+- Target-cell row and column.
+- Separate target-cell and full-grid difficulty labels and scores.
 - Validation metadata.
 - Optional deduction or hint steps.
 
-Before inclusion, every puzzle must be checked by a solver that counts solutions and rejects any puzzle with zero or multiple solutions.
+Before inclusion, every starting grid is checked by a solver that counts solutions and rejects grids with zero or multiple solutions. The target must be an empty cell in the starting grid, and its expected answer must match the validated complete solution.
 
-A stable puzzle ID makes reported problems reproducible. Consistent symbol, row, and column transformations may be used to create additional equivalent variants from validated puzzles.
+A stable puzzle ID makes reported problems reproducible. Consistent symbol, row, and column transformations may create equivalent variants from validated puzzles.
 
-Runtime puzzle generation is postponed until generation, uniqueness checking, and human-oriented difficulty rating are demonstrably reliable.
+Runtime generation remains out of scope until generation, uniqueness checking, target-specific difficulty, and human-oriented difficulty rating are demonstrably reliable.
 
-## 6. Progress tracking
+## 7. Progress tracking
 
 Version one has no accounts, authentication, backend, or cloud synchronization.
 
-Progress is stored only in the user's browser using local storage. Store at most the most recent 50 completed sessions and the summary values needed to display:
+Progress is stored only in the user's browser using local storage. Store at most the most recent 50 completed sessions and the values needed to display:
 
 - Latest and best mock scores.
-- Recent-question accuracy.
-- Median solving time.
-- Percentage of questions completed within 75 seconds.
-- Recent sessions with date, mode, score, and time.
+- Recent `Find the ?` accuracy.
+- Median `Find the ?` solving time.
+- Percentage of `Find the ?` questions completed within 75 seconds.
+- Recent sessions with date, mode, question type, score, and time.
 
-Users must be able to export their progress and delete all locally stored data. The interface must state that progress remains on the current browser and device.
+Full-grid sessions appear in recent sessions but are excluded from the examination-readiness timing aggregates.
 
-Streaks are not a primary metric because examination readiness depends on accuracy and speed, not merely opening the application.
+Users can export progress and delete all locally stored data. The interface states that progress remains on the current browser and device.
 
-## 7. Interface principles
+Streaks are not a primary metric because readiness depends on accuracy and speed, not merely opening the application.
 
-- The home screen presents only Learn, Speed Drill, Full Mock, and Progress.
+## 8. Screen and control specification
+
+The screen copy may be tightened for small displays, but the controls and decisions below must remain available.
+
+### 8.1 Global header
+
+- `dMAT Latin Squares` brand button: returns to Home.
+- Leaving an active Speed Drill or Full Mock through this button requires confirmation.
+
+### 8.2 Home
+
+Home presents exactly four primary actions:
+
+- `Learn`
+- `Speed Drill`
+- `Full Mock`
+- `Progress`
+
+Question-type choices do not appear on Home.
+
+### 8.3 Learn and Speed Drill setup
+
+- `Question type` selector:
+  - `Find the ? — exam-style mental solving` (default)
+  - `Complete the grid — foundational practice`
+- `Training difficulty` selector: Easy, Exam Standard, Hard, or Extreme.
+- `Start Learn` or `Start Speed Drill` button.
+- `Back` button.
+
+### 8.4 Full Mock introduction
+
+- Clearly states `20 Find the ? questions` and `25 minutes`.
+- `Start Mock` button.
+- `Back` button.
+- No configuration controls.
+
+### 8.5 Puzzle screen
+
+- 5×5 grid.
+- A–E answer buttons.
+- `Clear` button.
+- Keyboard A–E enters a value; Backspace or Delete clears it.
+- In `Find the ?`, only the target cell accepts input and displays `?` until answered.
+- In `Complete the grid`, all non-given cells accept input; the active cell, row, and column remain identifiable.
+- Learn adds `Show a hint` and `Check answer` or `Check puzzle`.
+- Timed modes add the question navigator, `Previous`, `Next`, and `Submit Speed Drill` or `Submit Full dMAT Mock`.
+- Every mode includes `Leave session`.
+
+### 8.6 Results and review
+
+- Summary metrics defined by the selected mode and question type.
+- One review row per question with status, puzzle ID, time, and `Review` button.
+- Review shows the submitted grid and complete solution side by side.
+- The target cell remains visually identified in target-cell review.
+- `New Learn`, `New Speed Drill`, or `Take another mock` button.
+- `Home` button.
+
+### 8.7 Progress
+
+- Examination-readiness summary metrics.
+- Recent session list with question type.
+- `Export progress` button.
+- `Delete all progress` button with confirmation.
+- `Home` button.
+
+## 9. Interface principles
+
 - Starting a mock requires no configuration.
-- The grid must work with mouse, touch, and keyboard input.
-- Selecting A–E enters a value; Backspace or Delete clears an editable cell.
-- Given cells are visually distinct and cannot be edited.
-- The active cell, its row, and its column remain identifiable.
-- The interface must be responsive on phones and desktop browsers.
-- Visual effects must never delay input or obscure the remaining time.
-- Refreshing or leaving an active drill or mock should trigger a warning.
+- The grid works with mouse, touch, and keyboard input.
+- Non-editable cells cannot receive accidental input.
+- Controls have accessible labels and visible keyboard focus.
+- The interface is responsive on phones and desktop browsers.
+- Visual effects never delay input or obscure remaining time.
+- Refreshing or leaving an active drill or mock triggers a warning.
+- The interface explicitly distinguishes supplementary full-grid practice from the dMAT format.
 
-## 8. Technical shape
+## 10. Technical shape
 
-The deployed application remains static and compatible with GitHub Pages.
-
-Suggested structure:
+The deployed application remains static and compatible with GitHub Pages:
 
 ```text
 index.html
@@ -166,19 +261,21 @@ js/app.js
 js/puzzle-ui.js
 js/session.js
 data/puzzles.json
+tools/generate-puzzles.mjs
 ```
 
 - `app.js` controls navigation and application state.
-- `puzzle-ui.js` renders the grid and handles input.
-- `session.js` controls timers, question navigation, scoring, and progress storage.
+- `puzzle-ui.js` renders the two grid interaction types and handles input.
+- `session.js` controls timers, scoring, and progress storage.
 - `puzzles.json` contains the validated puzzle bank and solutions.
+- `generate-puzzles.mjs` is a developer-only generator and validator; it is not a runtime dependency.
 
-No frontend framework, package manager, build process, database, or server is required for the deployed application.
+No frontend framework, package manager, build process, database, or server is required for deployment.
 
-Developer-only scripts may be added later to generate and validate the static puzzle bank. They must not become runtime dependencies.
+## 11. Explicitly out of scope for version one
 
-## 9. Explicitly out of scope for version one
-
+- Filling intermediate cells during `Find the ?` questions.
+- Candidate notes or scratchpads.
 - User accounts or profiles.
 - Cloud synchronization.
 - Public leaderboards.
@@ -190,26 +287,16 @@ Developer-only scripts may be added later to generate and validate the static pu
 - General Sudoku, Futoshiki, or other puzzle formats.
 - General GRE preparation.
 
-## 10. Release order
-
-1. Establish the puzzle data format and validate a small puzzle bank.
-2. Build the accessible 5×5 puzzle interface.
-3. Add Learn mode and review.
-4. Add Speed Drill and session results.
-5. Add the complete mock workflow.
-6. Add browser-only progress tracking.
-7. Test keyboard, touch, timing, refresh, and mobile behaviour.
-8. Publish through GitHub Pages.
-
-## 11. Version-one success criteria
+## 12. Version-one success criteria
 
 The first release is successful when a student can:
 
-- Learn the rules and request useful assistance.
-- Complete repeated practice without unnecessary configuration.
-- Measure whether they consistently solve questions within 75 seconds.
-- Take a faithful 20-question, 25-minute mock without receiving early feedback.
-- Review exactly where time and accuracy were lost.
+- Learn rules, direct deductions, and longer mental deduction chains.
+- Practise the real single-target format without filling intermediate cells.
+- Optionally practise completing full grids without mistaking it for the exam format.
+- Measure whether target questions are consistently solved within 75 seconds.
+- Take a faithful 20-question, 25-minute target-cell mock without early feedback.
+- Review the target answer and complete solution for every question.
 - Return later on the same browser and see recent progress.
 
 The product remains deliberately small: learn, drill, mock, review, and repeat.
