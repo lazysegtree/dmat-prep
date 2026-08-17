@@ -92,6 +92,24 @@ The rule applies only when the eligible-candidate set has size one. It asks: “
 
 For Rules 2 and 3, the recorded evidence includes `K`, the selected unit, its missing-candidate set, the selected candidate or cell, the eliminations, and the resulting placement.
 
+Each inference in `bestMethod` uses the following common fields:
+
+- `rule`: one of the three internal rule identifiers.
+- `weight`: the rule weight before adding the step scalar.
+- `unit`: `{ "type": "row" | "column", "index": number }`, using a zero-based index.
+- `k`: the number of empty cells in `unit` before the inference.
+- `missingCandidates`: the unit's missing values in `A` through `E` order.
+- `placement`: `{ "row": number, "column": number, "value": string }`.
+- `details`: the student-facing explanation generated from the other evidence fields.
+
+Rule-specific fields are:
+
+- `single-missing-cell`: no additional fields. `k` is `1`, `missingCandidates` contains the placed value, and `placement` identifies the unit's only empty cell.
+- `unique-candidate-position`: `selectedCandidate` contains the candidate being placed. `eliminations` is an array in row-major cell order. Each entry is `{ "row": number, "column": number, "blockedBy": { "row": number, "column": number } }`; `blockedBy` identifies where `selectedCandidate` already occurs in the intersecting unit.
+- `unique-candidate-for-cell`: `selectedCell` is `{ "row": number, "column": number }`. `eliminations` is an array in `A` through `E` value order. Each entry is `{ "value": string, "blockedBy": { "row": number, "column": number } }`; `blockedBy` identifies where that value already occurs in the intersecting unit.
+
+The inference JSON does not duplicate `row`, `column`, or `value` at its top level; those values come from `placement`. Fields are emitted in the common-field order above, with rule-specific fields after `missingCandidates` and before `placement`. Arrays use the deterministic orders stated above.
+
 Every recorded inference also includes a `details` string written for a student. The string uses one-based row and column numbers and is generated from the recorded evidence:
 
 - Rule 1 states which row or column has one empty cell, which value is missing, and where that value is placed.
@@ -112,7 +130,13 @@ edge cost = rule weight + 2
 
 Use cost-ordered search with a priority queue, not ordinary breadth-first search, because inference weights may differ.
 
-Use Dijkstra's algorithm to find the single minimum-cost path from the published grid to a state in which the target has been inferred. Explore only up to the configured maximum depth and maximum number of search states.
+Use Dijkstra's algorithm to find the single minimum-cost path from the published grid to a state in which the target has been inferred.
+
+The source node has depth `0`. A node's depth is the number of inference edges from the source. Explore nodes whose depth is less than or equal to the configured maximum depth. A node at the maximum depth may satisfy the target condition but is not expanded.
+
+A search state is one distinct partial grid admitted to the priority queue; the source counts as the first state. Reaching the configured state limit before a target-filled node is removed from the priority queue causes the candidate to be rejected as unrated. A target-filled node succeeds when it is removed as the current minimum-cost node, which proves that its path is minimum-cost.
+
+For each expanded node, the implementation applies the rules one at a time. Rule order, enumeration within a rule, and priority-queue tie handling are implementation-dependent, but they must remain stable within a generator version. Changing any of them requires a new generator version.
 
 ```text
 puzzle score = sum of edge costs on the minimum-cost path
@@ -143,17 +167,38 @@ The generator reports rejection counts for ambiguous, unrated, duplicate, and un
 
 Version one prevents exact duplicates only.
 
-Create a canonical string from the 25 grid cells plus target coordinates, hash it, and reject hashes already accepted. Similarity scoring and symmetry-aware deduplication are postponed unless repetition becomes noticeable.
+Create the canonical puzzle identity by writing the 25 grid cells in row-major order, using `A` through `E` for givens and `-` for empty cells, followed by `:`, the zero-based target row, `,`, and the zero-based target column. For example, the suffix is `:3,2` for row 3, column 2.
+
+Reject a candidate when its complete canonical identity has already been accepted. Hashes may be used as an index, but equality is decided using the complete identity so a hash collision cannot remove a distinct puzzle. Similarity scoring and symmetry-aware deduplication are postponed unless repetition becomes noticeable.
 
 ## 8. JSON output
 
 ### 8.1 Puzzle bank
 
-The output contains a format version, generator settings, and a puzzle list. Each puzzle contains:
+The puzzle-bank output has this top-level structure:
 
 ```json
 {
-  "id": "DMAT-G1-A7F32C",
+  "formatVersion": 1,
+  "generatorVersion": 1,
+  "settings": {
+    "seed": 42,
+    "counts": { "easy": 10, "exam": 10, "hard": 10, "extreme": 10 },
+    "maximumAttempts": 100000,
+    "maximumSearchStates": 10000,
+    "maximumSearchDepth": 12,
+    "minimumGivens": 8,
+    "maximumGivens": 15
+  },
+  "puzzles": []
+}
+```
+
+It contains no wall-clock timestamp. Each puzzle contains:
+
+```json
+{
+  "id": "DMAT-G1-1DC79AA45352",
   "grid": [
     ["B", "", "E", "", ""],
     ["", "D", "", "", ""],
@@ -172,18 +217,26 @@ The output contains a format version, generator settings, and a puzzle list. Eac
   ],
   "difficulty": {
     "targetCell": "easy",
-    "fullGrid": "easy",
-    "score": 4.0,
+    "score": 4,
     "level": "easy",
     "rulesVersion": 1
   },
   "bestMethod": [
     {
       "rule": "unique-candidate-position",
-      "row": 3,
-      "column": 2,
-      "value": "B",
       "weight": 2,
+      "unit": { "type": "row", "index": 3 },
+      "k": 2,
+      "missingCandidates": ["B", "E"],
+      "selectedCandidate": "B",
+      "eliminations": [
+        {
+          "row": 3,
+          "column": 4,
+          "blockedBy": { "row": 4, "column": 4 }
+        }
+      ],
+      "placement": { "row": 3, "column": 2, "value": "B" },
       "details": "Row 4 is missing B and E. B cannot be in column 5 because column 5 already contains B, so row 4, column 3 is B."
     }
   ],
@@ -195,8 +248,7 @@ The output contains a format version, generator settings, and a puzzle list. Eac
         "value": "B",
         "text": "Row 4 is missing B and E. B cannot be in column 5 because column 5 already contains B, so row 4, column 3 is B."
       }
-    ],
-    "fullGrid": []
+    ]
   },
   "validation": { "solutionCount": 1, "givens": 8 }
 }
@@ -204,19 +256,28 @@ The output contains a format version, generator settings, and a puzzle list. Eac
 
 Row and column indexes are zero-based.
 
-The compatibility fields follow the trainer's existing data contract:
+The target-cell compatibility fields follow the trainer's existing data contract:
 
 - `target.value` equals `answer`.
 - `difficulty.targetCell` equals `difficulty.level`.
 - The 7–12 medium band uses the existing trainer identifier `exam`.
-- `difficulty.fullGrid` preserves the puzzle's separate full-grid difficulty classification.
-- `hints.targetCell[0].text` contains the `details` string from the first inference in `bestMethod`. `hints.fullGrid` contains any existing full-grid hint steps and may be empty.
+- `hints.targetCell[0]` uses the `row`, `column`, and `value` from the first inference's `placement`, and its `text` contains that inference's `details` string.
 
-Puzzle IDs are derived from the canonical puzzle identity and generator version. The actual complete solution is stored; no separate completed-square ID is needed.
+Puzzle IDs are derived by calculating SHA-256 over the UTF-8 string `G<generatorVersion>|<canonicalIdentity>`, taking the first 12 hexadecimal characters in uppercase, and formatting the result as `DMAT-G<generatorVersion>-<digest>`. If two distinct canonical identities produce the same truncated ID, generation fails rather than emitting duplicate IDs. The actual complete solution is stored; no separate completed-square ID is needed.
 
 ### 8.2 Reduced-square catalogue
 
-The separate catalogue JSON contains a format version, the symbol list, and a `squares` array with exactly 56 entries. Each entry contains a stable sequential ID and one complete grid:
+The separate catalogue JSON has this top-level structure:
+
+```json
+{
+  "formatVersion": 1,
+  "symbols": ["A", "B", "C", "D", "E"],
+  "squares": []
+}
+```
+
+The `squares` array contains exactly 56 entries. Each entry contains a stable sequential ID and one complete grid:
 
 ```json
 {
@@ -233,17 +294,24 @@ The separate catalogue JSON contains a format version, the symbol list, and a `s
 
 ## 9. Command-line behavior
 
-The program accepts at least:
+The program accepts these version-one flags:
 
-- Puzzle-bank output path.
-- Reduced-square catalogue output path.
-- Random seed.
-- Requested count or count per difficulty level.
-- Maximum generation attempts.
-- Search-state limit.
-- Search-depth limit.
+- `--puzzles-out <path>`: required puzzle-bank output path.
+- `--catalogue-out <path>`: required reduced-square catalogue output path.
+- `--seed <uint64>`: required unsigned 64-bit random seed.
+- `--count-easy <uint>`, `--count-exam <uint>`, `--count-hard <uint>`, and `--count-extreme <uint>`: required requested counts per level. At least one count must be positive.
+- `--max-attempts <uint>`: required positive generation-attempt limit.
+- `--max-search-states <uint>`: optional positive state limit; default `10000`.
+- `--max-search-depth <uint>`: required positive search-depth limit.
+- `--min-givens <uint>` and `--max-givens <uint>`: optional inclusive given-cell range; defaults `8` and `15`.
 
-The same program version, settings, and seed produce the same outputs. Progress and rejection statistics go to standard error; both output files contain valid JSON only.
+Invalid or conflicting values fail before generation with a non-zero exit status.
+
+Version one uses SplitMix64 initialized directly from `--seed`. Each generated 64-bit value applies the standard SplitMix64 state increment `0x9E3779B97F4A7C15` and mixing constants `0xBF58476D1CE4E5B9` and `0x94D049BB133111EB`. Random selection from a range uses rejection sampling rather than a remainder operation that introduces modulo bias. Every randomized choice uses this single PRNG stream.
+
+The same generator version, settings, and seed produce byte-identical JSON. JSON arrays use their specified deterministic order, object fields use the order shown in this specification, indentation is two spaces, and each file ends with one newline.
+
+Generation is all-or-nothing. The generator must produce every requested difficulty count within `--max-attempts`. If it cannot, it exits non-zero and does not create or replace either output file. Both complete JSON documents are prepared and validated before temporary files in the destination directories are renamed over the requested paths. Progress and rejection statistics go to standard error; standard output is empty, and both output files contain valid JSON only on success.
 
 ## 10. Acceptance checks
 
@@ -256,8 +324,13 @@ Automated tests verify:
 - Every search edge costs its rule weight plus 2.
 - Scores at 6, 7, 12, 13, 18, and 19 receive the expected boundary classifications.
 - Recorded `details` strings describe the evidence and resulting placement using one-based row and column numbers.
+- Every `details` string can be regenerated exactly from the structured evidence in its inference record.
+- A serialized `bestMethod` can be replayed from the published grid and reaches the target with the stored score.
 - Stored answers match complete solutions.
 - Identical settings and seed reproduce output.
+- Depth and search-state boundaries follow the specified inclusion and rejection behavior.
+- Exhausting generation attempts produces no partial output or replacement.
+- Puzzle IDs follow the specified canonicalization and hashing procedure and are unique.
 - Exact duplicate grid-and-target pairs are absent.
 - The reduced-square catalogue contains exactly 56 distinct grids.
 - Every catalogue grid is a valid complete Latin square with its first row and first column fixed to A–E.
