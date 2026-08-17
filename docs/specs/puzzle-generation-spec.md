@@ -1,6 +1,6 @@
 # dMAT Puzzle Generation Specification
 
-Status: Draft v2
+Status: Draft v3
 
 Implementation language: Go
 
@@ -47,7 +47,10 @@ Use the following three sound rules. Each rule proves one empty cell, has a manu
 
 These are the complete inference rules for version one. The scorer may chain deductions made by these rules, but it must not fill a cell using any other inference method.
 
-Comment: Add weights. Rule 1 -> 1, Rule 2/3 -> 'K' 
+Version one uses these fixed rule weights:
+
+- Rule 1 has weight `1`.
+- Rules 2 and 3 have weight `K`, the number of empty cells in the selected row or column.
 
 ### Rule 1: Single Missing Cell
 
@@ -87,44 +90,50 @@ eligible candidates for c = M - values in the intersecting row or column
 
 The rule applies only when the eligible-candidate set has size one. It asks: “Which candidate can go in this selected cell?” Candidate sets need only be computed for the cell currently being examined; they are not persistent puzzle state.
 
-For Rules 2 and 3, the recorded evidence includes `K`, the selected unit, its missing-candidate set, the selected candidate or cell, the eliminations, and the resulting placement. Rule weights are configuration values. Within either rule, the weight increases with `K` to represent the greater difficulty of considering more empty cells and candidates. The exact weights can be tuned by reviewing generated examples.
+For Rules 2 and 3, the recorded evidence includes `K`, the selected unit, its missing-candidate set, the selected candidate or cell, the eliminations, and the resulting placement.
+
+Every recorded inference also includes a `details` string written for a student. The string uses one-based row and column numbers and is generated from the recorded evidence:
+
+- Rule 1 states which row or column has one empty cell, which value is missing, and where that value is placed.
+- Rule 2 states the selected unit and its missing values, where the selected value was eliminated, and why only the resulting position remains.
+- Rule 3 states the selected cell and the unit's missing values, which values were eliminated by the intersecting unit, and why only the resulting value remains.
+
+For example: `Row 4 is missing B and E. B cannot be in column 5 because column 5 already contains B, so row 4, column 3 is B.`
 
 The scorer must not use the stored solution to decide whether an inference is available. The solution is used only to validate the inferred result.
 
-Comment: Use a simple method to explore the graph till a given max depth, and given max number of nodes, while assiging every edge a weight, that is weight of rule + fixed lambda '2'
-
-Comment: Then we just find minimum weighted path from source to target. Via dijsktra.
-For now, just use that one weight of shortest path alone to detemine hardness. Remove all this unecessary details.
-
 ## 5. Difficulty scoring
 
-A search node is a partial grid. An edge is one valid inference that fills one additional cell and carries that rule's weight.
+A search node is a partial grid. An edge is one valid inference that fills one additional cell. Its cost is:
+
+```text
+edge cost = rule weight + 2
+```
 
 Use cost-ordered search with a priority queue, not ordinary breadth-first search, because inference weights may differ.
 
-Find up to three lowest-cost distinct paths that reach the target. For each path:
+Use Dijkstra's algorithm to find the single minimum-cost path from the published grid to a state in which the target has been inferred. Explore only up to the configured maximum depth and maximum number of search states.
 
 ```text
-path score = sum of rule weights + step scalar × inference count
+puzzle score = sum of edge costs on the minimum-cost path
 ```
 
-Start with a step scalar of `2`. The puzzle score is the average of the available lowest three path scores.
+The fixed `2` in each edge cost represents the effort of deriving and retaining another intermediate result. Internal states explored by the program do not affect difficulty.
 
-The inference count represents intermediate results the student must derive and remember. Internal states explored by the program do not affect difficulty.
+Classify the puzzle using its score:
 
-Minimum safeguards:
+- `0–6`: Easy (`easy`)
+- `7–12`: Medium / Exam Standard (`exam`)
+- `13–18`: Hard (`hard`)
+- `19` or greater: Extreme (`extreme`)
 
-- A target provable in one inference is Easy.
-- Extreme requires every retained route to contain at least four inferences.
-- Reaching the search limit means unrated and rejected, not Extreme.
-
-Difficulty boundaries remain configurable and will be adjusted after manually solving a sample from each level.
+There are no additional minimum-inference or maximum-inference conditions for a difficulty level. If the target is not reached within either search limit, the puzzle is unrated and rejected.
 
 ## 6. Initial limits
 
 - Search states per candidate: 10,000.
+- Search depth per candidate: configurable.
 - Given cells: 8–15.
-- Paths used for scoring: up to 3.
 - Step scalar: 2.
 - Generation attempts: configurable.
 
@@ -152,7 +161,7 @@ The output contains a format version, generator settings, and a puzzle list. Eac
     ["D", "A", "", "C", ""],
     ["", "", "", "", "B"]
   ],
-  "target": { "row": 3, "column": 2 },
+  "target": { "row": 3, "column": 2, "value": "B" },
   "answer": "B",
   "solution": [
     ["B", "C", "E", "D", "A"],
@@ -162,19 +171,46 @@ The output contains a format version, generator settings, and a puzzle list. Eac
     ["C", "E", "D", "A", "B"]
   ],
   "difficulty": {
+    "targetCell": "easy",
+    "fullGrid": "easy",
     "score": 4.0,
     "level": "easy",
-    "rulesVersion": 1,
-    "pathScores": [4.0]
+    "rulesVersion": 1
   },
   "bestMethod": [
-    { "rule": "unique-candidate-position", "row": 3, "column": 2, "value": "B", "weight": 2 }
+    {
+      "rule": "unique-candidate-position",
+      "row": 3,
+      "column": 2,
+      "value": "B",
+      "weight": 2,
+      "details": "Row 4 is missing B and E. B cannot be in column 5 because column 5 already contains B, so row 4, column 3 is B."
+    }
   ],
+  "hints": {
+    "targetCell": [
+      {
+        "row": 3,
+        "column": 2,
+        "value": "B",
+        "text": "Row 4 is missing B and E. B cannot be in column 5 because column 5 already contains B, so row 4, column 3 is B."
+      }
+    ],
+    "fullGrid": []
+  },
   "validation": { "solutionCount": 1, "givens": 8 }
 }
 ```
 
 Row and column indexes are zero-based.
+
+The compatibility fields follow the trainer's existing data contract:
+
+- `target.value` equals `answer`.
+- `difficulty.targetCell` equals `difficulty.level`.
+- The 7–12 medium band uses the existing trainer identifier `exam`.
+- `difficulty.fullGrid` preserves the puzzle's separate full-grid difficulty classification.
+- `hints.targetCell[0].text` contains the `details` string from the first inference in `bestMethod`. `hints.fullGrid` contains any existing full-grid hint steps and may be empty.
 
 Puzzle IDs are derived from the canonical puzzle identity and generator version. The actual complete solution is stored; no separate completed-square ID is needed.
 
@@ -205,6 +241,7 @@ The program accepts at least:
 - Requested count or count per difficulty level.
 - Maximum generation attempts.
 - Search-state limit.
+- Search-depth limit.
 
 The same program version, settings, and seed produce the same outputs. Progress and rejection statistics go to standard error; both output files contain valid JSON only.
 
@@ -215,8 +252,10 @@ Automated tests verify:
 - Generated complete grids obey Latin-square rules.
 - Zero-solution and multiple-solution grids are rejected.
 - Every inference rule is sound.
-- Direct target deductions are Easy.
-- A puzzle is not Extreme if a route shorter than four inferences exists.
+- Rule 1 uses weight 1, and Rules 2 and 3 use weight `K`.
+- Every search edge costs its rule weight plus 2.
+- Scores at 6, 7, 12, 13, 18, and 19 receive the expected boundary classifications.
+- Recorded `details` strings describe the evidence and resulting placement using one-based row and column numbers.
 - Stored answers match complete solutions.
 - Identical settings and seed reproduce output.
 - Exact duplicate grid-and-target pairs are absent.
@@ -224,7 +263,7 @@ Automated tests verify:
 - Every catalogue grid is a valid complete Latin square with its first row and first column fixed to A–E.
 - Catalogue order and IDs are deterministic.
 
-Before producing the main bank, manually solve a small sample from every level and adjust weights or boundaries if the classification is obviously wrong.
+Before producing the main bank, manually solve a small sample from every level. Any later change to rule weights or score boundaries requires a new rules version.
 
 ## 11. Out of scope
 
