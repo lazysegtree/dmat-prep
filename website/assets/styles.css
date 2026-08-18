@@ -30,6 +30,7 @@ body {
 
 button, select { font: inherit; }
 button { color: inherit; }
+a { color: inherit; }
 
 .site-header {
   height: 64px;
@@ -49,6 +50,7 @@ button { color: inherit; }
   background: transparent;
   font-weight: 750;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .brand-mark {
@@ -94,11 +96,13 @@ h3 { margin-bottom: 6px; font-size: 1.05rem; }
   background: var(--surface);
   text-align: left;
   cursor: pointer;
+  color: inherit;
+  text-decoration: none;
   transition: border-color 120ms ease, transform 120ms ease;
 }
 
 .mode-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-.mode-card:focus-visible, button:focus-visible, select:focus-visible { outline: 3px solid rgba(23, 107, 75, 0.28); outline-offset: 2px; }
+.brand:focus-visible, .mode-card:focus-visible, button:focus-visible, select:focus-visible { outline: 3px solid rgba(23, 107, 75, 0.28); outline-offset: 2px; }
 .mode-card strong { display: block; margin-bottom: 8px; font-size: 1.25rem; }
 .mode-card span { color: var(--muted); }
 
@@ -117,6 +121,9 @@ select { width: 100%; padding: 11px 12px; border: 1px solid var(--strong-line); 
 .button-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 
 .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-height: 44px;
   padding: 10px 17px;
   border: 1px solid var(--accent);
@@ -125,6 +132,7 @@ select { width: 100%; padding: 11px 12px; border: 1px solid var(--strong-line); 
   color: white;
   font-weight: 750;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .button:hover { background: var(--accent-dark); }

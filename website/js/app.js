@@ -14,6 +14,15 @@ import {
 
 const app = document.querySelector('#app');
 const homeButton = document.querySelector('#home-button');
+const SITE_ROOT = new URL('../', import.meta.url);
+const INITIAL_PAGE = document.body.dataset.page || 'home';
+const ROUTE_PATHS = {
+  home: '',
+  learn: 'latin-squares/learn/',
+  drill: 'latin-squares/speed-drill/',
+  mock: 'latin-squares/mock/',
+  progress: 'latin-squares/progress/',
+};
 const MODE_NAMES = { learn: 'Learn', drill: 'Speed Drill', mock: 'Full dMAT Mock' };
 const DIFFICULTY_NAMES = { easy: 'Easy', exam: 'Exam Standard', hard: 'Hard', extreme: 'Extreme' };
 const QUESTION_TYPE_NAMES = { target: 'Find the ?', full: 'Complete the grid' };
@@ -42,11 +51,23 @@ function confirmLeave() {
   return window.confirm('Leave this session? Your current answers will not be saved.');
 }
 
-function goHome(force = false) {
+function routeUrl(route, parameters = {}) {
+  const url = new URL(ROUTE_PATHS[route], SITE_ROOT);
+  Object.entries(parameters).forEach(([name, value]) => {
+    if (value !== null && value !== undefined && value !== '') url.searchParams.set(name, value);
+  });
+  return url.href;
+}
+
+function navigateTo(route, parameters = {}, force = false) {
   if (!force && !confirmLeave()) return;
   stopInteractiveState();
   activeSession = null;
-  renderHome();
+  window.location.assign(routeUrl(route, parameters));
+}
+
+function goHome(force = false) {
+  navigateTo('home', {}, force);
 }
 
 function renderHome() {
@@ -56,37 +77,45 @@ function renderHome() {
       <h1>Train accuracy.<br />Then train speed.</h1>
       <p class="lede">Find the value of one target cell mentally, as in the dMAT. Intermediate cells stay empty and cannot be filled.</p>
       <div class="home-actions" aria-label="Training modes">
-        <button class="mode-card" type="button" data-route="learn">
+        <a class="mode-card" href="${routeUrl('learn')}">
           <strong>Learn</strong>
           <span>Practise generated target-cell puzzles without a timer, with one deduction hint.</span>
-        </button>
-        <button class="mode-card" type="button" data-route="drill">
+        </a>
+        <a class="mode-card" href="${routeUrl('drill')}">
           <strong>Speed Drill</strong>
           <span>Practise 10 generated target-cell questions at pace.</span>
-        </button>
-        <button class="mode-card" type="button" data-route="mock">
+        </a>
+        <a class="mode-card" href="${routeUrl('mock')}">
           <strong>Full Mock</strong>
           <span>20 exam-style “Find the ?” questions in 25 minutes.</span>
-        </button>
-        <button class="mode-card" type="button" data-route="progress">
+        </a>
+        <a class="mode-card" href="${routeUrl('progress')}">
           <strong>Progress</strong>
           <span>Review recent accuracy, speed, and mock scores.</span>
-        </button>
+        </a>
       </div>
     </section>`;
-
-  app.querySelectorAll('[data-route]').forEach((button) => {
-    button.addEventListener('click', () => {
-      const route = button.dataset.route;
-      if (route === 'progress') renderProgress();
-      else if (route === 'mock') renderMockIntro();
-      else renderSetup(route);
-    });
-  });
   focusMain();
 }
 
-function renderSetup(mode) {
+function difficultyFromUrl() {
+  const url = new URL(window.location.href);
+  const difficulty = url.searchParams.get('difficulty');
+  if (!difficulty) return 'exam';
+  if (Object.hasOwn(DIFFICULTY_NAMES, difficulty)) return difficulty;
+  url.searchParams.delete('difficulty');
+  window.history.replaceState(null, '', url);
+  return 'exam';
+}
+
+function updateDifficultyUrl(difficulty) {
+  const url = new URL(window.location.href);
+  url.searchParams.delete('puzzle');
+  url.searchParams.set('difficulty', difficulty);
+  window.history.replaceState(null, '', url);
+}
+
+function renderSetup(mode, difficulty = 'exam') {
   const isLearn = mode === 'learn';
   app.innerHTML = `
     <section class="panel">
@@ -97,20 +126,24 @@ function renderSetup(mode) {
       <div class="field">
         <label for="difficulty">Training difficulty</label>
         <select id="difficulty">
-          <option value="easy">Easy — frequent forced placements</option>
-          <option value="exam" selected>Exam Standard — provisional training level</option>
-          <option value="hard">Hard — longer deduction chains</option>
-          <option value="extreme">Extreme — deliberate overtraining</option>
+          <option value="easy"${difficulty === 'easy' ? ' selected' : ''}>Easy — frequent forced placements</option>
+          <option value="exam"${difficulty === 'exam' ? ' selected' : ''}>Exam Standard — provisional training level</option>
+          <option value="hard"${difficulty === 'hard' ? ' selected' : ''}>Hard — longer deduction chains</option>
+          <option value="extreme"${difficulty === 'extreme' ? ' selected' : ''}>Extreme — deliberate overtraining</option>
         </select>
         <p class="small muted">“Exam Standard” is a provisional label and is not officially calibrated.</p>
       </div>
       <div class="button-row">
         <button class="button" id="start-session" type="button">Start ${MODE_NAMES[mode]}</button>
-        <button class="button secondary" id="cancel-setup" type="button">Back</button>
+        <a class="button secondary" href="${routeUrl('home')}">Back</a>
       </div>
     </section>`;
-  app.querySelector('#start-session').addEventListener('click', () => startSession(mode, app.querySelector('#difficulty').value));
-  app.querySelector('#cancel-setup').addEventListener('click', renderHome);
+  const difficultySelect = app.querySelector('#difficulty');
+  difficultySelect.addEventListener('change', () => updateDifficultyUrl(difficultySelect.value));
+  app.querySelector('#start-session').addEventListener('click', () => {
+    updateDifficultyUrl(difficultySelect.value);
+    startSession(mode, difficultySelect.value);
+  });
   focusMain();
 }
 
@@ -127,11 +160,10 @@ function renderMockIntro() {
       </ul>
       <div class="button-row">
         <button class="button" id="start-mock" type="button">Start Mock</button>
-        <button class="button secondary" id="cancel-mock" type="button">Back</button>
+        <a class="button secondary" href="${routeUrl('home')}">Back</a>
       </div>
     </section>`;
   app.querySelector('#start-mock').addEventListener('click', () => startSession('mock'));
-  app.querySelector('#cancel-mock').addEventListener('click', renderHome);
   focusMain();
 }
 
@@ -161,9 +193,14 @@ function choosePuzzles(mode, difficulty) {
   return shuffle(mix);
 }
 
-function startSession(mode, difficulty = null) {
+function startSession(mode, difficulty = null, selectedPuzzles = null) {
   stopInteractiveState();
-  const puzzles = choosePuzzles(mode, difficulty);
+  const puzzles = selectedPuzzles || choosePuzzles(mode, difficulty);
+  if (mode === 'learn') {
+    const puzzleUrl = new URL(routeUrl('learn'));
+    puzzleUrl.searchParams.set('puzzle', puzzles[0].id);
+    window.history.replaceState(null, '', puzzleUrl);
+  }
   activeSession = {
     mode,
     difficulty,
@@ -389,10 +426,9 @@ function renderResults(result, reviewIndex = null) {
     </section>`;
   app.querySelectorAll('[data-review]').forEach((button) => button.addEventListener('click', () => showReviewDetail(result, Number(button.dataset.review))));
   app.querySelector('#repeat-mode').addEventListener('click', () => {
-    if (result.mode === 'mock') renderMockIntro();
-    else renderSetup(result.mode);
+    navigateTo(result.mode, result.difficulty ? { difficulty: result.difficulty } : {});
   });
-  app.querySelector('#results-home').addEventListener('click', renderHome);
+  app.querySelector('#results-home').addEventListener('click', () => goHome());
   if (reviewIndex !== null) showReviewDetail(result, reviewIndex);
   focusMain();
 }
@@ -519,10 +555,9 @@ function renderProgress() {
       <div class="button-row">
         <button class="button secondary" id="export-progress" type="button" ${sessions.length ? '' : 'disabled'}>Export progress</button>
         <button class="button danger" id="delete-progress" type="button" ${sessions.length ? '' : 'disabled'}>Delete all progress</button>
-        <button class="button secondary" id="progress-home" type="button">Home</button>
+        <a class="button secondary" href="${routeUrl('home')}">Home</a>
       </div>
     </section>`;
-  app.querySelector('#progress-home').addEventListener('click', renderHome);
   app.querySelector('#export-progress').addEventListener('click', exportProgress);
   app.querySelector('#delete-progress').addEventListener('click', () => {
     if (!window.confirm('Delete all locally stored progress? This cannot be undone.')) return;
@@ -582,21 +617,65 @@ function validatePuzzleBank(data) {
   return data.puzzles;
 }
 
-homeButton.addEventListener('click', () => goHome());
+function renderPuzzleNotFound(puzzleId) {
+  app.innerHTML = `
+    <section class="panel">
+      <p class="eyebrow">Learn</p>
+      <h1>Puzzle not found.</h1>
+      <p class="muted">No published puzzle has the ID <strong>${escapeHtml(puzzleId)}</strong>.</p>
+      <a class="button" href="${routeUrl('learn')}">Choose another puzzle</a>
+    </section>`;
+  focusMain();
+}
+
+function renderInitialPage() {
+  if (INITIAL_PAGE === 'learn') {
+    const puzzleId = new URL(window.location.href).searchParams.get('puzzle');
+    if (puzzleId) {
+      const puzzle = bank.find((candidate) => candidate.id === puzzleId);
+      if (!puzzle) {
+        renderPuzzleNotFound(puzzleId);
+        return;
+      }
+      startSession('learn', puzzleDifficulty(puzzle), [puzzle]);
+      return;
+    }
+    renderSetup('learn', difficultyFromUrl());
+    return;
+  }
+  if (INITIAL_PAGE === 'drill') {
+    renderSetup('drill', difficultyFromUrl());
+    return;
+  }
+  if (INITIAL_PAGE === 'mock') {
+    renderMockIntro();
+    return;
+  }
+  if (INITIAL_PAGE === 'progress') {
+    renderProgress();
+    return;
+  }
+  renderHome();
+}
+
+homeButton.addEventListener('click', (event) => {
+  event.preventDefault();
+  goHome();
+});
 window.addEventListener('beforeunload', (event) => {
   if (!activeSession || activeSession.mode === 'learn') return;
   event.preventDefault();
   event.returnValue = '';
 });
 
-fetch('data/puzzles.json')
+fetch(new URL('../data/latin-squares/puzzles.json', import.meta.url))
   .then((response) => {
     if (!response.ok) throw new Error(`Puzzle data returned ${response.status}`);
     return response.json();
   })
   .then((data) => {
     bank = validatePuzzleBank(data);
-    renderHome();
+    renderInitialPage();
   })
   .catch((error) => {
     console.error(error);
