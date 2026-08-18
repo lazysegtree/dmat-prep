@@ -17,6 +17,7 @@ const homeButton = document.querySelector('#home-button');
 const MODE_NAMES = { learn: 'Learn', drill: 'Speed Drill', mock: 'Full dMAT Mock' };
 const DIFFICULTY_NAMES = { easy: 'Easy', exam: 'Exam Standard', hard: 'Hard', extreme: 'Extreme' };
 const QUESTION_TYPE_NAMES = { target: 'Find the ?', full: 'Complete the grid' };
+const PUZZLE_FORMAT_VERSION = 1;
 
 let bank = [];
 let activeSession = null;
@@ -53,15 +54,15 @@ function renderHome() {
     <section>
       <p class="eyebrow">5 × 5 Latin squares</p>
       <h1>Train accuracy.<br />Then train speed.</h1>
-      <p class="lede">Find one missing value mentally, as in the dMAT, or build your foundations by completing a full Latin square.</p>
+      <p class="lede">Find the value of one target cell mentally, as in the dMAT. Intermediate cells stay empty and cannot be filled.</p>
       <div class="home-actions" aria-label="Training modes">
         <button class="mode-card" type="button" data-route="learn">
           <strong>Learn</strong>
-          <span>Learn exam-style targets or full-grid solving, without a timer.</span>
+          <span>Practise generated target-cell puzzles without a timer, with one deduction hint.</span>
         </button>
         <button class="mode-card" type="button" data-route="drill">
           <strong>Speed Drill</strong>
-          <span>Practise 10 target questions or 10 full grids at pace.</span>
+          <span>Practise 10 generated target-cell questions at pace.</span>
         </button>
         <button class="mode-card" type="button" data-route="mock">
           <strong>Full Mock</strong>
@@ -92,14 +93,7 @@ function renderSetup(mode) {
       <p class="eyebrow">${MODE_NAMES[mode]}</p>
       <h1>${isLearn ? 'Practise a deduction.' : 'Build a steady pace.'}</h1>
       <p class="muted">${isLearn ? 'Take as long as you need. A hint is available if you get stuck.' : 'Complete 10 questions with no feedback until the end.'}</p>
-      <div class="field">
-        <label for="question-type">Question type</label>
-        <select id="question-type">
-          <option value="target" selected>Find the ? — exam-style mental solving</option>
-          <option value="full">Complete the grid — foundational practice</option>
-        </select>
-        <p class="small muted" id="question-type-help">Only the ? cell can be answered. Work out intermediate cells mentally.${isLearn ? '' : ' The 10-question target is 12:30.'}</p>
-      </div>
+      <p class="notice">Each generated puzzle asks for one <strong>?</strong> cell. Work out any intermediate deductions mentally.${isLearn ? '' : ' The 10-question target is 12:30.'}</p>
       <div class="field">
         <label for="difficulty">Training difficulty</label>
         <select id="difficulty">
@@ -115,13 +109,7 @@ function renderSetup(mode) {
         <button class="button secondary" id="cancel-setup" type="button">Back</button>
       </div>
     </section>`;
-  const questionType = app.querySelector('#question-type');
-  questionType.addEventListener('change', () => {
-    app.querySelector('#question-type-help').textContent = questionType.value === 'target'
-      ? `Only the ? cell can be answered. Work out intermediate cells mentally.${isLearn ? '' : ' The 10-question target is 12:30.'}`
-      : `Complete every empty cell. This builds foundations but is not the dMAT question format.${isLearn ? '' : ' No examination-time target applies.'}`;
-  });
-  app.querySelector('#start-session').addEventListener('click', () => startSession(mode, app.querySelector('#difficulty').value, questionType.value));
+  app.querySelector('#start-session').addEventListener('click', () => startSession(mode, app.querySelector('#difficulty').value));
   app.querySelector('#cancel-setup').addEventListener('click', renderHome);
   focusMain();
 }
@@ -156,31 +144,30 @@ function shuffle(values) {
   return copy;
 }
 
-function puzzleDifficulty(puzzle, questionType) {
-  return questionType === 'target' ? puzzle.difficulty.targetCell : puzzle.difficulty.fullGrid;
+function puzzleDifficulty(puzzle) {
+  return puzzle.difficulty.targetCell;
 }
 
-function choosePuzzles(mode, difficulty, questionType) {
+function choosePuzzles(mode, difficulty) {
   if (mode !== 'mock') {
     const count = mode === 'learn' ? 1 : 10;
-    return shuffle(bank.filter((puzzle) => puzzleDifficulty(puzzle, questionType) === difficulty)).slice(0, count);
+    return shuffle(bank.filter((puzzle) => puzzleDifficulty(puzzle) === difficulty)).slice(0, count);
   }
   const mix = [
-    ...shuffle(bank.filter((puzzle) => puzzleDifficulty(puzzle, 'target') === 'easy')).slice(0, 3),
-    ...shuffle(bank.filter((puzzle) => puzzleDifficulty(puzzle, 'target') === 'exam')).slice(0, 11),
-    ...shuffle(bank.filter((puzzle) => puzzleDifficulty(puzzle, 'target') === 'hard')).slice(0, 6),
+    ...shuffle(bank.filter((puzzle) => puzzleDifficulty(puzzle) === 'easy')).slice(0, 3),
+    ...shuffle(bank.filter((puzzle) => puzzleDifficulty(puzzle) === 'exam')).slice(0, 11),
+    ...shuffle(bank.filter((puzzle) => puzzleDifficulty(puzzle) === 'hard')).slice(0, 6),
   ];
   return shuffle(mix);
 }
 
-function startSession(mode, difficulty = null, selectedQuestionType = 'target') {
+function startSession(mode, difficulty = null) {
   stopInteractiveState();
-  const questionType = mode === 'mock' ? 'target' : selectedQuestionType;
-  const puzzles = choosePuzzles(mode, difficulty, questionType);
+  const puzzles = choosePuzzles(mode, difficulty);
   activeSession = {
     mode,
     difficulty,
-    questionType,
+    questionType: 'target',
     puzzles,
     answers: puzzles.map(emptyAnswer),
     questionTimes: puzzles.map(() => 0),
@@ -242,9 +229,7 @@ function renderPlay() {
           </div>
         </div>
         <aside class="side-panel">
-          <p class="muted">${session.questionType === 'target'
-            ? 'Answer only the ? cell. Keep intermediate deductions in your head.'
-            : 'Complete every empty cell. Select a cell, then enter A–E.'}</p>
+          <p class="muted">Answer only the ? cell. Keep intermediate deductions in your head.</p>
           ${session.puzzles.length > 1 ? `
             <h3>Questions</h3>
             <div class="navigator" aria-label="Question navigator">
@@ -263,7 +248,7 @@ function renderPlay() {
                 <button class="button secondary" id="previous-question" type="button" ${session.current === 0 ? 'disabled' : ''}>Previous</button>
                 <button class="button secondary" id="next-question" type="button" ${session.current === session.puzzles.length - 1 ? 'disabled' : ''}>Next</button>
               </div>` : ''}
-            <button class="button" id="submit-session" type="button">${session.mode === 'learn' ? (session.questionType === 'target' ? 'Check answer' : 'Check puzzle') : `Submit ${MODE_NAMES[session.mode]}`}</button>
+            <button class="button" id="submit-session" type="button">${session.mode === 'learn' ? 'Check answer' : `Submit ${MODE_NAMES[session.mode]}`}</button>
             <button class="button secondary" id="leave-session" type="button">Leave session</button>
           </div>
         </aside>
@@ -313,8 +298,7 @@ function changeQuestion(index) {
 
 function showHint() {
   const puzzle = activeSession.puzzles[0];
-  const hintKey = activeSession.questionType === 'target' ? 'targetCell' : 'fullGrid';
-  const hint = puzzle.hints?.[hintKey]?.[0];
+  const hint = puzzle.hints?.targetCell?.[0];
   if (!hint) return;
   activeSession.hintUsed = true;
   app.querySelector('#hint-area').innerHTML = `<div class="hint-box"><strong>Look at row ${hint.row + 1}, column ${hint.column + 1}.</strong><br />${hint.text}</div>`;
@@ -369,13 +353,10 @@ function resultMetrics(result) {
     <div class="metric"><span>Unanswered</span><strong>${result.unanswered}</strong></div>
     <div class="metric"><span>Total time</span><strong>${formatTime(result.totalTime)}</strong></div>`;
   if (result.mode === 'learn') return common;
-  const targetMetrics = result.questionType === 'target'
-    ? `<div class="metric"><span>Over 75 seconds</span><strong>${result.questionTimes.filter((time) => time > TARGET_SECONDS).length}</strong></div>`
-    : '';
   return `${common}
     <div class="metric"><span>Median / question</span><strong>${formatTime(median(result.questionTimes))}</strong></div>
-    ${targetMetrics}
-    ${result.mode === 'mock' ? `<div class="metric"><span>Time remaining</span><strong>${formatTime(result.timeRemaining)}</strong></div>` : (result.questionType === 'target' ? '<div class="metric"><span>Target total</span><strong>12:30</strong></div>' : '')}`;
+    <div class="metric"><span>Over 75 seconds</span><strong>${result.questionTimes.filter((time) => time > TARGET_SECONDS).length}</strong></div>
+    ${result.mode === 'mock' ? `<div class="metric"><span>Time remaining</span><strong>${formatTime(result.timeRemaining)}</strong></div>` : '<div class="metric"><span>Target total</span><strong>12:30</strong></div>'}`;
 }
 
 function renderResults(result, reviewIndex = null) {
@@ -442,16 +423,69 @@ function readonlyGrid(values, givens, statuses = null, label = 'Latin square', t
   </div>`;
 }
 
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (character) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  })[character]);
+}
+
+function cellName(cell) {
+  return `R${cell.row + 1}C${cell.column + 1}`;
+}
+
+function reviewMethodMarkup(puzzle) {
+  if (!puzzle?.bestMethod?.length) {
+    return `
+      <section class="inference-path" aria-labelledby="review-method-title">
+        <h3 id="review-method-title">Efficient solution path</h3>
+        <p class="muted">The deduction path is unavailable for this puzzle.</p>
+      </section>`;
+  }
+  const method = puzzle.bestMethod;
+  const level = DIFFICULTY_NAMES[puzzle.difficulty.targetCell] || puzzle.difficulty.targetCell;
+  return `
+    <section class="inference-path" aria-labelledby="review-method-title">
+      <div class="inference-path-header">
+        <div>
+          <h3 id="review-method-title">Efficient solution path</h3>
+          <p class="small muted">The lowest-effort chain found using the trainer’s supported deduction rules.</p>
+        </div>
+        <p class="inference-summary"><strong>${method.length} deduction${method.length === 1 ? '' : 's'}</strong><span>${escapeHtml(level)} · score ${puzzle.difficulty.score}</span></p>
+      </div>
+      <ol class="inference-steps">
+        ${method.map((inference, step) => {
+          const placement = inference.placement;
+          const isTarget = placement.row === puzzle.target.row && placement.column === puzzle.target.column;
+          return `
+            <li class="inference-step${isTarget ? ' target' : ''}">
+              <div class="inference-step-heading">
+                <span class="inference-step-number" aria-hidden="true">${step + 1}</span>
+                <strong>${cellName(placement)} = ${escapeHtml(placement.value)}</strong>
+                ${isTarget ? '<span class="target-badge">Target</span>' : ''}
+              </div>
+              <p>${escapeHtml(inference.details)}</p>
+            </li>`;
+        }).join('')}
+      </ol>
+    </section>`;
+}
+
 function showReviewDetail(result, index) {
   const detail = app.querySelector('#review-detail');
   const questionType = result.questionType || 'full';
   const target = questionType === 'target' ? result.targets[index] : null;
+  const puzzle = target ? bank.find((candidate) => candidate.id === result.puzzleIds[index]) : null;
   const selectedAnswer = target ? result.answers[index][target.row][target.column] : null;
   detail.className = 'review-detail';
   detail.innerHTML = `
     <h2>Question ${index + 1}</h2>
     <p class="small muted">${result.puzzleIds[index]} · ${formatTime(result.questionTimes[index])}</p>
     ${target ? `<p><strong>Your answer:</strong> ${selectedAnswer || 'Unanswered'} &nbsp; <strong>Correct answer:</strong> ${target.value}</p>` : ''}
+    ${target ? reviewMethodMarkup(puzzle) : ''}
     <div class="review-grids">
       <div class="review-grid"><h3>Your answer</h3>${readonlyGrid(result.answers[index], result.startingGrids[index], cellStatusGrid(result, index), 'Your answer', target, true)}</div>
       <div class="review-grid"><h3>Complete solution</h3>${readonlyGrid(result.solutions[index], result.startingGrids[index], null, 'Complete solution', target)}</div>
@@ -508,6 +542,46 @@ function exportProgress() {
   URL.revokeObjectURL(url);
 }
 
+function validatePuzzleBank(data) {
+  if (data?.formatVersion !== PUZZLE_FORMAT_VERSION) {
+    throw new Error(`Unsupported puzzle format version: ${data?.formatVersion ?? 'missing'}`);
+  }
+  if (!Array.isArray(data.puzzles) || data.puzzles.length === 0) {
+    throw new Error('The generated puzzle bank is empty');
+  }
+  const levels = new Map(Object.keys(DIFFICULTY_NAMES).map((level) => [level, 0]));
+  for (const puzzle of data.puzzles) {
+    const level = puzzle?.difficulty?.targetCell;
+    const method = puzzle?.bestMethod;
+    const finalPlacement = Array.isArray(method) && method.length ? method[method.length - 1]?.placement : null;
+    const methodScore = Array.isArray(method)
+      ? method.reduce((sum, inference) => sum + (Number.isInteger(inference?.weight) ? inference.weight + 2 : Number.NaN), 0)
+      : Number.NaN;
+    const methodValid = Array.isArray(method)
+      && method.length > 0
+      && method.every((inference) => Number.isInteger(inference?.placement?.row)
+        && Number.isInteger(inference?.placement?.column)
+        && SYMBOLS.includes(inference?.placement?.value)
+        && typeof inference?.details === 'string'
+        && inference.details.length > 0)
+      && finalPlacement?.row === puzzle?.target?.row
+      && finalPlacement?.column === puzzle?.target?.column
+      && finalPlacement?.value === puzzle?.target?.value
+      && methodScore === puzzle?.difficulty?.score;
+    if (!levels.has(level) || !puzzle?.target || !methodValid || !Array.isArray(puzzle?.hints?.targetCell) || puzzle.hints.targetCell.length === 0) {
+      throw new Error(`Puzzle ${puzzle?.id ?? '(missing ID)'} does not match the target-cell puzzle contract`);
+    }
+    levels.set(level, levels.get(level) + 1);
+  }
+  for (const level of levels.keys()) {
+    if (levels.get(level) < 10) throw new Error(`Puzzle bank needs at least 10 ${level} puzzles`);
+  }
+  if (levels.get('easy') < 3 || levels.get('exam') < 11 || levels.get('hard') < 6) {
+    throw new Error('Puzzle bank cannot supply the configured 20-question mock mix');
+  }
+  return data.puzzles;
+}
+
 homeButton.addEventListener('click', () => goHome());
 window.addEventListener('beforeunload', (event) => {
   if (!activeSession || activeSession.mode === 'learn') return;
@@ -521,7 +595,7 @@ fetch('data/puzzles.json')
     return response.json();
   })
   .then((data) => {
-    bank = data.puzzles;
+    bank = validatePuzzleBank(data);
     renderHome();
   })
   .catch((error) => {

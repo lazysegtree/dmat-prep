@@ -213,6 +213,21 @@ select { width: 100%; padding: 11px 12px; border: 1px solid var(--strong-line); 
 .review-grids { display: grid; grid-template-columns: repeat(2, minmax(0, 310px)); gap: 24px; }
 .review-grid h3 { margin-bottom: 10px; }
 .review-grid .cell { cursor: default; }
+.inference-path { max-width: 800px; margin: 26px 0 32px; padding: 20px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.inference-path-header { display: flex; justify-content: space-between; gap: 24px; align-items: flex-start; margin-bottom: 16px; }
+.inference-path-header h3 { margin-bottom: 3px; }
+.inference-path-header p { margin-bottom: 0; }
+.inference-summary { flex: 0 0 auto; text-align: right; }
+.inference-summary strong, .inference-summary span { display: block; }
+.inference-summary span { color: var(--muted); font-size: 0.82rem; }
+.inference-steps { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; }
+.inference-step { padding: 13px 15px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); }
+.inference-step.target { border-color: #8bb8a4; background: var(--accent-soft); }
+.inference-step-heading { display: flex; gap: 9px; align-items: center; }
+.inference-step-number { display: grid; width: 25px; height: 25px; flex: 0 0 25px; place-items: center; border-radius: 50%; background: #dfe4df; font-size: 0.78rem; font-weight: 800; }
+.inference-step.target .inference-step-number { background: var(--accent); color: white; }
+.target-badge { padding: 2px 7px; border-radius: 999px; background: var(--accent); color: white; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; }
+.inference-step p { margin: 7px 0 0 34px; color: var(--muted); font-size: 0.9rem; }
 
 .session-list { display: grid; gap: 10px; margin: 18px 0 32px; }
 .session-row { display: grid; grid-template-columns: 1fr auto auto; gap: 18px; padding: 15px 17px; border: 1px solid var(--line); border-radius: 9px; background: white; }
@@ -231,6 +246,8 @@ select { width: 100%; padding: 11px 12px; border: 1px solid var(--strong-line); 
   .results-summary, .metrics { grid-template-columns: repeat(2, 1fr); }
   .review-row { grid-template-columns: 58px 1fr; }
   .review-row .button { grid-column: 1 / -1; }
+  .inference-path-header { display: block; }
+  .inference-summary { margin-top: 10px; text-align: left; }
 }
 
 @media (max-width: 430px) {

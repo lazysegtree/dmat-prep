@@ -6,7 +6,7 @@ export function emptyAnswer(puzzle) {
   return puzzle.grid.map((row) => [...row]);
 }
 
-export function editableComplete(puzzle, answer, questionType = 'full') {
+export function editableComplete(puzzle, answer, questionType = 'target') {
   if (questionType === 'target') {
     return Boolean(answer[puzzle.target.row][puzzle.target.column]);
   }
@@ -15,7 +15,7 @@ export function editableComplete(puzzle, answer, questionType = 'full') {
   );
 }
 
-export function answerStatus(puzzle, answer, questionType = 'full') {
+export function answerStatus(puzzle, answer, questionType = 'target') {
   if (!editableComplete(puzzle, answer, questionType)) return 'unanswered';
   if (questionType === 'target') {
     return answer[puzzle.target.row][puzzle.target.column] === puzzle.target.value

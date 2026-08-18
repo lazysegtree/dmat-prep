@@ -1,7 +1,7 @@
 import { SYMBOLS } from './session.js';
 
 export class PuzzleUI {
-  constructor(container, { puzzle, values, onChange, questionType = 'full', readonly = false, statuses = null }) {
+  constructor(container, { puzzle, values, onChange, questionType = 'target', readonly = false, statuses = null }) {
     this.container = container;
     this.puzzle = puzzle;
     this.values = values;
