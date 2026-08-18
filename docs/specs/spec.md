@@ -1,6 +1,6 @@
 # dMAT Latin Squares Trainer — Product and Interface Specification
 
-Status: Draft v3
+Status: Draft v4
 
 Target platform: Static GitHub Pages website
 
@@ -117,7 +117,7 @@ Difficulty is target-specific. The application does not calculate or display ful
 
 ## 5. Generated puzzle bank
 
-Version one uses the checked-in, offline-generated `data/puzzles.json` bank. The browser never generates puzzles.
+Version one uses the checked-in, offline-generated `website/data/latin-squares/puzzles.json` bank. The browser never generates puzzles.
 
 The top-level document contains:
 
@@ -229,6 +229,22 @@ Home presents exactly four primary actions:
 - `Delete all progress` button with confirmation.
 - `Home` button.
 
+### 7.8 URLs and direct navigation
+
+Browser-delivered files live under `website/`. The repository root is served or published directly, so public URLs include the `website` directory name.
+
+- `/website/` or `/website/index.html`: trainer Home.
+- `/website/latin-squares/learn/`: Learn setup.
+- `/website/latin-squares/learn/?difficulty=hard`: Learn setup with the selected difficulty.
+- `/website/latin-squares/learn/?puzzle=DMAT-G1-296A8A48AD3F`: immediately opens that exact untimed puzzle.
+- `/website/latin-squares/speed-drill/?difficulty=hard`: Speed Drill setup with the selected difficulty.
+- `/website/latin-squares/mock/`: Full Mock introduction.
+- `/website/latin-squares/progress/`: locally stored Latin-square progress.
+
+The supported `difficulty` values are `easy`, `exam`, `hard`, and `extreme`. An invalid difficulty is removed and falls back to `exam`. An unknown puzzle ID produces a visible error and never silently substitutes another puzzle. When both `puzzle` and `difficulty` are present, the exact puzzle takes precedence. Opening a Speed Drill or Full Mock URL never starts its timer; the user must explicitly start the session.
+
+Starting a random Learn puzzle replaces the setup URL with its exact `puzzle` URL so it can be refreshed or shared. Random Drill and Mock selections are not encoded in the URL, and results remain transient session screens rather than shareable routes.
+
 ## 8. Interface principles
 
 - Starting a mock requires no configuration.
@@ -242,15 +258,21 @@ Home presents exactly four primary actions:
 
 ## 9. Technical shape
 
-The deployed application remains static and compatible with GitHub Pages:
+The deployed application remains static and compatible with GitHub Pages. Everything delivered to the browser is contained under `website/`:
 
 ```text
-index.html
-styles.css
-js/app.js
-js/puzzle-ui.js
-js/session.js
-data/puzzles.json
+website/
+  index.html
+  assets/styles.css
+  js/app.js
+  js/puzzle-ui.js
+  js/session.js
+  data/latin-squares/puzzles.json
+  latin-squares/
+    learn/index.html
+    speed-drill/index.html
+    mock/index.html
+    progress/index.html
 ```
 
 The development-only generator is a Go command and package:
@@ -262,11 +284,21 @@ data/reduced-latin-squares.json
 docs/specs/puzzle-generation-spec.md
 ```
 
-- `app.js` loads and validates the generated bank, then controls navigation and application state.
+- `website/` is the browser-delivered subtree and remains visible in public URLs.
+- Each clean route is backed by a thin directory `index.html` and loads the same shared CSS and JavaScript.
+- `app.js` loads and validates the generated bank, reads the entry page and query parameters, then controls navigation and application state.
 - `puzzle-ui.js` renders the target-cell grid and handles input.
 - `session.js` controls timers, target scoring, and progress storage.
-- `puzzles.json` contains the validated generated puzzle bank and solutions.
+- `website/data/latin-squares/puzzles.json` contains the validated generated puzzle bank and solutions.
 - `cmd/puzzle-generator` generates or verifies the two JSON data files; it is not a runtime dependency.
+
+Local development serves the repository root directly:
+
+```text
+python3 -m http.server 4173
+```
+
+No build step or custom deployment process is required. A static host can publish the repository root and serve the application from `/website/`.
 
 No frontend framework, package manager, browser build process, database, or server is required for deployment.
 
