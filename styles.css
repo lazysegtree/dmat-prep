@@ -155,7 +155,7 @@ select { width: 100%; padding: 11px 12px; border: 1px solid var(--strong-line); 
 }
 
 .grid-wrap { width: min(100%, 500px); }
-.latin-grid { display: grid; grid-template-columns: repeat(5, 1fr); aspect-ratio: 1; border: 2px solid var(--strong-line); background: var(--strong-line); gap: 1px; }
+.latin-grid { display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(5, minmax(0, 1fr)); aspect-ratio: 1; border: 2px solid var(--strong-line); background: var(--strong-line); gap: 1px; }
 .cell {
   display: grid;
   min-width: 0;
