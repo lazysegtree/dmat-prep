@@ -4,10 +4,10 @@ const app = document.querySelector('#app');
 const homeButton = document.querySelector('#equation-home-button');
 const SITE_ROOT = new URL('../', import.meta.url);
 const INITIAL_PAGE = document.body.dataset.equationPage || 'home';
-const FORMAT_VERSION = 2;
+const FORMAT_VERSION = 3;
 const STORAGE_KEY = 'dmat-equations-progress-v1';
 const MODE_NAMES = { learn: 'Learn', drill: 'Speed Drill', mock: 'Full Mock' };
-const DIFFICULTY_NAMES = { low: 'Low', medium: 'Medium', high: 'High' };
+const DIFFICULTY_NAMES = { low: 'Low', medium: 'Medium', high: 'High', extreme: 'Extreme' };
 const ROUTES = {
   home: 'mathematical-equations/',
   learn: 'mathematical-equations/learn/',
@@ -91,6 +91,7 @@ function renderSetup(mode, difficulty) {
           <option value="low"${difficulty === 'low' ? ' selected' : ''}>Low — short direct or one-hop reasoning</option>
           <option value="medium"${difficulty === 'medium' ? ' selected' : ''}>Medium — linked substitution or elimination</option>
           <option value="high"${difficulty === 'high' ? ' selected' : ''}>High — multi-step cancellation and memory load</option>
+          <option value="extreme"${difficulty === 'extreme' ? ' selected' : ''}>Extreme — four-letter, multi-stage mental work</option>
         </select>
         <p class="small muted">The labels come from a transparent mental-work score applied after generation; they are not official psychometric calibration.</p>
       </div>
@@ -350,7 +351,7 @@ function showReview(result, index) {
     <p class="small muted">${question.id} · ${DIFFICULTY_NAMES[question.difficulty.level]} · score ${question.difficulty.score} · ${formatTime(result.questionTimes[index])}</p>
     <div class="equation-review-layout">
       <div class="equation-card compact"><h3>System</h3><div class="equation-list">${question.equations.map((equation) => `<p>${escapeHtml(equation.display)}</p>`).join('')}</div><div class="answer-comparison">${question.variables.map((variable) => `<p><strong>${variable}</strong><span>Your answer: ${escapeHtml(answer[variable] || '—')}</span><span>Correct: ${question.answer[variable]}</span></p>`).join('')}</div></div>
-      <div class="difficulty-card"><h3>Why this is ${DIFFICULTY_NAMES[question.difficulty.level]}</h3><p class="small muted">The score measures the recorded mental path, not just the largest number.</p><dl><div><dt>Variables</dt><dd>${factors.variables}</dd></div><div><dt>Transformations</dt><dd>${factors.transformations}</dd></div><div><dt>Substitutions</dt><dd>${factors.substitutions}</dd></div><div><dt>Eliminations</dt><dd>${factors.eliminations}</dd></div><div><dt>Working memory</dt><dd>${factors.workingMemory}</dd></div><div><dt>Signed terms</dt><dd>${factors.signedTerms}</dd></div><div><dt>Arithmetic load</dt><dd>${factors.arithmeticLoad}</dd></div></dl></div>
+      <div class="difficulty-card"><h3>Why this is ${DIFFICULTY_NAMES[question.difficulty.level]}</h3><p class="small muted">The score measures the recorded mental path, not just the largest number.</p>${question.difficulty.level === 'extreme' ? '<p class="small muted">Extreme also requires four letters, at least four transformations, two coupled solution branches, peak working memory of three, a multi-stage substitution or elimination path, and substantial signed-term or arithmetic load.</p>' : ''}<dl><div><dt>Variables</dt><dd>${factors.variables}</dd></div><div><dt>Transformations</dt><dd>${factors.transformations}</dd></div><div><dt>Substitutions</dt><dd>${factors.substitutions}</dd></div><div><dt>Eliminations</dt><dd>${factors.eliminations}</dd></div><div><dt>Working memory</dt><dd>${factors.workingMemory}</dd></div><div><dt>Signed terms</dt><dd>${factors.signedTerms}</dd></div><div><dt>Coupled branches</dt><dd>${factors.coupledBranches}</dd></div><div><dt>Arithmetic load</dt><dd>${factors.arithmeticLoad}</dd></div></dl></div>
     </div>
     <section class="inference-path"><div class="inference-path-header"><div><h3>Worked solution</h3><p class="small muted">The mental solution path recorded by the generator.</p></div><p class="inference-summary"><strong>${question.solutionSteps.length} steps</strong><span>mental-work score ${question.difficulty.score}</span></p></div><ol class="inference-steps">${question.solutionSteps.map((step, stepIndex) => `<li class="inference-step"><div class="inference-step-heading"><span class="inference-step-number" aria-hidden="true">${stepIndex + 1}</span><strong>${escapeHtml(step.text)}</strong></div></li>`).join('')}</ol></section>`;
   detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -404,12 +405,20 @@ function renderProgress() {
 
 function validateBank(data) {
   if (data?.formatVersion !== FORMAT_VERSION || !Array.isArray(data.questions)) throw new Error('Unsupported or empty equation bank');
-  const counts = { low: 0, medium: 0, high: 0 };
+  const counts = { low: 0, medium: 0, high: 0, extreme: 0 };
   const ids = new Set();
   for (const question of data.questions) {
     const factors = question?.difficulty?.factors;
     const score = factors ? factors.variables - 1 + factors.transformations + factors.substitutions + factors.eliminations + factors.workingMemory + factors.signedTerms + factors.arithmeticLoad : Number.NaN;
-    const expectedLevel = score <= 9 ? 'low' : score <= 17 ? 'medium' : 'high';
+    const fourVariableCycle = hasFourVariableCycle(question);
+    const extremeEligible = factors?.variables === 4
+      && fourVariableCycle
+      && factors.transformations >= 4
+      && factors.workingMemory >= 3
+      && factors.coupledBranches >= 2
+      && factors.substitutions + factors.eliminations >= 3
+      && (factors.signedTerms >= 4 || factors.arithmeticLoad >= 9);
+    const expectedLevel = score <= 9 ? 'low' : score <= 17 ? 'medium' : score >= 26 && extremeEligible ? 'extreme' : 'high';
     const valid = typeof question?.id === 'string' && !ids.has(question.id)
       && typeof question.family === 'string' && question.family.length > 0
       && Array.isArray(question.variables) && question.variables.length >= 2 && question.variables.length <= 4
@@ -420,14 +429,30 @@ function validateBank(data) {
       && Array.isArray(question.solutionSteps) && question.solutionSteps.length > 0
       && question.solutionSteps.every((step) => ['isolate', 'substitute', 'eliminate', 'simplify'].includes(step.kind)
         && Number.isInteger(step.memory) && step.memory >= 1 && step.memory <= question.variables.length
-        && Number.isInteger(step.signedTerms) && step.signedTerms >= 0)
+        && Number.isInteger(step.signedTerms) && step.signedTerms >= 0
+        && Number.isInteger(step.coupledBranches) && step.coupledBranches >= 0 && step.coupledBranches <= 2)
       && typeof question.hint === 'string'
       && question.difficulty.score === score && question.difficulty.level === expectedLevel;
     if (!valid || !Object.hasOwn(counts, question.difficulty.level)) throw new Error(`Equation question ${question?.id || '(missing ID)'} violates the bank contract`);
     ids.add(question.id); counts[question.difficulty.level] += 1;
   }
-  if (counts.low < 10 || counts.medium < 10 || counts.high < 10) throw new Error('Equation bank needs at least 10 questions at every difficulty');
+  if (counts.low < 10 || counts.medium < 10 || counts.high < 10 || counts.extreme < 10) throw new Error('Equation bank needs at least 10 questions at every difficulty');
   return data.questions;
+}
+
+function hasFourVariableCycle(question) {
+  if (!Array.isArray(question?.variables) || question.variables.length !== 4 || !Array.isArray(question.equations) || question.equations.length !== 4) return false;
+  const degrees = Object.fromEntries(question.variables.map((variable) => [variable, 0]));
+  let scaledTerm = false;
+  for (const equation of question.equations) {
+    const terms = Object.entries(equation?.coefficients || {}).filter(([variable, coefficient]) => Object.hasOwn(degrees, variable) && Number.isInteger(coefficient) && coefficient !== 0);
+    if (terms.length !== 2) return false;
+    for (const [variable, coefficient] of terms) {
+      degrees[variable] += 1;
+      if (Math.abs(coefficient) > 1) scaledTerm = true;
+    }
+  }
+  return scaledTerm && question.variables.every((variable) => degrees[variable] === 2);
 }
 
 function renderNotFound(id) {

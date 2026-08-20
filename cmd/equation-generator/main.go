@@ -23,6 +23,7 @@ func run(arguments []string) error {
 	low := flags.Int("count-low", 20, "number of low questions")
 	medium := flags.Int("count-medium", 20, "number of medium questions")
 	high := flags.Int("count-high", 20, "number of high questions")
+	extreme := flags.Int("count-extreme", 20, "number of extreme questions")
 	if err := flags.Parse(arguments); err != nil {
 		return err
 	}
@@ -37,7 +38,7 @@ func run(arguments []string) error {
 		fmt.Fprintf(os.Stderr, "verified %d mathematical-equation questions\n", count)
 		return nil
 	}
-	bank, err := equationgen.Generate(equationgen.Settings{Seed: *seed, Low: *low, Medium: *medium, High: *high})
+	bank, err := equationgen.Generate(equationgen.Settings{Seed: *seed, Low: *low, Medium: *medium, High: *high, Extreme: *extreme})
 	if err != nil {
 		return err
 	}

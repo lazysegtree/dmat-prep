@@ -7,7 +7,7 @@ import (
 )
 
 func TestGenerateIsDeterministicAndVerified(t *testing.T) {
-	settings := Settings{Seed: 20260819, Low: 12, Medium: 12, High: 12}
+	settings := Settings{Seed: 20260819, Low: 12, Medium: 12, High: 12, Extreme: 12}
 	first, err := Generate(settings)
 	if err != nil {
 		t.Fatal(err)
@@ -35,7 +35,7 @@ func TestOperationCostRespectsMentalAnchors(t *testing.T) {
 }
 
 func TestGeneratedSystemsHaveOneSolutionInRange(t *testing.T) {
-	bank, err := Generate(Settings{Seed: 7, Low: 5, Medium: 5, High: 5})
+	bank, err := Generate(Settings{Seed: 7, Low: 5, Medium: 5, High: 5, Extreme: 5})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -47,7 +47,7 @@ func TestGeneratedSystemsHaveOneSolutionInRange(t *testing.T) {
 }
 
 func TestPublishedGrammarIsDiverseAndDoesNotContainMirroredTemplates(t *testing.T) {
-	bank, err := Generate(Settings{Seed: 20260819, Low: 20, Medium: 20, High: 20})
+	bank, err := Generate(Settings{Seed: 20260819, Low: 20, Medium: 20, High: 20, Extreme: 20})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -65,6 +65,73 @@ func TestPublishedGrammarIsDiverseAndDoesNotContainMirroredTemplates(t *testing.
 	}
 	if len(families) < 8 {
 		t.Fatalf("published bank uses only %d grammar families", len(families))
+	}
+}
+
+func TestExtremeRequiresScoreAndStructuralGate(t *testing.T) {
+	cycle := &Question{
+		Variables: []string{"A", "B", "C", "D"},
+		Equations: []Equation{
+			{Coefficients: map[string]int{"A": 1, "B": 1}},
+			{Coefficients: map[string]int{"B": 1, "C": 1}},
+			{Coefficients: map[string]int{"C": 1, "D": 1}},
+			{Coefficients: map[string]int{"D": 2, "A": 1}},
+		},
+	}
+	eligible := DifficultyFactors{
+		Variables: 4, Transformations: 4, Substitutions: 3,
+		WorkingMemory: 3, SignedTerms: 4, CoupledBranches: 2, ArithmeticLoad: 9,
+	}
+	if score := difficultyScore(eligible); score < ExtremeMinimumScore || difficultyLevel(cycle, score, eligible) != "extreme" {
+		t.Fatalf("eligible factors were not Extreme: score=%d factors=%+v", score, eligible)
+	}
+
+	shallow := DifficultyFactors{
+		Variables: 4, Transformations: 2, Substitutions: 1,
+		WorkingMemory: 2, SignedTerms: 3, ArithmeticLoad: 15,
+	}
+	if score := difficultyScore(shallow); score < ExtremeMinimumScore || difficultyLevel(cycle, score, shallow) != "high" {
+		t.Fatalf("score-only question should remain High: score=%d factors=%+v", score, shallow)
+	}
+
+	belowFloor := eligible
+	belowFloor.ArithmeticLoad = 8
+	if score := difficultyScore(belowFloor); score >= ExtremeMinimumScore || difficultyLevel(cycle, score, belowFloor) != "high" {
+		t.Fatalf("structurally eligible question below the score floor should remain High: score=%d factors=%+v", score, belowFloor)
+	}
+
+	uncoupled := eligible
+	uncoupled.CoupledBranches = 0
+	if score := difficultyScore(uncoupled); score < ExtremeMinimumScore || difficultyLevel(cycle, score, uncoupled) != "high" {
+		t.Fatalf("uncoupled question should remain High: score=%d factors=%+v", score, uncoupled)
+	}
+
+	path := &Question{
+		Variables: []string{"A", "B", "C", "D"},
+		Equations: []Equation{
+			{Coefficients: map[string]int{"A": 1, "B": 1}},
+			{Coefficients: map[string]int{"B": 1, "C": 1}},
+			{Coefficients: map[string]int{"C": 1, "D": 1}},
+			{Coefficients: map[string]int{"A": 2, "B": 1}},
+		},
+	}
+	if score := difficultyScore(eligible); difficultyLevel(path, score, eligible) != "high" {
+		t.Fatalf("non-cyclic dependency graph should remain High: score=%d", score)
+	}
+}
+
+func TestGeneratedExtremeQuestionsMeetStructuralGate(t *testing.T) {
+	bank, err := Generate(Settings{Seed: 20260819, Extreme: 20})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(bank.Questions) != 20 {
+		t.Fatalf("generated %d Extreme questions, want 20", len(bank.Questions))
+	}
+	for _, question := range bank.Questions {
+		if question.Difficulty.Level != "extreme" || question.Difficulty.Score < ExtremeMinimumScore || !extremeEligible(&question, question.Difficulty.Factors) {
+			t.Fatalf("%s violates the Extreme contract: %+v", question.ID, question.Difficulty)
+		}
 	}
 }
 

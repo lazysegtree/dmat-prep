@@ -12,15 +12,18 @@ import (
 )
 
 const (
-	FormatVersion    = 2
-	GeneratorVersion = "2.0.0"
+	FormatVersion         = 3
+	GeneratorVersion      = "3.0.0"
+	ExtremeMinimumScore   = 26
+	ExtremeMinimumActions = 3
 )
 
 type Settings struct {
-	Seed   uint64 `json:"seed"`
-	Low    int    `json:"low"`
-	Medium int    `json:"medium"`
-	High   int    `json:"high"`
+	Seed    uint64 `json:"seed"`
+	Low     int    `json:"low"`
+	Medium  int    `json:"medium"`
+	High    int    `json:"high"`
+	Extreme int    `json:"extreme"`
 }
 
 type Equation struct {
@@ -36,11 +39,12 @@ type Operation struct {
 }
 
 type Step struct {
-	Text        string      `json:"text"`
-	Kind        string      `json:"kind"`
-	Memory      int         `json:"memory"`
-	SignedTerms int         `json:"signedTerms"`
-	Operations  []Operation `json:"operations,omitempty"`
+	Text            string      `json:"text"`
+	Kind            string      `json:"kind"`
+	Memory          int         `json:"memory"`
+	SignedTerms     int         `json:"signedTerms"`
+	CoupledBranches int         `json:"coupledBranches"`
+	Operations      []Operation `json:"operations,omitempty"`
 }
 
 type DifficultyFactors struct {
@@ -50,6 +54,7 @@ type DifficultyFactors struct {
 	Eliminations    int `json:"eliminations"`
 	WorkingMemory   int `json:"workingMemory"`
 	SignedTerms     int `json:"signedTerms"`
+	CoupledBranches int `json:"coupledBranches"`
 	ArithmeticLoad  int `json:"arithmeticLoad"`
 }
 
@@ -103,7 +108,7 @@ func (r *splitMix64) between(minimum, maximum int) int {
 }
 
 func Generate(settings Settings) (Bank, error) {
-	if settings.Low < 0 || settings.Medium < 0 || settings.High < 0 || settings.Low+settings.Medium+settings.High == 0 {
+	if settings.Low < 0 || settings.Medium < 0 || settings.High < 0 || settings.Extreme < 0 || settings.Low+settings.Medium+settings.High+settings.Extreme == 0 {
 		return Bank{}, fmt.Errorf("counts must be non-negative and at least one question is required")
 	}
 	rng := newSplitMix64(settings.Seed)
@@ -112,7 +117,7 @@ func Generate(settings Settings) (Bank, error) {
 	requested := []struct {
 		level string
 		count int
-	}{{"low", settings.Low}, {"medium", settings.Medium}, {"high", settings.High}}
+	}{{"low", settings.Low}, {"medium", settings.Medium}, {"high", settings.High}, {"extreme", settings.Extreme}}
 	for _, request := range requested {
 		accepted := 0
 		for attempts := 0; accepted < request.count && attempts < request.count*1000+1000; attempts++ {
@@ -155,22 +160,78 @@ func applyDifficulty(question *Question) {
 		if step.Memory > factors.WorkingMemory {
 			factors.WorkingMemory = step.Memory
 		}
+		if step.CoupledBranches > factors.CoupledBranches {
+			factors.CoupledBranches = step.CoupledBranches
+		}
 		factors.SignedTerms += step.SignedTerms
 		for _, operation := range step.Operations {
 			factors.ArithmeticLoad += operationCost(operation)
 		}
 	}
-	score := factors.Variables - 1 + factors.Transformations + factors.Substitutions + factors.Eliminations + factors.WorkingMemory + factors.SignedTerms + factors.ArithmeticLoad
-	level := "high"
-	if score <= 9 {
-		level = "low"
-	} else if score <= 17 {
-		level = "medium"
-	}
+	score := difficultyScore(factors)
+	level := difficultyLevel(question, score, factors)
 	question.Difficulty = Difficulty{
 		Level: level, Score: score, Factors: factors,
-		Rationale: fmt.Sprintf("%d variables, %d transformations, %d substitutions, %d eliminations, working-memory load %d, %d signed-term costs, and arithmetic load %d", factors.Variables, factors.Transformations, factors.Substitutions, factors.Eliminations, factors.WorkingMemory, factors.SignedTerms, factors.ArithmeticLoad),
+		Rationale: fmt.Sprintf("%d variables, %d transformations, %d substitution steps, %d elimination steps, working-memory load %d, %d signed-term costs, %d coupled branches, and arithmetic load %d", factors.Variables, factors.Transformations, factors.Substitutions, factors.Eliminations, factors.WorkingMemory, factors.SignedTerms, factors.CoupledBranches, factors.ArithmeticLoad),
 	}
+}
+
+func difficultyScore(factors DifficultyFactors) int {
+	return factors.Variables - 1 + factors.Transformations + factors.Substitutions + factors.Eliminations + factors.WorkingMemory + factors.SignedTerms + factors.ArithmeticLoad
+}
+
+func difficultyLevel(question *Question, score int, factors DifficultyFactors) string {
+	if score <= 9 {
+		return "low"
+	}
+	if score <= 17 {
+		return "medium"
+	}
+	if score >= ExtremeMinimumScore && extremeEligible(question, factors) {
+		return "extreme"
+	}
+	return "high"
+}
+
+func extremeEligible(question *Question, factors DifficultyFactors) bool {
+	return factors.Variables == 4 &&
+		hasFourVariableCycle(question) &&
+		factors.Transformations >= 4 &&
+		factors.WorkingMemory >= 3 &&
+		factors.CoupledBranches >= 2 &&
+		factors.Substitutions+factors.Eliminations >= ExtremeMinimumActions &&
+		(factors.SignedTerms >= 4 || factors.ArithmeticLoad >= 9)
+}
+
+func hasFourVariableCycle(question *Question) bool {
+	if len(question.Variables) != 4 || len(question.Equations) != 4 {
+		return false
+	}
+	degrees := make(map[string]int, 4)
+	scaledTerm := false
+	for _, equation := range question.Equations {
+		termCount := 0
+		for _, variable := range question.Variables {
+			coefficient := equation.Coefficients[variable]
+			if coefficient == 0 {
+				continue
+			}
+			termCount++
+			degrees[variable]++
+			if abs(coefficient) > 1 {
+				scaledTerm = true
+			}
+		}
+		if termCount != 2 {
+			return false
+		}
+	}
+	for _, variable := range question.Variables {
+		if degrees[variable] != 2 {
+			return false
+		}
+	}
+	return scaledTerm
 }
 
 func operationCost(operation Operation) int {
@@ -302,7 +363,7 @@ func VerifyQuestion(question Question) error {
 	}
 	allowedKinds := map[string]bool{"isolate": true, "substitute": true, "eliminate": true, "simplify": true}
 	for index, step := range question.SolutionSteps {
-		if step.Text == "" || !allowedKinds[step.Kind] || step.Memory < 1 || step.Memory > len(question.Variables) || step.SignedTerms < 0 {
+		if step.Text == "" || !allowedKinds[step.Kind] || step.Memory < 1 || step.Memory > len(question.Variables) || step.SignedTerms < 0 || step.CoupledBranches < 0 || step.CoupledBranches > 2 {
 			return fmt.Errorf("%s: invalid solution step %d", question.ID, index+1)
 		}
 		for _, operation := range step.Operations {
@@ -329,7 +390,7 @@ func VerifyBank(bank Bank) error {
 	if bank.FormatVersion != FormatVersion || bank.GeneratorVersion != GeneratorVersion {
 		return fmt.Errorf("unsupported bank version")
 	}
-	if len(bank.Questions) != bank.Settings.Low+bank.Settings.Medium+bank.Settings.High {
+	if len(bank.Questions) != bank.Settings.Low+bank.Settings.Medium+bank.Settings.High+bank.Settings.Extreme {
 		return fmt.Errorf("question count does not match settings")
 	}
 	ids := map[string]bool{}
@@ -347,7 +408,7 @@ func VerifyBank(bank Bank) error {
 		}
 		counts[question.Difficulty.Level]++
 	}
-	if counts["low"] != bank.Settings.Low || counts["medium"] != bank.Settings.Medium || counts["high"] != bank.Settings.High {
+	if counts["low"] != bank.Settings.Low || counts["medium"] != bank.Settings.Medium || counts["high"] != bank.Settings.High || counts["extreme"] != bank.Settings.Extreme {
 		return fmt.Errorf("difficulty counts do not match settings")
 	}
 	return nil

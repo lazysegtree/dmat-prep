@@ -85,12 +85,18 @@ func makeStep(kind string, memory, signedTerms int, text string, operations ...O
 	return Step{Text: text, Kind: kind, Memory: memory, SignedTerms: signedTerms, Operations: operations}
 }
 
+func makeCoupledStep(kind string, memory, signedTerms int, text string, operations ...Operation) Step {
+	step := makeStep(kind, memory, signedTerms, text, operations...)
+	step.CoupledBranches = 2
+	return step
+}
+
 func operation(operator string, left, right int) Operation {
 	return Operation{Operator: operator, Left: left, Right: right}
 }
 
 func generateCandidate(rng *splitMix64) Question {
-	switch rng.n(11) {
+	switch rng.n(13) {
 	case 0:
 		return generateIndependentAnchors(rng, 2+rng.n(2))
 	case 1:
@@ -111,8 +117,12 @@ func generateCandidate(rng *splitMix64) Question {
 		return generateScaledSum(rng, 2+rng.n(3))
 	case 9:
 		return generateTriangleSums(rng, 3+rng.n(2))
-	default:
+	case 10:
 		return generateDifferenceCycle(rng, 3+rng.n(2))
+	case 11:
+		return generateCoupledBranches(rng)
+	default:
+		return generateCrossCoupled(rng)
 	}
 }
 
@@ -366,6 +376,77 @@ func generateDifferenceCycle(rng *splitMix64, count int) Question {
 		equations, steps = appendDependent(rng, equations, steps, roles[3], roles[rng.n(3)], answers, 3)
 	}
 	return finishCandidate(rng, "difference-cycle", "Turn the two difference equations into expressions for the three-letter total.", variables, answers, equations, steps)
+}
+
+func generateCoupledBranches(rng *splitMix64) Question {
+	variables, roles, answers := candidateData(rng, 4)
+	x, y, z, w := roles[0], roles[1], roles[2], roles[3]
+	xFactor, wFactor := rng.between(2, 4), rng.between(2, 4)
+	xySum := answers[x] + answers[y]
+	ywSum := answers[y] + answers[w]
+	zwOffset := answers[z] - wFactor*answers[w]
+	xzTotal := xFactor*answers[x] + answers[z]
+	equations := []Equation{
+		buildEquation(expression(0, term(1, x), term(1, y)), expression(xySum)),
+		buildEquation(expression(0, term(1, z), term(-wFactor, w)), expression(zwOffset)),
+		buildEquation(expression(0, term(1, y), term(1, w)), expression(ywSum)),
+		buildEquation(expression(0, term(xFactor, x), term(1, z)), expression(xzTotal)),
+	}
+	firstProduct := xFactor * xySum
+	secondProduct := wFactor * ywSum
+	partial := firstProduct + zwOffset
+	combined := partial + secondProduct
+	numerator := combined - xzTotal
+	steps := []Step{
+		makeCoupledStep("isolate", 3, 2, fmt.Sprintf("Build two branches around %s: %s = %d - %s and %s = %d - %s.", y, x, xySum, y, w, ywSum, y)),
+		makeCoupledStep("substitute", 4, 2, fmt.Sprintf("Use %s = %d - %s in %s - %d × %s = %d, giving a second expression in %s.", w, ywSum, y, z, wFactor, w, zwOffset, y)),
+		makeCoupledStep(
+			"eliminate", 4, 4,
+			fmt.Sprintf("Put both branches into %d × %s + %s = %d. After collecting terms, %d × %s = %d, so %s = %d.", xFactor, x, z, xzTotal, xFactor+wFactor, y, numerator, y, answers[y]),
+			operation("×", xFactor, xySum), operation("×", wFactor, ywSum), operation("+", firstProduct, zwOffset), operation("+", partial, secondProduct), operation("-", combined, xzTotal), operation("/", numerator, xFactor+wFactor),
+		),
+		makeCoupledStep(
+			"substitute", 4, boolInt(zwOffset < 0),
+			fmt.Sprintf("Back-substitute %s = %d to get %s = %d, %s = %d, and %s = %d.", y, answers[y], x, answers[x], w, answers[w], z, answers[z]),
+			operation("-", xySum, answers[y]), operation("-", ywSum, answers[y]), operation("×", wFactor, answers[w]), operation("+", zwOffset, wFactor*answers[w]),
+		),
+	}
+	return finishCandidate(rng, "coupled-branches", "Create expressions from the two pair equations, then combine both branches in the scaled equation.", variables, answers, equations, steps)
+}
+
+func generateCrossCoupled(rng *splitMix64) Question {
+	variables, roles, answers := candidateData(rng, 4)
+	x, y, z, w := roles[0], roles[1], roles[2], roles[3]
+	wFactor := rng.between(2, 3)
+	yFactor := wFactor + 2 + rng.n(2)
+	xySum := answers[x] + answers[y]
+	zwSum := answers[z] + answers[w]
+	xzSum := answers[x] + answers[z]
+	weightedTotal := yFactor*answers[y] + wFactor*answers[w]
+	equations := []Equation{
+		buildEquation(expression(0, term(1, x), term(1, y)), expression(xySum)),
+		buildEquation(expression(0, term(1, z), term(1, w)), expression(zwSum)),
+		buildEquation(expression(0, term(1, x), term(1, z)), expression(xzSum)),
+		buildEquation(expression(0, term(yFactor, y), term(wFactor, w)), expression(weightedTotal)),
+	}
+	wConstant := zwSum - xzSum + xySum
+	weightedConstant := wFactor * wConstant
+	numerator := weightedTotal - weightedConstant
+	steps := []Step{
+		makeCoupledStep("isolate", 3, 2, fmt.Sprintf("Start two branches: %s = %d - %s and %s = %d - %s.", x, xySum, y, w, zwSum, z)),
+		makeCoupledStep("substitute", 4, 3, fmt.Sprintf("Use the first branch in %s + %s = %d, then feed the resulting %s expression into the second branch so both depend on %s.", x, z, xzSum, z, y)),
+		makeCoupledStep(
+			"eliminate", 4, 3,
+			fmt.Sprintf("Substitute the %s branch into %d × %s + %d × %s = %d. Collect terms to get %d × %s = %d, so %s = %d.", w, yFactor, y, wFactor, w, weightedTotal, yFactor-wFactor, y, numerator, y, answers[y]),
+			operation("×", wFactor, wConstant), operation("-", weightedTotal, weightedConstant), operation("/", numerator, yFactor-wFactor),
+		),
+		makeCoupledStep(
+			"substitute", 4, 0,
+			fmt.Sprintf("Back-substitute %s = %d to get %s = %d, %s = %d, and %s = %d.", y, answers[y], x, answers[x], z, answers[z], w, answers[w]),
+			operation("-", xySum, answers[y]), operation("-", xzSum, answers[x]), operation("-", zwSum, answers[z]),
+		),
+	}
+	return finishCandidate(rng, "cross-coupled-sums", "Express the two outer letters through the pair sums, then use the weighted equation to solve the shared pivot.", variables, answers, equations, steps)
 }
 
 func (r *splitMix64) shuffleStrings(values []string) {
