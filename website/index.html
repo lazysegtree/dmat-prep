@@ -4,21 +4,47 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#f6f5f1" />
-    <meta name="description" content="Practise Latin squares and Figure Sequences for the dMAT." />
+    <meta name="description" content="Practise Mathematical Equations, Latin Squares, and Figure Sequences for the dMAT." />
     <base href="./" />
     <title>dMAT Core Trainer</title>
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
-  <body data-page="home">
+  <body>
     <header class="site-header">
-      <a class="brand" id="home-button" href="./" aria-label="Return home">
+      <a class="brand" href="./" aria-label="Return home">
         <span class="brand-mark" aria-hidden="true">dM</span>
         <span>dMAT Core Trainer</span>
       </a>
     </header>
-    <main id="app" tabindex="-1">
-      <p class="loading">Loading trainer…</p>
+    <main id="app">
+      <section>
+        <p class="eyebrow">General Academic Module</p>
+        <h1>Practise the task,<br />not just the topic.</h1>
+        <p class="lede">Choose a dMAT task type. Each trainer is built around the official no-notes format and its own verified question engine.</p>
+        <div class="task-grid" aria-label="Task types">
+          <a class="task-card" href="mathematical-equations/">
+            <span class="task-number" aria-hidden="true">01</span>
+            <div>
+              <strong>Mathematical Equations</strong>
+              <span>Solve small systems mentally. Practise 2–4 variables, substitutions, and accuracy under time pressure.</span>
+            </div>
+          </a>
+          <a class="task-card" href="latin-squares/">
+            <span class="task-number" aria-hidden="true">02</span>
+            <div>
+              <strong>Latin Squares</strong>
+              <span>Find one target cell using generated, uniquely solvable 5 × 5 puzzles.</span>
+            </div>
+          </a>
+          <a class="task-card" href="figure-sequences.html">
+            <span class="task-number" aria-hidden="true">03</span>
+            <div>
+              <strong>Figure Sequences <span class="poc-badge">POC</span></strong>
+              <span>Track moving figures across four matrices and predict the next two.</span>
+            </div>
+          </a>
+        </div>
+      </section>
     </main>
-    <script type="module" src="js/app.js"></script>
   </body>
 </html>

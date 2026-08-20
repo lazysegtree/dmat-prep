@@ -1,6 +1,6 @@
-# dMAT Latin Squares Trainer — Product and Interface Specification
+# dMAT Latin Squares Module — Product and Interface Specification
 
-Status: Draft v4
+Status: Draft v5
 
 Target platform: Static GitHub Pages website
 
@@ -20,7 +20,7 @@ The application supports this training loop:
 4. Attempt a 20-question target-cell mock.
 5. Review slow and incorrect answers with the efficient deduction path and complete solution.
 
-This is a focused dMAT Latin-square trainer, not a general puzzle platform.
+This is the Latin Squares module within the static dMAT Trainer. Mathematical Equations has a separate question engine and interface specified in `docs/specs/equation-generation-spec.md`.
 
 ## 2. Latin-square and question rules
 
@@ -177,7 +177,7 @@ The screen copy may be tightened for small displays, but the controls and decisi
 
 ### 7.2 Home
 
-Home presents exactly four primary actions:
+The Latin Squares module home presents exactly four primary actions:
 
 - `Learn`
 - `Speed Drill`
@@ -233,7 +233,8 @@ Home presents exactly four primary actions:
 
 Browser-delivered files live under `website/`. The repository root is served or published directly, so public URLs include the `website` directory name.
 
-- `/website/` or `/website/index.html`: trainer Home.
+- `/website/` or `/website/index.html`: task-type selection.
+- `/website/latin-squares/`: Latin Squares module Home.
 - `/website/latin-squares/learn/`: Learn setup.
 - `/website/latin-squares/learn/?difficulty=hard`: Learn setup with the selected difficulty.
 - `/website/latin-squares/learn/?puzzle=DMAT-G1-296A8A48AD3F`: immediately opens that exact untimed puzzle.
@@ -268,14 +269,22 @@ website/
   js/puzzle-ui.js
   js/session.js
   data/latin-squares/puzzles.json
+  data/mathematical-equations/questions.json
+  mathematical-equations/
+    index.html
+    learn/index.html
+    speed-drill/index.html
+    mock/index.html
+    progress/index.html
   latin-squares/
+    index.html
     learn/index.html
     speed-drill/index.html
     mock/index.html
     progress/index.html
 ```
 
-The development-only generator is a Go command and package:
+The development-only Latin-square generator is a Go command and package:
 
 ```text
 cmd/puzzle-generator/
@@ -283,6 +292,8 @@ internal/puzzlegen/
 data/reduced-latin-squares.json
 docs/specs/puzzle-generation-spec.md
 ```
+
+The Mathematical Equations module adds `website/js/equation-app.js`, `cmd/equation-generator/`, and `internal/equationgen/`. It remains separate from the Latin-square scorer and data contract.
 
 - `website/` is the browser-delivered subtree and remains visible in public URLs.
 - Each clean route is backed by a thin directory `index.html` and loads the same shared CSS and JavaScript.

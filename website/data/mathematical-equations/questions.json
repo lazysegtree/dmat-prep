@@ -1,0 +1,5944 @@
+{
+  "formatVersion": 2,
+  "generatorVersion": "2.0.0",
+  "settings": {
+    "seed": 20260819,
+    "low": 20,
+    "medium": 20,
+    "high": 20
+  },
+  "questions": [
+    {
+      "id": "DMAT-EQ-F1FE6A6FC7EC",
+      "family": "independent-anchors",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "12 = B + 2",
+          "coefficients": {
+            "B": -1
+          },
+          "constant": -10
+        },
+        {
+          "display": "A + 4 = 6",
+          "coefficients": {
+            "A": 1
+          },
+          "constant": 2
+        }
+      ],
+      "answer": {
+        "A": 2,
+        "B": 10
+      },
+      "hint": "Several equations can be solved directly; start with whichever arithmetic is most comfortable.",
+      "solutionSteps": [
+        {
+          "text": "Use the direct equation to subtract 2 and get B = 10.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 12,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Use the direct equation to subtract 4 and get A = 2.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 6,
+              "right": 4
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "low",
+        "score": 7,
+        "factors": {
+          "variables": 2,
+          "transformations": 2,
+          "substitutions": 0,
+          "eliminations": 0,
+          "workingMemory": 1,
+          "signedTerms": 0,
+          "arithmeticLoad": 3
+        },
+        "rationale": "2 variables, 2 transformations, 0 substitutions, 0 eliminations, working-memory load 1, 0 signed-term costs, and arithmetic load 3"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-85A44CADB9B2",
+      "family": "near-cancellation",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "2 × B + A = 16",
+          "coefficients": {
+            "A": 1,
+            "B": 2
+          },
+          "constant": 16
+        },
+        {
+          "display": "B + A = 10",
+          "coefficients": {
+            "A": 1,
+            "B": 1
+          },
+          "constant": 10
+        }
+      ],
+      "answer": {
+        "A": 4,
+        "B": 6
+      },
+      "hint": "Compare the two similar equations instead of solving either one in isolation.",
+      "solutionSteps": [
+        {
+          "text": "Subtract the two equations; every A term cancels and B = 6.",
+          "kind": "eliminate",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 16,
+              "right": 10
+            }
+          ]
+        },
+        {
+          "text": "Use B = 6 in B + A = 10 to get A = 4.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 10,
+              "right": 6
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "low",
+        "score": 9,
+        "factors": {
+          "variables": 2,
+          "transformations": 2,
+          "substitutions": 1,
+          "eliminations": 1,
+          "workingMemory": 2,
+          "signedTerms": 0,
+          "arithmeticLoad": 2
+        },
+        "rationale": "2 variables, 2 transformations, 1 substitutions, 1 eliminations, working-memory load 2, 0 signed-term costs, and arithmetic load 2"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-BE0152984E9A",
+      "family": "near-cancellation",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "B + A = 6",
+          "coefficients": {
+            "A": 1,
+            "B": 1
+          },
+          "constant": 6
+        },
+        {
+          "display": "2 × B + A = 10",
+          "coefficients": {
+            "A": 1,
+            "B": 2
+          },
+          "constant": 10
+        }
+      ],
+      "answer": {
+        "A": 2,
+        "B": 4
+      },
+      "hint": "Compare the two similar equations instead of solving either one in isolation.",
+      "solutionSteps": [
+        {
+          "text": "Subtract the two equations; every A term cancels and B = 4.",
+          "kind": "eliminate",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 10,
+              "right": 6
+            }
+          ]
+        },
+        {
+          "text": "Use B = 4 in B + A = 6 to get A = 2.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 6,
+              "right": 4
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "low",
+        "score": 9,
+        "factors": {
+          "variables": 2,
+          "transformations": 2,
+          "substitutions": 1,
+          "eliminations": 1,
+          "workingMemory": 2,
+          "signedTerms": 0,
+          "arithmeticLoad": 2
+        },
+        "rationale": "2 variables, 2 transformations, 1 substitutions, 1 eliminations, working-memory load 2, 0 signed-term costs, and arithmetic load 2"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-56442B621493",
+      "family": "independent-anchors",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "B + 4 = 9",
+          "coefficients": {
+            "B": 1
+          },
+          "constant": 5
+        },
+        {
+          "display": "A + 6 = 15",
+          "coefficients": {
+            "A": 1
+          },
+          "constant": 9
+        }
+      ],
+      "answer": {
+        "A": 9,
+        "B": 5
+      },
+      "hint": "Several equations can be solved directly; start with whichever arithmetic is most comfortable.",
+      "solutionSteps": [
+        {
+          "text": "Use the direct equation to subtract 6 and get A = 9.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 15,
+              "right": 6
+            }
+          ]
+        },
+        {
+          "text": "Use the direct equation to subtract 4 and get B = 5.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 9,
+              "right": 4
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "low",
+        "score": 7,
+        "factors": {
+          "variables": 2,
+          "transformations": 2,
+          "substitutions": 0,
+          "eliminations": 0,
+          "workingMemory": 1,
+          "signedTerms": 0,
+          "arithmeticLoad": 3
+        },
+        "rationale": "2 variables, 2 transformations, 0 substitutions, 0 eliminations, working-memory load 1, 0 signed-term costs, and arithmetic load 3"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-BB0D12551C33",
+      "family": "independent-anchors",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "B + 3 = 5",
+          "coefficients": {
+            "B": 1
+          },
+          "constant": 2
+        },
+        {
+          "display": "A + 3 = 11",
+          "coefficients": {
+            "A": 1
+          },
+          "constant": 8
+        }
+      ],
+      "answer": {
+        "A": 8,
+        "B": 2
+      },
+      "hint": "Several equations can be solved directly; start with whichever arithmetic is most comfortable.",
+      "solutionSteps": [
+        {
+          "text": "Use the direct equation to subtract 3 and get A = 8.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 11,
+              "right": 3
+            }
+          ]
+        },
+        {
+          "text": "Use the direct equation to subtract 3 and get B = 2.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 5,
+              "right": 3
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "low",
+        "score": 7,
+        "factors": {
+          "variables": 2,
+          "transformations": 2,
+          "substitutions": 0,
+          "eliminations": 0,
+          "workingMemory": 1,
+          "signedTerms": 0,
+          "arithmeticLoad": 3
+        },
+        "rationale": "2 variables, 2 transformations, 0 substitutions, 0 eliminations, working-memory load 1, 0 signed-term costs, and arithmetic load 3"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-9A7D010B9A91",
+      "family": "independent-anchors",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "B + 6 = 13",
+          "coefficients": {
+            "B": 1
+          },
+          "constant": 7
+        },
+        {
+          "display": "A + 5 = 13",
+          "coefficients": {
+            "A": 1
+          },
+          "constant": 8
+        }
+      ],
+      "answer": {
+        "A": 8,
+        "B": 7
+      },
+      "hint": "Several equations can be solved directly; start with whichever arithmetic is most comfortable.",
+      "solutionSteps": [
+        {
+          "text": "Use the direct equation to subtract 6 and get B = 7.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 13,
+              "right": 6
+            }
+          ]
+        },
+        {
+          "text": "Use the direct equation to subtract 5 and get A = 8.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 13,
+              "right": 5
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "low",
+        "score": 8,
+        "factors": {
+          "variables": 2,
+          "transformations": 2,
+          "substitutions": 0,
+          "eliminations": 0,
+          "workingMemory": 1,
+          "signedTerms": 0,
+          "arithmeticLoad": 4
+        },
+        "rationale": "2 variables, 2 transformations, 0 substitutions, 0 eliminations, working-memory load 1, 0 signed-term costs, and arithmetic load 4"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-7DD316BEF26D",
+      "family": "anchored-chain",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "8 = A + 2",
+          "coefficients": {
+            "A": -1
+          },
+          "constant": -6
+        },
+        {
+          "display": "B - A = -2",
+          "coefficients": {
+            "A": -1,
+            "B": 1
+          },
+          "constant": -2
+        }
+      ],
+      "answer": {
+        "A": 6,
+        "B": 4
+      },
+      "hint": "Find the one directly solvable letter, then follow the dependency chain. Equation order is not chain order.",
+      "solutionSteps": [
+        {
+          "text": "Use the direct equation to subtract 2 and get A = 6.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 8,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Substitute A = 6 into B - A = -2 to get B = 4.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 6,
+              "right": -2
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "low",
+        "score": 9,
+        "factors": {
+          "variables": 2,
+          "transformations": 2,
+          "substitutions": 1,
+          "eliminations": 0,
+          "workingMemory": 2,
+          "signedTerms": 1,
+          "arithmeticLoad": 2
+        },
+        "rationale": "2 variables, 2 transformations, 1 substitutions, 0 eliminations, working-memory load 2, 1 signed-term costs, and arithmetic load 2"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-6AED1C4FE778",
+      "family": "affine-chain",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "8 = A + 5",
+          "coefficients": {
+            "A": -1
+          },
+          "constant": -3
+        },
+        {
+          "display": "B + 3 = 2 × A",
+          "coefficients": {
+            "A": -2,
+            "B": 1
+          },
+          "constant": -3
+        }
+      ],
+      "answer": {
+        "A": 3,
+        "B": 3
+      },
+      "hint": "Start with the direct equation. Each remaining relationship contains one value already found and one new letter.",
+      "solutionSteps": [
+        {
+          "text": "Use the direct equation to subtract 5 and get A = 3.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 8,
+              "right": 5
+            }
+          ]
+        },
+        {
+          "text": "Substitute A = 3, calculate 2 × 3, and isolate B = 3.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "×",
+              "left": 2,
+              "right": 3
+            },
+            {
+              "operator": "-",
+              "left": 6,
+              "right": 3
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "low",
+        "score": 9,
+        "factors": {
+          "variables": 2,
+          "transformations": 2,
+          "substitutions": 1,
+          "eliminations": 0,
+          "workingMemory": 2,
+          "signedTerms": 0,
+          "arithmeticLoad": 3
+        },
+        "rationale": "2 variables, 2 transformations, 1 substitutions, 0 eliminations, working-memory load 2, 0 signed-term costs, and arithmetic load 3"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-4C78AA7BE3F7",
+      "family": "near-cancellation",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "A + B = 10",
+          "coefficients": {
+            "A": 1,
+            "B": 1
+          },
+          "constant": 10
+        },
+        {
+          "display": "2 × A + B = 18",
+          "coefficients": {
+            "A": 2,
+            "B": 1
+          },
+          "constant": 18
+        }
+      ],
+      "answer": {
+        "A": 8,
+        "B": 2
+      },
+      "hint": "Compare the two similar equations instead of solving either one in isolation.",
+      "solutionSteps": [
+        {
+          "text": "Subtract the two equations; every B term cancels and A = 8.",
+          "kind": "eliminate",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 18,
+              "right": 10
+            }
+          ]
+        },
+        {
+          "text": "Use A = 8 in A + B = 10 to get B = 2.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 10,
+              "right": 8
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "low",
+        "score": 9,
+        "factors": {
+          "variables": 2,
+          "transformations": 2,
+          "substitutions": 1,
+          "eliminations": 1,
+          "workingMemory": 2,
+          "signedTerms": 0,
+          "arithmeticLoad": 2
+        },
+        "rationale": "2 variables, 2 transformations, 1 substitutions, 1 eliminations, working-memory load 2, 0 signed-term costs, and arithmetic load 2"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-D6C66F9523EC",
+      "family": "anchored-chain",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "B - A = -2",
+          "coefficients": {
+            "A": -1,
+            "B": 1
+          },
+          "constant": -2
+        },
+        {
+          "display": "A + 4 = 8",
+          "coefficients": {
+            "A": 1
+          },
+          "constant": 4
+        }
+      ],
+      "answer": {
+        "A": 4,
+        "B": 2
+      },
+      "hint": "Find the one directly solvable letter, then follow the dependency chain. Equation order is not chain order.",
+      "solutionSteps": [
+        {
+          "text": "Use the direct equation to subtract 4 and get A = 4.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 8,
+              "right": 4
+            }
+          ]
+        },
+        {
+          "text": "Substitute A = 4 into B - A = -2 to get B = 2.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 4,
+              "right": -2
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "low",
+        "score": 9,
+        "factors": {
+          "variables": 2,
+          "transformations": 2,
+          "substitutions": 1,
+          "eliminations": 0,
+          "workingMemory": 2,
+          "signedTerms": 1,
+          "arithmeticLoad": 2
+        },
+        "rationale": "2 variables, 2 transformations, 1 substitutions, 0 eliminations, working-memory load 2, 1 signed-term costs, and arithmetic load 2"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-789255A6F68E",
+      "family": "independent-anchors",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "B + 3 = 6",
+          "coefficients": {
+            "B": 1
+          },
+          "constant": 3
+        },
+        {
+          "display": "A + 5 = 14",
+          "coefficients": {
+            "A": 1
+          },
+          "constant": 9
+        }
+      ],
+      "answer": {
+        "A": 9,
+        "B": 3
+      },
+      "hint": "Several equations can be solved directly; start with whichever arithmetic is most comfortable.",
+      "solutionSteps": [
+        {
+          "text": "Use the direct equation to subtract 3 and get B = 3.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 6,
+              "right": 3
+            }
+          ]
+        },
+        {
+          "text": "Use the direct equation to subtract 5 and get A = 9.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 14,
+              "right": 5
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "low",
+        "score": 7,
+        "factors": {
+          "variables": 2,
+          "transformations": 2,
+          "substitutions": 0,
+          "eliminations": 0,
+          "workingMemory": 1,
+          "signedTerms": 0,
+          "arithmeticLoad": 3
+        },
+        "rationale": "2 variables, 2 transformations, 0 substitutions, 0 eliminations, working-memory load 1, 0 signed-term costs, and arithmetic load 3"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-2EA9ED92F3DD",
+      "family": "affine-chain",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "B + 6 = 8",
+          "coefficients": {
+            "B": 1
+          },
+          "constant": 2
+        },
+        {
+          "display": "A + 6 = 4 × B",
+          "coefficients": {
+            "A": 1,
+            "B": -4
+          },
+          "constant": -6
+        }
+      ],
+      "answer": {
+        "A": 2,
+        "B": 2
+      },
+      "hint": "Start with the direct equation. Each remaining relationship contains one value already found and one new letter.",
+      "solutionSteps": [
+        {
+          "text": "Use the direct equation to subtract 6 and get B = 2.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 8,
+              "right": 6
+            }
+          ]
+        },
+        {
+          "text": "Substitute B = 2, calculate 4 × 2, and isolate A = 2.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "×",
+              "left": 4,
+              "right": 2
+            },
+            {
+              "operator": "-",
+              "left": 8,
+              "right": 6
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "low",
+        "score": 9,
+        "factors": {
+          "variables": 2,
+          "transformations": 2,
+          "substitutions": 1,
+          "eliminations": 0,
+          "workingMemory": 2,
+          "signedTerms": 0,
+          "arithmeticLoad": 3
+        },
+        "rationale": "2 variables, 2 transformations, 1 substitutions, 0 eliminations, working-memory load 2, 0 signed-term costs, and arithmetic load 3"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-2119C26D335B",
+      "family": "independent-anchors",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "B + 2 = 11",
+          "coefficients": {
+            "B": 1
+          },
+          "constant": 9
+        },
+        {
+          "display": "14 = A + 6",
+          "coefficients": {
+            "A": -1
+          },
+          "constant": -8
+        }
+      ],
+      "answer": {
+        "A": 8,
+        "B": 9
+      },
+      "hint": "Several equations can be solved directly; start with whichever arithmetic is most comfortable.",
+      "solutionSteps": [
+        {
+          "text": "Use the direct equation to subtract 6 and get A = 8.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 14,
+              "right": 6
+            }
+          ]
+        },
+        {
+          "text": "Use the direct equation to subtract 2 and get B = 9.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 11,
+              "right": 2
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "low",
+        "score": 8,
+        "factors": {
+          "variables": 2,
+          "transformations": 2,
+          "substitutions": 0,
+          "eliminations": 0,
+          "workingMemory": 1,
+          "signedTerms": 0,
+          "arithmeticLoad": 4
+        },
+        "rationale": "2 variables, 2 transformations, 0 substitutions, 0 eliminations, working-memory load 1, 0 signed-term costs, and arithmetic load 4"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-5B00752ACBB8",
+      "family": "anchored-chain",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "B + 2 = 7",
+          "coefficients": {
+            "B": 1
+          },
+          "constant": 5
+        },
+        {
+          "display": "A - B = 5",
+          "coefficients": {
+            "A": 1,
+            "B": -1
+          },
+          "constant": 5
+        }
+      ],
+      "answer": {
+        "A": 10,
+        "B": 5
+      },
+      "hint": "Find the one directly solvable letter, then follow the dependency chain. Equation order is not chain order.",
+      "solutionSteps": [
+        {
+          "text": "Use the direct equation to subtract 2 and get B = 5.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 7,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Substitute B = 5 into A - B = 5 to get A = 10.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 5,
+              "right": 5
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "low",
+        "score": 8,
+        "factors": {
+          "variables": 2,
+          "transformations": 2,
+          "substitutions": 1,
+          "eliminations": 0,
+          "workingMemory": 2,
+          "signedTerms": 0,
+          "arithmeticLoad": 2
+        },
+        "rationale": "2 variables, 2 transformations, 1 substitutions, 0 eliminations, working-memory load 2, 0 signed-term costs, and arithmetic load 2"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-6E7B4FF03111",
+      "family": "independent-anchors",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "6 = B + 4",
+          "coefficients": {
+            "B": -1
+          },
+          "constant": -2
+        },
+        {
+          "display": "9 = A + 3",
+          "coefficients": {
+            "A": -1
+          },
+          "constant": -6
+        }
+      ],
+      "answer": {
+        "A": 6,
+        "B": 2
+      },
+      "hint": "Several equations can be solved directly; start with whichever arithmetic is most comfortable.",
+      "solutionSteps": [
+        {
+          "text": "Use the direct equation to subtract 3 and get A = 6.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 9,
+              "right": 3
+            }
+          ]
+        },
+        {
+          "text": "Use the direct equation to subtract 4 and get B = 2.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 6,
+              "right": 4
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "low",
+        "score": 6,
+        "factors": {
+          "variables": 2,
+          "transformations": 2,
+          "substitutions": 0,
+          "eliminations": 0,
+          "workingMemory": 1,
+          "signedTerms": 0,
+          "arithmeticLoad": 2
+        },
+        "rationale": "2 variables, 2 transformations, 0 substitutions, 0 eliminations, working-memory load 1, 0 signed-term costs, and arithmetic load 2"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-C150E5AF6B6E",
+      "family": "anchored-chain",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "10 = B + 4",
+          "coefficients": {
+            "B": -1
+          },
+          "constant": -6
+        },
+        {
+          "display": "A - B = -4",
+          "coefficients": {
+            "A": 1,
+            "B": -1
+          },
+          "constant": -4
+        }
+      ],
+      "answer": {
+        "A": 2,
+        "B": 6
+      },
+      "hint": "Find the one directly solvable letter, then follow the dependency chain. Equation order is not chain order.",
+      "solutionSteps": [
+        {
+          "text": "Use the direct equation to subtract 4 and get B = 6.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 10,
+              "right": 4
+            }
+          ]
+        },
+        {
+          "text": "Substitute B = 6 into A - B = -4 to get A = 2.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 6,
+              "right": -4
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "low",
+        "score": 9,
+        "factors": {
+          "variables": 2,
+          "transformations": 2,
+          "substitutions": 1,
+          "eliminations": 0,
+          "workingMemory": 2,
+          "signedTerms": 1,
+          "arithmeticLoad": 2
+        },
+        "rationale": "2 variables, 2 transformations, 1 substitutions, 0 eliminations, working-memory load 2, 1 signed-term costs, and arithmetic load 2"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-C5A6E8674170",
+      "family": "anchored-chain",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "B + 6 = 10",
+          "coefficients": {
+            "B": 1
+          },
+          "constant": 4
+        },
+        {
+          "display": "A - B = 4",
+          "coefficients": {
+            "A": 1,
+            "B": -1
+          },
+          "constant": 4
+        }
+      ],
+      "answer": {
+        "A": 8,
+        "B": 4
+      },
+      "hint": "Find the one directly solvable letter, then follow the dependency chain. Equation order is not chain order.",
+      "solutionSteps": [
+        {
+          "text": "Use the direct equation to subtract 6 and get B = 4.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 10,
+              "right": 6
+            }
+          ]
+        },
+        {
+          "text": "Substitute B = 4 into A - B = 4 to get A = 8.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 4,
+              "right": 4
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "low",
+        "score": 8,
+        "factors": {
+          "variables": 2,
+          "transformations": 2,
+          "substitutions": 1,
+          "eliminations": 0,
+          "workingMemory": 2,
+          "signedTerms": 0,
+          "arithmeticLoad": 2
+        },
+        "rationale": "2 variables, 2 transformations, 1 substitutions, 0 eliminations, working-memory load 2, 0 signed-term costs, and arithmetic load 2"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-08105D1F15EF",
+      "family": "independent-anchors",
+      "variables": [
+        "A",
+        "B",
+        "C"
+      ],
+      "equations": [
+        {
+          "display": "B + 4 = 9",
+          "coefficients": {
+            "B": 1
+          },
+          "constant": 5
+        },
+        {
+          "display": "6 = C + 2",
+          "coefficients": {
+            "C": -1
+          },
+          "constant": -4
+        },
+        {
+          "display": "A + 2 = 10",
+          "coefficients": {
+            "A": 1
+          },
+          "constant": 8
+        }
+      ],
+      "answer": {
+        "A": 8,
+        "B": 5,
+        "C": 4
+      },
+      "hint": "Several equations can be solved directly; start with whichever arithmetic is most comfortable.",
+      "solutionSteps": [
+        {
+          "text": "Use the direct equation to subtract 2 and get C = 4.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 6,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Use the direct equation to subtract 4 and get B = 5.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 9,
+              "right": 4
+            }
+          ]
+        },
+        {
+          "text": "Use the direct equation to subtract 2 and get A = 8.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 10,
+              "right": 2
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "low",
+        "score": 9,
+        "factors": {
+          "variables": 3,
+          "transformations": 3,
+          "substitutions": 0,
+          "eliminations": 0,
+          "workingMemory": 1,
+          "signedTerms": 0,
+          "arithmeticLoad": 3
+        },
+        "rationale": "3 variables, 3 transformations, 0 substitutions, 0 eliminations, working-memory load 1, 0 signed-term costs, and arithmetic load 3"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-7E4E8425CDA1",
+      "family": "independent-anchors",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "B + 3 = 11",
+          "coefficients": {
+            "B": 1
+          },
+          "constant": 8
+        },
+        {
+          "display": "A + 4 = 11",
+          "coefficients": {
+            "A": 1
+          },
+          "constant": 7
+        }
+      ],
+      "answer": {
+        "A": 7,
+        "B": 8
+      },
+      "hint": "Several equations can be solved directly; start with whichever arithmetic is most comfortable.",
+      "solutionSteps": [
+        {
+          "text": "Use the direct equation to subtract 3 and get B = 8.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 11,
+              "right": 3
+            }
+          ]
+        },
+        {
+          "text": "Use the direct equation to subtract 4 and get A = 7.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 11,
+              "right": 4
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "low",
+        "score": 8,
+        "factors": {
+          "variables": 2,
+          "transformations": 2,
+          "substitutions": 0,
+          "eliminations": 0,
+          "workingMemory": 1,
+          "signedTerms": 0,
+          "arithmeticLoad": 4
+        },
+        "rationale": "2 variables, 2 transformations, 0 substitutions, 0 eliminations, working-memory load 1, 0 signed-term costs, and arithmetic load 4"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-2BC7154C41E9",
+      "family": "independent-anchors",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "13 = B + 6",
+          "coefficients": {
+            "B": -1
+          },
+          "constant": -7
+        },
+        {
+          "display": "11 = A + 6",
+          "coefficients": {
+            "A": -1
+          },
+          "constant": -5
+        }
+      ],
+      "answer": {
+        "A": 5,
+        "B": 7
+      },
+      "hint": "Several equations can be solved directly; start with whichever arithmetic is most comfortable.",
+      "solutionSteps": [
+        {
+          "text": "Use the direct equation to subtract 6 and get A = 5.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 11,
+              "right": 6
+            }
+          ]
+        },
+        {
+          "text": "Use the direct equation to subtract 6 and get B = 7.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 13,
+              "right": 6
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "low",
+        "score": 8,
+        "factors": {
+          "variables": 2,
+          "transformations": 2,
+          "substitutions": 0,
+          "eliminations": 0,
+          "workingMemory": 1,
+          "signedTerms": 0,
+          "arithmeticLoad": 4
+        },
+        "rationale": "2 variables, 2 transformations, 0 substitutions, 0 eliminations, working-memory load 1, 0 signed-term costs, and arithmetic load 4"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-B26E3475258D",
+      "family": "near-cancellation",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "B + A = 9",
+          "coefficients": {
+            "A": 1,
+            "B": 1
+          },
+          "constant": 9
+        },
+        {
+          "display": "2 × B + A = 15",
+          "coefficients": {
+            "A": 1,
+            "B": 2
+          },
+          "constant": 15
+        }
+      ],
+      "answer": {
+        "A": 3,
+        "B": 6
+      },
+      "hint": "Compare the two similar equations instead of solving either one in isolation.",
+      "solutionSteps": [
+        {
+          "text": "Subtract the two equations; every A term cancels and B = 6.",
+          "kind": "eliminate",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 15,
+              "right": 9
+            }
+          ]
+        },
+        {
+          "text": "Use B = 6 in B + A = 9 to get A = 3.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 9,
+              "right": 6
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "medium",
+        "score": 10,
+        "factors": {
+          "variables": 2,
+          "transformations": 2,
+          "substitutions": 1,
+          "eliminations": 1,
+          "workingMemory": 2,
+          "signedTerms": 0,
+          "arithmeticLoad": 3
+        },
+        "rationale": "2 variables, 2 transformations, 1 substitutions, 1 eliminations, working-memory load 2, 0 signed-term costs, and arithmetic load 3"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-A0CCC936632E",
+      "family": "anchored-chain",
+      "variables": [
+        "A",
+        "B",
+        "C"
+      ],
+      "equations": [
+        {
+          "display": "12 = A + 2",
+          "coefficients": {
+            "A": -1
+          },
+          "constant": -10
+        },
+        {
+          "display": "C - B = 1",
+          "coefficients": {
+            "B": -1,
+            "C": 1
+          },
+          "constant": 1
+        },
+        {
+          "display": "B - A = -4",
+          "coefficients": {
+            "A": -1,
+            "B": 1
+          },
+          "constant": -4
+        }
+      ],
+      "answer": {
+        "A": 10,
+        "B": 6,
+        "C": 7
+      },
+      "hint": "Find the one directly solvable letter, then follow the dependency chain. Equation order is not chain order.",
+      "solutionSteps": [
+        {
+          "text": "Use the direct equation to subtract 2 and get A = 10.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 12,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Substitute A = 10 into B - A = -4 to get B = 6.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 10,
+              "right": -4
+            }
+          ]
+        },
+        {
+          "text": "Substitute B = 6 into C - B = 1 to get C = 7.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 6,
+              "right": 1
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "medium",
+        "score": 15,
+        "factors": {
+          "variables": 3,
+          "transformations": 3,
+          "substitutions": 2,
+          "eliminations": 0,
+          "workingMemory": 3,
+          "signedTerms": 1,
+          "arithmeticLoad": 4
+        },
+        "rationale": "3 variables, 3 transformations, 2 substitutions, 0 eliminations, working-memory load 3, 1 signed-term costs, and arithmetic load 4"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-4F717668C591",
+      "family": "scaled-sum",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "B - A = 0",
+          "coefficients": {
+            "A": -1,
+            "B": 1
+          },
+          "constant": 0
+        },
+        {
+          "display": "2 × B + 2 × A = 20",
+          "coefficients": {
+            "A": 2,
+            "B": 2
+          },
+          "constant": 20
+        }
+      ],
+      "answer": {
+        "A": 5,
+        "B": 5
+      },
+      "hint": "Simplify the equation with a common factor before combining it with the difference equation.",
+      "solutionSteps": [
+        {
+          "text": "Divide 2 × B + 2 × A = 20 by 2 to get B + A = 10.",
+          "kind": "simplify",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "/",
+              "left": 20,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Add the simplified sum and the difference equation to get B = 5.",
+          "kind": "eliminate",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 10,
+              "right": 0
+            },
+            {
+              "operator": "/",
+              "left": 10,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Use B = 5 in the sum to get A = 5.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 10,
+              "right": 5
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "medium",
+        "score": 12,
+        "factors": {
+          "variables": 2,
+          "transformations": 3,
+          "substitutions": 1,
+          "eliminations": 1,
+          "workingMemory": 2,
+          "signedTerms": 1,
+          "arithmeticLoad": 3
+        },
+        "rationale": "2 variables, 3 transformations, 1 substitutions, 1 eliminations, working-memory load 2, 1 signed-term costs, and arithmetic load 3"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-E8133C1898F5",
+      "family": "shared-term-cancellation",
+      "variables": [
+        "A",
+        "B",
+        "C"
+      ],
+      "equations": [
+        {
+          "display": "C + A = 7",
+          "coefficients": {
+            "A": 1,
+            "C": 1
+          },
+          "constant": 7
+        },
+        {
+          "display": "C + A + B = 16",
+          "coefficients": {
+            "A": 1,
+            "B": 1,
+            "C": 1
+          },
+          "constant": 16
+        },
+        {
+          "display": "C - A = 3",
+          "coefficients": {
+            "A": -1,
+            "C": 1
+          },
+          "constant": 3
+        }
+      ],
+      "answer": {
+        "A": 2,
+        "B": 9,
+        "C": 5
+      },
+      "hint": "Two equations share the same group of terms. Subtract them before doing any substitution.",
+      "solutionSteps": [
+        {
+          "text": "Subtract the shared C + A equation from the three-letter equation to get B = 9.",
+          "kind": "eliminate",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 16,
+              "right": 7
+            }
+          ]
+        },
+        {
+          "text": "Add C + A = 7 and C - A = 3 to get C = 5.",
+          "kind": "eliminate",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 7,
+              "right": 3
+            },
+            {
+              "operator": "/",
+              "left": 10,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Use C = 5 in the pair sum to get A = 2.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 7,
+              "right": 5
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "medium",
+        "score": 17,
+        "factors": {
+          "variables": 3,
+          "transformations": 3,
+          "substitutions": 1,
+          "eliminations": 2,
+          "workingMemory": 3,
+          "signedTerms": 1,
+          "arithmeticLoad": 5
+        },
+        "rationale": "3 variables, 3 transformations, 1 substitutions, 2 eliminations, working-memory load 3, 1 signed-term costs, and arithmetic load 5"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-0D8FE7B52646",
+      "family": "shared-term-cancellation",
+      "variables": [
+        "A",
+        "B",
+        "C"
+      ],
+      "equations": [
+        {
+          "display": "C - B = 0",
+          "coefficients": {
+            "B": -1,
+            "C": 1
+          },
+          "constant": 0
+        },
+        {
+          "display": "C + B = 12",
+          "coefficients": {
+            "B": 1,
+            "C": 1
+          },
+          "constant": 12
+        },
+        {
+          "display": "C + B + A = 15",
+          "coefficients": {
+            "A": 1,
+            "B": 1,
+            "C": 1
+          },
+          "constant": 15
+        }
+      ],
+      "answer": {
+        "A": 3,
+        "B": 6,
+        "C": 6
+      },
+      "hint": "Two equations share the same group of terms. Subtract them before doing any substitution.",
+      "solutionSteps": [
+        {
+          "text": "Subtract the shared C + B equation from the three-letter equation to get A = 3.",
+          "kind": "eliminate",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 15,
+              "right": 12
+            }
+          ]
+        },
+        {
+          "text": "Add C + B = 12 and C - B = 0 to get C = 6.",
+          "kind": "eliminate",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 12,
+              "right": 0
+            },
+            {
+              "operator": "/",
+              "left": 12,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Use C = 6 in the pair sum to get B = 6.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 12,
+              "right": 6
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "medium",
+        "score": 17,
+        "factors": {
+          "variables": 3,
+          "transformations": 3,
+          "substitutions": 1,
+          "eliminations": 2,
+          "workingMemory": 3,
+          "signedTerms": 1,
+          "arithmeticLoad": 5
+        },
+        "rationale": "3 variables, 3 transformations, 1 substitutions, 2 eliminations, working-memory load 3, 1 signed-term costs, and arithmetic load 5"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-3A6D08ACFABE",
+      "family": "variables-both-sides",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "2 × B + A = B + 9",
+          "coefficients": {
+            "A": 1,
+            "B": 1
+          },
+          "constant": 9
+        },
+        {
+          "display": "A - B = 5",
+          "coefficients": {
+            "A": 1,
+            "B": -1
+          },
+          "constant": 5
+        }
+      ],
+      "answer": {
+        "A": 7,
+        "B": 2
+      },
+      "hint": "First simplify the equation that has the same letter on both sides.",
+      "solutionSteps": [
+        {
+          "text": "Subtract B from both sides of 2 × B + A = 9 + B; it becomes B + A = 9.",
+          "kind": "simplify",
+          "memory": 2,
+          "signedTerms": 1
+        },
+        {
+          "text": "From A - B = 5, use A = B +5 in the simplified sum.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 1
+        },
+        {
+          "text": "Solve 2 × B +5 = 9 to get B = 2, then A = 7.",
+          "kind": "isolate",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 9,
+              "right": 5
+            },
+            {
+              "operator": "/",
+              "left": 4,
+              "right": 2
+            },
+            {
+              "operator": "+",
+              "left": 2,
+              "right": 5
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "medium",
+        "score": 12,
+        "factors": {
+          "variables": 2,
+          "transformations": 3,
+          "substitutions": 1,
+          "eliminations": 0,
+          "workingMemory": 2,
+          "signedTerms": 2,
+          "arithmeticLoad": 3
+        },
+        "rationale": "2 variables, 3 transformations, 1 substitutions, 0 eliminations, working-memory load 2, 2 signed-term costs, and arithmetic load 3"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-C248AC4B8495",
+      "family": "variables-both-sides",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "A - B = 2",
+          "coefficients": {
+            "A": 1,
+            "B": -1
+          },
+          "constant": 2
+        },
+        {
+          "display": "2 × B + A = B + 8",
+          "coefficients": {
+            "A": 1,
+            "B": 1
+          },
+          "constant": 8
+        }
+      ],
+      "answer": {
+        "A": 5,
+        "B": 3
+      },
+      "hint": "First simplify the equation that has the same letter on both sides.",
+      "solutionSteps": [
+        {
+          "text": "Subtract B from both sides of 2 × B + A = 8 + B; it becomes B + A = 8.",
+          "kind": "simplify",
+          "memory": 2,
+          "signedTerms": 1
+        },
+        {
+          "text": "From A - B = 2, use A = B +2 in the simplified sum.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 1
+        },
+        {
+          "text": "Solve 2 × B +2 = 8 to get B = 3, then A = 5.",
+          "kind": "isolate",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 8,
+              "right": 2
+            },
+            {
+              "operator": "/",
+              "left": 6,
+              "right": 2
+            },
+            {
+              "operator": "+",
+              "left": 3,
+              "right": 2
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "medium",
+        "score": 12,
+        "factors": {
+          "variables": 2,
+          "transformations": 3,
+          "substitutions": 1,
+          "eliminations": 0,
+          "workingMemory": 2,
+          "signedTerms": 2,
+          "arithmeticLoad": 3
+        },
+        "rationale": "2 variables, 3 transformations, 1 substitutions, 0 eliminations, working-memory load 2, 2 signed-term costs, and arithmetic load 3"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-2149DA3A56B9",
+      "family": "near-cancellation",
+      "variables": [
+        "A",
+        "B",
+        "C"
+      ],
+      "equations": [
+        {
+          "display": "B + C = 12",
+          "coefficients": {
+            "B": 1,
+            "C": 1
+          },
+          "constant": 12
+        },
+        {
+          "display": "2 × B + C = 18",
+          "coefficients": {
+            "B": 2,
+            "C": 1
+          },
+          "constant": 18
+        },
+        {
+          "display": "A - B = 0",
+          "coefficients": {
+            "A": 1,
+            "B": -1
+          },
+          "constant": 0
+        }
+      ],
+      "answer": {
+        "A": 6,
+        "B": 6,
+        "C": 6
+      },
+      "hint": "Compare the two similar equations instead of solving either one in isolation.",
+      "solutionSteps": [
+        {
+          "text": "Subtract the two equations; every C term cancels and B = 6.",
+          "kind": "eliminate",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 18,
+              "right": 12
+            }
+          ]
+        },
+        {
+          "text": "Use B = 6 in B + C = 12 to get C = 6.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 12,
+              "right": 6
+            }
+          ]
+        },
+        {
+          "text": "Substitute B = 6 into A - B = 0 to get A = 6.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 6,
+              "right": 0
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "medium",
+        "score": 15,
+        "factors": {
+          "variables": 3,
+          "transformations": 3,
+          "substitutions": 2,
+          "eliminations": 1,
+          "workingMemory": 3,
+          "signedTerms": 0,
+          "arithmeticLoad": 4
+        },
+        "rationale": "3 variables, 3 transformations, 2 substitutions, 1 eliminations, working-memory load 3, 0 signed-term costs, and arithmetic load 4"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-C60EC745B774",
+      "family": "near-cancellation",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "2 × B + A = 12",
+          "coefficients": {
+            "A": 1,
+            "B": 2
+          },
+          "constant": 12
+        },
+        {
+          "display": "B + A = 7",
+          "coefficients": {
+            "A": 1,
+            "B": 1
+          },
+          "constant": 7
+        }
+      ],
+      "answer": {
+        "A": 2,
+        "B": 5
+      },
+      "hint": "Compare the two similar equations instead of solving either one in isolation.",
+      "solutionSteps": [
+        {
+          "text": "Subtract the two equations; every A term cancels and B = 5.",
+          "kind": "eliminate",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 12,
+              "right": 7
+            }
+          ]
+        },
+        {
+          "text": "Use B = 5 in B + A = 7 to get A = 2.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 7,
+              "right": 5
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "medium",
+        "score": 10,
+        "factors": {
+          "variables": 2,
+          "transformations": 2,
+          "substitutions": 1,
+          "eliminations": 1,
+          "workingMemory": 2,
+          "signedTerms": 0,
+          "arithmeticLoad": 3
+        },
+        "rationale": "2 variables, 2 transformations, 1 substitutions, 1 eliminations, working-memory load 2, 0 signed-term costs, and arithmetic load 3"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-CF91C00F3C43",
+      "family": "affine-chain",
+      "variables": [
+        "A",
+        "B",
+        "C"
+      ],
+      "equations": [
+        {
+          "display": "10 = A + 4",
+          "coefficients": {
+            "A": -1
+          },
+          "constant": -6
+        },
+        {
+          "display": "C + 20 = 4 × A",
+          "coefficients": {
+            "A": -4,
+            "C": 1
+          },
+          "constant": -20
+        },
+        {
+          "display": "B - 2 = 2 × C",
+          "coefficients": {
+            "B": 1,
+            "C": -2
+          },
+          "constant": 2
+        }
+      ],
+      "answer": {
+        "A": 6,
+        "B": 10,
+        "C": 4
+      },
+      "hint": "Start with the direct equation. Each remaining relationship contains one value already found and one new letter.",
+      "solutionSteps": [
+        {
+          "text": "Use the direct equation to subtract 4 and get A = 6.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 10,
+              "right": 4
+            }
+          ]
+        },
+        {
+          "text": "Substitute A = 6, calculate 4 × 6, and isolate C = 4.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "×",
+              "left": 4,
+              "right": 6
+            },
+            {
+              "operator": "-",
+              "left": 24,
+              "right": 20
+            }
+          ]
+        },
+        {
+          "text": "Substitute C = 4, calculate 2 × 4, and isolate B = 10.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "×",
+              "left": 2,
+              "right": 4
+            },
+            {
+              "operator": "-",
+              "left": 8,
+              "right": -2
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "medium",
+        "score": 17,
+        "factors": {
+          "variables": 3,
+          "transformations": 3,
+          "substitutions": 2,
+          "eliminations": 0,
+          "workingMemory": 3,
+          "signedTerms": 1,
+          "arithmeticLoad": 6
+        },
+        "rationale": "3 variables, 3 transformations, 2 substitutions, 0 eliminations, working-memory load 3, 1 signed-term costs, and arithmetic load 6"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-1328CC7841A2",
+      "family": "anchored-chain",
+      "variables": [
+        "A",
+        "B",
+        "C"
+      ],
+      "equations": [
+        {
+          "display": "B - C = -6",
+          "coefficients": {
+            "B": 1,
+            "C": -1
+          },
+          "constant": -6
+        },
+        {
+          "display": "C + 2 = 10",
+          "coefficients": {
+            "C": 1
+          },
+          "constant": 8
+        },
+        {
+          "display": "A - B = 1",
+          "coefficients": {
+            "A": 1,
+            "B": -1
+          },
+          "constant": 1
+        }
+      ],
+      "answer": {
+        "A": 3,
+        "B": 2,
+        "C": 8
+      },
+      "hint": "Find the one directly solvable letter, then follow the dependency chain. Equation order is not chain order.",
+      "solutionSteps": [
+        {
+          "text": "Use the direct equation to subtract 2 and get C = 8.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 10,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Substitute C = 8 into B - C = -6 to get B = 2.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 8,
+              "right": -6
+            }
+          ]
+        },
+        {
+          "text": "Substitute B = 2 into A - B = 1 to get A = 3.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 2,
+              "right": 1
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "medium",
+        "score": 14,
+        "factors": {
+          "variables": 3,
+          "transformations": 3,
+          "substitutions": 2,
+          "eliminations": 0,
+          "workingMemory": 3,
+          "signedTerms": 1,
+          "arithmeticLoad": 3
+        },
+        "rationale": "3 variables, 3 transformations, 2 substitutions, 0 eliminations, working-memory load 3, 1 signed-term costs, and arithmetic load 3"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-6877E593D853",
+      "family": "near-cancellation",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "B + A = 8",
+          "coefficients": {
+            "A": 1,
+            "B": 1
+          },
+          "constant": 8
+        },
+        {
+          "display": "2 × B + A = 14",
+          "coefficients": {
+            "A": 1,
+            "B": 2
+          },
+          "constant": 14
+        }
+      ],
+      "answer": {
+        "A": 2,
+        "B": 6
+      },
+      "hint": "Compare the two similar equations instead of solving either one in isolation.",
+      "solutionSteps": [
+        {
+          "text": "Subtract the two equations; every A term cancels and B = 6.",
+          "kind": "eliminate",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 14,
+              "right": 8
+            }
+          ]
+        },
+        {
+          "text": "Use B = 6 in B + A = 8 to get A = 2.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 8,
+              "right": 6
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "medium",
+        "score": 10,
+        "factors": {
+          "variables": 2,
+          "transformations": 2,
+          "substitutions": 1,
+          "eliminations": 1,
+          "workingMemory": 2,
+          "signedTerms": 0,
+          "arithmeticLoad": 3
+        },
+        "rationale": "2 variables, 2 transformations, 1 substitutions, 1 eliminations, working-memory load 2, 0 signed-term costs, and arithmetic load 3"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-CA81D6E06F90",
+      "family": "scaled-sum",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "2 × B + 2 × A = 34",
+          "coefficients": {
+            "A": 2,
+            "B": 2
+          },
+          "constant": 34
+        },
+        {
+          "display": "B - A = -3",
+          "coefficients": {
+            "A": -1,
+            "B": 1
+          },
+          "constant": -3
+        }
+      ],
+      "answer": {
+        "A": 10,
+        "B": 7
+      },
+      "hint": "Simplify the equation with a common factor before combining it with the difference equation.",
+      "solutionSteps": [
+        {
+          "text": "Divide 2 × B + 2 × A = 34 by 2 to get B + A = 17.",
+          "kind": "simplify",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "/",
+              "left": 34,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Add the simplified sum and the difference equation to get B = 7.",
+          "kind": "eliminate",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 17,
+              "right": -3
+            },
+            {
+              "operator": "/",
+              "left": 14,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Use B = 7 in the sum to get A = 10.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 17,
+              "right": 7
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "medium",
+        "score": 15,
+        "factors": {
+          "variables": 2,
+          "transformations": 3,
+          "substitutions": 1,
+          "eliminations": 1,
+          "workingMemory": 2,
+          "signedTerms": 1,
+          "arithmeticLoad": 6
+        },
+        "rationale": "2 variables, 3 transformations, 1 substitutions, 1 eliminations, working-memory load 2, 1 signed-term costs, and arithmetic load 6"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-479399B2F760",
+      "family": "sum-difference",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "B - A = -7",
+          "coefficients": {
+            "A": -1,
+            "B": 1
+          },
+          "constant": -7
+        },
+        {
+          "display": "B + A = 13",
+          "coefficients": {
+            "A": 1,
+            "B": 1
+          },
+          "constant": 13
+        }
+      ],
+      "answer": {
+        "A": 10,
+        "B": 3
+      },
+      "hint": "Look for two equations whose addition or subtraction removes one letter.",
+      "solutionSteps": [
+        {
+          "text": "Add the two equations to eliminate A: 2 × B = 6, so B = 3.",
+          "kind": "eliminate",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 13,
+              "right": -7
+            },
+            {
+              "operator": "/",
+              "left": 6,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Substitute B = 3 into B + A = 13 to get A = 10.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 13,
+              "right": 3
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "medium",
+        "score": 13,
+        "factors": {
+          "variables": 2,
+          "transformations": 2,
+          "substitutions": 1,
+          "eliminations": 1,
+          "workingMemory": 2,
+          "signedTerms": 1,
+          "arithmeticLoad": 5
+        },
+        "rationale": "2 variables, 2 transformations, 1 substitutions, 1 eliminations, working-memory load 2, 1 signed-term costs, and arithmetic load 5"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-9E9519AAAF85",
+      "family": "near-cancellation",
+      "variables": [
+        "A",
+        "B",
+        "C"
+      ],
+      "equations": [
+        {
+          "display": "2 × B + C = 15",
+          "coefficients": {
+            "B": 2,
+            "C": 1
+          },
+          "constant": 15
+        },
+        {
+          "display": "A - B = 6",
+          "coefficients": {
+            "A": 1,
+            "B": -1
+          },
+          "constant": 6
+        },
+        {
+          "display": "B + C = 11",
+          "coefficients": {
+            "B": 1,
+            "C": 1
+          },
+          "constant": 11
+        }
+      ],
+      "answer": {
+        "A": 10,
+        "B": 4,
+        "C": 7
+      },
+      "hint": "Compare the two similar equations instead of solving either one in isolation.",
+      "solutionSteps": [
+        {
+          "text": "Subtract the two equations; every C term cancels and B = 4.",
+          "kind": "eliminate",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 15,
+              "right": 11
+            }
+          ]
+        },
+        {
+          "text": "Use B = 4 in B + C = 11 to get C = 7.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 11,
+              "right": 4
+            }
+          ]
+        },
+        {
+          "text": "Substitute B = 4 into A - B = 6 to get A = 10.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 4,
+              "right": 6
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "medium",
+        "score": 16,
+        "factors": {
+          "variables": 3,
+          "transformations": 3,
+          "substitutions": 2,
+          "eliminations": 1,
+          "workingMemory": 3,
+          "signedTerms": 0,
+          "arithmeticLoad": 5
+        },
+        "rationale": "3 variables, 3 transformations, 2 substitutions, 1 eliminations, working-memory load 3, 0 signed-term costs, and arithmetic load 5"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-357CF442CDCD",
+      "family": "sum-difference",
+      "variables": [
+        "A",
+        "B",
+        "C"
+      ],
+      "equations": [
+        {
+          "display": "C + B = 9",
+          "coefficients": {
+            "B": 1,
+            "C": 1
+          },
+          "constant": 9
+        },
+        {
+          "display": "A - C = 0",
+          "coefficients": {
+            "A": 1,
+            "C": -1
+          },
+          "constant": 0
+        },
+        {
+          "display": "C - B = -5",
+          "coefficients": {
+            "B": -1,
+            "C": 1
+          },
+          "constant": -5
+        }
+      ],
+      "answer": {
+        "A": 2,
+        "B": 7,
+        "C": 2
+      },
+      "hint": "Look for two equations whose addition or subtraction removes one letter.",
+      "solutionSteps": [
+        {
+          "text": "Add the two equations to eliminate B: 2 × C = 4, so C = 2.",
+          "kind": "eliminate",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 9,
+              "right": -5
+            },
+            {
+              "operator": "/",
+              "left": 4,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Substitute C = 2 into C + B = 9 to get B = 7.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 9,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Substitute C = 2 into A - C = 0 to get A = 2.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 2,
+              "right": 0
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "medium",
+        "score": 15,
+        "factors": {
+          "variables": 3,
+          "transformations": 3,
+          "substitutions": 2,
+          "eliminations": 1,
+          "workingMemory": 3,
+          "signedTerms": 1,
+          "arithmeticLoad": 3
+        },
+        "rationale": "3 variables, 3 transformations, 2 substitutions, 1 eliminations, working-memory load 3, 1 signed-term costs, and arithmetic load 3"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-3DF6006235DA",
+      "family": "sum-difference",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "B + A = 10",
+          "coefficients": {
+            "A": 1,
+            "B": 1
+          },
+          "constant": 10
+        },
+        {
+          "display": "B - A = -4",
+          "coefficients": {
+            "A": -1,
+            "B": 1
+          },
+          "constant": -4
+        }
+      ],
+      "answer": {
+        "A": 7,
+        "B": 3
+      },
+      "hint": "Look for two equations whose addition or subtraction removes one letter.",
+      "solutionSteps": [
+        {
+          "text": "Add the two equations to eliminate A: 2 × B = 6, so B = 3.",
+          "kind": "eliminate",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 10,
+              "right": -4
+            },
+            {
+              "operator": "/",
+              "left": 6,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Substitute B = 3 into B + A = 10 to get A = 7.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 10,
+              "right": 3
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "medium",
+        "score": 11,
+        "factors": {
+          "variables": 2,
+          "transformations": 2,
+          "substitutions": 1,
+          "eliminations": 1,
+          "workingMemory": 2,
+          "signedTerms": 1,
+          "arithmeticLoad": 3
+        },
+        "rationale": "2 variables, 2 transformations, 1 substitutions, 1 eliminations, working-memory load 2, 1 signed-term costs, and arithmetic load 3"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-FCFA84025FF2",
+      "family": "shared-term-cancellation",
+      "variables": [
+        "A",
+        "B",
+        "C"
+      ],
+      "equations": [
+        {
+          "display": "B + A + C = 15",
+          "coefficients": {
+            "A": 1,
+            "B": 1,
+            "C": 1
+          },
+          "constant": 15
+        },
+        {
+          "display": "B - A = 1",
+          "coefficients": {
+            "A": -1,
+            "B": 1
+          },
+          "constant": 1
+        },
+        {
+          "display": "B + A = 9",
+          "coefficients": {
+            "A": 1,
+            "B": 1
+          },
+          "constant": 9
+        }
+      ],
+      "answer": {
+        "A": 4,
+        "B": 5,
+        "C": 6
+      },
+      "hint": "Two equations share the same group of terms. Subtract them before doing any substitution.",
+      "solutionSteps": [
+        {
+          "text": "Subtract the shared B + A equation from the three-letter equation to get C = 6.",
+          "kind": "eliminate",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 15,
+              "right": 9
+            }
+          ]
+        },
+        {
+          "text": "Add B + A = 9 and B - A = 1 to get B = 5.",
+          "kind": "eliminate",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 9,
+              "right": 1
+            },
+            {
+              "operator": "/",
+              "left": 10,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Use B = 5 in the pair sum to get A = 4.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 9,
+              "right": 5
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "medium",
+        "score": 17,
+        "factors": {
+          "variables": 3,
+          "transformations": 3,
+          "substitutions": 1,
+          "eliminations": 2,
+          "workingMemory": 3,
+          "signedTerms": 1,
+          "arithmeticLoad": 5
+        },
+        "rationale": "3 variables, 3 transformations, 1 substitutions, 2 eliminations, working-memory load 3, 1 signed-term costs, and arithmetic load 5"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-B86BF00F879B",
+      "family": "affine-chain",
+      "variables": [
+        "A",
+        "B",
+        "C"
+      ],
+      "equations": [
+        {
+          "display": "C - 1 = 4 × A",
+          "coefficients": {
+            "A": -4,
+            "C": 1
+          },
+          "constant": 1
+        },
+        {
+          "display": "B + 3 = 13",
+          "coefficients": {
+            "B": 1
+          },
+          "constant": 10
+        },
+        {
+          "display": "A + 18 = 2 × B",
+          "coefficients": {
+            "A": 1,
+            "B": -2
+          },
+          "constant": -18
+        }
+      ],
+      "answer": {
+        "A": 2,
+        "B": 10,
+        "C": 9
+      },
+      "hint": "Start with the direct equation. Each remaining relationship contains one value already found and one new letter.",
+      "solutionSteps": [
+        {
+          "text": "Use the direct equation to subtract 3 and get B = 10.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 13,
+              "right": 3
+            }
+          ]
+        },
+        {
+          "text": "Substitute B = 10, calculate 2 × 10, and isolate A = 2.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "×",
+              "left": 2,
+              "right": 10
+            },
+            {
+              "operator": "-",
+              "left": 20,
+              "right": 18
+            }
+          ]
+        },
+        {
+          "text": "Substitute A = 2, calculate 4 × 2, and isolate C = 9.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "×",
+              "left": 4,
+              "right": 2
+            },
+            {
+              "operator": "-",
+              "left": 8,
+              "right": -1
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "medium",
+        "score": 17,
+        "factors": {
+          "variables": 3,
+          "transformations": 3,
+          "substitutions": 2,
+          "eliminations": 0,
+          "workingMemory": 3,
+          "signedTerms": 1,
+          "arithmeticLoad": 6
+        },
+        "rationale": "3 variables, 3 transformations, 2 substitutions, 0 eliminations, working-memory load 3, 1 signed-term costs, and arithmetic load 6"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-D123DCA9E985",
+      "family": "variables-both-sides",
+      "variables": [
+        "A",
+        "B",
+        "C"
+      ],
+      "equations": [
+        {
+          "display": "C - B = 1",
+          "coefficients": {
+            "B": -1,
+            "C": 1
+          },
+          "constant": 1
+        },
+        {
+          "display": "2 × B + A = B + 7",
+          "coefficients": {
+            "A": 1,
+            "B": 1
+          },
+          "constant": 7
+        },
+        {
+          "display": "A - B = 3",
+          "coefficients": {
+            "A": 1,
+            "B": -1
+          },
+          "constant": 3
+        }
+      ],
+      "answer": {
+        "A": 5,
+        "B": 2,
+        "C": 3
+      },
+      "hint": "First simplify the equation that has the same letter on both sides.",
+      "solutionSteps": [
+        {
+          "text": "Subtract B from both sides of 2 × B + A = 7 + B; it becomes B + A = 7.",
+          "kind": "simplify",
+          "memory": 2,
+          "signedTerms": 1
+        },
+        {
+          "text": "From A - B = 3, use A = B +3 in the simplified sum.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 1
+        },
+        {
+          "text": "Solve 2 × B +3 = 7 to get B = 2, then A = 5.",
+          "kind": "isolate",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 7,
+              "right": 3
+            },
+            {
+              "operator": "/",
+              "left": 4,
+              "right": 2
+            },
+            {
+              "operator": "+",
+              "left": 2,
+              "right": 3
+            }
+          ]
+        },
+        {
+          "text": "Substitute B = 2 into C - B = 1 to get C = 3.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 2,
+              "right": 1
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "medium",
+        "score": 17,
+        "factors": {
+          "variables": 3,
+          "transformations": 4,
+          "substitutions": 2,
+          "eliminations": 0,
+          "workingMemory": 3,
+          "signedTerms": 2,
+          "arithmeticLoad": 4
+        },
+        "rationale": "3 variables, 4 transformations, 2 substitutions, 0 eliminations, working-memory load 3, 2 signed-term costs, and arithmetic load 4"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-F8E8A6437380",
+      "family": "difference-cycle",
+      "variables": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "equations": [
+        {
+          "display": "D - B = 1",
+          "coefficients": {
+            "B": -1,
+            "D": 1
+          },
+          "constant": 1
+        },
+        {
+          "display": "B - C = -1",
+          "coefficients": {
+            "B": 1,
+            "C": -1
+          },
+          "constant": -1
+        },
+        {
+          "display": "C - A = 2",
+          "coefficients": {
+            "A": -1,
+            "C": 1
+          },
+          "constant": 2
+        },
+        {
+          "display": "B + C + A = 27",
+          "coefficients": {
+            "A": 1,
+            "B": 1,
+            "C": 1
+          },
+          "constant": 27
+        }
+      ],
+      "answer": {
+        "A": 8,
+        "B": 9,
+        "C": 10,
+        "D": 10
+      },
+      "hint": "Turn the two difference equations into expressions for the three-letter total.",
+      "solutionSteps": [
+        {
+          "text": "Write C = A +2 and B = C -1, then express both in terms of A.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 2
+        },
+        {
+          "text": "Substitute those expressions into the total: 3 × A +3 = 27, so A = 8.",
+          "kind": "isolate",
+          "memory": 3,
+          "signedTerms": 2,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 27,
+              "right": 3
+            },
+            {
+              "operator": "/",
+              "left": 24,
+              "right": 3
+            }
+          ]
+        },
+        {
+          "text": "Use A = 8 to get C = 10, then B = 9.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 8,
+              "right": 2
+            },
+            {
+              "operator": "+",
+              "left": 10,
+              "right": -1
+            }
+          ]
+        },
+        {
+          "text": "Substitute B = 9 into D - B = 1 to get D = 10.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 9,
+              "right": 1
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "high",
+        "score": 24,
+        "factors": {
+          "variables": 4,
+          "transformations": 4,
+          "substitutions": 3,
+          "eliminations": 0,
+          "workingMemory": 3,
+          "signedTerms": 4,
+          "arithmeticLoad": 7
+        },
+        "rationale": "4 variables, 4 transformations, 3 substitutions, 0 eliminations, working-memory load 3, 4 signed-term costs, and arithmetic load 7"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-9312779EDA15",
+      "family": "substitution-pair",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "A + B = 19",
+          "coefficients": {
+            "A": 1,
+            "B": 1
+          },
+          "constant": 19
+        },
+        {
+          "display": "A = 4 × B - 26",
+          "coefficients": {
+            "A": 1,
+            "B": -4
+          },
+          "constant": -26
+        }
+      ],
+      "answer": {
+        "A": 10,
+        "B": 9
+      },
+      "hint": "One equation already expresses a letter in terms of another. Put that expression into the sum equation.",
+      "solutionSteps": [
+        {
+          "text": "Replace A with 4 × B -26 in the sum equation.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 1
+        },
+        {
+          "text": "Solve 5 × B -26 = 19 to get B = 9.",
+          "kind": "isolate",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 19,
+              "right": -26
+            },
+            {
+              "operator": "/",
+              "left": 45,
+              "right": 5
+            }
+          ]
+        },
+        {
+          "text": "Use B = 9 in A = 4 × B -26 to get A = 10.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "×",
+              "left": 4,
+              "right": 9
+            },
+            {
+              "operator": "+",
+              "left": 36,
+              "right": -26
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "high",
+        "score": 18,
+        "factors": {
+          "variables": 2,
+          "transformations": 3,
+          "substitutions": 2,
+          "eliminations": 0,
+          "workingMemory": 2,
+          "signedTerms": 3,
+          "arithmeticLoad": 7
+        },
+        "rationale": "2 variables, 3 transformations, 2 substitutions, 0 eliminations, working-memory load 2, 3 signed-term costs, and arithmetic load 7"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-DA5C37D7D6A3",
+      "family": "scaled-sum",
+      "variables": [
+        "A",
+        "B",
+        "C"
+      ],
+      "equations": [
+        {
+          "display": "C - A = 0",
+          "coefficients": {
+            "A": -1,
+            "C": 1
+          },
+          "constant": 0
+        },
+        {
+          "display": "2 × A + 2 × B = 26",
+          "coefficients": {
+            "A": 2,
+            "B": 2
+          },
+          "constant": 26
+        },
+        {
+          "display": "A - B = -3",
+          "coefficients": {
+            "A": 1,
+            "B": -1
+          },
+          "constant": -3
+        }
+      ],
+      "answer": {
+        "A": 5,
+        "B": 8,
+        "C": 5
+      },
+      "hint": "Simplify the equation with a common factor before combining it with the difference equation.",
+      "solutionSteps": [
+        {
+          "text": "Divide 2 × A + 2 × B = 26 by 2 to get A + B = 13.",
+          "kind": "simplify",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "/",
+              "left": 26,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Add the simplified sum and the difference equation to get A = 5.",
+          "kind": "eliminate",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 13,
+              "right": -3
+            },
+            {
+              "operator": "/",
+              "left": 10,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Use A = 5 in the sum to get B = 8.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 13,
+              "right": 5
+            }
+          ]
+        },
+        {
+          "text": "Substitute A = 5 into C - A = 0 to get C = 5.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 5,
+              "right": 0
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "high",
+        "score": 19,
+        "factors": {
+          "variables": 3,
+          "transformations": 4,
+          "substitutions": 2,
+          "eliminations": 1,
+          "workingMemory": 3,
+          "signedTerms": 1,
+          "arithmeticLoad": 6
+        },
+        "rationale": "3 variables, 4 transformations, 2 substitutions, 1 eliminations, working-memory load 3, 1 signed-term costs, and arithmetic load 6"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-C46A9B202482",
+      "family": "difference-cycle",
+      "variables": [
+        "A",
+        "B",
+        "C"
+      ],
+      "equations": [
+        {
+          "display": "B + A + C = 21",
+          "coefficients": {
+            "A": 1,
+            "B": 1,
+            "C": 1
+          },
+          "constant": 21
+        },
+        {
+          "display": "B - A = -3",
+          "coefficients": {
+            "A": -1,
+            "B": 1
+          },
+          "constant": -3
+        },
+        {
+          "display": "A - C = 3",
+          "coefficients": {
+            "A": 1,
+            "C": -1
+          },
+          "constant": 3
+        }
+      ],
+      "answer": {
+        "A": 9,
+        "B": 6,
+        "C": 6
+      },
+      "hint": "Turn the two difference equations into expressions for the three-letter total.",
+      "solutionSteps": [
+        {
+          "text": "Write A = C +3 and B = A -3, then express both in terms of C.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 2
+        },
+        {
+          "text": "Substitute those expressions into the total: 3 × C +3 = 21, so C = 6.",
+          "kind": "isolate",
+          "memory": 3,
+          "signedTerms": 2,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 21,
+              "right": 3
+            },
+            {
+              "operator": "/",
+              "left": 18,
+              "right": 3
+            }
+          ]
+        },
+        {
+          "text": "Use C = 6 to get A = 9, then B = 6.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 6,
+              "right": 3
+            },
+            {
+              "operator": "+",
+              "left": 9,
+              "right": -3
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "high",
+        "score": 20,
+        "factors": {
+          "variables": 3,
+          "transformations": 3,
+          "substitutions": 2,
+          "eliminations": 0,
+          "workingMemory": 3,
+          "signedTerms": 4,
+          "arithmeticLoad": 6
+        },
+        "rationale": "3 variables, 3 transformations, 2 substitutions, 0 eliminations, working-memory load 3, 4 signed-term costs, and arithmetic load 6"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-FEB02DF2CC7B",
+      "family": "substitution-pair",
+      "variables": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "equations": [
+        {
+          "display": "B = 2 × A - 11",
+          "coefficients": {
+            "A": -2,
+            "B": 1
+          },
+          "constant": -11
+        },
+        {
+          "display": "C - B = 3",
+          "coefficients": {
+            "B": -1,
+            "C": 1
+          },
+          "constant": 3
+        },
+        {
+          "display": "B + A = 13",
+          "coefficients": {
+            "A": 1,
+            "B": 1
+          },
+          "constant": 13
+        },
+        {
+          "display": "D - A = -6",
+          "coefficients": {
+            "A": -1,
+            "D": 1
+          },
+          "constant": -6
+        }
+      ],
+      "answer": {
+        "A": 8,
+        "B": 5,
+        "C": 8,
+        "D": 2
+      },
+      "hint": "One equation already expresses a letter in terms of another. Put that expression into the sum equation.",
+      "solutionSteps": [
+        {
+          "text": "Replace B with 2 × A -11 in the sum equation.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 1
+        },
+        {
+          "text": "Solve 3 × A -11 = 13 to get A = 8.",
+          "kind": "isolate",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 13,
+              "right": -11
+            },
+            {
+              "operator": "/",
+              "left": 24,
+              "right": 3
+            }
+          ]
+        },
+        {
+          "text": "Use A = 8 in B = 2 × A -11 to get B = 5.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "×",
+              "left": 2,
+              "right": 8
+            },
+            {
+              "operator": "+",
+              "left": 16,
+              "right": -11
+            }
+          ]
+        },
+        {
+          "text": "Substitute B = 5 into C - B = 3 to get C = 8.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 5,
+              "right": 3
+            }
+          ]
+        },
+        {
+          "text": "Substitute A = 8 into D - A = -6 to get D = 2.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 8,
+              "right": -6
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "high",
+        "score": 28,
+        "factors": {
+          "variables": 4,
+          "transformations": 5,
+          "substitutions": 4,
+          "eliminations": 0,
+          "workingMemory": 3,
+          "signedTerms": 4,
+          "arithmeticLoad": 9
+        },
+        "rationale": "4 variables, 5 transformations, 4 substitutions, 0 eliminations, working-memory load 3, 4 signed-term costs, and arithmetic load 9"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-670106FFAD4A",
+      "family": "shared-term-cancellation",
+      "variables": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "equations": [
+        {
+          "display": "A + C + B = 19",
+          "coefficients": {
+            "A": 1,
+            "B": 1,
+            "C": 1
+          },
+          "constant": 19
+        },
+        {
+          "display": "A - C = 3",
+          "coefficients": {
+            "A": 1,
+            "C": -1
+          },
+          "constant": 3
+        },
+        {
+          "display": "A + C = 15",
+          "coefficients": {
+            "A": 1,
+            "C": 1
+          },
+          "constant": 15
+        },
+        {
+          "display": "D - B = 2",
+          "coefficients": {
+            "B": -1,
+            "D": 1
+          },
+          "constant": 2
+        }
+      ],
+      "answer": {
+        "A": 9,
+        "B": 4,
+        "C": 6,
+        "D": 6
+      },
+      "hint": "Two equations share the same group of terms. Subtract them before doing any substitution.",
+      "solutionSteps": [
+        {
+          "text": "Subtract the shared A + C equation from the three-letter equation to get B = 4.",
+          "kind": "eliminate",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 19,
+              "right": 15
+            }
+          ]
+        },
+        {
+          "text": "Add A + C = 15 and A - C = 3 to get A = 9.",
+          "kind": "eliminate",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 15,
+              "right": 3
+            },
+            {
+              "operator": "/",
+              "left": 18,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Use A = 9 in the pair sum to get C = 6.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 15,
+              "right": 9
+            }
+          ]
+        },
+        {
+          "text": "Substitute B = 4 into D - B = 2 to get D = 6.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 4,
+              "right": 2
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "high",
+        "score": 23,
+        "factors": {
+          "variables": 4,
+          "transformations": 4,
+          "substitutions": 2,
+          "eliminations": 2,
+          "workingMemory": 3,
+          "signedTerms": 1,
+          "arithmeticLoad": 8
+        },
+        "rationale": "4 variables, 4 transformations, 2 substitutions, 2 eliminations, working-memory load 3, 1 signed-term costs, and arithmetic load 8"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-EDBC568F7DA3",
+      "family": "difference-cycle",
+      "variables": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "equations": [
+        {
+          "display": "D - C = 1",
+          "coefficients": {
+            "C": -1,
+            "D": 1
+          },
+          "constant": 1
+        },
+        {
+          "display": "A - C = -2",
+          "coefficients": {
+            "A": 1,
+            "C": -1
+          },
+          "constant": -2
+        },
+        {
+          "display": "B - D = -3",
+          "coefficients": {
+            "B": 1,
+            "D": -1
+          },
+          "constant": -3
+        },
+        {
+          "display": "B + D + C = 23",
+          "coefficients": {
+            "B": 1,
+            "C": 1,
+            "D": 1
+          },
+          "constant": 23
+        }
+      ],
+      "answer": {
+        "A": 6,
+        "B": 6,
+        "C": 8,
+        "D": 9
+      },
+      "hint": "Turn the two difference equations into expressions for the three-letter total.",
+      "solutionSteps": [
+        {
+          "text": "Write D = C +1 and B = D -3, then express both in terms of C.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 2
+        },
+        {
+          "text": "Substitute those expressions into the total: 3 × C -1 = 23, so C = 8.",
+          "kind": "isolate",
+          "memory": 3,
+          "signedTerms": 2,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 23,
+              "right": -1
+            },
+            {
+              "operator": "/",
+              "left": 24,
+              "right": 3
+            }
+          ]
+        },
+        {
+          "text": "Use C = 8 to get D = 9, then B = 6.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 8,
+              "right": 1
+            },
+            {
+              "operator": "+",
+              "left": 9,
+              "right": -3
+            }
+          ]
+        },
+        {
+          "text": "Substitute C = 8 into A - C = -2 to get A = 6.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 8,
+              "right": -2
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "high",
+        "score": 25,
+        "factors": {
+          "variables": 4,
+          "transformations": 4,
+          "substitutions": 3,
+          "eliminations": 0,
+          "workingMemory": 3,
+          "signedTerms": 5,
+          "arithmeticLoad": 7
+        },
+        "rationale": "4 variables, 4 transformations, 3 substitutions, 0 eliminations, working-memory load 3, 5 signed-term costs, and arithmetic load 7"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-E72F343A5AD8",
+      "family": "triangle-pair-sums",
+      "variables": [
+        "A",
+        "B",
+        "C"
+      ],
+      "equations": [
+        {
+          "display": "A + C = 12",
+          "coefficients": {
+            "A": 1,
+            "C": 1
+          },
+          "constant": 12
+        },
+        {
+          "display": "B + C = 15",
+          "coefficients": {
+            "B": 1,
+            "C": 1
+          },
+          "constant": 15
+        },
+        {
+          "display": "B + A = 7",
+          "coefficients": {
+            "A": 1,
+            "B": 1
+          },
+          "constant": 7
+        }
+      ],
+      "answer": {
+        "A": 2,
+        "B": 5,
+        "C": 10
+      },
+      "hint": "All three equations are pair sums. Combine all three so that two letters cancel.",
+      "solutionSteps": [
+        {
+          "text": "Add the B + A and A + C sums, then subtract B + C; only 2 × A remains, so A = 2.",
+          "kind": "eliminate",
+          "memory": 3,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 7,
+              "right": 12
+            },
+            {
+              "operator": "-",
+              "left": 19,
+              "right": 15
+            },
+            {
+              "operator": "/",
+              "left": 4,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Use A = 2 in B + A = 7 to get B = 5.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 7,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Use A = 2 in A + C = 12 to get C = 10.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 12,
+              "right": 2
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "high",
+        "score": 20,
+        "factors": {
+          "variables": 3,
+          "transformations": 3,
+          "substitutions": 2,
+          "eliminations": 1,
+          "workingMemory": 3,
+          "signedTerms": 1,
+          "arithmeticLoad": 8
+        },
+        "rationale": "3 variables, 3 transformations, 2 substitutions, 1 eliminations, working-memory load 3, 1 signed-term costs, and arithmetic load 8"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-D37F1F5622A2",
+      "family": "substitution-pair",
+      "variables": [
+        "A",
+        "B"
+      ],
+      "equations": [
+        {
+          "display": "A + B = 9",
+          "coefficients": {
+            "A": 1,
+            "B": 1
+          },
+          "constant": 9
+        },
+        {
+          "display": "A = 4 × B - 26",
+          "coefficients": {
+            "A": 1,
+            "B": -4
+          },
+          "constant": -26
+        }
+      ],
+      "answer": {
+        "A": 2,
+        "B": 7
+      },
+      "hint": "One equation already expresses a letter in terms of another. Put that expression into the sum equation.",
+      "solutionSteps": [
+        {
+          "text": "Replace A with 4 × B -26 in the sum equation.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 1
+        },
+        {
+          "text": "Solve 5 × B -26 = 9 to get B = 7.",
+          "kind": "isolate",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 9,
+              "right": -26
+            },
+            {
+              "operator": "/",
+              "left": 35,
+              "right": 5
+            }
+          ]
+        },
+        {
+          "text": "Use B = 7 in A = 4 × B -26 to get A = 2.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "×",
+              "left": 4,
+              "right": 7
+            },
+            {
+              "operator": "+",
+              "left": 28,
+              "right": -26
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "high",
+        "score": 18,
+        "factors": {
+          "variables": 2,
+          "transformations": 3,
+          "substitutions": 2,
+          "eliminations": 0,
+          "workingMemory": 2,
+          "signedTerms": 3,
+          "arithmeticLoad": 7
+        },
+        "rationale": "2 variables, 3 transformations, 2 substitutions, 0 eliminations, working-memory load 2, 3 signed-term costs, and arithmetic load 7"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-CBD101E73C7A",
+      "family": "scaled-sum",
+      "variables": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "equations": [
+        {
+          "display": "C - A = -2",
+          "coefficients": {
+            "A": -1,
+            "C": 1
+          },
+          "constant": -2
+        },
+        {
+          "display": "D - A = -1",
+          "coefficients": {
+            "A": -1,
+            "D": 1
+          },
+          "constant": -1
+        },
+        {
+          "display": "B - C = 5",
+          "coefficients": {
+            "B": 1,
+            "C": -1
+          },
+          "constant": 5
+        },
+        {
+          "display": "2 × C + 2 × A = 12",
+          "coefficients": {
+            "A": 2,
+            "C": 2
+          },
+          "constant": 12
+        }
+      ],
+      "answer": {
+        "A": 4,
+        "B": 7,
+        "C": 2,
+        "D": 3
+      },
+      "hint": "Simplify the equation with a common factor before combining it with the difference equation.",
+      "solutionSteps": [
+        {
+          "text": "Divide 2 × C + 2 × A = 12 by 2 to get C + A = 6.",
+          "kind": "simplify",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "/",
+              "left": 12,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Add the simplified sum and the difference equation to get C = 2.",
+          "kind": "eliminate",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 6,
+              "right": -2
+            },
+            {
+              "operator": "/",
+              "left": 4,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Use C = 2 in the sum to get A = 4.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 6,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Substitute C = 2 into B - C = 5 to get B = 7.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 2,
+              "right": 5
+            }
+          ]
+        },
+        {
+          "text": "Substitute A = 4 into D - A = -1 to get D = 3.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 4,
+              "right": -1
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "high",
+        "score": 23,
+        "factors": {
+          "variables": 4,
+          "transformations": 5,
+          "substitutions": 3,
+          "eliminations": 1,
+          "workingMemory": 3,
+          "signedTerms": 2,
+          "arithmeticLoad": 6
+        },
+        "rationale": "4 variables, 5 transformations, 3 substitutions, 1 eliminations, working-memory load 3, 2 signed-term costs, and arithmetic load 6"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-34E84AC967DF",
+      "family": "shared-term-cancellation",
+      "variables": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "equations": [
+        {
+          "display": "D + B + C = 20",
+          "coefficients": {
+            "B": 1,
+            "C": 1,
+            "D": 1
+          },
+          "constant": 20
+        },
+        {
+          "display": "A - C = 2",
+          "coefficients": {
+            "A": 1,
+            "C": -1
+          },
+          "constant": 2
+        },
+        {
+          "display": "D - B = -3",
+          "coefficients": {
+            "B": -1,
+            "D": 1
+          },
+          "constant": -3
+        },
+        {
+          "display": "D + B = 15",
+          "coefficients": {
+            "B": 1,
+            "D": 1
+          },
+          "constant": 15
+        }
+      ],
+      "answer": {
+        "A": 7,
+        "B": 9,
+        "C": 5,
+        "D": 6
+      },
+      "hint": "Two equations share the same group of terms. Subtract them before doing any substitution.",
+      "solutionSteps": [
+        {
+          "text": "Subtract the shared D + B equation from the three-letter equation to get C = 5.",
+          "kind": "eliminate",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 20,
+              "right": 15
+            }
+          ]
+        },
+        {
+          "text": "Add D + B = 15 and D - B = -3 to get D = 6.",
+          "kind": "eliminate",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 15,
+              "right": -3
+            },
+            {
+              "operator": "/",
+              "left": 12,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Use D = 6 in the pair sum to get B = 9.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 15,
+              "right": 6
+            }
+          ]
+        },
+        {
+          "text": "Substitute C = 5 into A - C = 2 to get A = 7.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 5,
+              "right": 2
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "high",
+        "score": 22,
+        "factors": {
+          "variables": 4,
+          "transformations": 4,
+          "substitutions": 2,
+          "eliminations": 2,
+          "workingMemory": 3,
+          "signedTerms": 1,
+          "arithmeticLoad": 7
+        },
+        "rationale": "4 variables, 4 transformations, 2 substitutions, 2 eliminations, working-memory load 3, 1 signed-term costs, and arithmetic load 7"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-325F1A5E10AE",
+      "family": "difference-cycle",
+      "variables": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "equations": [
+        {
+          "display": "B - C = -3",
+          "coefficients": {
+            "B": 1,
+            "C": -1
+          },
+          "constant": -3
+        },
+        {
+          "display": "A - D = -3",
+          "coefficients": {
+            "A": 1,
+            "D": -1
+          },
+          "constant": -3
+        },
+        {
+          "display": "D - C = 4",
+          "coefficients": {
+            "C": -1,
+            "D": 1
+          },
+          "constant": 4
+        },
+        {
+          "display": "A + D + C = 23",
+          "coefficients": {
+            "A": 1,
+            "C": 1,
+            "D": 1
+          },
+          "constant": 23
+        }
+      ],
+      "answer": {
+        "A": 7,
+        "B": 3,
+        "C": 6,
+        "D": 10
+      },
+      "hint": "Turn the two difference equations into expressions for the three-letter total.",
+      "solutionSteps": [
+        {
+          "text": "Write D = C +4 and A = D -3, then express both in terms of C.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 2
+        },
+        {
+          "text": "Substitute those expressions into the total: 3 × C +5 = 23, so C = 6.",
+          "kind": "isolate",
+          "memory": 3,
+          "signedTerms": 2,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 23,
+              "right": 5
+            },
+            {
+              "operator": "/",
+              "left": 18,
+              "right": 3
+            }
+          ]
+        },
+        {
+          "text": "Use C = 6 to get D = 10, then A = 7.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 6,
+              "right": 4
+            },
+            {
+              "operator": "+",
+              "left": 10,
+              "right": -3
+            }
+          ]
+        },
+        {
+          "text": "Substitute C = 6 into B - C = -3 to get B = 3.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 6,
+              "right": -3
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "high",
+        "score": 25,
+        "factors": {
+          "variables": 4,
+          "transformations": 4,
+          "substitutions": 3,
+          "eliminations": 0,
+          "workingMemory": 3,
+          "signedTerms": 5,
+          "arithmeticLoad": 7
+        },
+        "rationale": "4 variables, 4 transformations, 3 substitutions, 0 eliminations, working-memory load 3, 5 signed-term costs, and arithmetic load 7"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-4AC7ECEC08D2",
+      "family": "scaled-sum",
+      "variables": [
+        "A",
+        "B",
+        "C"
+      ],
+      "equations": [
+        {
+          "display": "2 × C + 2 × B = 24",
+          "coefficients": {
+            "B": 2,
+            "C": 2
+          },
+          "constant": 24
+        },
+        {
+          "display": "C - B = -4",
+          "coefficients": {
+            "B": -1,
+            "C": 1
+          },
+          "constant": -4
+        },
+        {
+          "display": "A - C = 3",
+          "coefficients": {
+            "A": 1,
+            "C": -1
+          },
+          "constant": 3
+        }
+      ],
+      "answer": {
+        "A": 7,
+        "B": 8,
+        "C": 4
+      },
+      "hint": "Simplify the equation with a common factor before combining it with the difference equation.",
+      "solutionSteps": [
+        {
+          "text": "Divide 2 × C + 2 × B = 24 by 2 to get C + B = 12.",
+          "kind": "simplify",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "/",
+              "left": 24,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Add the simplified sum and the difference equation to get C = 4.",
+          "kind": "eliminate",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 12,
+              "right": -4
+            },
+            {
+              "operator": "/",
+              "left": 8,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Use C = 4 in the sum to get B = 8.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 12,
+              "right": 4
+            }
+          ]
+        },
+        {
+          "text": "Substitute C = 4 into A - C = 3 to get A = 7.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 4,
+              "right": 3
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "high",
+        "score": 20,
+        "factors": {
+          "variables": 3,
+          "transformations": 4,
+          "substitutions": 2,
+          "eliminations": 1,
+          "workingMemory": 3,
+          "signedTerms": 1,
+          "arithmeticLoad": 7
+        },
+        "rationale": "3 variables, 4 transformations, 2 substitutions, 1 eliminations, working-memory load 3, 1 signed-term costs, and arithmetic load 7"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-03625B5DC284",
+      "family": "near-cancellation",
+      "variables": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "equations": [
+        {
+          "display": "C - B = 2",
+          "coefficients": {
+            "B": -1,
+            "C": 1
+          },
+          "constant": 2
+        },
+        {
+          "display": "A - D = -7",
+          "coefficients": {
+            "A": 1,
+            "D": -1
+          },
+          "constant": -7
+        },
+        {
+          "display": "2 × D + B = 26",
+          "coefficients": {
+            "B": 1,
+            "D": 2
+          },
+          "constant": 26
+        },
+        {
+          "display": "D + B = 17",
+          "coefficients": {
+            "B": 1,
+            "D": 1
+          },
+          "constant": 17
+        }
+      ],
+      "answer": {
+        "A": 2,
+        "B": 8,
+        "C": 10,
+        "D": 9
+      },
+      "hint": "Compare the two similar equations instead of solving either one in isolation.",
+      "solutionSteps": [
+        {
+          "text": "Subtract the two equations; every B term cancels and D = 9.",
+          "kind": "eliminate",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 26,
+              "right": 17
+            }
+          ]
+        },
+        {
+          "text": "Use D = 9 in D + B = 17 to get B = 8.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 17,
+              "right": 9
+            }
+          ]
+        },
+        {
+          "text": "Substitute D = 9 into A - D = -7 to get A = 2.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 9,
+              "right": -7
+            }
+          ]
+        },
+        {
+          "text": "Substitute B = 8 into C - B = 2 to get C = 10.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 8,
+              "right": 2
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "high",
+        "score": 21,
+        "factors": {
+          "variables": 4,
+          "transformations": 4,
+          "substitutions": 3,
+          "eliminations": 1,
+          "workingMemory": 3,
+          "signedTerms": 1,
+          "arithmeticLoad": 6
+        },
+        "rationale": "4 variables, 4 transformations, 3 substitutions, 1 eliminations, working-memory load 3, 1 signed-term costs, and arithmetic load 6"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-140452357909",
+      "family": "substitution-pair",
+      "variables": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "equations": [
+        {
+          "display": "B - A = 4",
+          "coefficients": {
+            "A": -1,
+            "B": 1
+          },
+          "constant": 4
+        },
+        {
+          "display": "A + D = 10",
+          "coefficients": {
+            "A": 1,
+            "D": 1
+          },
+          "constant": 10
+        },
+        {
+          "display": "C - D = 1",
+          "coefficients": {
+            "C": 1,
+            "D": -1
+          },
+          "constant": 1
+        },
+        {
+          "display": "A = 4 × D - 15",
+          "coefficients": {
+            "A": 1,
+            "D": -4
+          },
+          "constant": -15
+        }
+      ],
+      "answer": {
+        "A": 5,
+        "B": 9,
+        "C": 6,
+        "D": 5
+      },
+      "hint": "One equation already expresses a letter in terms of another. Put that expression into the sum equation.",
+      "solutionSteps": [
+        {
+          "text": "Replace A with 4 × D -15 in the sum equation.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 1
+        },
+        {
+          "text": "Solve 5 × D -15 = 10 to get D = 5.",
+          "kind": "isolate",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 10,
+              "right": -15
+            },
+            {
+              "operator": "/",
+              "left": 25,
+              "right": 5
+            }
+          ]
+        },
+        {
+          "text": "Use D = 5 in A = 4 × D -15 to get A = 5.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "×",
+              "left": 4,
+              "right": 5
+            },
+            {
+              "operator": "+",
+              "left": 20,
+              "right": -15
+            }
+          ]
+        },
+        {
+          "text": "Substitute A = 5 into B - A = 4 to get B = 9.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 5,
+              "right": 4
+            }
+          ]
+        },
+        {
+          "text": "Substitute D = 5 into C - D = 1 to get C = 6.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 5,
+              "right": 1
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "high",
+        "score": 24,
+        "factors": {
+          "variables": 4,
+          "transformations": 5,
+          "substitutions": 4,
+          "eliminations": 0,
+          "workingMemory": 3,
+          "signedTerms": 3,
+          "arithmeticLoad": 6
+        },
+        "rationale": "4 variables, 5 transformations, 4 substitutions, 0 eliminations, working-memory load 3, 3 signed-term costs, and arithmetic load 6"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-F1FA138DD473",
+      "family": "variables-both-sides",
+      "variables": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "equations": [
+        {
+          "display": "A - C = -1",
+          "coefficients": {
+            "A": 1,
+            "C": -1
+          },
+          "constant": -1
+        },
+        {
+          "display": "B - A = 3",
+          "coefficients": {
+            "A": -1,
+            "B": 1
+          },
+          "constant": 3
+        },
+        {
+          "display": "2 × C + A = C + 15",
+          "coefficients": {
+            "A": 1,
+            "C": 1
+          },
+          "constant": 15
+        },
+        {
+          "display": "D - C = 2",
+          "coefficients": {
+            "C": -1,
+            "D": 1
+          },
+          "constant": 2
+        }
+      ],
+      "answer": {
+        "A": 7,
+        "B": 10,
+        "C": 8,
+        "D": 10
+      },
+      "hint": "First simplify the equation that has the same letter on both sides.",
+      "solutionSteps": [
+        {
+          "text": "Subtract C from both sides of 2 × C + A = 15 + C; it becomes C + A = 15.",
+          "kind": "simplify",
+          "memory": 2,
+          "signedTerms": 1
+        },
+        {
+          "text": "From A - C = -1, use A = C -1 in the simplified sum.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 1
+        },
+        {
+          "text": "Solve 2 × C -1 = 15 to get C = 8, then A = 7.",
+          "kind": "isolate",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 15,
+              "right": -1
+            },
+            {
+              "operator": "/",
+              "left": 16,
+              "right": 2
+            },
+            {
+              "operator": "+",
+              "left": 8,
+              "right": -1
+            }
+          ]
+        },
+        {
+          "text": "Substitute C = 8 into D - C = 2 to get D = 10.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 8,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Substitute A = 7 into B - A = 3 to get B = 10.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 7,
+              "right": 3
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "high",
+        "score": 23,
+        "factors": {
+          "variables": 4,
+          "transformations": 5,
+          "substitutions": 3,
+          "eliminations": 0,
+          "workingMemory": 3,
+          "signedTerms": 3,
+          "arithmeticLoad": 6
+        },
+        "rationale": "4 variables, 5 transformations, 3 substitutions, 0 eliminations, working-memory load 3, 3 signed-term costs, and arithmetic load 6"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-834D9D452960",
+      "family": "difference-cycle",
+      "variables": [
+        "A",
+        "B",
+        "C"
+      ],
+      "equations": [
+        {
+          "display": "A + B + C = 16",
+          "coefficients": {
+            "A": 1,
+            "B": 1,
+            "C": 1
+          },
+          "constant": 16
+        },
+        {
+          "display": "A - B = -6",
+          "coefficients": {
+            "A": 1,
+            "B": -1
+          },
+          "constant": -6
+        },
+        {
+          "display": "B - C = 2",
+          "coefficients": {
+            "B": 1,
+            "C": -1
+          },
+          "constant": 2
+        }
+      ],
+      "answer": {
+        "A": 2,
+        "B": 8,
+        "C": 6
+      },
+      "hint": "Turn the two difference equations into expressions for the three-letter total.",
+      "solutionSteps": [
+        {
+          "text": "Write B = C +2 and A = B -6, then express both in terms of C.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 2
+        },
+        {
+          "text": "Substitute those expressions into the total: 3 × C -2 = 16, so C = 6.",
+          "kind": "isolate",
+          "memory": 3,
+          "signedTerms": 2,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 16,
+              "right": -2
+            },
+            {
+              "operator": "/",
+              "left": 18,
+              "right": 3
+            }
+          ]
+        },
+        {
+          "text": "Use C = 6 to get B = 8, then A = 2.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 6,
+              "right": 2
+            },
+            {
+              "operator": "+",
+              "left": 8,
+              "right": -6
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "high",
+        "score": 20,
+        "factors": {
+          "variables": 3,
+          "transformations": 3,
+          "substitutions": 2,
+          "eliminations": 0,
+          "workingMemory": 3,
+          "signedTerms": 4,
+          "arithmeticLoad": 6
+        },
+        "rationale": "3 variables, 3 transformations, 2 substitutions, 0 eliminations, working-memory load 3, 4 signed-term costs, and arithmetic load 6"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-938AA8A01FE4",
+      "family": "difference-cycle",
+      "variables": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "equations": [
+        {
+          "display": "C + B + D = 22",
+          "coefficients": {
+            "B": 1,
+            "C": 1,
+            "D": 1
+          },
+          "constant": 22
+        },
+        {
+          "display": "C - B = 8",
+          "coefficients": {
+            "B": -1,
+            "C": 1
+          },
+          "constant": 8
+        },
+        {
+          "display": "A - B = 7",
+          "coefficients": {
+            "A": 1,
+            "B": -1
+          },
+          "constant": 7
+        },
+        {
+          "display": "B - D = -8",
+          "coefficients": {
+            "B": 1,
+            "D": -1
+          },
+          "constant": -8
+        }
+      ],
+      "answer": {
+        "A": 9,
+        "B": 2,
+        "C": 10,
+        "D": 10
+      },
+      "hint": "Turn the two difference equations into expressions for the three-letter total.",
+      "solutionSteps": [
+        {
+          "text": "Write B = D -8 and C = B +8, then express both in terms of D.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 2
+        },
+        {
+          "text": "Substitute those expressions into the total: 3 × D -8 = 22, so D = 10.",
+          "kind": "isolate",
+          "memory": 3,
+          "signedTerms": 2,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 22,
+              "right": -8
+            },
+            {
+              "operator": "/",
+              "left": 30,
+              "right": 3
+            }
+          ]
+        },
+        {
+          "text": "Use D = 10 to get B = 2, then C = 10.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 10,
+              "right": -8
+            },
+            {
+              "operator": "+",
+              "left": 2,
+              "right": 8
+            }
+          ]
+        },
+        {
+          "text": "Substitute B = 2 into A - B = 7 to get A = 9.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 2,
+              "right": 7
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "high",
+        "score": 24,
+        "factors": {
+          "variables": 4,
+          "transformations": 4,
+          "substitutions": 3,
+          "eliminations": 0,
+          "workingMemory": 3,
+          "signedTerms": 5,
+          "arithmeticLoad": 6
+        },
+        "rationale": "4 variables, 4 transformations, 3 substitutions, 0 eliminations, working-memory load 3, 5 signed-term costs, and arithmetic load 6"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-8344A2504F3D",
+      "family": "affine-chain",
+      "variables": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "equations": [
+        {
+          "display": "D + 12 = 2 × C",
+          "coefficients": {
+            "C": -2,
+            "D": 1
+          },
+          "constant": -12
+        },
+        {
+          "display": "6 = A + 3",
+          "coefficients": {
+            "A": -1
+          },
+          "constant": -3
+        },
+        {
+          "display": "C + 3 = 4 × A",
+          "coefficients": {
+            "A": -4,
+            "C": 1
+          },
+          "constant": -3
+        },
+        {
+          "display": "B + 5 = 2 × D",
+          "coefficients": {
+            "B": 1,
+            "D": -2
+          },
+          "constant": -5
+        }
+      ],
+      "answer": {
+        "A": 3,
+        "B": 7,
+        "C": 9,
+        "D": 6
+      },
+      "hint": "Start with the direct equation. Each remaining relationship contains one value already found and one new letter.",
+      "solutionSteps": [
+        {
+          "text": "Use the direct equation to subtract 3 and get A = 3.",
+          "kind": "isolate",
+          "memory": 1,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 6,
+              "right": 3
+            }
+          ]
+        },
+        {
+          "text": "Substitute A = 3, calculate 4 × 3, and isolate C = 9.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "×",
+              "left": 4,
+              "right": 3
+            },
+            {
+              "operator": "-",
+              "left": 12,
+              "right": 3
+            }
+          ]
+        },
+        {
+          "text": "Substitute C = 9, calculate 2 × 9, and isolate D = 6.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "×",
+              "left": 2,
+              "right": 9
+            },
+            {
+              "operator": "-",
+              "left": 18,
+              "right": 12
+            }
+          ]
+        },
+        {
+          "text": "Substitute D = 6, calculate 2 × 6, and isolate B = 7.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "×",
+              "left": 2,
+              "right": 6
+            },
+            {
+              "operator": "-",
+              "left": 12,
+              "right": 5
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "high",
+        "score": 24,
+        "factors": {
+          "variables": 4,
+          "transformations": 4,
+          "substitutions": 3,
+          "eliminations": 0,
+          "workingMemory": 3,
+          "signedTerms": 0,
+          "arithmeticLoad": 11
+        },
+        "rationale": "4 variables, 4 transformations, 3 substitutions, 0 eliminations, working-memory load 3, 0 signed-term costs, and arithmetic load 11"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    },
+    {
+      "id": "DMAT-EQ-CFD6F0BAF8F9",
+      "family": "sum-difference",
+      "variables": [
+        "A",
+        "B",
+        "C"
+      ],
+      "equations": [
+        {
+          "display": "B - C = -2",
+          "coefficients": {
+            "B": 1,
+            "C": -1
+          },
+          "constant": -2
+        },
+        {
+          "display": "C + A = 12",
+          "coefficients": {
+            "A": 1,
+            "C": 1
+          },
+          "constant": 12
+        },
+        {
+          "display": "C - A = 8",
+          "coefficients": {
+            "A": -1,
+            "C": 1
+          },
+          "constant": 8
+        }
+      ],
+      "answer": {
+        "A": 2,
+        "B": 8,
+        "C": 10
+      },
+      "hint": "Look for two equations whose addition or subtraction removes one letter.",
+      "solutionSteps": [
+        {
+          "text": "Add the two equations to eliminate A: 2 × C = 20, so C = 10.",
+          "kind": "eliminate",
+          "memory": 2,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 12,
+              "right": 8
+            },
+            {
+              "operator": "/",
+              "left": 20,
+              "right": 2
+            }
+          ]
+        },
+        {
+          "text": "Substitute C = 10 into C + A = 12 to get A = 2.",
+          "kind": "substitute",
+          "memory": 2,
+          "signedTerms": 0,
+          "operations": [
+            {
+              "operator": "-",
+              "left": 12,
+              "right": 10
+            }
+          ]
+        },
+        {
+          "text": "Substitute C = 10 into B - C = -2 to get B = 8.",
+          "kind": "substitute",
+          "memory": 3,
+          "signedTerms": 1,
+          "operations": [
+            {
+              "operator": "+",
+              "left": 10,
+              "right": -2
+            }
+          ]
+        }
+      ],
+      "difficulty": {
+        "level": "high",
+        "score": 18,
+        "factors": {
+          "variables": 3,
+          "transformations": 3,
+          "substitutions": 2,
+          "eliminations": 1,
+          "workingMemory": 3,
+          "signedTerms": 2,
+          "arithmeticLoad": 5
+        },
+        "rationale": "3 variables, 3 transformations, 2 substitutions, 1 eliminations, working-memory load 3, 2 signed-term costs, and arithmetic load 5"
+      },
+      "validation": {
+        "solutionsInRange": 1,
+        "minimumValue": 1,
+        "maximumValue": 20
+      }
+    }
+  ]
+}

@@ -17,8 +17,7 @@ const homeButton = document.querySelector('#home-button');
 const SITE_ROOT = new URL('../', import.meta.url);
 const INITIAL_PAGE = document.body.dataset.page || 'home';
 const ROUTE_PATHS = {
-  home: '',
-  figures: 'figure-sequences.html',
+  home: 'latin-squares/',
   learn: 'latin-squares/learn/',
   drill: 'latin-squares/speed-drill/',
   mock: 'latin-squares/mock/',
@@ -74,14 +73,10 @@ function goHome(force = false) {
 function renderHome() {
   app.innerHTML = `
     <section>
-      <p class="eyebrow">5 × 5 Latin squares</p>
+      <p class="eyebrow">Latin Squares · 5 × 5</p>
       <h1>Train accuracy.<br />Then train speed.</h1>
       <p class="lede">Find the value of one target cell mentally, as in the dMAT. Intermediate cells stay empty and cannot be filled.</p>
       <div class="home-actions" aria-label="Training modes">
-        <a class="mode-card sequence-entry-card" href="${routeUrl('figures')}">
-          <strong>Figure Sequences <span class="poc-badge">POC</span></strong>
-          <span>Track moving figures across four matrices and predict the next two.</span>
-        </a>
         <a class="mode-card" href="${routeUrl('learn')}">
           <strong>Learn</strong>
           <span>Practise generated target-cell puzzles without a timer, with one deduction hint.</span>
@@ -99,6 +94,7 @@ function renderHome() {
           <span>Review recent accuracy, speed, and mock scores.</span>
         </a>
       </div>
+      <p class="module-back"><a href="${routeUrl('home').replace(/latin-squares\/$/, '')}">← All task types</a></p>
     </section>`;
   focusMain();
 }
