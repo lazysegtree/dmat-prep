@@ -50,6 +50,7 @@ a { color: inherit; }
   background: transparent;
   font-weight: 750;
   cursor: pointer;
+  color: inherit;
   text-decoration: none;
 }
 
@@ -105,6 +106,8 @@ h3 { margin-bottom: 6px; font-size: 1.05rem; }
 .brand:focus-visible, .mode-card:focus-visible, button:focus-visible, select:focus-visible { outline: 3px solid rgba(23, 107, 75, 0.28); outline-offset: 2px; }
 .mode-card strong { display: block; margin-bottom: 8px; font-size: 1.25rem; }
 .mode-card span { color: var(--muted); }
+.sequence-entry-card { border-color: #8bb8a4; background: linear-gradient(145deg, #ffffff, var(--accent-soft)); }
+.poc-badge { display: inline-block !important; margin-left: 6px; padding: 2px 7px; border-radius: 999px; background: var(--accent); color: white !important; font-size: 0.66rem; letter-spacing: 0.06em; vertical-align: middle; }
 
 .panel {
   width: min(620px, 100%);
@@ -244,6 +247,38 @@ select { width: 100%; padding: 11px 12px; border: 1px solid var(--strong-line); 
 .loading, .error { margin-top: 60px; text-align: center; color: var(--muted); }
 .error { color: var(--danger); }
 
+#figure-app {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 48px 0 72px;
+  outline: none;
+}
+
+.sequence-setup { width: min(680px, 100%); }
+.link-button { display: inline-flex; align-items: center; text-decoration: none; }
+.sequence-instruction { margin-bottom: 18px; }
+.observed-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.sequence-frame-card { min-width: 0; }
+.sequence-frame-card span { display: block; margin-top: 6px; color: var(--muted); font-size: 0.78rem; font-weight: 700; text-align: center; }
+.sequence-matrix { display: block; width: 100%; aspect-ratio: 1; background: white; }
+.missing-divider { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin: 24px 0 12px; color: var(--muted); text-align: center; }
+.missing-divider span { font-size: 2rem; font-weight: 800; }
+.sequence-questions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.sequence-answer-group { min-width: 0; margin: 0; padding: 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.sequence-answer-group legend { padding: 0 7px; font-weight: 800; }
+.sequence-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.sequence-option { min-width: 0; padding: 8px; border: 2px solid transparent; border-radius: 9px; background: var(--paper); cursor: pointer; }
+.sequence-option:hover { border-color: #8bb8a4; }
+.sequence-option.selected { border-color: var(--accent); background: var(--accent-soft); }
+.sequence-option.correct { border-color: var(--accent); background: var(--accent-soft); }
+.sequence-option.incorrect { border-color: var(--danger); background: var(--danger-soft); }
+.sequence-option:disabled { cursor: default; opacity: 1; }
+.sequence-option strong { display: block; margin-top: 7px; font-size: 0.8rem; }
+.sequence-actions { margin-top: 24px; }
+.sequence-result { display: flex; justify-content: space-between; gap: 18px; margin-top: 24px; padding: 16px; border-radius: 9px; }
+.sequence-result.correct { background: var(--accent-soft); color: var(--accent-dark); }
+.sequence-result.incorrect { background: var(--danger-soft); color: var(--danger); }
+
 @media (max-width: 720px) {
   #app { width: min(100% - 24px, 560px); padding-top: 34px; }
   .home-actions, .play-layout, .review-grids { grid-template-columns: 1fr; }
@@ -256,6 +291,9 @@ select { width: 100%; padding: 11px 12px; border: 1px solid var(--strong-line); 
   .review-row .button { grid-column: 1 / -1; }
   .inference-path-header { display: block; }
   .inference-summary { margin-top: 10px; text-align: left; }
+  #figure-app { width: min(100% - 24px, 620px); padding-top: 32px; }
+  .observed-strip { gap: 6px; }
+  .sequence-questions { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 430px) {
@@ -268,6 +306,10 @@ select { width: 100%; padding: 11px 12px; border: 1px solid var(--strong-line); 
   .navigator { grid-template-columns: repeat(5, 1fr); }
   .session-row { grid-template-columns: 1fr auto; }
   .session-row time { grid-column: 1 / -1; }
+  .observed-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .sequence-options { gap: 6px; }
+  .sequence-answer-group { padding: 12px; }
+  .sequence-result { display: grid; }
 }
 
 @media (prefers-reduced-motion: reduce) {

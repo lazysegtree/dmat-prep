@@ -1,13 +1,14 @@
 import { expect, test } from '@playwright/test';
 
-test('home page exposes the four training choices', async ({ page }) => {
+test('home page exposes the five training choices', async ({ page }) => {
   const browserErrors = [];
   page.on('pageerror', (error) => browserErrors.push(error.message));
 
   await page.goto('/');
 
-  await expect(page).toHaveTitle('dMAT Trainer');
-  await expect(page.getByLabel('Training modes').getByRole('link')).toHaveCount(4);
+  await expect(page).toHaveTitle('dMAT Core Trainer');
+  await expect(page.getByLabel('Training modes').getByRole('link')).toHaveCount(5);
+  await expect(page.getByRole('link', { name: /^Figure Sequences / })).toBeVisible();
   await expect(page.getByRole('link', { name: /^Learn / })).toBeVisible();
   await expect(page.getByRole('link', { name: /^Speed Drill / })).toBeVisible();
   await expect(page.getByRole('link', { name: /^Full Mock / })).toBeVisible();
