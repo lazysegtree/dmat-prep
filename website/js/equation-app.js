@@ -13,7 +13,7 @@ const DIFFICULTY_NAMES = { low: 'Low', medium: 'Medium', high: 'High', extreme: 
 const MOCK_LEVELS = {
   easy: { name: 'Easy', mix: { low: 10, medium: 8, high: 2 } },
   normal: { name: 'Normal', mix: { low: 6, medium: 8, high: 6 } },
-  hard: { name: 'Hard', mix: { medium: 10, high: 10 } },
+  hard: { name: 'Hard', mix: { medium: 8, high: 10, extreme: 2 } },
   extreme: { name: 'Extreme', mix: { medium: 5, high: 10, extreme: 5 } },
 };
 const ROUTES = {

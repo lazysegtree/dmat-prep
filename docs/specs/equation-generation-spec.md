@@ -123,7 +123,7 @@ Generation writes to a temporary file and replaces the destination only after fu
 
 - Learn: one untimed system at Low, Medium, High, or Extreme, with a strategy hint and immediate review.
 - Speed Drill: 10 systems at one selected difficulty, including Extreme, target `12:30`, no mid-session feedback.
-- Full Mock: 20 systems in `25:00`; selectable training mixes: Easy (10 Low, 8 Medium, 2 High), Normal (default: 6 Low, 8 Medium, 6 High), Hard (10 Medium, 10 High), Extreme (5 Medium, 10 High, 5 Extreme); automatic submission on expiry.
+- Full Mock: 20 systems in `25:00`; selectable training mixes: Easy (10 Low, 8 Medium, 2 High), Normal (default: 6 Low, 8 Medium, 6 High), Hard (8 Medium, 10 High, 2 Extreme), Extreme (5 Medium, 10 High, 5 Extreme); automatic submission on expiry.
 - Progress: equation-only accuracy, median time, within-75-second rate, and mock scores in local browser storage.
 
 The interface supplies answer fields but no scratchpad, intermediate-work field, calculator, or notes area.

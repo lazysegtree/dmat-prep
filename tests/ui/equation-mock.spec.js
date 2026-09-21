@@ -7,7 +7,7 @@ const key = 'dmat-equations-progress-v1';
 const mixes = {
   easy: { low: 10, medium: 8, high: 2 },
   normal: { low: 6, medium: 8, high: 6 },
-  hard: { medium: 10, high: 10 },
+  hard: { medium: 8, high: 10, extreme: 2 },
   extreme: { medium: 5, high: 10, extreme: 5 },
 };
 
