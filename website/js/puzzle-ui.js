@@ -54,7 +54,7 @@ export class PuzzleUI {
       cell.dataset.index = String(index);
       cell.setAttribute('role', 'gridcell');
       cell.setAttribute('aria-label', `Row ${row + 1}, column ${column + 1}${given ? ', given' : ''}${target ? ', target question' : ''}`);
-      cell.textContent = this.values[row][column] || (target ? '?' : '');
+      cell.textContent = target && !this.readonly ? '?' : this.values[row][column] || (target ? '?' : '');
       if (given) cell.classList.add('given');
       if (target) cell.classList.add('target-cell');
       if (this.statuses?.[row]?.[column]) cell.classList.add(this.statuses[row][column]);
@@ -93,7 +93,7 @@ export class PuzzleUI {
     const column = this.active % 5;
     if (!this.isEditable(row, column)) return;
     this.values[row][column] = value;
-    this.container.querySelector(`[data-index="${this.active}"]`).textContent = value;
+    this.container.querySelector(`[data-index="${this.active}"]`).textContent = this.questionType === 'target' ? '?' : value;
     this.onChange?.(this.values);
     if (this.questionType !== 'target') this.move(1);
   }

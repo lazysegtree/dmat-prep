@@ -45,8 +45,8 @@ function frameSVG(frame, puzzle) {
   }).join('');
   return `<svg class="sequence-matrix" viewBox="0 0 100 100" aria-hidden="true">
     <rect width="100" height="100" fill="#fff" />
-    <g fill="none" stroke="#89938c" stroke-width="1">${gridLines}</g>
-    <rect x="1" y="1" width="98" height="98" fill="none" stroke="#27332b" stroke-width="2" />
+    <g class="sequence-grid-lines" fill="none" stroke="#89938c" stroke-width="1">${gridLines}</g>
+    <rect class="sequence-grid-border" x="1" y="1" width="98" height="98" fill="none" stroke="#27332b" stroke-width="2" />
     ${figures}
   </svg>`;
 }
@@ -64,6 +64,18 @@ function sequenceMarkup(puzzle, answers, review = false) {
  <div class="sequence-questions">${puzzle.questions.map((question, frameIndex) => `<fieldset class="sequence-answer-group"><legend>Frame ${question.frameNumber}</legend>
  ${review ? `<p>Your choice: ${answers[frameIndex] === null ? 'Unanswered' : answers[frameIndex] + 1}. Correct choice: ${question.answerIndex + 1}.</p>` : ''}
  <div class="sequence-options">${question.options.map((option, optionIndex) => `<button type="button" class="sequence-option${answers[frameIndex] === optionIndex ? ' selected' : ''}${review && question.answerIndex === optionIndex ? ' correct' : ''}${review && answers[frameIndex] === optionIndex && optionIndex !== question.answerIndex ? ' incorrect' : ''}" data-frame="${frameIndex}" data-option="${optionIndex}" aria-label="Frame ${question.frameNumber}, option ${optionIndex + 1}: ${escapeHtml(frameDescription(option))}" aria-pressed="${answers[frameIndex] === optionIndex}" ${review ? 'disabled' : ''}>${frameSVG(option, puzzle)}<strong>Option ${optionIndex + 1}</strong></button>`).join('')}</div></fieldset>`).join('')}</div>`;
+}
+
+function examSequenceMarkup(puzzle, answers) {
+  return `<div class="exam-sequence-layout" data-question-id="${puzzle.id}">
+    ${puzzle.observedFrames.map((frame, index) => frameCard(frame, puzzle, `Matrix ${index + 1}`)).join('')}
+    ${puzzle.questions.map((question, frameIndex) => `<fieldset class="exam-sequence-answer-column">
+      <legend class="visually-hidden">Frame ${question.frameNumber}</legend>
+      <div class="sequence-missing-frame" role="img" aria-label="Missing frame ${question.frameNumber}"><span aria-hidden="true">?</span></div>
+      <svg class="sequence-answer-arrow" viewBox="0 0 100 42" aria-hidden="true"><path d="M28 0H72V19H100L50 42 0 19H28Z" /></svg>
+      <div class="sequence-options">${question.options.map((option, optionIndex) => `<button type="button" class="sequence-option${answers[frameIndex] === optionIndex ? ' selected' : ''}" data-frame="${frameIndex}" data-option="${optionIndex}" aria-label="Frame ${question.frameNumber}, option ${optionIndex + 1}: ${escapeHtml(frameDescription(option))}" aria-pressed="${answers[frameIndex] === optionIndex}">${frameSVG(option, puzzle)}</button>`).join('')}</div>
+    </fieldset>`).join('')}
+  </div>`;
 }
 
 let bank = [];
@@ -182,6 +194,7 @@ function startSession(mode, difficulty = null, selectedQuestions = null) {
     difficulty,
     questions,
     answers: questions.map(emptyFigureAnswer),
+    reviewFlags: questions.map(() => false),
     questionTimes: questions.map(() => 0),
     current: 0,
     enteredQuestionAt: Date.now(),
@@ -216,9 +229,9 @@ function renderQuestion() {
   task: 'Figure Sequences',
   modeName: MODE_NAMES[session.mode],
   heading: `Sequence ${session.current + 1} of ${session.questions.length}`,
-  instructions: '<strong>Which figures continue the sequence?</strong><p>Study the four matrices, then choose both missing frames.</p><p>Select one answer for Frame 5 and one answer for Frame 6.</p>',
-  content: `<div class="exam-sequence-layout" data-question-id="${question.id}">${sequenceMarkup(question, session.answers[session.current])}</div>`,
-  navigator: examNavigator(session.questions, session.current, (item, index) => answerComplete(item, session.answers[index]), 'Sequence'),
+  instructions: '<strong>Which pictures are missing in the row?</strong><p>The series of pictures has to be continued. Each picture consists of symbols, which can change in color, position, and orientation.</p><p>Below each question mark, there are three options. Click onto the two correct answers with the mouse. If you do not know an answer, please guess.</p>',
+  content: examSequenceMarkup(question, session.answers[session.current]),
+  navigator: examNavigator(session.questions, session.current, (item, index) => answerComplete(item, session.answers[index]), 'Sequence', session.reviewFlags),
   current: session.current,
   count: session.questions.length,
   timerLabel: timed ? (session.mode === 'mock' ? 'Time remaining' : 'Time elapsed') : null,
@@ -226,7 +239,7 @@ function renderQuestion() {
   checkDisabled: session.mode === 'learn' && !answerComplete(question, session.answers[session.current]),
   learnActions: session.mode === 'learn' ? `<button class="button secondary" id="show-hint" type="button" ${session.hintUsed ? 'disabled' : ''}>Show strategy hint</button>` : '',
  });
- bindExamControls(app);
+ bindExamControls(app, session);
  if (session.mode === 'learn' && session.hintUsed) app.querySelector('#hint-area').innerHTML = `<div class="hint-box">${escapeHtml(question.hint)}</div>`;
  app.querySelectorAll('[data-frame]').forEach((button) => button.addEventListener('click', () => {
   session.answers[session.current][Number(button.dataset.frame)] = Number(button.dataset.option);

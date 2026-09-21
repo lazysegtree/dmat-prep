@@ -5,19 +5,32 @@ export function setExamMode(active) {
   document.body.classList.toggle('exam-mode', active);
 }
 
-export function examNavigator(items, current, isAnswered, noun = 'Question') {
+function questionLabel(label, answered, markedForReview) {
+  return `${label}, ${answered ? 'answered' : 'unanswered'}${markedForReview ? ', marked for review' : ''}`;
+}
+
+export function examNavigator(items, current, isAnswered, noun = 'Question', reviewFlags = []) {
   return `<nav class="exam-navigator" aria-label="${noun} navigator">${items.map((item, index) => {
     const answered = isAnswered(item, index);
-    return `<button class="nav-question${answered ? ' answered' : ''}${index === current ? ' current' : ''}" type="button" data-question="${index}" aria-label="${noun} ${index + 1}, ${answered ? 'answered' : 'unanswered'}" ${index === current ? 'aria-current="true"' : ''}>${index + 1}</button>`;
+    const label = `${noun} ${index + 1}`;
+    return `<button class="nav-question${answered ? ' answered' : ''}${index === current ? ' current' : ''}${reviewFlags[index] ? ' marked-for-review' : ''}" type="button" data-question="${index}" data-question-label="${label}" aria-label="${questionLabel(label, answered, reviewFlags[index])}" ${index === current ? 'aria-current="true"' : ''}>${index + 1}</button>`;
   }).join('')}</nav>`;
+}
+
+export function updateExamNavigator(app, index, answered) {
+  const button = app.querySelector(`[data-question="${index}"]`);
+  if (!button) return;
+  button.classList.toggle('answered', answered);
+  button.setAttribute('aria-label', questionLabel(button.dataset.questionLabel, answered, button.classList.contains('marked-for-review')));
 }
 
 export function examMarkup({ task, modeName, heading, instructions, content, navigator = '', current, count, timerLabel, timerValue, learnActions = '', checkLabel = 'Check answers', checkDisabled = false }) {
   const timed = Boolean(timerLabel);
+  const moduleIndex = ['Figure Sequences', 'Mathematical Equations', 'Latin Squares'].indexOf(task);
   return `<section class="exam-shell" data-text-size="${textSize}">
     <header class="exam-header">
       <div class="exam-modules">
-        <div class="exam-module"><div class="exam-module-bars" aria-hidden="true"><i></i><i class="active"></i><i></i></div><strong>Core Module</strong><span>${task}</span></div>
+        <div class="exam-module"><div class="exam-module-bars" aria-hidden="true">${[0, 1, 2].map((index) => `<i${index === moduleIndex ? ' class="active"' : ''}></i>`).join('')}</div><strong>Core Module</strong><span>${task}</span></div>
         <div class="exam-module inactive"><div class="exam-module-bars" aria-hidden="true"><i></i></div><strong>Subject Module</strong><span>General Academic Module</span></div>
       </div>
       <div class="exam-header-actions">
@@ -32,7 +45,7 @@ export function examMarkup({ task, modeName, heading, instructions, content, nav
     <div class="exam-toolbar">
       <h1 class="exam-question-heading">${heading}</h1>
       <div class="exam-display-controls">
-        <button class="exam-instruction-button" type="button" aria-label="Toggle instructions" aria-controls="exam-instruction-text" aria-expanded="${instructionsOpen}"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 2h14v20H5zM8 6h8M8 9h8M8 12h8M8 15h8M8 18h5" /></svg></button>
+        <button class="exam-review-button" id="mark-for-review" type="button" aria-label="Mark for review" aria-pressed="false" title="Mark for review"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 2h14v20H5zM8 6h8M8 9h8M8 12h8M8 15h8M8 18h5" /></svg></button>
         <div class="exam-text-sizes" role="group" aria-label="Text size">${['small', 'medium', 'large'].map((size) => `<button type="button" data-text-size="${size}" aria-label="${size[0].toUpperCase() + size.slice(1)} text" aria-pressed="${textSize === size}">A</button>`).join('')}</div>
       </div>
     </div>
@@ -47,8 +60,26 @@ export function examMarkup({ task, modeName, heading, instructions, content, nav
   </section>`;
 }
 
-export function bindExamControls(app) {
+export function bindExamControls(app, session) {
   const shell = app.querySelector('.exam-shell');
+  const reviewButton = app.querySelector('#mark-for-review');
+  function updateReviewMark() {
+    const marked = session.reviewFlags[session.current];
+    const label = marked ? 'Remove review mark' : 'Mark for review';
+    reviewButton.setAttribute('aria-pressed', String(marked));
+    reviewButton.setAttribute('aria-label', label);
+    reviewButton.title = label;
+    const question = app.querySelector(`[data-question="${session.current}"]`);
+    if (question) {
+      question.classList.toggle('marked-for-review', marked);
+      updateExamNavigator(app, session.current, question.classList.contains('answered'));
+    }
+  }
+  reviewButton.addEventListener('click', () => {
+    session.reviewFlags[session.current] = !session.reviewFlags[session.current];
+    updateReviewMark();
+  });
+  updateReviewMark();
   function toggleInstructions() {
     instructionsOpen = !instructionsOpen;
     app.querySelector('#exam-instruction-text').hidden = !instructionsOpen;

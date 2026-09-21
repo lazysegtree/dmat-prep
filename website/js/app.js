@@ -1,4 +1,4 @@
-import { examMarkup, examNavigator, bindExamControls, setExamMode } from './exam-ui.js';
+import { examMarkup, examNavigator, bindExamControls, updateExamNavigator, setExamMode } from './exam-ui.js';
 import { transferMarkup, bindTransfer } from './data-transfer.js';
 import { PuzzleUI } from './puzzle-ui.js';
 import {
@@ -210,6 +210,7 @@ function startSession(mode, difficulty = null, selectedPuzzles = null) {
     questionType: 'target',
     puzzles,
     answers: puzzles.map(emptyAnswer),
+    reviewFlags: puzzles.map(() => false),
     questionTimes: puzzles.map(() => 0),
     current: 0,
     enteredQuestionAt: Date.now(),
@@ -253,12 +254,12 @@ function renderPlay() {
     task: 'Latin Squares',
     modeName: MODE_NAMES[session.mode],
     heading: session.puzzles.length === 1 ? 'Puzzle' : `Question ${session.current + 1} of ${session.puzzles.length}`,
-    instructions: `<strong>Which symbol belongs in the question mark cell?</strong><p>Each row and column contains each of the symbols A–E exactly once.</p><p>Answer only the ? cell. Select a symbol below or use the A–E keys on your keyboard.</p><p>Backspace or Delete clears the answer. Keep intermediate deductions in your head.</p>`,
+    instructions: `<strong>Which letter is missing?</strong><p>On the position of the question mark in the square, a letter is missing.</p><p>In the square there can only occur the letters A, B, C, D and E.</p><p>Each letter may occur only exactly once in each row and each column.</p><p>Click onto the correct solution in the answer column with the mouse. If you do not know the answer, please guess.</p>`,
     content: `<div class="exam-latin-layout">
-      <section class="exam-column"><h2>Latin square</h2><div class="grid-wrap"><div id="puzzle-grid"></div></div></section>
-      <section class="exam-column"><h2>Your answer</h2><div class="symbol-pad" aria-label="Enter a symbol">${SYMBOLS.map((symbol) => `<button class="symbol-key" type="button" data-symbol="${symbol}">${symbol}</button>`).join('')}<button class="symbol-key clear" type="button" data-clear aria-label="Clear selected cell">Clear</button></div></section>
+      <section class="exam-latin-square"><h2>Square</h2><div class="grid-wrap"><div id="puzzle-grid"></div></div></section>
+      <section class="exam-latin-answers"><h2>Answer column</h2><div class="symbol-pad" role="group" aria-label="Answer column">${SYMBOLS.map((symbol) => `<button class="symbol-key" type="button" data-symbol="${symbol}" aria-pressed="false">${symbol}</button>`).join('')}</div><button class="latin-clear-answer" type="button" data-clear aria-label="Clear answer" title="Backspace or Delete">Clear</button></section>
     </div>`,
-    navigator: examNavigator(session.puzzles, session.current, (item, index) => editableComplete(item, session.answers[index], session.questionType)),
+    navigator: examNavigator(session.puzzles, session.current, (item, index) => editableComplete(item, session.answers[index], session.questionType), 'Question', session.reviewFlags),
     current: session.current,
     count: session.puzzles.length,
     timerLabel: timed ? (session.mode === 'mock' ? 'Time remaining' : 'Time elapsed') : null,
@@ -266,14 +267,18 @@ function renderPlay() {
     checkLabel: 'Check answer',
     learnActions: session.mode === 'learn' ? '<button class="button secondary" id="show-hint" type="button">Show a hint</button>' : '',
   });
-  bindExamControls(app);
+  bindExamControls(app, session);
 
   puzzleUi = new PuzzleUI(app.querySelector('#puzzle-grid'), {
     puzzle,
     values: session.answers[session.current],
     questionType: session.questionType,
-    onChange: () => updateNavigatorState(),
+    onChange: () => {
+      updateAnswerSelection();
+      updateNavigatorState();
+    },
   });
+  updateAnswerSelection();
   app.querySelectorAll('[data-symbol]').forEach((button) => button.addEventListener('click', () => puzzleUi.enter(button.dataset.symbol)));
   app.querySelector('[data-clear]').addEventListener('click', () => puzzleUi.clear());
   app.querySelectorAll('[data-question]').forEach((button) => button.addEventListener('click', () => changeQuestion(Number(button.dataset.question))));
@@ -288,13 +293,19 @@ function renderPlay() {
   focusMain();
 }
 
+function updateAnswerSelection() {
+  const { current, puzzles, answers } = activeSession;
+  const { row, column } = puzzles[current].target;
+  const answer = answers[current][row][column];
+  app.querySelectorAll('[data-symbol]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.symbol === answer)));
+  app.querySelector('[data-clear]').disabled = !answer;
+}
+
 function updateNavigatorState() {
   if (!activeSession || activeSession.puzzles.length === 1) return;
   const current = activeSession.current;
   const answered = editableComplete(activeSession.puzzles[current], activeSession.answers[current], activeSession.questionType);
-  const button = app.querySelector(`[data-question="${current}"]`);
-  button?.classList.toggle('answered', answered);
-  button?.setAttribute('aria-label', `Question ${current + 1}, ${answered ? 'answered' : 'unanswered'}`);
+  updateExamNavigator(app, current, answered);
 }
 
 function changeQuestion(index) {

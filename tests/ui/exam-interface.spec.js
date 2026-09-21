@@ -49,6 +49,52 @@ test('equation keyboard edits the focused answer and keeps answers through navig
 });
 
 for (const task of ['mathematical-equations', 'latin-squares', 'figure-sequences']) {
+  test(`${task} keeps review marks separate from answers and clears them for a new test`, async ({ page }) => {
+    await page.goto(`/${task}/mock/`);
+    await page.getByRole('button', { name: 'Start Mock', exact: true }).click();
+    const review = page.locator('#mark-for-review');
+    const first = page.locator('[data-question="0"]');
+    await expect(review).toHaveAttribute('aria-pressed', 'false');
+    await page.getByRole('button', { name: 'Mark for review', exact: true }).click();
+    await expect(review).toHaveAttribute('aria-pressed', 'true');
+    await expect(first).toHaveAttribute('aria-label', /unanswered, marked for review$/);
+    await expect(first).toHaveClass(/marked-for-review/);
+    await expect(page.locator('#exam-instruction-text')).toBeVisible();
+
+    if (task === 'mathematical-equations') {
+      for (const input of await page.locator('[data-variable]').all()) await input.fill('1');
+    } else if (task === 'latin-squares') {
+      await page.getByRole('button', { name: 'A', exact: true }).click();
+    } else {
+      await page.locator('[data-frame="0"][data-option="0"]').click();
+      await page.locator('[data-frame="1"][data-option="1"]').click();
+    }
+    await expect(first).toHaveAttribute('aria-label', /, answered, marked for review$/);
+    await expect(review).toHaveAttribute('aria-pressed', 'true');
+    await page.getByRole('button', { name: 'Save and forward' }).click();
+    await expect(review).toHaveAttribute('aria-pressed', 'false');
+    await review.click();
+    await expect(page.locator('.nav-question.marked-for-review')).toHaveCount(2);
+    await page.getByRole('button', { name: 'Save and back' }).click();
+    await expect(review).toHaveAttribute('aria-pressed', 'true');
+    await page.getByRole('button', { name: 'Remove review mark', exact: true }).click();
+    await expect(first).not.toHaveClass(/marked-for-review/);
+    await expect(first).toHaveAttribute('aria-label', /, answered$/);
+    await expect(page.locator('[data-question="1"]')).toHaveClass(/marked-for-review/);
+    await page.getByRole('button', { name: 'Hide instructions', exact: true }).click();
+    await expect(page.locator('#exam-instruction-text')).toBeHidden();
+    await expect(review).toHaveAttribute('aria-pressed', 'false');
+    await page.locator('[data-question="1"]').click();
+    await expect(review).toHaveAttribute('aria-pressed', 'true');
+
+    page.once('dialog', dialog => dialog.accept());
+    await page.getByRole('button', { name: 'End Subtest' }).click();
+    await page.getByRole('button', { name: 'Take another mock' }).click();
+    await page.getByRole('button', { name: 'Start Mock', exact: true }).click();
+    await expect(review).toHaveAttribute('aria-pressed', 'false');
+    await expect(page.locator('.nav-question.marked-for-review')).toHaveCount(0);
+  });
+
   test(`${task} uses the exam shell and keeps navigation reachable on mobile`, async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(`/${task}/mock/`);

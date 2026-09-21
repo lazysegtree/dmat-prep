@@ -48,15 +48,45 @@ test('learn, review, persistence and three-trainer backup round trip on mobile',
 });
 
 test('drill keeps both choices through navigation, hides feedback and guards leaving', async ({ page }) => {
+ await page.setViewportSize({ width: 1440, height: 900 });
  await page.goto('/figure-sequences/speed-drill/');
  await page.getByRole('button', { name: 'Start Speed Drill' }).click();
  await expect(page.getByRole('heading', { name: 'Sequence 1 of 10' })).toBeVisible();
+ const frames = await page.locator('.exam-sequence-layout > .sequence-frame-card, .sequence-missing-frame').evaluateAll(elements => elements.map(element => {
+  const { x, y, width, height } = element.getBoundingClientRect();
+  return { x, y, width, height };
+ }));
+ expect(frames).toHaveLength(6);
+ for (const frame of frames) {
+  expect(frame.y).toBeCloseTo(frames[0].y, 0);
+  expect(frame.width).toBeCloseTo(frame.height, 0);
+ }
+ for (let frame = 0; frame < 2; frame++) {
+  const options = await page.locator(`[data-frame="${frame}"]`).evaluateAll(elements => elements.map(element => {
+   const { x, y, width, height } = element.getBoundingClientRect();
+   return { x, y, width, height };
+  }));
+  expect(options).toHaveLength(3);
+  for (const [index, option] of options.entries()) {
+   expect(option.x).toBeCloseTo(frames[frame + 4].x, 0);
+   expect(option.width).toBeCloseTo(frames[frame + 4].width, 0);
+   expect(option.y).toBeGreaterThan(index ? options[index - 1].y + options[index - 1].height : frames[frame + 4].y + frames[frame + 4].height);
+  }
+ }
  await page.locator('[data-frame="0"][data-option="0"]').click();
  await page.locator('[data-frame="1"][data-option="1"]').click();
  await page.getByRole('button', { name: 'Save and forward' }).click();
  await page.getByRole('button', { name: 'Save and back' }).click();
  await expect(page.locator('[data-frame="0"][data-option="0"]')).toHaveAttribute('aria-pressed', 'true');
  await expect(page.locator('[data-frame="1"][data-option="1"]')).toHaveAttribute('aria-pressed', 'true');
+ await page.locator('[data-frame="0"][data-option="2"]').press('Enter');
+ await expect(page.locator('[data-frame="0"][data-option="0"]')).toHaveAttribute('aria-pressed', 'false');
+ await expect(page.locator('[data-frame="0"][data-option="2"]')).toHaveAttribute('aria-pressed', 'true');
+ await expect(page.locator('.sequence-option.selected')).toHaveCount(2);
+ await expect(page.locator('[data-question="0"]')).toHaveAttribute('aria-label', 'Sequence 1, answered');
+ await page.getByRole('heading', { name: 'Sequence 1 of 10' }).click();
+ await page.mouse.move(0, 0);
+ await page.screenshot({ path: '/tmp/dmat-figure-sequences-desktop.png', fullPage: true });
  await expect(page.locator('.sequence-option.correct')).toHaveCount(0);
  await expect(page.locator('#show-hint')).toHaveCount(0);
  page.once('dialog', (dialog) => dialog.dismiss());

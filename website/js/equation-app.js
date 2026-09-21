@@ -1,4 +1,4 @@
-import { examMarkup, examNavigator, bindExamControls, setExamMode, numberKeyboardMarkup, bindNumberKeyboard } from './exam-ui.js';
+import { examMarkup, examNavigator, bindExamControls, updateExamNavigator, setExamMode, numberKeyboardMarkup, bindNumberKeyboard } from './exam-ui.js';
 import { transferMarkup, bindTransfer } from './data-transfer.js';
 import { SessionClock, TARGET_SECONDS, formatTime, median } from './session.js';
 
@@ -198,6 +198,7 @@ function startSession(mode, difficulty = null, selectedQuestions = null) {
     difficulty,
     questions,
     answers: questions.map(emptyEquationAnswer),
+    reviewFlags: questions.map(() => false),
     questionTimes: questions.map(() => 0),
     current: 0,
     enteredQuestionAt: Date.now(),
@@ -253,14 +254,14 @@ function renderQuestion() {
       <section class="exam-column"><h2>Solutions</h2><div class="exam-answer-fields" aria-label="Your values">${question.variables.map((variable) => `<label><span>${variable} =</span><input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="off" data-variable="${variable}" value="${escapeHtml(session.answers[session.current][variable])}" aria-label="Value of ${variable}" /></label>`).join('')}</div></section>
       <section class="exam-column"><h2>Virtual keyboard</h2>${numberKeyboardMarkup()}</section>
     </div>`,
-    navigator: examNavigator(session.questions, session.current, (item, index) => answerComplete(item, session.answers[index])),
+    navigator: examNavigator(session.questions, session.current, (item, index) => answerComplete(item, session.answers[index]), 'Question', session.reviewFlags),
     current: session.current,
     count: session.questions.length,
     timerLabel: timed ? (session.mode === 'mock' ? 'Time remaining' : 'Time elapsed') : null,
     timerValue: formatTime(session.mode === 'mock' ? Math.max(0, 1500 - (clock?.elapsed() || 0)) : clock?.elapsed() || 0),
     learnActions: session.mode === 'learn' ? '<button class="button secondary" id="show-hint" type="button">Show strategy hint</button>' : '',
   });
-  bindExamControls(app);
+  bindExamControls(app, session);
   bindNumberKeyboard(app);
   app.querySelectorAll('[data-variable]').forEach((input) => input.addEventListener('input', () => {
     input.value = input.value.replace(/\D/g, '').slice(0, 2);
@@ -284,9 +285,7 @@ function updateNavigator() {
   if (!activeSession || activeSession.questions.length === 1) return;
   const index = activeSession.current;
   const answered = answerComplete(activeSession.questions[index], activeSession.answers[index]);
-  const button = app.querySelector(`[data-question="${index}"]`);
-  button?.classList.toggle('answered', answered);
-  button?.setAttribute('aria-label', `Question ${index + 1}, ${answered ? 'answered' : 'unanswered'}`);
+  updateExamNavigator(app, index, answered);
 }
 
 function changeQuestion(index) {
