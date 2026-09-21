@@ -8,7 +8,7 @@ import (
 )
 
 func testSettings() Settings {
-	return Settings{Seed: 20260818, Counts: Counts{Low: 2, Medium: 2, High: 2}}
+	return Settings{Seed: 20260818, Counts: Counts{Low: 2, Medium: 2, High: 2, Extreme: 2}}
 }
 
 func TestGenerationIsDeterministicAndValid(t *testing.T) {
@@ -31,11 +31,11 @@ func TestGenerationIsDeterministicAndValid(t *testing.T) {
 }
 
 func TestDifficultyTemplatesHaveExpectedTrackingLoad(t *testing.T) {
-	bank, err := Generate(Settings{Seed: 9, Counts: Counts{Low: 1, Medium: 1, High: 1}})
+	bank, err := Generate(Settings{Seed: 9, Counts: Counts{Low: 1, Medium: 1, High: 1, Extreme: 1}})
 	if err != nil {
 		t.Fatal(err)
 	}
-	wantActors := map[string]int{"low": 1, "medium": 3, "high": 4}
+	wantActors := map[string]int{"low": 1, "medium": 3, "high": 4, "extreme": 4}
 	for _, puzzle := range bank.Puzzles {
 		if got := len(puzzle.Actors); got != wantActors[puzzle.Difficulty.Level] {
 			t.Fatalf("%s puzzle has %d actors", puzzle.Difficulty.Level, got)
@@ -83,8 +83,8 @@ func TestWrittenBankCanBeStrictlyVerified(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if count != 6 {
-		t.Fatalf("verified %d puzzles, want 6", count)
+	if count != 8 {
+		t.Fatalf("verified %d puzzles, want 8", count)
 	}
 }
 
@@ -125,5 +125,30 @@ func TestVerifierRejectsCorruptionBeforeReplay(t *testing.T) {
 		if err := VerifyPuzzle(puzzle); err == nil {
 			t.Fatal("accepted corrupted puzzle")
 		}
+	}
+}
+
+func TestExtremeCannotBeRelabelledHighPuzzle(t *testing.T) {
+	bank, err := Generate(testSettings())
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, puzzle := range bank.Puzzles {
+		if puzzle.Difficulty.Level != "high" {
+			continue
+		}
+		puzzle.Difficulty = difficultyFor(puzzle.Programs, "extreme")
+		puzzle.ID = puzzleID(puzzle)
+		if err := VerifyPuzzle(puzzle); err == nil {
+			t.Fatal("accepted relabelled high puzzle as extreme")
+		}
+	}
+}
+
+func TestNegativeExtremeCountRejected(t *testing.T) {
+	settings := testSettings()
+	settings.Counts.Extreme = -1
+	if _, err := Generate(settings); err == nil {
+		t.Fatal("accepted negative count")
 	}
 }

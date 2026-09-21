@@ -18,7 +18,7 @@ function validateSessions(sessions, task) {
       || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$/.test(session.date)
       || !Number.isFinite(Date.parse(session.date))
       || !['learn', 'drill', 'mock'].includes(session.mode)
-      || (session.difficulty != null && !(task === 'mathematical-equations' && session.mode === 'mock' ? [...difficulties, 'easy', 'normal', 'hard'] : difficulties).includes(session.difficulty))
+      || (session.difficulty != null && !(session.mode === 'mock' ? [...difficulties, 'easy', 'normal', 'hard'] : difficulties).includes(session.difficulty))
       || (session.task != null && session.task !== task)
       || (session.questionType != null && !['target', 'full'].includes(session.questionType))
       || !Number.isSafeInteger(session.questionCount) || session.questionCount < 1
@@ -36,7 +36,7 @@ function validateSessions(sessions, task) {
 function validateFigureSession(session) {
   const count = session.questionCount;
   if ((session.mode === 'learn' && count !== 1) || (session.mode === 'drill' && count !== 10) || (session.mode === 'mock' && count !== 20)
-    || (session.difficulty != null && !['low', 'medium', 'high'].includes(session.difficulty))
+    || (session.difficulty != null && !(session.mode === 'mock' ? ['easy', 'normal', 'hard', 'extreme', 'low', 'medium', 'high'] : ['low', 'medium', 'high', 'extreme']).includes(session.difficulty))
     || !Number.isSafeInteger(session.frameCorrect) || session.frameCorrect < 2 * session.correct || session.frameCorrect > count + session.correct
     || !Array.isArray(session.answers) || session.answers.length !== count
     || !session.answers.every((answer) => Array.isArray(answer) && answer.length === 2 && answer.every((value) => value === null || (Number.isInteger(value) && value >= 0 && value < 3)))

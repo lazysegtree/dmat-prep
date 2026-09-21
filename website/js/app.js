@@ -26,6 +26,12 @@ const ROUTE_PATHS = {
   progress: 'latin-squares/progress/',
 };
 const MODE_NAMES = { learn: 'Learn', drill: 'Speed Drill', mock: 'Full dMAT Mock' };
+const MOCK_LEVELS = {
+  easy: { name: 'Easy', mix: { easy: 10, exam: 8, hard: 2 } },
+  normal: { name: 'Normal', mix: { easy: 6, exam: 8, hard: 6 } },
+  hard: { name: 'Hard', mix: { exam: 8, hard: 10, extreme: 2 } },
+  extreme: { name: 'Extreme', mix: { exam: 5, hard: 10, extreme: 5 } },
+};
 const DIFFICULTY_NAMES = { easy: 'Easy', exam: 'Exam Standard', hard: 'Hard', extreme: 'Extreme' };
 const QUESTION_TYPE_NAMES = { target: 'Find the ?', full: 'Complete the grid' };
 const PUZZLE_FORMAT_VERSION = 1;
@@ -150,7 +156,29 @@ function renderSetup(mode, difficulty = 'exam') {
   focusMain();
 }
 
+function mockLevelFromUrl() {
+  const url = new URL(window.location.href);
+  const level = url.searchParams.get('difficulty');
+  if (Object.hasOwn(MOCK_LEVELS, level)) return level;
+  if (level !== null) {
+    url.searchParams.delete('difficulty');
+    window.history.replaceState(null, '', url);
+  }
+  return 'normal';
+}
+
+function sessionDifficultyName(session) {
+  if (session.mode === 'mock') return MOCK_LEVELS[session.difficulty]?.name || 'Previous mix (3 Easy, 11 Exam Standard, 6 Hard)';
+  return DIFFICULTY_NAMES[session.difficulty] || 'Mixed difficulty';
+}
+
+function mockMixDescription(level) {
+  return Object.entries(MOCK_LEVELS[level].mix)
+    .map(([difficulty, count]) => `${count} ${DIFFICULTY_NAMES[difficulty]}`).join(', ');
+}
+
 function renderMockIntro() {
+  const level = mockLevelFromUrl();
   app.innerHTML = `
     <section class="panel">
       <p class="eyebrow">Full dMAT Mock</p>
@@ -159,14 +187,22 @@ function renderMockIntro() {
       <ul>
         <li>All questions are selected before the mock begins.</li>
         <li>The mock submits automatically when time runs out.</li>
-        <li>Difficulty is selected internally.</li>
+        <li id="mock-mix">The training mix is ${mockMixDescription(level)}.</li>
       </ul>
+      <div class="field"><label for="mock-level">Mock difficulty</label><select id="mock-level">${Object.entries(MOCK_LEVELS).map(([key, value]) => `<option value="${key}"${key === level ? ' selected' : ''}>${value.name}</option>`).join('')}</select></div>
       <div class="button-row">
         <button class="button" id="start-mock" type="button">Start Mock</button>
         <a class="button secondary" href="${routeUrl('home')}">Back</a>
       </div>
     </section>`;
-  app.querySelector('#start-mock').addEventListener('click', () => startSession('mock'));
+  const select = app.querySelector('#mock-level');
+  select.addEventListener('change', () => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('difficulty', select.value);
+    window.history.replaceState(null, '', url);
+    app.querySelector('#mock-mix').textContent = `The training mix is ${mockMixDescription(select.value)}.`;
+  });
+  app.querySelector('#start-mock').addEventListener('click', () => startSession('mock', select.value));
   focusMain();
 }
 
@@ -188,12 +224,9 @@ function choosePuzzles(mode, difficulty) {
     const count = mode === 'learn' ? 1 : 10;
     return shuffle(bank.filter((puzzle) => puzzleDifficulty(puzzle) === difficulty)).slice(0, count);
   }
-  const mix = [
-    ...shuffle(bank.filter((puzzle) => puzzleDifficulty(puzzle) === 'easy')).slice(0, 3),
-    ...shuffle(bank.filter((puzzle) => puzzleDifficulty(puzzle) === 'exam')).slice(0, 11),
-    ...shuffle(bank.filter((puzzle) => puzzleDifficulty(puzzle) === 'hard')).slice(0, 6),
-  ];
-  return shuffle(mix);
+  const mix = MOCK_LEVELS[difficulty || 'normal'].mix;
+  return shuffle(Object.entries(mix).flatMap(([level, count]) =>
+    shuffle(bank.filter((puzzle) => puzzleDifficulty(puzzle) === level)).slice(0, count)));
 }
 
 function startSession(mode, difficulty = null, selectedPuzzles = null) {
@@ -252,7 +285,7 @@ function renderPlay() {
   setExamMode(true);
   app.innerHTML = examMarkup({
     task: 'Latin Squares',
-    modeName: MODE_NAMES[session.mode],
+    modeName: MODE_NAMES[session.mode] + (session.mode === 'mock' ? ` · ${sessionDifficultyName(session)}` : ''),
     heading: session.puzzles.length === 1 ? 'Puzzle' : `Question ${session.current + 1} of ${session.puzzles.length}`,
     instructions: `<strong>Which letter is missing?</strong><p>On the position of the question mark in the square, a letter is missing.</p><p>In the square there can only occur the letters A, B, C, D and E.</p><p>Each letter may occur only exactly once in each row and each column.</p><p>Click onto the correct solution in the answer column with the mouse. If you do not know the answer, please guess.</p>`,
     content: `<div class="exam-latin-layout">
@@ -392,7 +425,7 @@ function renderResults(result, reviewIndex = null) {
     .slice(0, 3);
   app.innerHTML = `
     <section>
-      <p class="eyebrow">${MODE_NAMES[result.mode]} · ${QUESTION_TYPE_NAMES[result.questionType || 'full']} results</p>
+      <p class="eyebrow">${MODE_NAMES[result.mode]}${result.mode === 'mock' ? ` · ${sessionDifficultyName(result)}` : ''} · ${QUESTION_TYPE_NAMES[result.questionType || 'full']} results</p>
       <h1>${title}</h1>
       <p class="lede">${result.automatic ? 'Time expired, so the mock was submitted automatically.' : 'Review each answer and note where accuracy or time was lost.'}</p>
       <div class="results-summary">${resultMetrics(result)}</div>
@@ -536,7 +569,7 @@ function renderProgress() {
       <h2>Recent sessions</h2>
       ${sessions.length ? `<div class="session-list">${sessions.map((session) => `
         <div class="session-row">
-          <div><strong>${MODE_NAMES[session.mode]}</strong><br /><span class="small muted">${QUESTION_TYPE_NAMES[session.questionType || 'full']} · ${session.difficulty ? DIFFICULTY_NAMES[session.difficulty] : 'Internal difficulty mix'}</span></div>
+          <div><strong>${MODE_NAMES[session.mode]}</strong><br /><span class="small muted">${QUESTION_TYPE_NAMES[session.questionType || 'full']} · ${sessionDifficultyName(session)}</span></div>
           <strong>${session.correct}/${session.questionCount}</strong>
           <time class="small muted" datetime="${session.date}">${new Date(session.date).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })} · ${formatTime(session.totalTime)}</time>
         </div>`).join('')}</div>` : '<p class="empty">Complete a Learn puzzle, Speed Drill, or Full Mock to see progress here.</p>'}
@@ -588,9 +621,6 @@ function validatePuzzleBank(data) {
   }
   for (const level of levels.keys()) {
     if (levels.get(level) < 10) throw new Error(`Puzzle bank needs at least 10 ${level} puzzles`);
-  }
-  if (levels.get('easy') < 3 || levels.get('exam') < 11 || levels.get('hard') < 6) {
-    throw new Error('Puzzle bank cannot supply the configured 20-question mock mix');
   }
   return data.puzzles;
 }

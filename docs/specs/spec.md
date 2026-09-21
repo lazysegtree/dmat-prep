@@ -80,7 +80,7 @@ Purpose: simulate the Latin-square portion of the examination.
 
 - Exactly 20 target-cell questions.
 - Exactly 25 minutes.
-- The difficulty mixture is 3 Easy, 11 Exam Standard, and 6 Hard puzzles, shuffled after selection.
+- Select a mock level: Easy (10 Easy, 8 Exam Standard, 2 Hard), Normal (default: 6 Easy, 8 Exam Standard, 6 Hard), Hard (8 Exam Standard, 10 Hard, 2 Extreme), or Extreme (5 Exam Standard, 10 Hard, 5 Extreme). Questions are sampled without repeats and shuffled. Low/Medium/High correspond to the existing Easy/Exam Standard/Hard question tiers.
 - All questions are selected before the mock begins.
 - The timer counts down and remains visible.
 - Users can move forward and backward between questions.
@@ -242,13 +242,13 @@ Browser-delivered files live under `website/`. The repository root is served or 
 - `/website/latin-squares/mock/`: Full Mock introduction.
 - `/website/latin-squares/progress/`: locally stored Latin-square progress.
 
-The supported `difficulty` values are `easy`, `exam`, `hard`, and `extreme`. An invalid difficulty is removed and falls back to `exam`. An unknown puzzle ID produces a visible error and never silently substitutes another puzzle. When both `puzzle` and `difficulty` are present, the exact puzzle takes precedence. Opening a Speed Drill or Full Mock URL never starts its timer; the user must explicitly start the session.
+For Learn and Speed Drill, the supported `difficulty` values are `easy`, `exam`, `hard`, and `extreme`. Mock URLs instead accept `easy`, `normal`, `hard`, and `extreme`, defaulting to `normal` when absent or invalid. An invalid difficulty is removed and falls back to `exam`. An unknown puzzle ID produces a visible error and never silently substitutes another puzzle. When both `puzzle` and `difficulty` are present, the exact puzzle takes precedence. Opening a Speed Drill or Full Mock URL never starts its timer; the user must explicitly start the session.
 
 Starting a random Learn puzzle replaces the setup URL with its exact `puzzle` URL so it can be refreshed or shared. Random Drill and Mock selections are not encoded in the URL, and results remain transient session screens rather than shareable routes.
 
 ## 8. Interface principles
 
-- Starting a mock requires no configuration.
+- Mock difficulty defaults to Normal and can be changed before starting. It is retained in results, history, backups, and repeat attempts. Older mocks without a level keep their previous-mix label.
 - The grid works with mouse, touch, and keyboard input.
 - Non-target cells cannot receive accidental input.
 - Controls have accessible labels and visible keyboard focus.

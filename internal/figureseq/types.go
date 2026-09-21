@@ -89,9 +89,10 @@ type Puzzle struct {
 }
 
 type Counts struct {
-	Low    int `json:"low"`
-	Medium int `json:"medium"`
-	High   int `json:"high"`
+	Extreme int `json:"extreme,omitempty"`
+	Low     int `json:"low"`
+	Medium  int `json:"medium"`
+	High    int `json:"high"`
 }
 
 type Settings struct {

@@ -24,6 +24,7 @@ func run(arguments []string) error {
 	low := flags.Int("count-low", 12, "number of low puzzles")
 	medium := flags.Int("count-medium", 12, "number of medium puzzles")
 	high := flags.Int("count-high", 12, "number of high puzzles")
+	extreme := flags.Int("count-extreme", 12, "number of extreme puzzles")
 	if err := flags.Parse(arguments); err != nil {
 		return err
 	}
@@ -40,7 +41,7 @@ func run(arguments []string) error {
 	}
 	bank, err := figureseq.Generate(figureseq.Settings{
 		Seed:   *seed,
-		Counts: figureseq.Counts{Low: *low, Medium: *medium, High: *high},
+		Counts: figureseq.Counts{Low: *low, Medium: *medium, High: *high, Extreme: *extreme},
 	})
 	if err != nil {
 		return err

@@ -256,7 +256,7 @@ func difficultyFor(programs []Program, level string) Difficulty {
 }
 
 func makePrograms(level string, variant int, rng *splitMix64) ([]Actor, []Program) {
-	actorCount := map[string]int{"low": 1, "medium": 3, "high": 4}[level]
+	actorCount := map[string]int{"low": 1, "medium": 3, "high": 4, "extreme": 4}[level]
 	actors := make([]Actor, actorCount)
 	programs := make([]Program, actorCount)
 	motions := []string{"horizontal-bounce", "vertical-bounce", "diagonal-bounce", "perimeter"}
@@ -281,7 +281,7 @@ func makePrograms(level string, variant int, rng *splitMix64) ([]Actor, []Progra
 				program.RotationStep = 90
 			}
 		}
-		if level == "high" {
+		if level == "high" || level == "extreme" {
 			switch index {
 			case 0:
 				program.StepMode = "increasing"
@@ -296,6 +296,11 @@ func makePrograms(level string, variant int, rng *splitMix64) ([]Actor, []Progra
 				program.StepSize = 2
 				program.Colors = []string{colors[index], colors[(index+1)%len(colors)]}
 			}
+		}
+		if level == "extreme" {
+			program.Colors = []string{colors[index], colors[(index+1)%len(colors)], colors[(index+2)%len(colors)]}
+			program.RotationStep = 90
+			program.RotationIncreasing = index%2 == 0
 		}
 		program.Explanation = explanation(program)
 		actors[index] = Actor{ID: actorID, Shape: shapes[index]}
@@ -351,7 +356,7 @@ func makePuzzle(level string, variant int, rng *splitMix64) (Puzzle, error) {
 }
 
 func Generate(settings Settings) (Bank, error) {
-	if settings.Counts.Low < 0 || settings.Counts.Medium < 0 || settings.Counts.High < 0 || settings.Counts.Low+settings.Counts.Medium+settings.Counts.High == 0 {
+	if settings.Counts.Low < 0 || settings.Counts.Medium < 0 || settings.Counts.High < 0 || settings.Counts.Extreme < 0 || settings.Counts.Low+settings.Counts.Medium+settings.Counts.High+settings.Counts.Extreme == 0 {
 		return Bank{}, fmt.Errorf("at least one non-negative difficulty count must be positive")
 	}
 	rng := &splitMix64{state: settings.Seed}
@@ -360,7 +365,7 @@ func Generate(settings Settings) (Bank, error) {
 	for _, request := range []struct {
 		level string
 		count int
-	}{{"low", settings.Counts.Low}, {"medium", settings.Counts.Medium}, {"high", settings.Counts.High}} {
+	}{{"low", settings.Counts.Low}, {"medium", settings.Counts.Medium}, {"high", settings.Counts.High}, {"extreme", settings.Counts.Extreme}} {
 		produced := 0
 		for attempt := 0; produced < request.count && attempt < request.count*1000; attempt++ {
 			puzzle, err := makePuzzle(request.level, attempt, rng)

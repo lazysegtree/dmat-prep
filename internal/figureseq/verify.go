@@ -73,11 +73,17 @@ func VerifyPuzzle(puzzle Puzzle) error {
 	if puzzle.ID != puzzleID(puzzle) {
 		return fmt.Errorf("puzzle ID is not canonical")
 	}
-	if puzzle.Difficulty.Level != "low" && puzzle.Difficulty.Level != "medium" && puzzle.Difficulty.Level != "high" {
+	if puzzle.Difficulty.Level != "low" && puzzle.Difficulty.Level != "medium" && puzzle.Difficulty.Level != "high" && puzzle.Difficulty.Level != "extreme" {
 		return fmt.Errorf("invalid difficulty level")
 	}
 	if !reflect.DeepEqual(puzzle.Difficulty, difficultyFor(puzzle.Programs, puzzle.Difficulty.Level)) {
 		return fmt.Errorf("invalid difficulty metadata")
+	}
+	if puzzle.Difficulty.Level == "extreme" {
+		components := difficultyFor(puzzle.Programs, "extreme").Components
+		if components.ActorTracking != 4 || components.ChangingTracks != 12 || components.CoupledActors != 4 || components.IncrementalPrograms < 2 {
+			return fmt.Errorf("extreme puzzle does not meet the structural gate")
+		}
 	}
 	if !puzzle.Validation.PredictiveUnique || !puzzle.Validation.FramesValid || !puzzle.Validation.OptionsUnique || !puzzle.Validation.ProgramsDeterministic || puzzle.Validation.GeneratorVersion != GeneratorVersion {
 		return fmt.Errorf("validation metadata is incomplete")
@@ -106,6 +112,8 @@ func VerifyBank(bank Bank) error {
 			counts.Medium++
 		case "high":
 			counts.High++
+		case "extreme":
+			counts.Extreme++
 		}
 	}
 	if counts != bank.Settings.Counts {

@@ -9,7 +9,13 @@ const SITE_ROOT = new URL('../', import.meta.url);
 const INITIAL_PAGE = document.body.dataset.figurePage || 'home';
 const STORAGE_KEY = 'dmat-figures-progress-v1';
 const MODE_NAMES = { learn: 'Learn', drill: 'Speed Drill', mock: 'Full Mock' };
-const DIFFICULTY_NAMES = { low: 'Low', medium: 'Medium', high: 'High' };
+const DIFFICULTY_NAMES = { low: 'Low', medium: 'Medium', high: 'High', extreme: 'Extreme' };
+const MOCK_LEVELS = {
+  easy: { name: 'Easy', mix: { low: 10, medium: 8, high: 2 } },
+  normal: { name: 'Normal', mix: { low: 6, medium: 8, high: 6 } },
+  hard: { name: 'Hard', mix: { medium: 8, high: 10, extreme: 2 } },
+  extreme: { name: 'Extreme', mix: { medium: 5, high: 10, extreme: 5 } },
+};
 const ROUTES = {
   home: 'figure-sequences/',
   learn: 'figure-sequences/learn/',
@@ -146,13 +152,43 @@ function renderSetup(mode, difficulty) {
  focusMain();
 }
 
+function mockLevelFromUrl() {
+  const url = new URL(window.location.href);
+  const level = url.searchParams.get('difficulty');
+  if (Object.hasOwn(MOCK_LEVELS, level)) return level;
+  if (level !== null) {
+    url.searchParams.delete('difficulty');
+    window.history.replaceState(null, '', url);
+  }
+  return 'normal';
+}
+
+function sessionDifficultyName(session) {
+  if (session.mode === 'mock') return MOCK_LEVELS[session.difficulty]?.name || 'Normal';
+  return DIFFICULTY_NAMES[session.difficulty] || 'Mixed difficulty';
+}
+
+function mockMixDescription(level) {
+  return Object.entries(MOCK_LEVELS[level].mix)
+    .map(([difficulty, count]) => `${count} ${DIFFICULTY_NAMES[difficulty]}`).join(', ');
+}
+
 function renderMockIntro() {
+ const level = mockLevelFromUrl();
  app.innerHTML = `<section class="panel"><p class="eyebrow">Figure Sequences · Full Mock</p><h1>20 sequences. 25 minutes.</h1>
  <p class="muted">Choose two frames per sequence. Navigate freely; feedback appears after submission.</p>
- <ul><li>6 Low, 8 Medium, and 6 High sequences, with no repeats within the session.</li><li>The timer submits automatically when time expires.</li><li>A complete-sequence point requires both frames to be correct. Individual frames are counted separately.</li></ul>
+ <ul><li id="mock-mix">The training mix is ${mockMixDescription(level)}.</li><li>The timer submits automatically when time expires.</li><li>A complete-sequence point requires both frames to be correct. Individual frames are counted separately.</li></ul>
  <p class="small muted">The difficulty mix and displayed scoring are training conventions.</p>
+      <div class="field"><label for="mock-level">Mock difficulty</label><select id="mock-level">${Object.entries(MOCK_LEVELS).map(([key, value]) => `<option value="${key}"${key === level ? ' selected' : ''}>${value.name}</option>`).join('')}</select></div>
  <div class="button-row"><button class="button" id="start-mock">Start Mock</button><a class="button secondary" href="${routeUrl('home')}">Back</a></div></section>`;
- app.querySelector('#start-mock').addEventListener('click', () => startSession('mock'));
+  const select = app.querySelector('#mock-level');
+  select.addEventListener('change', () => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('difficulty', select.value);
+    window.history.replaceState(null, '', url);
+    app.querySelector('#mock-mix').textContent = `The training mix is ${mockMixDescription(select.value)}.`;
+  });
+  app.querySelector('#start-mock').addEventListener('click', () => startSession('mock', select.value));
  focusMain();
 }
 
@@ -168,11 +204,9 @@ function shuffle(values) {
 function chooseQuestions(mode, difficulty) {
   if (mode === 'learn') return shuffle(bank.filter((question) => question.difficulty.level === difficulty)).slice(0, 1);
   if (mode === 'drill') return shuffle(bank.filter((question) => question.difficulty.level === difficulty)).slice(0, 10);
-  return shuffle([
-    ...shuffle(bank.filter((question) => question.difficulty.level === 'low')).slice(0, 6),
-    ...shuffle(bank.filter((question) => question.difficulty.level === 'medium')).slice(0, 8),
-    ...shuffle(bank.filter((question) => question.difficulty.level === 'high')).slice(0, 6),
-  ]);
+  const mix = MOCK_LEVELS[difficulty || 'normal'].mix;
+  return shuffle(Object.entries(mix).flatMap(([level, count]) =>
+    shuffle(bank.filter((question) => question.difficulty.level === level)).slice(0, count)));
 }
 
 function emptyFigureAnswer() { return [null, null]; }
@@ -227,7 +261,7 @@ function renderQuestion() {
  setExamMode(true);
  app.innerHTML = examMarkup({
   task: 'Figure Sequences',
-  modeName: MODE_NAMES[session.mode],
+  modeName: MODE_NAMES[session.mode] + (session.mode === 'mock' ? ` · ${sessionDifficultyName(session)}` : ''),
   heading: `Sequence ${session.current + 1} of ${session.questions.length}`,
   instructions: '<strong>Which pictures are missing in the row?</strong><p>The series of pictures has to be continued. Each picture consists of symbols, which can change in color, position, and orientation.</p><p>Below each question mark, there are three options. Click onto the two correct answers with the mouse. If you do not know an answer, please guess.</p>',
   content: examSequenceMarkup(question, session.answers[session.current]),
@@ -326,7 +360,7 @@ function renderResults(result, reviewIndex = null) {
   const slowest = result.questionTimes.map((time, index) => ({ time, index })).sort((a, b) => b.time - a.time).slice(0, 3);
   app.innerHTML = `
     <section>
-      <p class="eyebrow">Figure Sequences · ${MODE_NAMES[result.mode]} results</p>
+      <p class="eyebrow">Figure Sequences · ${MODE_NAMES[result.mode]}${result.mode === 'mock' ? ` · ${sessionDifficultyName(result)}` : ''} results</p>
       <h1>${result.mode === 'mock' ? `${result.correct} out of 20` : result.correct === result.questionCount ? 'All correct' : `${result.correct} of ${result.questionCount} correct`}</h1>
       <p class="lede">${result.automatic ? 'Time expired, so the mock was submitted automatically.' : 'Review each figure’s movement, colour, and rotation.'}</p>
       <div class="results-summary">${resultMetrics(result)}</div>
@@ -388,7 +422,7 @@ function renderProgress() {
   app.innerHTML = `
     <section><p class="eyebrow">Figure Sequences · Progress</p><h1>Your recent training</h1><p class="notice">Progress is stored only in this browser on this device. Up to 50 completed figure sessions are kept.</p>
       <div class="metrics"><div class="metric"><span>Latest mock</span><strong>${summary.latestMock === null ? '—' : `${summary.latestMock}/20`}</strong></div><div class="metric"><span>Best mock</span><strong>${summary.bestMock === null ? '—' : `${summary.bestMock}/20`}</strong></div><div class="metric"><span>Complete-sequence accuracy</span><strong>${percent(summary.accuracy)}</strong></div><div class="metric"><span>Individual-frame accuracy</span><strong>${percent(summary.frameAccuracy)}</strong></div><div class="metric"><span>Median sequence time</span><strong>${summary.medianTime === null ? '—' : formatTime(summary.medianTime)}</strong></div><div class="metric"><span>Within 75 seconds</span><strong>${percent(summary.withinTarget)}</strong></div></div>
-      <h2>Recent sessions</h2>${sessions.length ? `<div class="session-list">${sessions.map((session) => `<div class="session-row"><div><strong>${MODE_NAMES[session.mode]}</strong><br /><span class="small muted">${session.difficulty ? DIFFICULTY_NAMES[session.difficulty] : 'Mixed difficulty'}</span></div><strong>${session.correct}/${session.questionCount} pairs<br /><span class="small">${session.frameCorrect}/${session.questionCount * 2} frames</span></strong><time class="small muted" datetime="${escapeHtml(session.date)}">${new Date(session.date).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })} · ${formatTime(session.totalTime)}</time><button class="button secondary" data-session="${sessions.indexOf(session)}">Review</button></div>`).join('')}</div>` : '<p class="empty">Complete a figure session to see progress here.</p>'}
+      <h2>Recent sessions</h2>${sessions.length ? `<div class="session-list">${sessions.map((session) => `<div class="session-row"><div><strong>${MODE_NAMES[session.mode]}</strong><br /><span class="small muted">${sessionDifficultyName(session)}</span></div><strong>${session.correct}/${session.questionCount} pairs<br /><span class="small">${session.frameCorrect}/${session.questionCount * 2} frames</span></strong><time class="small muted" datetime="${escapeHtml(session.date)}">${new Date(session.date).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })} · ${formatTime(session.totalTime)}</time><button class="button secondary" data-session="${sessions.indexOf(session)}">Review</button></div>`).join('')}</div>` : '<p class="empty">Complete a figure session to see progress here.</p>'}
       <div class="button-row"><button class="button danger" id="delete-progress" type="button" ${sessions.length ? '' : 'disabled'}>Delete figure progress</button><a class="button secondary" href="${routeUrl('home')}">Figure Sequences home</a></div>
     </section>`;
   app.insertAdjacentHTML('beforeend', transferMarkup());

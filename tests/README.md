@@ -38,3 +38,5 @@ Go tests under `internal/figureseq` cover deterministic generation, ambiguous
 continuations, and malformed programs/observations. Run `go test ./...`,
 `go vet ./...`, and the verification command in
 `docs/specs/figure-sequence-poc.md`.
+
+Mock mix browser tests cover all four levels in Latin Squares, Mathematical Equations, and Figure Sequences, including exact counts without repeats, persistence, backup validation, repeat selection, and timeout.

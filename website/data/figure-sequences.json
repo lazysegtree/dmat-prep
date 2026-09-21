@@ -4,6 +4,7 @@
   "settings": {
     "seed": 20260818,
     "counts": {
+      "extreme": 12,
       "low": 12,
       "medium": 12,
       "high": 12
@@ -14810,6 +14811,6966 @@
         }
       },
       "hint": "Track the arrow figure first. The arrow figure moves horizontally and bounces at the left and right edges by one additional cell on each transition; its quarter-turn count also increases on each transition.",
+      "validation": {
+        "predictiveUnique": true,
+        "framesValid": true,
+        "optionsUnique": true,
+        "programsDeterministic": true,
+        "generatorVersion": 2
+      }
+    },
+    {
+      "id": "DMAT-FS-G2-5F3ECE12ECDF",
+      "kind": "figure-sequence",
+      "gridSize": 4,
+      "actors": [
+        {
+          "id": "arrow figure",
+          "shape": "arrow"
+        },
+        {
+          "id": "triangle figure",
+          "shape": "triangle"
+        },
+        {
+          "id": "corner figure",
+          "shape": "corner"
+        },
+        {
+          "id": "chevron figure",
+          "shape": "chevron"
+        }
+      ],
+      "observedFrames": [
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 1,
+              "column": 1,
+              "color": "teal",
+              "rotation": 0
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 3,
+              "column": 2,
+              "color": "magenta",
+              "rotation": 0
+            },
+            {
+              "actorId": "corner figure",
+              "row": 0,
+              "column": 2,
+              "color": "amber",
+              "rotation": 0
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 2,
+              "column": 1,
+              "color": "ink",
+              "rotation": 180
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 0,
+              "color": "magenta",
+              "rotation": 90
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 3,
+              "column": 3,
+              "color": "amber",
+              "rotation": 90
+            },
+            {
+              "actorId": "corner figure",
+              "row": 0,
+              "column": 3,
+              "color": "ink",
+              "rotation": 90
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 0,
+              "column": 1,
+              "color": "teal",
+              "rotation": 270
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 2,
+              "column": 2,
+              "color": "amber",
+              "rotation": 270
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 2,
+              "column": 3,
+              "color": "ink",
+              "rotation": 180
+            },
+            {
+              "actorId": "corner figure",
+              "row": 0,
+              "column": 2,
+              "color": "teal",
+              "rotation": 270
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 2,
+              "column": 1,
+              "color": "magenta",
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 1,
+              "column": 1,
+              "color": "teal",
+              "rotation": 180
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 1,
+              "column": 3,
+              "color": "magenta",
+              "rotation": 270
+            },
+            {
+              "actorId": "corner figure",
+              "row": 0,
+              "column": 1,
+              "color": "amber",
+              "rotation": 180
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 2,
+              "column": 1,
+              "color": "ink",
+              "rotation": 90
+            }
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "frameNumber": 5,
+          "options": [
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 3,
+                  "color": "amber",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 180
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 3,
+                  "column": 3,
+                  "color": "magenta",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 3,
+                  "color": "amber",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 180
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 3,
+                  "column": 3,
+                  "color": "magenta",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 3,
+                  "color": "amber",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 180
+                }
+              ]
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "frameNumber": 6,
+          "options": [
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "amber",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 3,
+                  "color": "ink",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 1,
+                  "color": "magenta",
+                  "rotation": 270
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "amber",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "ink",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 1,
+                  "color": "magenta",
+                  "rotation": 270
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "amber",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "ink",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 1,
+                  "color": "magenta",
+                  "rotation": 270
+                }
+              ]
+            }
+          ],
+          "answerIndex": 2
+        }
+      ],
+      "programs": [
+        {
+          "actorId": "arrow figure",
+          "motion": "diagonal-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 1,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 2
+            },
+            {
+              "row": 3,
+              "column": 3
+            },
+            {
+              "row": 2,
+              "column": 2
+            },
+            {
+              "row": 1,
+              "column": 1
+            }
+          ],
+          "startIndex": 5,
+          "direction": 1,
+          "stepMode": "increasing",
+          "stepSize": 1,
+          "colors": [
+            "teal",
+            "magenta",
+            "amber"
+          ],
+          "colorStart": 0,
+          "rotationStart": 0,
+          "rotationStep": 90,
+          "rotationIncreasing": true,
+          "explanation": "The arrow figure moves on one diagonal and reverses at its endpoints by one additional cell on each transition; its quarter-turn count also increases on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "triangle figure",
+          "motion": "perimeter",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 3
+            },
+            {
+              "row": 1,
+              "column": 3
+            },
+            {
+              "row": 2,
+              "column": 3
+            },
+            {
+              "row": 3,
+              "column": 3
+            },
+            {
+              "row": 3,
+              "column": 2
+            },
+            {
+              "row": 3,
+              "column": 1
+            },
+            {
+              "row": 3,
+              "column": 0
+            },
+            {
+              "row": 2,
+              "column": 0
+            },
+            {
+              "row": 1,
+              "column": 0
+            }
+          ],
+          "startIndex": 7,
+          "direction": -1,
+          "stepMode": "constant",
+          "stepSize": 1,
+          "colors": [
+            "magenta",
+            "amber",
+            "ink"
+          ],
+          "colorStart": 0,
+          "rotationStart": 0,
+          "rotationStep": 90,
+          "rotationIncreasing": false,
+          "explanation": "The triangle figure moves around the outer border counter-clockwise by one cell at a time; it rotates 90 degrees on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "corner figure",
+          "motion": "horizontal-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 3
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 1
+            }
+          ],
+          "startIndex": 2,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 1,
+          "colors": [
+            "amber",
+            "ink",
+            "teal"
+          ],
+          "colorStart": 0,
+          "rotationStart": 0,
+          "rotationStep": 90,
+          "rotationIncreasing": true,
+          "explanation": "The corner figure moves horizontally and bounces at the left and right edges by one cell at a time; its quarter-turn count also increases on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "chevron figure",
+          "motion": "vertical-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 1,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 1
+            },
+            {
+              "row": 3,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 1
+            },
+            {
+              "row": 1,
+              "column": 1
+            }
+          ],
+          "startIndex": 4,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 2,
+          "colors": [
+            "ink",
+            "teal",
+            "magenta"
+          ],
+          "colorStart": 0,
+          "rotationStart": 180,
+          "rotationStep": 90,
+          "rotationIncreasing": false,
+          "explanation": "The chevron figure moves vertically and bounces at the top and bottom edges by 2 cells at a time; it rotates 90 degrees on each transition; its colour follows a repeating cycle."
+        }
+      ],
+      "difficulty": {
+        "level": "extreme",
+        "score": 34,
+        "provisional": true,
+        "components": {
+          "actorTracking": 4,
+          "changingTracks": 12,
+          "coupledActors": 4,
+          "incrementalPrograms": 2
+        }
+      },
+      "hint": "Track the arrow figure first. The arrow figure moves on one diagonal and reverses at its endpoints by one additional cell on each transition; its quarter-turn count also increases on each transition; its colour follows a repeating cycle.",
+      "validation": {
+        "predictiveUnique": true,
+        "framesValid": true,
+        "optionsUnique": true,
+        "programsDeterministic": true,
+        "generatorVersion": 2
+      }
+    },
+    {
+      "id": "DMAT-FS-G2-9E49DB090B14",
+      "kind": "figure-sequence",
+      "gridSize": 4,
+      "actors": [
+        {
+          "id": "arrow figure",
+          "shape": "arrow"
+        },
+        {
+          "id": "triangle figure",
+          "shape": "triangle"
+        },
+        {
+          "id": "corner figure",
+          "shape": "corner"
+        },
+        {
+          "id": "chevron figure",
+          "shape": "chevron"
+        }
+      ],
+      "observedFrames": [
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 0,
+              "color": "teal",
+              "rotation": 270
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 0,
+              "column": 1,
+              "color": "magenta",
+              "rotation": 90
+            },
+            {
+              "actorId": "corner figure",
+              "row": 3,
+              "column": 1,
+              "color": "amber",
+              "rotation": 0
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 2,
+              "column": 2,
+              "color": "ink",
+              "rotation": 90
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 1,
+              "column": 0,
+              "color": "magenta",
+              "rotation": 0
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 0,
+              "column": 0,
+              "color": "amber",
+              "rotation": 180
+            },
+            {
+              "actorId": "corner figure",
+              "row": 2,
+              "column": 1,
+              "color": "ink",
+              "rotation": 90
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 2,
+              "column": 2,
+              "color": "teal",
+              "rotation": 180
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 3,
+              "column": 0,
+              "color": "amber",
+              "rotation": 180
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 0,
+              "column": 1,
+              "color": "ink",
+              "rotation": 270
+            },
+            {
+              "actorId": "corner figure",
+              "row": 1,
+              "column": 1,
+              "color": "teal",
+              "rotation": 270
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 0,
+              "column": 0,
+              "color": "magenta",
+              "rotation": 270
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 3,
+              "column": 3,
+              "color": "teal",
+              "rotation": 90
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 0,
+              "column": 2,
+              "color": "magenta",
+              "rotation": 0
+            },
+            {
+              "actorId": "corner figure",
+              "row": 0,
+              "column": 1,
+              "color": "amber",
+              "rotation": 180
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 2,
+              "column": 2,
+              "color": "ink",
+              "rotation": 0
+            }
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "frameNumber": 5,
+          "options": [
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "teal",
+                  "rotation": 90
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 3,
+                  "color": "amber",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "teal",
+                  "rotation": 90
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 3,
+                  "color": "amber",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "teal",
+                  "rotation": 90
+                }
+              ]
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "frameNumber": 6,
+          "options": [
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 3,
+                  "column": 0,
+                  "color": "amber",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 2,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "magenta",
+                  "rotation": 180
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 3,
+                  "column": 0,
+                  "color": "amber",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 3,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "magenta",
+                  "rotation": 180
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 3,
+                  "column": 0,
+                  "color": "amber",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 2,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "magenta",
+                  "rotation": 270
+                }
+              ]
+            }
+          ],
+          "answerIndex": 0
+        }
+      ],
+      "programs": [
+        {
+          "actorId": "arrow figure",
+          "motion": "perimeter",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 3
+            },
+            {
+              "row": 1,
+              "column": 3
+            },
+            {
+              "row": 2,
+              "column": 3
+            },
+            {
+              "row": 3,
+              "column": 3
+            },
+            {
+              "row": 3,
+              "column": 2
+            },
+            {
+              "row": 3,
+              "column": 1
+            },
+            {
+              "row": 3,
+              "column": 0
+            },
+            {
+              "row": 2,
+              "column": 0
+            },
+            {
+              "row": 1,
+              "column": 0
+            }
+          ],
+          "startIndex": 0,
+          "direction": -1,
+          "stepMode": "increasing",
+          "stepSize": 1,
+          "colors": [
+            "teal",
+            "magenta",
+            "amber"
+          ],
+          "colorStart": 0,
+          "rotationStart": 270,
+          "rotationStep": 90,
+          "rotationIncreasing": true,
+          "explanation": "The arrow figure moves around the outer border counter-clockwise by one additional cell on each transition; its quarter-turn count also increases on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "triangle figure",
+          "motion": "horizontal-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 3
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 1
+            }
+          ],
+          "startIndex": 5,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 1,
+          "colors": [
+            "magenta",
+            "amber",
+            "ink"
+          ],
+          "colorStart": 0,
+          "rotationStart": 90,
+          "rotationStep": 90,
+          "rotationIncreasing": false,
+          "explanation": "The triangle figure moves horizontally and bounces at the left and right edges by one cell at a time; it rotates 90 degrees on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "corner figure",
+          "motion": "vertical-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 1,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 1
+            },
+            {
+              "row": 3,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 1
+            },
+            {
+              "row": 1,
+              "column": 1
+            }
+          ],
+          "startIndex": 3,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 1,
+          "colors": [
+            "amber",
+            "ink",
+            "teal"
+          ],
+          "colorStart": 0,
+          "rotationStart": 0,
+          "rotationStep": 90,
+          "rotationIncreasing": true,
+          "explanation": "The corner figure moves vertically and bounces at the top and bottom edges by one cell at a time; its quarter-turn count also increases on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "chevron figure",
+          "motion": "diagonal-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 1,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 2
+            },
+            {
+              "row": 3,
+              "column": 3
+            },
+            {
+              "row": 2,
+              "column": 2
+            },
+            {
+              "row": 1,
+              "column": 1
+            }
+          ],
+          "startIndex": 2,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 2,
+          "colors": [
+            "ink",
+            "teal",
+            "magenta"
+          ],
+          "colorStart": 0,
+          "rotationStart": 90,
+          "rotationStep": 90,
+          "rotationIncreasing": false,
+          "explanation": "The chevron figure moves on one diagonal and reverses at its endpoints by 2 cells at a time; it rotates 90 degrees on each transition; its colour follows a repeating cycle."
+        }
+      ],
+      "difficulty": {
+        "level": "extreme",
+        "score": 34,
+        "provisional": true,
+        "components": {
+          "actorTracking": 4,
+          "changingTracks": 12,
+          "coupledActors": 4,
+          "incrementalPrograms": 2
+        }
+      },
+      "hint": "Track the arrow figure first. The arrow figure moves around the outer border counter-clockwise by one additional cell on each transition; its quarter-turn count also increases on each transition; its colour follows a repeating cycle.",
+      "validation": {
+        "predictiveUnique": true,
+        "framesValid": true,
+        "optionsUnique": true,
+        "programsDeterministic": true,
+        "generatorVersion": 2
+      }
+    },
+    {
+      "id": "DMAT-FS-G2-11E5AC5B1ABC",
+      "kind": "figure-sequence",
+      "gridSize": 4,
+      "actors": [
+        {
+          "id": "arrow figure",
+          "shape": "arrow"
+        },
+        {
+          "id": "triangle figure",
+          "shape": "triangle"
+        },
+        {
+          "id": "corner figure",
+          "shape": "corner"
+        },
+        {
+          "id": "chevron figure",
+          "shape": "chevron"
+        }
+      ],
+      "observedFrames": [
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 2,
+              "color": "teal",
+              "rotation": 90
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 2,
+              "column": 1,
+              "color": "magenta",
+              "rotation": 180
+            },
+            {
+              "actorId": "corner figure",
+              "row": 1,
+              "column": 1,
+              "color": "amber",
+              "rotation": 0
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 0,
+              "column": 1,
+              "color": "ink",
+              "rotation": 270
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 3,
+              "color": "magenta",
+              "rotation": 180
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 3,
+              "column": 1,
+              "color": "amber",
+              "rotation": 270
+            },
+            {
+              "actorId": "corner figure",
+              "row": 0,
+              "column": 0,
+              "color": "ink",
+              "rotation": 90
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 1,
+              "column": 0,
+              "color": "teal",
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 1,
+              "color": "amber",
+              "rotation": 0
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 2,
+              "column": 1,
+              "color": "ink",
+              "rotation": 0
+            },
+            {
+              "actorId": "corner figure",
+              "row": 1,
+              "column": 1,
+              "color": "teal",
+              "rotation": 270
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 3,
+              "column": 0,
+              "color": "magenta",
+              "rotation": 90
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 2,
+              "color": "teal",
+              "rotation": 270
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 1,
+              "column": 1,
+              "color": "magenta",
+              "rotation": 90
+            },
+            {
+              "actorId": "corner figure",
+              "row": 2,
+              "column": 2,
+              "color": "amber",
+              "rotation": 180
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 3,
+              "column": 2,
+              "color": "ink",
+              "rotation": 180
+            }
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "frameNumber": 5,
+          "options": [
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "magenta",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 3,
+                  "column": 3,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 3,
+                  "color": "teal",
+                  "rotation": 270
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "magenta",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 3,
+                  "color": "teal",
+                  "rotation": 270
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "magenta",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 3,
+                  "column": 3,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 3,
+                  "color": "teal",
+                  "rotation": 0
+                }
+              ]
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "frameNumber": 6,
+          "options": [
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "teal",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 1,
+                  "column": 3,
+                  "color": "magenta",
+                  "rotation": 0
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "teal",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 0,
+                  "column": 3,
+                  "color": "magenta",
+                  "rotation": 0
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "teal",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 0,
+                  "column": 3,
+                  "color": "magenta",
+                  "rotation": 0
+                }
+              ]
+            }
+          ],
+          "answerIndex": 1
+        }
+      ],
+      "programs": [
+        {
+          "actorId": "arrow figure",
+          "motion": "horizontal-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 3
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 1
+            }
+          ],
+          "startIndex": 2,
+          "direction": 1,
+          "stepMode": "increasing",
+          "stepSize": 1,
+          "colors": [
+            "teal",
+            "magenta",
+            "amber"
+          ],
+          "colorStart": 0,
+          "rotationStart": 90,
+          "rotationStep": 90,
+          "rotationIncreasing": true,
+          "explanation": "The arrow figure moves horizontally and bounces at the left and right edges by one additional cell on each transition; its quarter-turn count also increases on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "triangle figure",
+          "motion": "vertical-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 1,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 1
+            },
+            {
+              "row": 3,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 1
+            },
+            {
+              "row": 1,
+              "column": 1
+            }
+          ],
+          "startIndex": 2,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 1,
+          "colors": [
+            "magenta",
+            "amber",
+            "ink"
+          ],
+          "colorStart": 0,
+          "rotationStart": 180,
+          "rotationStep": 90,
+          "rotationIncreasing": false,
+          "explanation": "The triangle figure moves vertically and bounces at the top and bottom edges by one cell at a time; it rotates 90 degrees on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "corner figure",
+          "motion": "diagonal-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 1,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 2
+            },
+            {
+              "row": 3,
+              "column": 3
+            },
+            {
+              "row": 2,
+              "column": 2
+            },
+            {
+              "row": 1,
+              "column": 1
+            }
+          ],
+          "startIndex": 5,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 1,
+          "colors": [
+            "amber",
+            "ink",
+            "teal"
+          ],
+          "colorStart": 0,
+          "rotationStart": 0,
+          "rotationStep": 90,
+          "rotationIncreasing": true,
+          "explanation": "The corner figure moves on one diagonal and reverses at its endpoints by one cell at a time; its quarter-turn count also increases on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "chevron figure",
+          "motion": "perimeter",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 3
+            },
+            {
+              "row": 1,
+              "column": 3
+            },
+            {
+              "row": 2,
+              "column": 3
+            },
+            {
+              "row": 3,
+              "column": 3
+            },
+            {
+              "row": 3,
+              "column": 2
+            },
+            {
+              "row": 3,
+              "column": 1
+            },
+            {
+              "row": 3,
+              "column": 0
+            },
+            {
+              "row": 2,
+              "column": 0
+            },
+            {
+              "row": 1,
+              "column": 0
+            }
+          ],
+          "startIndex": 1,
+          "direction": -1,
+          "stepMode": "constant",
+          "stepSize": 2,
+          "colors": [
+            "ink",
+            "teal",
+            "magenta"
+          ],
+          "colorStart": 0,
+          "rotationStart": 270,
+          "rotationStep": 90,
+          "rotationIncreasing": false,
+          "explanation": "The chevron figure moves around the outer border counter-clockwise by 2 cells at a time; it rotates 90 degrees on each transition; its colour follows a repeating cycle."
+        }
+      ],
+      "difficulty": {
+        "level": "extreme",
+        "score": 34,
+        "provisional": true,
+        "components": {
+          "actorTracking": 4,
+          "changingTracks": 12,
+          "coupledActors": 4,
+          "incrementalPrograms": 2
+        }
+      },
+      "hint": "Track the arrow figure first. The arrow figure moves horizontally and bounces at the left and right edges by one additional cell on each transition; its quarter-turn count also increases on each transition; its colour follows a repeating cycle.",
+      "validation": {
+        "predictiveUnique": true,
+        "framesValid": true,
+        "optionsUnique": true,
+        "programsDeterministic": true,
+        "generatorVersion": 2
+      }
+    },
+    {
+      "id": "DMAT-FS-G2-208631C6DAAB",
+      "kind": "figure-sequence",
+      "gridSize": 4,
+      "actors": [
+        {
+          "id": "arrow figure",
+          "shape": "arrow"
+        },
+        {
+          "id": "triangle figure",
+          "shape": "triangle"
+        },
+        {
+          "id": "corner figure",
+          "shape": "corner"
+        },
+        {
+          "id": "chevron figure",
+          "shape": "chevron"
+        }
+      ],
+      "observedFrames": [
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 2,
+              "column": 3,
+              "color": "teal",
+              "rotation": 0
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 0,
+              "column": 2,
+              "color": "magenta",
+              "rotation": 180
+            },
+            {
+              "actorId": "corner figure",
+              "row": 2,
+              "column": 1,
+              "color": "amber",
+              "rotation": 180
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 2,
+              "column": 2,
+              "color": "ink",
+              "rotation": 180
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 1,
+              "column": 3,
+              "color": "magenta",
+              "rotation": 90
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 0,
+              "column": 1,
+              "color": "amber",
+              "rotation": 270
+            },
+            {
+              "actorId": "corner figure",
+              "row": 3,
+              "column": 1,
+              "color": "ink",
+              "rotation": 270
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 0,
+              "column": 0,
+              "color": "teal",
+              "rotation": 270
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 2,
+              "color": "amber",
+              "rotation": 270
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 0,
+              "column": 0,
+              "color": "ink",
+              "rotation": 0
+            },
+            {
+              "actorId": "corner figure",
+              "row": 2,
+              "column": 1,
+              "color": "teal",
+              "rotation": 90
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 2,
+              "column": 2,
+              "color": "magenta",
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 1,
+              "column": 0,
+              "color": "teal",
+              "rotation": 180
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 0,
+              "column": 1,
+              "color": "magenta",
+              "rotation": 90
+            },
+            {
+              "actorId": "corner figure",
+              "row": 1,
+              "column": 1,
+              "color": "amber",
+              "rotation": 0
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 2,
+              "column": 2,
+              "color": "ink",
+              "rotation": 90
+            }
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "frameNumber": 5,
+          "options": [
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 3,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "amber",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 180
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 3,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "amber",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "teal",
+                  "rotation": 180
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 3,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "amber",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "teal",
+                  "rotation": 180
+                }
+              ]
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "frameNumber": 6,
+          "options": [
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 1,
+                  "column": 3,
+                  "color": "amber",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 3,
+                  "color": "ink",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 270
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "amber",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 3,
+                  "color": "ink",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 270
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "amber",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 3,
+                  "color": "ink",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 270
+                }
+              ]
+            }
+          ],
+          "answerIndex": 2
+        }
+      ],
+      "programs": [
+        {
+          "actorId": "arrow figure",
+          "motion": "perimeter",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 3
+            },
+            {
+              "row": 1,
+              "column": 3
+            },
+            {
+              "row": 2,
+              "column": 3
+            },
+            {
+              "row": 3,
+              "column": 3
+            },
+            {
+              "row": 3,
+              "column": 2
+            },
+            {
+              "row": 3,
+              "column": 1
+            },
+            {
+              "row": 3,
+              "column": 0
+            },
+            {
+              "row": 2,
+              "column": 0
+            },
+            {
+              "row": 1,
+              "column": 0
+            }
+          ],
+          "startIndex": 5,
+          "direction": -1,
+          "stepMode": "increasing",
+          "stepSize": 1,
+          "colors": [
+            "teal",
+            "magenta",
+            "amber"
+          ],
+          "colorStart": 0,
+          "rotationStart": 0,
+          "rotationStep": 90,
+          "rotationIncreasing": true,
+          "explanation": "The arrow figure moves around the outer border counter-clockwise by one additional cell on each transition; its quarter-turn count also increases on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "triangle figure",
+          "motion": "horizontal-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 3
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 1
+            }
+          ],
+          "startIndex": 4,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 1,
+          "colors": [
+            "magenta",
+            "amber",
+            "ink"
+          ],
+          "colorStart": 0,
+          "rotationStart": 180,
+          "rotationStep": 90,
+          "rotationIncreasing": false,
+          "explanation": "The triangle figure moves horizontally and bounces at the left and right edges by one cell at a time; it rotates 90 degrees on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "corner figure",
+          "motion": "vertical-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 1,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 1
+            },
+            {
+              "row": 3,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 1
+            },
+            {
+              "row": 1,
+              "column": 1
+            }
+          ],
+          "startIndex": 2,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 1,
+          "colors": [
+            "amber",
+            "ink",
+            "teal"
+          ],
+          "colorStart": 0,
+          "rotationStart": 180,
+          "rotationStep": 90,
+          "rotationIncreasing": true,
+          "explanation": "The corner figure moves vertically and bounces at the top and bottom edges by one cell at a time; its quarter-turn count also increases on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "chevron figure",
+          "motion": "diagonal-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 1,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 2
+            },
+            {
+              "row": 3,
+              "column": 3
+            },
+            {
+              "row": 2,
+              "column": 2
+            },
+            {
+              "row": 1,
+              "column": 1
+            }
+          ],
+          "startIndex": 4,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 2,
+          "colors": [
+            "ink",
+            "teal",
+            "magenta"
+          ],
+          "colorStart": 0,
+          "rotationStart": 180,
+          "rotationStep": 90,
+          "rotationIncreasing": false,
+          "explanation": "The chevron figure moves on one diagonal and reverses at its endpoints by 2 cells at a time; it rotates 90 degrees on each transition; its colour follows a repeating cycle."
+        }
+      ],
+      "difficulty": {
+        "level": "extreme",
+        "score": 34,
+        "provisional": true,
+        "components": {
+          "actorTracking": 4,
+          "changingTracks": 12,
+          "coupledActors": 4,
+          "incrementalPrograms": 2
+        }
+      },
+      "hint": "Track the arrow figure first. The arrow figure moves around the outer border counter-clockwise by one additional cell on each transition; its quarter-turn count also increases on each transition; its colour follows a repeating cycle.",
+      "validation": {
+        "predictiveUnique": true,
+        "framesValid": true,
+        "optionsUnique": true,
+        "programsDeterministic": true,
+        "generatorVersion": 2
+      }
+    },
+    {
+      "id": "DMAT-FS-G2-5E207DB66C43",
+      "kind": "figure-sequence",
+      "gridSize": 4,
+      "actors": [
+        {
+          "id": "arrow figure",
+          "shape": "arrow"
+        },
+        {
+          "id": "triangle figure",
+          "shape": "triangle"
+        },
+        {
+          "id": "corner figure",
+          "shape": "corner"
+        },
+        {
+          "id": "chevron figure",
+          "shape": "chevron"
+        }
+      ],
+      "observedFrames": [
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 2,
+              "column": 1,
+              "color": "teal",
+              "rotation": 0
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 1,
+              "column": 1,
+              "color": "magenta",
+              "rotation": 0
+            },
+            {
+              "actorId": "corner figure",
+              "row": 1,
+              "column": 0,
+              "color": "amber",
+              "rotation": 270
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 0,
+              "column": 1,
+              "color": "ink",
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 3,
+              "column": 1,
+              "color": "magenta",
+              "rotation": 90
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 2,
+              "column": 2,
+              "color": "amber",
+              "rotation": 90
+            },
+            {
+              "actorId": "corner figure",
+              "row": 2,
+              "column": 0,
+              "color": "ink",
+              "rotation": 0
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 0,
+              "column": 3,
+              "color": "teal",
+              "rotation": 90
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 1,
+              "column": 1,
+              "color": "amber",
+              "rotation": 270
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 3,
+              "column": 3,
+              "color": "ink",
+              "rotation": 180
+            },
+            {
+              "actorId": "corner figure",
+              "row": 3,
+              "column": 0,
+              "color": "teal",
+              "rotation": 180
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 0,
+              "column": 1,
+              "color": "magenta",
+              "rotation": 180
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 2,
+              "column": 1,
+              "color": "teal",
+              "rotation": 180
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 2,
+              "column": 2,
+              "color": "magenta",
+              "rotation": 270
+            },
+            {
+              "actorId": "corner figure",
+              "row": 3,
+              "column": 1,
+              "color": "amber",
+              "rotation": 90
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 0,
+              "column": 1,
+              "color": "ink",
+              "rotation": 270
+            }
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "frameNumber": 5,
+          "options": [
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 2,
+                  "column": 1,
+                  "color": "magenta",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 3,
+                  "column": 2,
+                  "color": "ink",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 0,
+                  "column": 3,
+                  "color": "teal",
+                  "rotation": 0
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "magenta",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 3,
+                  "column": 2,
+                  "color": "ink",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 0,
+                  "column": 3,
+                  "color": "teal",
+                  "rotation": 0
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "magenta",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 3,
+                  "column": 2,
+                  "color": "ink",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 0,
+                  "column": 3,
+                  "color": "teal",
+                  "rotation": 0
+                }
+              ]
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "frameNumber": 6,
+          "options": [
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "ink",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 3,
+                  "column": 3,
+                  "color": "teal",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "magenta",
+                  "rotation": 90
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "ink",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 3,
+                  "column": 3,
+                  "color": "teal",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "magenta",
+                  "rotation": 90
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "ink",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 3,
+                  "column": 3,
+                  "color": "teal",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "magenta",
+                  "rotation": 90
+                }
+              ]
+            }
+          ],
+          "answerIndex": 0
+        }
+      ],
+      "programs": [
+        {
+          "actorId": "arrow figure",
+          "motion": "vertical-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 1,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 1
+            },
+            {
+              "row": 3,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 1
+            },
+            {
+              "row": 1,
+              "column": 1
+            }
+          ],
+          "startIndex": 2,
+          "direction": 1,
+          "stepMode": "increasing",
+          "stepSize": 1,
+          "colors": [
+            "teal",
+            "magenta",
+            "amber"
+          ],
+          "colorStart": 0,
+          "rotationStart": 0,
+          "rotationStep": 90,
+          "rotationIncreasing": true,
+          "explanation": "The arrow figure moves vertically and bounces at the top and bottom edges by one additional cell on each transition; its quarter-turn count also increases on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "triangle figure",
+          "motion": "diagonal-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 1,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 2
+            },
+            {
+              "row": 3,
+              "column": 3
+            },
+            {
+              "row": 2,
+              "column": 2
+            },
+            {
+              "row": 1,
+              "column": 1
+            }
+          ],
+          "startIndex": 1,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 1,
+          "colors": [
+            "magenta",
+            "amber",
+            "ink"
+          ],
+          "colorStart": 0,
+          "rotationStart": 0,
+          "rotationStep": 90,
+          "rotationIncreasing": false,
+          "explanation": "The triangle figure moves on one diagonal and reverses at its endpoints by one cell at a time; it rotates 90 degrees on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "corner figure",
+          "motion": "perimeter",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 3
+            },
+            {
+              "row": 1,
+              "column": 3
+            },
+            {
+              "row": 2,
+              "column": 3
+            },
+            {
+              "row": 3,
+              "column": 3
+            },
+            {
+              "row": 3,
+              "column": 2
+            },
+            {
+              "row": 3,
+              "column": 1
+            },
+            {
+              "row": 3,
+              "column": 0
+            },
+            {
+              "row": 2,
+              "column": 0
+            },
+            {
+              "row": 1,
+              "column": 0
+            }
+          ],
+          "startIndex": 11,
+          "direction": -1,
+          "stepMode": "constant",
+          "stepSize": 1,
+          "colors": [
+            "amber",
+            "ink",
+            "teal"
+          ],
+          "colorStart": 0,
+          "rotationStart": 270,
+          "rotationStep": 90,
+          "rotationIncreasing": true,
+          "explanation": "The corner figure moves around the outer border counter-clockwise by one cell at a time; its quarter-turn count also increases on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "chevron figure",
+          "motion": "horizontal-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 3
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 1
+            }
+          ],
+          "startIndex": 1,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 2,
+          "colors": [
+            "ink",
+            "teal",
+            "magenta"
+          ],
+          "colorStart": 0,
+          "rotationStart": 0,
+          "rotationStep": 90,
+          "rotationIncreasing": false,
+          "explanation": "The chevron figure moves horizontally and bounces at the left and right edges by 2 cells at a time; it rotates 90 degrees on each transition; its colour follows a repeating cycle."
+        }
+      ],
+      "difficulty": {
+        "level": "extreme",
+        "score": 34,
+        "provisional": true,
+        "components": {
+          "actorTracking": 4,
+          "changingTracks": 12,
+          "coupledActors": 4,
+          "incrementalPrograms": 2
+        }
+      },
+      "hint": "Track the arrow figure first. The arrow figure moves vertically and bounces at the top and bottom edges by one additional cell on each transition; its quarter-turn count also increases on each transition; its colour follows a repeating cycle.",
+      "validation": {
+        "predictiveUnique": true,
+        "framesValid": true,
+        "optionsUnique": true,
+        "programsDeterministic": true,
+        "generatorVersion": 2
+      }
+    },
+    {
+      "id": "DMAT-FS-G2-486200C94D29",
+      "kind": "figure-sequence",
+      "gridSize": 4,
+      "actors": [
+        {
+          "id": "arrow figure",
+          "shape": "arrow"
+        },
+        {
+          "id": "triangle figure",
+          "shape": "triangle"
+        },
+        {
+          "id": "corner figure",
+          "shape": "corner"
+        },
+        {
+          "id": "chevron figure",
+          "shape": "chevron"
+        }
+      ],
+      "observedFrames": [
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 0,
+              "color": "teal",
+              "rotation": 90
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 0,
+              "column": 2,
+              "color": "magenta",
+              "rotation": 90
+            },
+            {
+              "actorId": "corner figure",
+              "row": 0,
+              "column": 1,
+              "color": "amber",
+              "rotation": 270
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 2,
+              "column": 1,
+              "color": "ink",
+              "rotation": 270
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 1,
+              "column": 1,
+              "color": "magenta",
+              "rotation": 180
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 0,
+              "column": 1,
+              "color": "amber",
+              "rotation": 180
+            },
+            {
+              "actorId": "corner figure",
+              "row": 0,
+              "column": 2,
+              "color": "ink",
+              "rotation": 0
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 2,
+              "column": 1,
+              "color": "teal",
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 3,
+              "column": 3,
+              "color": "amber",
+              "rotation": 0
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 0,
+              "column": 0,
+              "color": "ink",
+              "rotation": 270
+            },
+            {
+              "actorId": "corner figure",
+              "row": 0,
+              "column": 3,
+              "color": "teal",
+              "rotation": 180
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 0,
+              "column": 1,
+              "color": "magenta",
+              "rotation": 90
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 0,
+              "color": "teal",
+              "rotation": 270
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 1,
+              "column": 0,
+              "color": "magenta",
+              "rotation": 0
+            },
+            {
+              "actorId": "corner figure",
+              "row": 0,
+              "column": 2,
+              "color": "amber",
+              "rotation": 90
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 2,
+              "column": 1,
+              "color": "ink",
+              "rotation": 180
+            }
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "frameNumber": 5,
+          "options": [
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 2,
+                  "column": 0,
+                  "color": "amber",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 270
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 1,
+                  "column": 0,
+                  "color": "amber",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 270
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 2,
+                  "column": 0,
+                  "color": "amber",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 270
+                }
+              ]
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "frameNumber": 6,
+          "options": [
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 3,
+                  "column": 3,
+                  "color": "amber",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 3,
+                  "column": 0,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "teal",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "magenta",
+                  "rotation": 0
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 3,
+                  "column": 3,
+                  "color": "amber",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 3,
+                  "column": 0,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "teal",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "magenta",
+                  "rotation": 0
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 3,
+                  "column": 3,
+                  "color": "amber",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 3,
+                  "column": 0,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "teal",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "magenta",
+                  "rotation": 90
+                }
+              ]
+            }
+          ],
+          "answerIndex": 1
+        }
+      ],
+      "programs": [
+        {
+          "actorId": "arrow figure",
+          "motion": "diagonal-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 1,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 2
+            },
+            {
+              "row": 3,
+              "column": 3
+            },
+            {
+              "row": 2,
+              "column": 2
+            },
+            {
+              "row": 1,
+              "column": 1
+            }
+          ],
+          "startIndex": 0,
+          "direction": 1,
+          "stepMode": "increasing",
+          "stepSize": 1,
+          "colors": [
+            "teal",
+            "magenta",
+            "amber"
+          ],
+          "colorStart": 0,
+          "rotationStart": 90,
+          "rotationStep": 90,
+          "rotationIncreasing": true,
+          "explanation": "The arrow figure moves on one diagonal and reverses at its endpoints by one additional cell on each transition; its quarter-turn count also increases on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "triangle figure",
+          "motion": "perimeter",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 3
+            },
+            {
+              "row": 1,
+              "column": 3
+            },
+            {
+              "row": 2,
+              "column": 3
+            },
+            {
+              "row": 3,
+              "column": 3
+            },
+            {
+              "row": 3,
+              "column": 2
+            },
+            {
+              "row": 3,
+              "column": 1
+            },
+            {
+              "row": 3,
+              "column": 0
+            },
+            {
+              "row": 2,
+              "column": 0
+            },
+            {
+              "row": 1,
+              "column": 0
+            }
+          ],
+          "startIndex": 2,
+          "direction": -1,
+          "stepMode": "constant",
+          "stepSize": 1,
+          "colors": [
+            "magenta",
+            "amber",
+            "ink"
+          ],
+          "colorStart": 0,
+          "rotationStart": 90,
+          "rotationStep": 90,
+          "rotationIncreasing": false,
+          "explanation": "The triangle figure moves around the outer border counter-clockwise by one cell at a time; it rotates 90 degrees on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "corner figure",
+          "motion": "horizontal-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 3
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 1
+            }
+          ],
+          "startIndex": 1,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 1,
+          "colors": [
+            "amber",
+            "ink",
+            "teal"
+          ],
+          "colorStart": 0,
+          "rotationStart": 270,
+          "rotationStep": 90,
+          "rotationIncreasing": true,
+          "explanation": "The corner figure moves horizontally and bounces at the left and right edges by one cell at a time; its quarter-turn count also increases on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "chevron figure",
+          "motion": "vertical-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 1,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 1
+            },
+            {
+              "row": 3,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 1
+            },
+            {
+              "row": 1,
+              "column": 1
+            }
+          ],
+          "startIndex": 2,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 2,
+          "colors": [
+            "ink",
+            "teal",
+            "magenta"
+          ],
+          "colorStart": 0,
+          "rotationStart": 270,
+          "rotationStep": 90,
+          "rotationIncreasing": false,
+          "explanation": "The chevron figure moves vertically and bounces at the top and bottom edges by 2 cells at a time; it rotates 90 degrees on each transition; its colour follows a repeating cycle."
+        }
+      ],
+      "difficulty": {
+        "level": "extreme",
+        "score": 34,
+        "provisional": true,
+        "components": {
+          "actorTracking": 4,
+          "changingTracks": 12,
+          "coupledActors": 4,
+          "incrementalPrograms": 2
+        }
+      },
+      "hint": "Track the arrow figure first. The arrow figure moves on one diagonal and reverses at its endpoints by one additional cell on each transition; its quarter-turn count also increases on each transition; its colour follows a repeating cycle.",
+      "validation": {
+        "predictiveUnique": true,
+        "framesValid": true,
+        "optionsUnique": true,
+        "programsDeterministic": true,
+        "generatorVersion": 2
+      }
+    },
+    {
+      "id": "DMAT-FS-G2-C986FB76E589",
+      "kind": "figure-sequence",
+      "gridSize": 4,
+      "actors": [
+        {
+          "id": "arrow figure",
+          "shape": "arrow"
+        },
+        {
+          "id": "triangle figure",
+          "shape": "triangle"
+        },
+        {
+          "id": "corner figure",
+          "shape": "corner"
+        },
+        {
+          "id": "chevron figure",
+          "shape": "chevron"
+        }
+      ],
+      "observedFrames": [
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 2,
+              "column": 0,
+              "color": "teal",
+              "rotation": 0
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 0,
+              "column": 2,
+              "color": "magenta",
+              "rotation": 0
+            },
+            {
+              "actorId": "corner figure",
+              "row": 1,
+              "column": 1,
+              "color": "amber",
+              "rotation": 180
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 0,
+              "column": 0,
+              "color": "ink",
+              "rotation": 270
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 3,
+              "column": 0,
+              "color": "magenta",
+              "rotation": 90
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 0,
+              "column": 1,
+              "color": "amber",
+              "rotation": 90
+            },
+            {
+              "actorId": "corner figure",
+              "row": 2,
+              "column": 1,
+              "color": "ink",
+              "rotation": 270
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 2,
+              "column": 2,
+              "color": "teal",
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 3,
+              "column": 2,
+              "color": "amber",
+              "rotation": 270
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 0,
+              "column": 0,
+              "color": "ink",
+              "rotation": 180
+            },
+            {
+              "actorId": "corner figure",
+              "row": 3,
+              "column": 1,
+              "color": "teal",
+              "rotation": 90
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 2,
+              "column": 2,
+              "color": "magenta",
+              "rotation": 90
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 1,
+              "column": 3,
+              "color": "teal",
+              "rotation": 180
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 0,
+              "column": 1,
+              "color": "magenta",
+              "rotation": 270
+            },
+            {
+              "actorId": "corner figure",
+              "row": 2,
+              "column": 1,
+              "color": "amber",
+              "rotation": 0
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 0,
+              "column": 0,
+              "color": "ink",
+              "rotation": 180
+            }
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "frameNumber": 5,
+          "options": [
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "magenta",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "amber",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "teal",
+                  "rotation": 270
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "magenta",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "amber",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "teal",
+                  "rotation": 270
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "magenta",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "amber",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "teal",
+                  "rotation": 0
+                }
+              ]
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "frameNumber": 6,
+          "options": [
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 3,
+                  "column": 2,
+                  "color": "amber",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 3,
+                  "color": "ink",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "magenta",
+                  "rotation": 0
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 3,
+                  "column": 2,
+                  "color": "amber",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 3,
+                  "color": "ink",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 0
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 3,
+                  "column": 2,
+                  "color": "amber",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 3,
+                  "color": "ink",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 0
+                }
+              ]
+            }
+          ],
+          "answerIndex": 2
+        }
+      ],
+      "programs": [
+        {
+          "actorId": "arrow figure",
+          "motion": "perimeter",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 3
+            },
+            {
+              "row": 1,
+              "column": 3
+            },
+            {
+              "row": 2,
+              "column": 3
+            },
+            {
+              "row": 3,
+              "column": 3
+            },
+            {
+              "row": 3,
+              "column": 2
+            },
+            {
+              "row": 3,
+              "column": 1
+            },
+            {
+              "row": 3,
+              "column": 0
+            },
+            {
+              "row": 2,
+              "column": 0
+            },
+            {
+              "row": 1,
+              "column": 0
+            }
+          ],
+          "startIndex": 10,
+          "direction": -1,
+          "stepMode": "increasing",
+          "stepSize": 1,
+          "colors": [
+            "teal",
+            "magenta",
+            "amber"
+          ],
+          "colorStart": 0,
+          "rotationStart": 0,
+          "rotationStep": 90,
+          "rotationIncreasing": true,
+          "explanation": "The arrow figure moves around the outer border counter-clockwise by one additional cell on each transition; its quarter-turn count also increases on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "triangle figure",
+          "motion": "horizontal-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 3
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 1
+            }
+          ],
+          "startIndex": 4,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 1,
+          "colors": [
+            "magenta",
+            "amber",
+            "ink"
+          ],
+          "colorStart": 0,
+          "rotationStart": 0,
+          "rotationStep": 90,
+          "rotationIncreasing": false,
+          "explanation": "The triangle figure moves horizontally and bounces at the left and right edges by one cell at a time; it rotates 90 degrees on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "corner figure",
+          "motion": "vertical-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 1,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 1
+            },
+            {
+              "row": 3,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 1
+            },
+            {
+              "row": 1,
+              "column": 1
+            }
+          ],
+          "startIndex": 1,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 1,
+          "colors": [
+            "amber",
+            "ink",
+            "teal"
+          ],
+          "colorStart": 0,
+          "rotationStart": 180,
+          "rotationStep": 90,
+          "rotationIncreasing": true,
+          "explanation": "The corner figure moves vertically and bounces at the top and bottom edges by one cell at a time; its quarter-turn count also increases on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "chevron figure",
+          "motion": "diagonal-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 1,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 2
+            },
+            {
+              "row": 3,
+              "column": 3
+            },
+            {
+              "row": 2,
+              "column": 2
+            },
+            {
+              "row": 1,
+              "column": 1
+            }
+          ],
+          "startIndex": 0,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 2,
+          "colors": [
+            "ink",
+            "teal",
+            "magenta"
+          ],
+          "colorStart": 0,
+          "rotationStart": 270,
+          "rotationStep": 90,
+          "rotationIncreasing": false,
+          "explanation": "The chevron figure moves on one diagonal and reverses at its endpoints by 2 cells at a time; it rotates 90 degrees on each transition; its colour follows a repeating cycle."
+        }
+      ],
+      "difficulty": {
+        "level": "extreme",
+        "score": 34,
+        "provisional": true,
+        "components": {
+          "actorTracking": 4,
+          "changingTracks": 12,
+          "coupledActors": 4,
+          "incrementalPrograms": 2
+        }
+      },
+      "hint": "Track the arrow figure first. The arrow figure moves around the outer border counter-clockwise by one additional cell on each transition; its quarter-turn count also increases on each transition; its colour follows a repeating cycle.",
+      "validation": {
+        "predictiveUnique": true,
+        "framesValid": true,
+        "optionsUnique": true,
+        "programsDeterministic": true,
+        "generatorVersion": 2
+      }
+    },
+    {
+      "id": "DMAT-FS-G2-B90B7648B3DC",
+      "kind": "figure-sequence",
+      "gridSize": 4,
+      "actors": [
+        {
+          "id": "arrow figure",
+          "shape": "arrow"
+        },
+        {
+          "id": "triangle figure",
+          "shape": "triangle"
+        },
+        {
+          "id": "corner figure",
+          "shape": "corner"
+        },
+        {
+          "id": "chevron figure",
+          "shape": "chevron"
+        }
+      ],
+      "observedFrames": [
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 2,
+              "color": "teal",
+              "rotation": 270
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 2,
+              "column": 1,
+              "color": "magenta",
+              "rotation": 180
+            },
+            {
+              "actorId": "corner figure",
+              "row": 1,
+              "column": 1,
+              "color": "amber",
+              "rotation": 90
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 1,
+              "column": 3,
+              "color": "ink",
+              "rotation": 270
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 1,
+              "color": "magenta",
+              "rotation": 0
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 3,
+              "column": 1,
+              "color": "amber",
+              "rotation": 270
+            },
+            {
+              "actorId": "corner figure",
+              "row": 0,
+              "column": 0,
+              "color": "ink",
+              "rotation": 180
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 0,
+              "column": 2,
+              "color": "teal",
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 1,
+              "color": "amber",
+              "rotation": 180
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 2,
+              "column": 1,
+              "color": "ink",
+              "rotation": 0
+            },
+            {
+              "actorId": "corner figure",
+              "row": 1,
+              "column": 1,
+              "color": "teal",
+              "rotation": 0
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 0,
+              "column": 0,
+              "color": "magenta",
+              "rotation": 90
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 2,
+              "color": "teal",
+              "rotation": 90
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 1,
+              "column": 1,
+              "color": "magenta",
+              "rotation": 90
+            },
+            {
+              "actorId": "corner figure",
+              "row": 2,
+              "column": 2,
+              "color": "amber",
+              "rotation": 270
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 2,
+              "column": 0,
+              "color": "ink",
+              "rotation": 180
+            }
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "frameNumber": 5,
+          "options": [
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 3,
+                  "column": 3,
+                  "color": "ink",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 3,
+                  "column": 0,
+                  "color": "teal",
+                  "rotation": 270
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 3,
+                  "column": 3,
+                  "color": "ink",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 3,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 270
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 3,
+                  "column": 3,
+                  "color": "ink",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 3,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 270
+                }
+              ]
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "frameNumber": 6,
+          "options": [
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "teal",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 3,
+                  "column": 3,
+                  "color": "magenta",
+                  "rotation": 0
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "amber",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "teal",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 3,
+                  "column": 3,
+                  "color": "magenta",
+                  "rotation": 0
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "teal",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 3,
+                  "column": 3,
+                  "color": "magenta",
+                  "rotation": 0
+                }
+              ]
+            }
+          ],
+          "answerIndex": 0
+        }
+      ],
+      "programs": [
+        {
+          "actorId": "arrow figure",
+          "motion": "horizontal-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 3
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 1
+            }
+          ],
+          "startIndex": 4,
+          "direction": 1,
+          "stepMode": "increasing",
+          "stepSize": 1,
+          "colors": [
+            "teal",
+            "magenta",
+            "amber"
+          ],
+          "colorStart": 0,
+          "rotationStart": 270,
+          "rotationStep": 90,
+          "rotationIncreasing": true,
+          "explanation": "The arrow figure moves horizontally and bounces at the left and right edges by one additional cell on each transition; its quarter-turn count also increases on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "triangle figure",
+          "motion": "vertical-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 1,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 1
+            },
+            {
+              "row": 3,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 1
+            },
+            {
+              "row": 1,
+              "column": 1
+            }
+          ],
+          "startIndex": 2,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 1,
+          "colors": [
+            "magenta",
+            "amber",
+            "ink"
+          ],
+          "colorStart": 0,
+          "rotationStart": 180,
+          "rotationStep": 90,
+          "rotationIncreasing": false,
+          "explanation": "The triangle figure moves vertically and bounces at the top and bottom edges by one cell at a time; it rotates 90 degrees on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "corner figure",
+          "motion": "diagonal-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 1,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 2
+            },
+            {
+              "row": 3,
+              "column": 3
+            },
+            {
+              "row": 2,
+              "column": 2
+            },
+            {
+              "row": 1,
+              "column": 1
+            }
+          ],
+          "startIndex": 5,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 1,
+          "colors": [
+            "amber",
+            "ink",
+            "teal"
+          ],
+          "colorStart": 0,
+          "rotationStart": 90,
+          "rotationStep": 90,
+          "rotationIncreasing": true,
+          "explanation": "The corner figure moves on one diagonal and reverses at its endpoints by one cell at a time; its quarter-turn count also increases on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "chevron figure",
+          "motion": "perimeter",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 3
+            },
+            {
+              "row": 1,
+              "column": 3
+            },
+            {
+              "row": 2,
+              "column": 3
+            },
+            {
+              "row": 3,
+              "column": 3
+            },
+            {
+              "row": 3,
+              "column": 2
+            },
+            {
+              "row": 3,
+              "column": 1
+            },
+            {
+              "row": 3,
+              "column": 0
+            },
+            {
+              "row": 2,
+              "column": 0
+            },
+            {
+              "row": 1,
+              "column": 0
+            }
+          ],
+          "startIndex": 4,
+          "direction": -1,
+          "stepMode": "constant",
+          "stepSize": 2,
+          "colors": [
+            "ink",
+            "teal",
+            "magenta"
+          ],
+          "colorStart": 0,
+          "rotationStart": 270,
+          "rotationStep": 90,
+          "rotationIncreasing": false,
+          "explanation": "The chevron figure moves around the outer border counter-clockwise by 2 cells at a time; it rotates 90 degrees on each transition; its colour follows a repeating cycle."
+        }
+      ],
+      "difficulty": {
+        "level": "extreme",
+        "score": 34,
+        "provisional": true,
+        "components": {
+          "actorTracking": 4,
+          "changingTracks": 12,
+          "coupledActors": 4,
+          "incrementalPrograms": 2
+        }
+      },
+      "hint": "Track the arrow figure first. The arrow figure moves horizontally and bounces at the left and right edges by one additional cell on each transition; its quarter-turn count also increases on each transition; its colour follows a repeating cycle.",
+      "validation": {
+        "predictiveUnique": true,
+        "framesValid": true,
+        "optionsUnique": true,
+        "programsDeterministic": true,
+        "generatorVersion": 2
+      }
+    },
+    {
+      "id": "DMAT-FS-G2-36A2FB1B0E2E",
+      "kind": "figure-sequence",
+      "gridSize": 4,
+      "actors": [
+        {
+          "id": "arrow figure",
+          "shape": "arrow"
+        },
+        {
+          "id": "triangle figure",
+          "shape": "triangle"
+        },
+        {
+          "id": "corner figure",
+          "shape": "corner"
+        },
+        {
+          "id": "chevron figure",
+          "shape": "chevron"
+        }
+      ],
+      "observedFrames": [
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 1,
+              "color": "teal",
+              "rotation": 0
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 1,
+              "column": 1,
+              "color": "magenta",
+              "rotation": 180
+            },
+            {
+              "actorId": "corner figure",
+              "row": 0,
+              "column": 0,
+              "color": "amber",
+              "rotation": 270
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 3,
+              "column": 0,
+              "color": "ink",
+              "rotation": 180
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 0,
+              "color": "magenta",
+              "rotation": 90
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 2,
+              "column": 1,
+              "color": "amber",
+              "rotation": 270
+            },
+            {
+              "actorId": "corner figure",
+              "row": 1,
+              "column": 1,
+              "color": "ink",
+              "rotation": 0
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 3,
+              "column": 2,
+              "color": "teal",
+              "rotation": 270
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 2,
+              "color": "amber",
+              "rotation": 270
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 3,
+              "column": 1,
+              "color": "ink",
+              "rotation": 0
+            },
+            {
+              "actorId": "corner figure",
+              "row": 2,
+              "column": 2,
+              "color": "teal",
+              "rotation": 180
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 2,
+              "column": 3,
+              "color": "magenta",
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 1,
+              "color": "teal",
+              "rotation": 180
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 2,
+              "column": 1,
+              "color": "magenta",
+              "rotation": 90
+            },
+            {
+              "actorId": "corner figure",
+              "row": 3,
+              "column": 3,
+              "color": "amber",
+              "rotation": 90
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 0,
+              "column": 3,
+              "color": "ink",
+              "rotation": 90
+            }
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "frameNumber": 5,
+          "options": [
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 3,
+                  "color": "magenta",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "ink",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 180
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "ink",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 180
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 3,
+                  "color": "magenta",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "ink",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 180
+                }
+              ]
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "frameNumber": 6,
+          "options": [
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "amber",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 2,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 1,
+                  "column": 0,
+                  "color": "magenta",
+                  "rotation": 270
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "amber",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 1,
+                  "column": 0,
+                  "color": "magenta",
+                  "rotation": 270
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "amber",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 1,
+                  "column": 0,
+                  "color": "magenta",
+                  "rotation": 270
+                }
+              ]
+            }
+          ],
+          "answerIndex": 1
+        }
+      ],
+      "programs": [
+        {
+          "actorId": "arrow figure",
+          "motion": "horizontal-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 3
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 1
+            }
+          ],
+          "startIndex": 5,
+          "direction": 1,
+          "stepMode": "increasing",
+          "stepSize": 1,
+          "colors": [
+            "teal",
+            "magenta",
+            "amber"
+          ],
+          "colorStart": 0,
+          "rotationStart": 0,
+          "rotationStep": 90,
+          "rotationIncreasing": true,
+          "explanation": "The arrow figure moves horizontally and bounces at the left and right edges by one additional cell on each transition; its quarter-turn count also increases on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "triangle figure",
+          "motion": "vertical-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 1,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 1
+            },
+            {
+              "row": 3,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 1
+            },
+            {
+              "row": 1,
+              "column": 1
+            }
+          ],
+          "startIndex": 1,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 1,
+          "colors": [
+            "magenta",
+            "amber",
+            "ink"
+          ],
+          "colorStart": 0,
+          "rotationStart": 180,
+          "rotationStep": 90,
+          "rotationIncreasing": false,
+          "explanation": "The triangle figure moves vertically and bounces at the top and bottom edges by one cell at a time; it rotates 90 degrees on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "corner figure",
+          "motion": "diagonal-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 1,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 2
+            },
+            {
+              "row": 3,
+              "column": 3
+            },
+            {
+              "row": 2,
+              "column": 2
+            },
+            {
+              "row": 1,
+              "column": 1
+            }
+          ],
+          "startIndex": 0,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 1,
+          "colors": [
+            "amber",
+            "ink",
+            "teal"
+          ],
+          "colorStart": 0,
+          "rotationStart": 270,
+          "rotationStep": 90,
+          "rotationIncreasing": true,
+          "explanation": "The corner figure moves on one diagonal and reverses at its endpoints by one cell at a time; its quarter-turn count also increases on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "chevron figure",
+          "motion": "perimeter",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 3
+            },
+            {
+              "row": 1,
+              "column": 3
+            },
+            {
+              "row": 2,
+              "column": 3
+            },
+            {
+              "row": 3,
+              "column": 3
+            },
+            {
+              "row": 3,
+              "column": 2
+            },
+            {
+              "row": 3,
+              "column": 1
+            },
+            {
+              "row": 3,
+              "column": 0
+            },
+            {
+              "row": 2,
+              "column": 0
+            },
+            {
+              "row": 1,
+              "column": 0
+            }
+          ],
+          "startIndex": 9,
+          "direction": -1,
+          "stepMode": "constant",
+          "stepSize": 2,
+          "colors": [
+            "ink",
+            "teal",
+            "magenta"
+          ],
+          "colorStart": 0,
+          "rotationStart": 180,
+          "rotationStep": 90,
+          "rotationIncreasing": false,
+          "explanation": "The chevron figure moves around the outer border counter-clockwise by 2 cells at a time; it rotates 90 degrees on each transition; its colour follows a repeating cycle."
+        }
+      ],
+      "difficulty": {
+        "level": "extreme",
+        "score": 34,
+        "provisional": true,
+        "components": {
+          "actorTracking": 4,
+          "changingTracks": 12,
+          "coupledActors": 4,
+          "incrementalPrograms": 2
+        }
+      },
+      "hint": "Track the arrow figure first. The arrow figure moves horizontally and bounces at the left and right edges by one additional cell on each transition; its quarter-turn count also increases on each transition; its colour follows a repeating cycle.",
+      "validation": {
+        "predictiveUnique": true,
+        "framesValid": true,
+        "optionsUnique": true,
+        "programsDeterministic": true,
+        "generatorVersion": 2
+      }
+    },
+    {
+      "id": "DMAT-FS-G2-43721A6439F3",
+      "kind": "figure-sequence",
+      "gridSize": 4,
+      "actors": [
+        {
+          "id": "arrow figure",
+          "shape": "arrow"
+        },
+        {
+          "id": "triangle figure",
+          "shape": "triangle"
+        },
+        {
+          "id": "corner figure",
+          "shape": "corner"
+        },
+        {
+          "id": "chevron figure",
+          "shape": "chevron"
+        }
+      ],
+      "observedFrames": [
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 3,
+              "color": "teal",
+              "rotation": 180
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 3,
+              "column": 1,
+              "color": "magenta",
+              "rotation": 180
+            },
+            {
+              "actorId": "corner figure",
+              "row": 2,
+              "column": 2,
+              "color": "amber",
+              "rotation": 270
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 2,
+              "column": 3,
+              "color": "ink",
+              "rotation": 180
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 2,
+              "color": "magenta",
+              "rotation": 270
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 2,
+              "column": 1,
+              "color": "amber",
+              "rotation": 270
+            },
+            {
+              "actorId": "corner figure",
+              "row": 3,
+              "column": 3,
+              "color": "ink",
+              "rotation": 0
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 0,
+              "column": 3,
+              "color": "teal",
+              "rotation": 270
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 0,
+              "color": "amber",
+              "rotation": 90
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 1,
+              "column": 1,
+              "color": "ink",
+              "rotation": 0
+            },
+            {
+              "actorId": "corner figure",
+              "row": 2,
+              "column": 2,
+              "color": "teal",
+              "rotation": 180
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 0,
+              "column": 1,
+              "color": "magenta",
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 3,
+              "color": "teal",
+              "rotation": 0
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 0,
+              "column": 1,
+              "color": "magenta",
+              "rotation": 90
+            },
+            {
+              "actorId": "corner figure",
+              "row": 1,
+              "column": 1,
+              "color": "amber",
+              "rotation": 90
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 1,
+              "column": 0,
+              "color": "ink",
+              "rotation": 90
+            }
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "frameNumber": 5,
+          "options": [
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "magenta",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 2,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "ink",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 3,
+                  "column": 0,
+                  "color": "teal",
+                  "rotation": 180
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "magenta",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "ink",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 3,
+                  "column": 0,
+                  "color": "teal",
+                  "rotation": 180
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "magenta",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 3,
+                  "column": 0,
+                  "color": "teal",
+                  "rotation": 180
+                }
+              ]
+            }
+          ],
+          "answerIndex": 1
+        },
+        {
+          "frameNumber": 6,
+          "options": [
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "amber",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 2,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "teal",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 3,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 270
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "amber",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 2,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 3,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 0
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "amber",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 2,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 3,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 270
+                }
+              ]
+            }
+          ],
+          "answerIndex": 2
+        }
+      ],
+      "programs": [
+        {
+          "actorId": "arrow figure",
+          "motion": "horizontal-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 3
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 1
+            }
+          ],
+          "startIndex": 3,
+          "direction": 1,
+          "stepMode": "increasing",
+          "stepSize": 1,
+          "colors": [
+            "teal",
+            "magenta",
+            "amber"
+          ],
+          "colorStart": 0,
+          "rotationStart": 180,
+          "rotationStep": 90,
+          "rotationIncreasing": true,
+          "explanation": "The arrow figure moves horizontally and bounces at the left and right edges by one additional cell on each transition; its quarter-turn count also increases on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "triangle figure",
+          "motion": "vertical-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 1,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 1
+            },
+            {
+              "row": 3,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 1
+            },
+            {
+              "row": 1,
+              "column": 1
+            }
+          ],
+          "startIndex": 3,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 1,
+          "colors": [
+            "magenta",
+            "amber",
+            "ink"
+          ],
+          "colorStart": 0,
+          "rotationStart": 180,
+          "rotationStep": 90,
+          "rotationIncreasing": false,
+          "explanation": "The triangle figure moves vertically and bounces at the top and bottom edges by one cell at a time; it rotates 90 degrees on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "corner figure",
+          "motion": "diagonal-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 1,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 2
+            },
+            {
+              "row": 3,
+              "column": 3
+            },
+            {
+              "row": 2,
+              "column": 2
+            },
+            {
+              "row": 1,
+              "column": 1
+            }
+          ],
+          "startIndex": 2,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 1,
+          "colors": [
+            "amber",
+            "ink",
+            "teal"
+          ],
+          "colorStart": 0,
+          "rotationStart": 270,
+          "rotationStep": 90,
+          "rotationIncreasing": true,
+          "explanation": "The corner figure moves on one diagonal and reverses at its endpoints by one cell at a time; its quarter-turn count also increases on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "chevron figure",
+          "motion": "perimeter",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 3
+            },
+            {
+              "row": 1,
+              "column": 3
+            },
+            {
+              "row": 2,
+              "column": 3
+            },
+            {
+              "row": 3,
+              "column": 3
+            },
+            {
+              "row": 3,
+              "column": 2
+            },
+            {
+              "row": 3,
+              "column": 1
+            },
+            {
+              "row": 3,
+              "column": 0
+            },
+            {
+              "row": 2,
+              "column": 0
+            },
+            {
+              "row": 1,
+              "column": 0
+            }
+          ],
+          "startIndex": 5,
+          "direction": -1,
+          "stepMode": "constant",
+          "stepSize": 2,
+          "colors": [
+            "ink",
+            "teal",
+            "magenta"
+          ],
+          "colorStart": 0,
+          "rotationStart": 180,
+          "rotationStep": 90,
+          "rotationIncreasing": false,
+          "explanation": "The chevron figure moves around the outer border counter-clockwise by 2 cells at a time; it rotates 90 degrees on each transition; its colour follows a repeating cycle."
+        }
+      ],
+      "difficulty": {
+        "level": "extreme",
+        "score": 34,
+        "provisional": true,
+        "components": {
+          "actorTracking": 4,
+          "changingTracks": 12,
+          "coupledActors": 4,
+          "incrementalPrograms": 2
+        }
+      },
+      "hint": "Track the arrow figure first. The arrow figure moves horizontally and bounces at the left and right edges by one additional cell on each transition; its quarter-turn count also increases on each transition; its colour follows a repeating cycle.",
+      "validation": {
+        "predictiveUnique": true,
+        "framesValid": true,
+        "optionsUnique": true,
+        "programsDeterministic": true,
+        "generatorVersion": 2
+      }
+    },
+    {
+      "id": "DMAT-FS-G2-DC88AF4E95DE",
+      "kind": "figure-sequence",
+      "gridSize": 4,
+      "actors": [
+        {
+          "id": "arrow figure",
+          "shape": "arrow"
+        },
+        {
+          "id": "triangle figure",
+          "shape": "triangle"
+        },
+        {
+          "id": "corner figure",
+          "shape": "corner"
+        },
+        {
+          "id": "chevron figure",
+          "shape": "chevron"
+        }
+      ],
+      "observedFrames": [
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 2,
+              "color": "teal",
+              "rotation": 90
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 0,
+              "column": 1,
+              "color": "magenta",
+              "rotation": 90
+            },
+            {
+              "actorId": "corner figure",
+              "row": 3,
+              "column": 1,
+              "color": "amber",
+              "rotation": 0
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 0,
+              "column": 0,
+              "color": "ink",
+              "rotation": 180
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 1,
+              "color": "magenta",
+              "rotation": 180
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 0,
+              "column": 2,
+              "color": "amber",
+              "rotation": 180
+            },
+            {
+              "actorId": "corner figure",
+              "row": 2,
+              "column": 1,
+              "color": "ink",
+              "rotation": 90
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 2,
+              "column": 2,
+              "color": "teal",
+              "rotation": 270
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 1,
+              "column": 0,
+              "color": "amber",
+              "rotation": 0
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 0,
+              "column": 3,
+              "color": "ink",
+              "rotation": 270
+            },
+            {
+              "actorId": "corner figure",
+              "row": 1,
+              "column": 1,
+              "color": "teal",
+              "rotation": 270
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 2,
+              "column": 2,
+              "color": "magenta",
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 3,
+              "column": 1,
+              "color": "teal",
+              "rotation": 270
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 0,
+              "column": 2,
+              "color": "magenta",
+              "rotation": 0
+            },
+            {
+              "actorId": "corner figure",
+              "row": 0,
+              "column": 1,
+              "color": "amber",
+              "rotation": 180
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 0,
+              "column": 0,
+              "color": "ink",
+              "rotation": 90
+            }
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "frameNumber": 5,
+          "options": [
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 1,
+                  "column": 3,
+                  "color": "magenta",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 2,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "teal",
+                  "rotation": 180
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 1,
+                  "column": 3,
+                  "color": "magenta",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "teal",
+                  "rotation": 270
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 1,
+                  "column": 3,
+                  "color": "magenta",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "teal",
+                  "rotation": 180
+                }
+              ]
+            }
+          ],
+          "answerIndex": 2
+        },
+        {
+          "frameNumber": 6,
+          "options": [
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 1,
+                  "column": 0,
+                  "color": "amber",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 2,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 270
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 1,
+                  "column": 0,
+                  "color": "amber",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 2,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "magenta",
+                  "rotation": 270
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 1,
+                  "column": 0,
+                  "color": "amber",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 2,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 270
+                }
+              ]
+            }
+          ],
+          "answerIndex": 0
+        }
+      ],
+      "programs": [
+        {
+          "actorId": "arrow figure",
+          "motion": "perimeter",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 3
+            },
+            {
+              "row": 1,
+              "column": 3
+            },
+            {
+              "row": 2,
+              "column": 3
+            },
+            {
+              "row": 3,
+              "column": 3
+            },
+            {
+              "row": 3,
+              "column": 2
+            },
+            {
+              "row": 3,
+              "column": 1
+            },
+            {
+              "row": 3,
+              "column": 0
+            },
+            {
+              "row": 2,
+              "column": 0
+            },
+            {
+              "row": 1,
+              "column": 0
+            }
+          ],
+          "startIndex": 2,
+          "direction": -1,
+          "stepMode": "increasing",
+          "stepSize": 1,
+          "colors": [
+            "teal",
+            "magenta",
+            "amber"
+          ],
+          "colorStart": 0,
+          "rotationStart": 90,
+          "rotationStep": 90,
+          "rotationIncreasing": true,
+          "explanation": "The arrow figure moves around the outer border counter-clockwise by one additional cell on each transition; its quarter-turn count also increases on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "triangle figure",
+          "motion": "horizontal-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 3
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 1
+            }
+          ],
+          "startIndex": 1,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 1,
+          "colors": [
+            "magenta",
+            "amber",
+            "ink"
+          ],
+          "colorStart": 0,
+          "rotationStart": 90,
+          "rotationStep": 90,
+          "rotationIncreasing": false,
+          "explanation": "The triangle figure moves horizontally and bounces at the left and right edges by one cell at a time; it rotates 90 degrees on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "corner figure",
+          "motion": "vertical-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 1,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 1
+            },
+            {
+              "row": 3,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 1
+            },
+            {
+              "row": 1,
+              "column": 1
+            }
+          ],
+          "startIndex": 3,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 1,
+          "colors": [
+            "amber",
+            "ink",
+            "teal"
+          ],
+          "colorStart": 0,
+          "rotationStart": 0,
+          "rotationStep": 90,
+          "rotationIncreasing": true,
+          "explanation": "The corner figure moves vertically and bounces at the top and bottom edges by one cell at a time; its quarter-turn count also increases on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "chevron figure",
+          "motion": "diagonal-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 1,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 2
+            },
+            {
+              "row": 3,
+              "column": 3
+            },
+            {
+              "row": 2,
+              "column": 2
+            },
+            {
+              "row": 1,
+              "column": 1
+            }
+          ],
+          "startIndex": 0,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 2,
+          "colors": [
+            "ink",
+            "teal",
+            "magenta"
+          ],
+          "colorStart": 0,
+          "rotationStart": 180,
+          "rotationStep": 90,
+          "rotationIncreasing": false,
+          "explanation": "The chevron figure moves on one diagonal and reverses at its endpoints by 2 cells at a time; it rotates 90 degrees on each transition; its colour follows a repeating cycle."
+        }
+      ],
+      "difficulty": {
+        "level": "extreme",
+        "score": 34,
+        "provisional": true,
+        "components": {
+          "actorTracking": 4,
+          "changingTracks": 12,
+          "coupledActors": 4,
+          "incrementalPrograms": 2
+        }
+      },
+      "hint": "Track the arrow figure first. The arrow figure moves around the outer border counter-clockwise by one additional cell on each transition; its quarter-turn count also increases on each transition; its colour follows a repeating cycle.",
+      "validation": {
+        "predictiveUnique": true,
+        "framesValid": true,
+        "optionsUnique": true,
+        "programsDeterministic": true,
+        "generatorVersion": 2
+      }
+    },
+    {
+      "id": "DMAT-FS-G2-236E611A6356",
+      "kind": "figure-sequence",
+      "gridSize": 4,
+      "actors": [
+        {
+          "id": "arrow figure",
+          "shape": "arrow"
+        },
+        {
+          "id": "triangle figure",
+          "shape": "triangle"
+        },
+        {
+          "id": "corner figure",
+          "shape": "corner"
+        },
+        {
+          "id": "chevron figure",
+          "shape": "chevron"
+        }
+      ],
+      "observedFrames": [
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 0,
+              "color": "teal",
+              "rotation": 270
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 2,
+              "column": 3,
+              "color": "magenta",
+              "rotation": 0
+            },
+            {
+              "actorId": "corner figure",
+              "row": 0,
+              "column": 2,
+              "color": "amber",
+              "rotation": 0
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 1,
+              "column": 1,
+              "color": "ink",
+              "rotation": 180
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 1,
+              "column": 1,
+              "color": "magenta",
+              "rotation": 0
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 1,
+              "column": 3,
+              "color": "amber",
+              "rotation": 90
+            },
+            {
+              "actorId": "corner figure",
+              "row": 0,
+              "column": 1,
+              "color": "ink",
+              "rotation": 90
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 3,
+              "column": 1,
+              "color": "teal",
+              "rotation": 270
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 3,
+              "column": 3,
+              "color": "amber",
+              "rotation": 180
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 0,
+              "column": 3,
+              "color": "ink",
+              "rotation": 180
+            },
+            {
+              "actorId": "corner figure",
+              "row": 0,
+              "column": 0,
+              "color": "teal",
+              "rotation": 270
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 1,
+              "column": 1,
+              "color": "magenta",
+              "rotation": 0
+            }
+          ]
+        },
+        {
+          "figures": [
+            {
+              "actorId": "arrow figure",
+              "row": 0,
+              "column": 0,
+              "color": "teal",
+              "rotation": 90
+            },
+            {
+              "actorId": "triangle figure",
+              "row": 0,
+              "column": 2,
+              "color": "magenta",
+              "rotation": 270
+            },
+            {
+              "actorId": "corner figure",
+              "row": 0,
+              "column": 1,
+              "color": "amber",
+              "rotation": 180
+            },
+            {
+              "actorId": "chevron figure",
+              "row": 1,
+              "column": 1,
+              "color": "ink",
+              "rotation": 90
+            }
+          ]
+        }
+      ],
+      "questions": [
+        {
+          "frameNumber": 5,
+          "options": [
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 3,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 180
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 2,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 180
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "magenta",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 1,
+                  "color": "amber",
+                  "rotation": 0
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 2,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 3,
+                  "column": 1,
+                  "color": "teal",
+                  "rotation": 180
+                }
+              ]
+            }
+          ],
+          "answerIndex": 0
+        },
+        {
+          "frameNumber": 6,
+          "options": [
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 2,
+                  "column": 2,
+                  "color": "amber",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "ink",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 3,
+                  "color": "teal",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "magenta",
+                  "rotation": 270
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 3,
+                  "column": 3,
+                  "color": "amber",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "ink",
+                  "rotation": 90
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 3,
+                  "color": "teal",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "magenta",
+                  "rotation": 270
+                }
+              ]
+            },
+            {
+              "figures": [
+                {
+                  "actorId": "arrow figure",
+                  "row": 3,
+                  "column": 3,
+                  "color": "amber",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "triangle figure",
+                  "row": 0,
+                  "column": 0,
+                  "color": "ink",
+                  "rotation": 180
+                },
+                {
+                  "actorId": "corner figure",
+                  "row": 0,
+                  "column": 3,
+                  "color": "teal",
+                  "rotation": 270
+                },
+                {
+                  "actorId": "chevron figure",
+                  "row": 1,
+                  "column": 1,
+                  "color": "magenta",
+                  "rotation": 270
+                }
+              ]
+            }
+          ],
+          "answerIndex": 1
+        }
+      ],
+      "programs": [
+        {
+          "actorId": "arrow figure",
+          "motion": "diagonal-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 1,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 2
+            },
+            {
+              "row": 3,
+              "column": 3
+            },
+            {
+              "row": 2,
+              "column": 2
+            },
+            {
+              "row": 1,
+              "column": 1
+            }
+          ],
+          "startIndex": 0,
+          "direction": 1,
+          "stepMode": "increasing",
+          "stepSize": 1,
+          "colors": [
+            "teal",
+            "magenta",
+            "amber"
+          ],
+          "colorStart": 0,
+          "rotationStart": 270,
+          "rotationStep": 90,
+          "rotationIncreasing": true,
+          "explanation": "The arrow figure moves on one diagonal and reverses at its endpoints by one additional cell on each transition; its quarter-turn count also increases on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "triangle figure",
+          "motion": "perimeter",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 3
+            },
+            {
+              "row": 1,
+              "column": 3
+            },
+            {
+              "row": 2,
+              "column": 3
+            },
+            {
+              "row": 3,
+              "column": 3
+            },
+            {
+              "row": 3,
+              "column": 2
+            },
+            {
+              "row": 3,
+              "column": 1
+            },
+            {
+              "row": 3,
+              "column": 0
+            },
+            {
+              "row": 2,
+              "column": 0
+            },
+            {
+              "row": 1,
+              "column": 0
+            }
+          ],
+          "startIndex": 5,
+          "direction": -1,
+          "stepMode": "constant",
+          "stepSize": 1,
+          "colors": [
+            "magenta",
+            "amber",
+            "ink"
+          ],
+          "colorStart": 0,
+          "rotationStart": 0,
+          "rotationStep": 90,
+          "rotationIncreasing": false,
+          "explanation": "The triangle figure moves around the outer border counter-clockwise by one cell at a time; it rotates 90 degrees on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "corner figure",
+          "motion": "horizontal-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 0
+            },
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 3
+            },
+            {
+              "row": 0,
+              "column": 2
+            },
+            {
+              "row": 0,
+              "column": 1
+            }
+          ],
+          "startIndex": 4,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 1,
+          "colors": [
+            "amber",
+            "ink",
+            "teal"
+          ],
+          "colorStart": 0,
+          "rotationStart": 0,
+          "rotationStep": 90,
+          "rotationIncreasing": true,
+          "explanation": "The corner figure moves horizontally and bounces at the left and right edges by one cell at a time; its quarter-turn count also increases on each transition; its colour follows a repeating cycle."
+        },
+        {
+          "actorId": "chevron figure",
+          "motion": "vertical-bounce",
+          "path": [
+            {
+              "row": 0,
+              "column": 1
+            },
+            {
+              "row": 1,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 1
+            },
+            {
+              "row": 3,
+              "column": 1
+            },
+            {
+              "row": 2,
+              "column": 1
+            },
+            {
+              "row": 1,
+              "column": 1
+            }
+          ],
+          "startIndex": 1,
+          "direction": 1,
+          "stepMode": "constant",
+          "stepSize": 2,
+          "colors": [
+            "ink",
+            "teal",
+            "magenta"
+          ],
+          "colorStart": 0,
+          "rotationStart": 180,
+          "rotationStep": 90,
+          "rotationIncreasing": false,
+          "explanation": "The chevron figure moves vertically and bounces at the top and bottom edges by 2 cells at a time; it rotates 90 degrees on each transition; its colour follows a repeating cycle."
+        }
+      ],
+      "difficulty": {
+        "level": "extreme",
+        "score": 34,
+        "provisional": true,
+        "components": {
+          "actorTracking": 4,
+          "changingTracks": 12,
+          "coupledActors": 4,
+          "incrementalPrograms": 2
+        }
+      },
+      "hint": "Track the arrow figure first. The arrow figure moves on one diagonal and reverses at its endpoints by one additional cell on each transition; its quarter-turn count also increases on each transition; its colour follows a repeating cycle.",
       "validation": {
         "predictiveUnique": true,
         "framesValid": true,

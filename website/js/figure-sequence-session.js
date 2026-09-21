@@ -13,7 +13,7 @@ export function answerStatus(question, answer) {
 
 export function validateFigureBank(data) {
   if (data?.formatVersion !== 1 || data?.generatorVersion !== 2 || !Array.isArray(data.puzzles)) throw new Error('Unsupported figure bank');
-  const counts = { low: 0, medium: 0, high: 0 };
+  const counts = { low: 0, medium: 0, high: 0, extreme: 0 };
   const ids = new Set();
   for (const puzzle of data.puzzles) {
     const actors = puzzle?.actors;
@@ -38,6 +38,14 @@ export function validateFigureBank(data) {
       || !puzzle.programs.every((program, index) => program.actorId === actors[index].id && typeof program.explanation === 'string')
       || typeof puzzle.hint !== 'string' || puzzle.validation?.predictiveUnique !== true || puzzle.validation?.generatorVersion !== 2) {
       throw new Error('Invalid figure sequence in bank');
+    }
+    if (puzzle.difficulty.level === 'extreme') {
+      const programs = puzzle.programs;
+      if (programs.length !== 4
+        || !programs.every((program) => program.colors?.length > 1 && program.rotationStep !== 0)
+        || programs.filter((program) => program.stepMode === 'increasing' || program.rotationIncreasing).length < 2) {
+        throw new Error('Extreme figure sequence does not meet the structural gate');
+      }
     }
     ids.add(puzzle.id);
     counts[puzzle.difficulty.level]++;

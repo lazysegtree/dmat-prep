@@ -12,11 +12,12 @@ The task card opens `website/figure-sequences/`, with `learn/`,
   submitting both answers. A `?question=ID` link opens a specific sequence.
 - Speed Drill: 10 distinct sequences at the selected difficulty, elapsed time,
   and a 12:30 target. Review appears after session submission.
-- Full Mock: 20 distinct sequences in 25 minutes; a training mix of 6 low,
-  8 medium, and 6 high. Free navigation preserves both selections. Timeout
+- Full Mock: 20 distinct sequences in 25 minutes; selectable mixes: Easy (10 Low, 8 Medium, 2 High), Normal (default: 6 Low, 8 Medium, 6 High), Hard (8 Medium, 10 High, 2 Extreme), and Extreme (5 Medium, 10 High, 5 Extreme). Free navigation preserves both selections. Timeout
   submits once. Hints and correctness feedback are withheld until submission.
 - Progress: recent sessions, complete-sequence and individual-frame accuracy,
   latest/best mock scores, timing, and saved-session review.
+
+Mock level is retained in the URL, results, history, backups, and repeat attempts. Old mocks without a level display Normal. Learn and Speed Drill also offer the new Extreme question tier. Existing Low, Medium, and High question IDs are preserved.
 
 Each sequence has four observed 4x4 matrices and two predicted frames (5 and 6),
 with three options each. One complete-sequence point requires both answers to be
@@ -50,12 +51,12 @@ also covers failure while saving the third trainer.
 ## Generator and verification
 
 The static browser loads a pre-generated bank; Go is not required at runtime.
-Generate the current 36-puzzle bank:
+Generate the current 48-puzzle bank:
 
 ```sh
 go run ./cmd/figure-sequence-generator \
   --out website/data/figure-sequences.json --seed 20260818 \
-  --count-low 12 --count-medium 12 --count-high 12
+  --count-low 12 --count-medium 12 --count-high 12 --count-extreme 12
 ```
 
 Verify independently:
@@ -102,6 +103,10 @@ perimeter is a regression fixture and must be rejected.
 - Medium: three figures, including colour or rotation tracking.
 - High: four figures, at least seven changing tracks, at least two figures with
   multiple changing properties, and at least one increasing program.
+
+- Extreme: four figures, all changing position, colour, and rotation (12 tracks),
+  with at least two figures using increasing movement or rotation. The verifier
+  rejects relabelled High puzzles that do not meet this gate.
 
 Labels describe structural load and have not been calibrated against human
 accuracy or timing. Sessions do not repeat a puzzle internally; the small bank

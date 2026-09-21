@@ -17,13 +17,14 @@ test('paired scoring distinguishes incomplete, one correct, and both correct', (
 });
 
 test('published bank meets browser contract and malformed answers/frames are rejected', () => {
- assert.equal(validateFigureBank(bank).length, 36);
+ assert.equal(validateFigureBank(bank).length, 48);
  for (const mutate of [
   (data) => { data.puzzles[0].questions[0].answerIndex = 3; },
   (data) => { data.puzzles[0].observedFrames[0].figures[0].row = 4; },
   (data) => { data.puzzles[0].validation.predictiveUnique = false; },
   (data) => { data.puzzles[0].questions[0].options[1] = data.puzzles[0].questions[0].options[0]; },
   (data) => { data.puzzles[0].difficulty.level = 'unknown'; },
+  (data) => { data.puzzles[0].difficulty.level = 'extreme'; },
  ]) {
   const data = structuredClone(bank); mutate(data);
   assert.throws(() => validateFigureBank(data));
