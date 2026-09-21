@@ -1,3 +1,4 @@
+import { transferMarkup, bindTransfer } from './data-transfer.js';
 import { PuzzleUI } from './puzzle-ui.js';
 import {
   SYMBOLS,
@@ -554,28 +555,18 @@ function renderProgress() {
           <time class="small muted" datetime="${session.date}">${new Date(session.date).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })} · ${formatTime(session.totalTime)}</time>
         </div>`).join('')}</div>` : '<p class="empty">Complete a Learn puzzle, Speed Drill, or Full Mock to see progress here.</p>'}
       <div class="button-row">
-        <button class="button secondary" id="export-progress" type="button" ${sessions.length ? '' : 'disabled'}>Export progress</button>
         <button class="button danger" id="delete-progress" type="button" ${sessions.length ? '' : 'disabled'}>Delete all progress</button>
         <a class="button secondary" href="${routeUrl('home')}">Home</a>
       </div>
     </section>`;
-  app.querySelector('#export-progress').addEventListener('click', exportProgress);
+  app.insertAdjacentHTML('beforeend', transferMarkup());
+  bindTransfer(app, renderProgress);
   app.querySelector('#delete-progress').addEventListener('click', () => {
     if (!window.confirm('Delete all locally stored progress? This cannot be undone.')) return;
     progressStore.clear();
     renderProgress();
   });
   focusMain();
-}
-
-function exportProgress() {
-  const blob = new Blob([progressStore.export()], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = `dmat-progress-${new Date().toISOString().slice(0, 10)}.json`;
-  link.click();
-  URL.revokeObjectURL(url);
 }
 
 function validatePuzzleBank(data) {

@@ -1,14 +1,16 @@
 import { expect, test } from '@playwright/test';
 
-test('home page exposes the five training choices', async ({ page }) => {
+test('home page exposes task types and Latin Squares training choices', async ({ page }) => {
   const browserErrors = [];
   page.on('pageerror', (error) => browserErrors.push(error.message));
 
   await page.goto('/');
 
   await expect(page).toHaveTitle('dMAT Core Trainer');
-  await expect(page.getByLabel('Training modes').getByRole('link')).toHaveCount(5);
+  await expect(page.getByLabel('Task types').getByRole('link')).toHaveCount(3);
   await expect(page.getByRole('link', { name: /^Figure Sequences / })).toBeVisible();
+  await page.getByRole('link', { name: /^Latin Squares / }).click();
+  await expect(page.getByLabel('Training modes').getByRole('link')).toHaveCount(4);
   await expect(page.getByRole('link', { name: /^Learn / })).toBeVisible();
   await expect(page.getByRole('link', { name: /^Speed Drill / })).toBeVisible();
   await expect(page.getByRole('link', { name: /^Full Mock / })).toBeVisible();
@@ -17,7 +19,7 @@ test('home page exposes the five training choices', async ({ page }) => {
 });
 
 test('a learner can enter, clear, and request a hint', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/latin-squares/');
   await page.getByRole('link', { name: /^Learn / }).click();
   await page.getByLabel('Training difficulty').selectOption('easy');
   await page.getByRole('button', { name: 'Start Learn' }).click();

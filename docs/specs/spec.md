@@ -162,7 +162,7 @@ Progress is stored only in the user's browser using local storage. Store at most
 - Percentage of target-cell questions completed within 75 seconds.
 - Recent sessions with date, mode, score, difficulty, and time.
 
-Users can export progress and delete all locally stored data. The interface states that progress remains on the current browser and device.
+Users can export all saved Latin Squares and Mathematical Equations progress as a versioned JSON backup from the home or progress pages, and import it in Merge or Replace mode. Merge deduplicates by session ID, keeping the existing record on conflicts. Replace overwrites the trainers included in the backup after confirmation. Both modes keep the newest 50 sessions per trainer. Legacy single-trainer exports remain supported and affect only their trainer. Invalid files are rejected before any saved progress changes. No separate user profile is stored; Figure Sequences does not persist progress. Users can also delete locally stored progress from each trainer. The interface states that progress remains on the current browser and device.
 
 Streaks are not a primary metric because readiness depends on accuracy and speed, not merely opening the application.
 
