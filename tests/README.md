@@ -23,3 +23,17 @@ npm test
 ```
 
 Use `npm run test:unit` or `npm run test:ui` to isolate a failure. The UI command starts and stops the local Python static server automatically. On a UI failure, Playwright prints the failed user action and saves a trace under `test-results/`.
+
+## Figure Sequences
+
+`tests/unit/figure-sequence.test.js` covers paired scoring and browser-bank validation.
+`tests/ui/figure-sequences.spec.js` covers Learn, mobile layout, saved review,
+backup restoration, drill navigation, mock expiry, redirects, and load/save errors.
+Data-transfer tests also cover version 3 figure backups, older-backup preservation,
+and rollback on a third-trainer storage failure. Run these with `npm test`.
+
+The figure browser tests save mobile and results screenshots under `/tmp/`.
+Go tests under `internal/figureseq` cover deterministic generation, ambiguous
+continuations, and malformed programs/observations. Run `go test ./...`,
+`go vet ./...`, and the verification command in
+`docs/specs/figure-sequence-poc.md`.

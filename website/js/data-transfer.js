@@ -1,6 +1,7 @@
 export const PROGRESS_KEYS = {
   'latin-squares': 'dmat-latin-progress-v1',
   'mathematical-equations': 'dmat-equations-progress-v1',
+  'figure-sequences': 'dmat-figures-progress-v1',
 };
 
 const MAX_FILE_BYTES = 10 * 1024 * 1024;
@@ -27,8 +28,25 @@ function validateSessions(sessions, task) {
       || !session.questionTimes.every(nonnegative)) {
       throw new Error(`Invalid session in ${task}. No data was imported.`);
     }
+    if (task === 'figure-sequences') validateFigureSession(session);
   }
   return sessions;
+}
+
+function validateFigureSession(session) {
+  const count = session.questionCount;
+  if ((session.mode === 'learn' && count !== 1) || (session.mode === 'drill' && count !== 10) || (session.mode === 'mock' && count !== 20)
+    || (session.difficulty != null && !['low', 'medium', 'high'].includes(session.difficulty))
+    || !Number.isSafeInteger(session.frameCorrect) || session.frameCorrect < 2 * session.correct || session.frameCorrect > count + session.correct
+    || !Array.isArray(session.answers) || session.answers.length !== count
+    || !session.answers.every((answer) => Array.isArray(answer) && answer.length === 2 && answer.every((value) => value === null || (Number.isInteger(value) && value >= 0 && value < 3)))
+    || !Array.isArray(session.questionIds) || session.questionIds.length !== count || !session.questionIds.every((id) => typeof id === 'string' && id.length > 0)
+    || !Array.isArray(session.statuses) || session.statuses.length !== count || !session.statuses.every((status) => ['correct', 'incorrect', 'unanswered'].includes(status))
+    || session.statuses.filter((status) => status === 'correct').length !== session.correct
+    || session.statuses.filter((status) => status === 'incorrect').length !== session.incorrect
+    || session.statuses.filter((status) => status === 'unanswered').length !== session.unanswered) {
+    throw new Error('Invalid Figure Sequences session. No data was imported.');
+  }
 }
 
 export function parseBackup(text) {
@@ -36,12 +54,13 @@ export function parseBackup(text) {
   try { data = JSON.parse(text); } catch { throw new Error('Choose a valid JSON backup file.'); }
   if (!isObject(data)) throw new Error('Invalid backup format.');
   let progress;
-  if (data.version === 2 && data.format === 'dmat-progress' && isObject(data.progress)) {
+  if ([2, 3].includes(data.version) && data.format === 'dmat-progress' && isObject(data.progress)) {
     progress = data.progress;
-    if (Object.keys(progress).length !== 2 || !Object.keys(PROGRESS_KEYS).every((task) => Object.hasOwn(progress, task))) {
-      throw new Error('The backup must contain both trainer session lists.');
+    const tasks = data.version === 2 ? ['latin-squares', 'mathematical-equations'] : Object.keys(PROGRESS_KEYS);
+    if (Object.keys(progress).length !== tasks.length || !tasks.every((task) => Object.hasOwn(progress, task))) {
+      throw new Error('The backup must contain the trainer lists required by its version.');
     }
-  } else if (data.version === 1 && (data.task === undefined || Object.hasOwn(PROGRESS_KEYS, data.task))) {
+  } else if (data.version === 1 && (data.task === undefined || ['latin-squares', 'mathematical-equations'].includes(data.task))) {
     // Original Latin Squares exports did not include a task field.
     progress = { [data.task || 'latin-squares']: data.sessions };
   } else {
@@ -58,7 +77,7 @@ function readProgress(storage, task) {
 
 export function exportBackup(storage = localStorage) {
   const progress = Object.fromEntries(Object.keys(PROGRESS_KEYS).map((task) => [task, readProgress(storage, task)]));
-  return JSON.stringify({ format: 'dmat-progress', version: 2, exportedAt: new Date().toISOString(), progress }, null, 2);
+  return JSON.stringify({ format: 'dmat-progress', version: 3, exportedAt: new Date().toISOString(), progress }, null, 2);
 }
 
 export function importBackup(text, mode, storage = localStorage) {
@@ -90,14 +109,14 @@ export function importBackup(text, mode, storage = localStorage) {
 export function transferMarkup() {
   return `<section class="data-transfer" aria-labelledby="data-transfer-title">
     <h2 id="data-transfer-title">Back up or restore your data</h2>
-    <p class="small muted">Export includes all saved Latin Squares and Mathematical Equations progress. This app has no separate profile data. Figure Sequences does not save progress.</p>
+    <p class="small muted">Export includes all saved Latin Squares, Mathematical Equations, and Figure Sequences progress. This app has no separate profile data.</p>
     <button class="button secondary" id="export-progress" type="button">Export all progress</button>
     <form id="import-progress-form">
       <div class="setup-grid">
         <label>Backup file<input id="import-file" type="file" accept=".json,application/json" required /></label>
         <label>Import mode<select id="import-mode"><option value="merge">Merge</option><option value="replace">Replace</option></select></label>
       </div>
-      <p class="small muted">Merge combines sessions and keeps existing records with the same ID. Replace overwrites progress for the trainers in the file. Both modes keep the newest 50 sessions per trainer. Older single-trainer exports affect only that trainer.</p>
+      <p class="small muted">Merge combines sessions and keeps existing records with the same ID. Replace overwrites progress for the trainers in the file. Both modes keep the newest 50 sessions per trainer. Older backups affect only the trainers they contain.</p>
       <button class="button" type="submit">Import progress</button>
     </form>
     <p id="transfer-status" role="status" aria-live="polite"></p>

@@ -2,6 +2,7 @@ package figureseq
 
 import (
 	"bytes"
+	"encoding/json"
 	"path/filepath"
 	"testing"
 )
@@ -84,5 +85,45 @@ func TestWrittenBankCanBeStrictlyVerified(t *testing.T) {
 	}
 	if count != 6 {
 		t.Fatalf("verified %d puzzles, want 6", count)
+	}
+}
+
+func TestAmbiguousContinuationIsRejected(t *testing.T) {
+	// Four positions along the top row fit both a horizontal bounce and a
+	// perimeter traversal. They disagree at frame five.
+	program := Program{ActorID: "arrow figure", Motion: "horizontal-bounce", Path: pathFor("horizontal-bounce", 0), Direction: 1, StepMode: "constant", StepSize: 1, Colors: []string{"teal"}}
+	puzzle := Puzzle{Programs: []Program{program}}
+	for frame := 0; frame < ObservedFrames; frame++ {
+		puzzle.ObservedFrames = append(puzzle.ObservedFrames, frameAt(puzzle.Programs, frame))
+	}
+	if err := verifyPredictiveUniqueness(puzzle); err == nil {
+		t.Fatal("accepted bounce/perimeter ambiguity")
+	}
+}
+
+func TestVerifierRejectsCorruptionBeforeReplay(t *testing.T) {
+	bank, err := Generate(testSettings())
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, mutate := range []func(*Puzzle){
+		func(p *Puzzle) { p.Programs[0].Path = nil },
+		func(p *Puzzle) { p.Programs[0].Colors = nil },
+		func(p *Puzzle) { p.Programs[0].StepSize = 0 },
+		func(p *Puzzle) {
+			p.ObservedFrames[0].Figures[0].Rotation = (p.ObservedFrames[0].Figures[0].Rotation + 90) % 360
+		},
+		func(p *Puzzle) { p.Validation.PredictiveUnique = false },
+	} {
+		data, _ := json.Marshal(bank.Puzzles[0])
+		var puzzle Puzzle
+		if err := json.Unmarshal(data, &puzzle); err != nil {
+			t.Fatal(err)
+		}
+		mutate(&puzzle)
+		puzzle.ID = puzzleID(puzzle) // Rehashing must not hide semantic corruption.
+		if err := VerifyPuzzle(puzzle); err == nil {
+			t.Fatal("accepted corrupted puzzle")
+		}
 	}
 }

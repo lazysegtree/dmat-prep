@@ -68,3 +68,37 @@ test('failure writing the second trainer rolls back the first trainer', () => {
   assert.equal(target.getItem(latin), before);
   assert.equal(target.getItem(equations), null);
 });
+
+const figures = PROGRESS_KEYS['figure-sequences'];
+const figureSession = () => ({ ...session('figure'), task: 'figure-sequences', difficulty: 'high', answers: [[0, 1]], questionIds: ['sequence-1'], statuses: ['correct'], incorrect: 0, unanswered: 0, frameCorrect: 2 });
+
+test('version 3 includes figures and older replace backups preserve their progress', () => {
+ const target = storage({ [figures]: JSON.stringify([figureSession()]) });
+ const saved = target.getItem(figures);
+ const backup = exportBackup(target);
+ assert.equal(JSON.parse(backup).version, 3);
+ const copy = storage();
+ importBackup(backup, 'replace', copy);
+ assert.equal(copy.getItem(figures), saved);
+ importBackup(backup, 'merge', copy);
+ assert.equal(copy.getItem(figures), saved);
+ importBackup(JSON.stringify({ format: 'dmat-progress', version: 2, progress: { 'latin-squares': [], 'mathematical-equations': [] } }), 'replace', target);
+ assert.equal(target.getItem(figures), saved);
+ importBackup(legacy([]), 'replace', target);
+ assert.equal(target.getItem(figures), saved);
+});
+
+test('bad paired answers and failure writing third trainer preserve existing data', () => {
+ const source = storage({ [figures]: JSON.stringify([figureSession()]) });
+ const target = storage({ [latin]: JSON.stringify([session('old')]) });
+ const before = target.getItem(latin);
+ const backup = JSON.parse(exportBackup(source));
+ backup.progress['figure-sequences'][0].answers = [[0, 7]];
+ assert.throws(() => importBackup(JSON.stringify(backup), 'replace', target));
+ assert.equal(target.getItem(latin), before);
+ const set = target.setItem;
+ target.setItem = (key, value) => { if (key === figures) throw new Error('quota'); set(key, value); };
+ assert.throws(() => importBackup(exportBackup(source), 'replace', target), /restored/);
+ assert.equal(target.getItem(latin), before);
+ assert.equal(target.getItem(equations), null);
+});

@@ -224,7 +224,7 @@ func explanation(program Program) string {
 		if program.RotationIncreasing {
 			changes += "; its quarter-turn count also increases on each transition"
 		} else {
-			changes += "; it rotates 90 degrees on each transition"
+			changes += fmt.Sprintf("; it rotates %d degrees on each transition", program.RotationStep)
 		}
 	}
 	if len(program.Colors) > 1 {
@@ -339,7 +339,10 @@ func makePuzzle(level string, variant int, rng *splitMix64) (Puzzle, error) {
 			ObservedFrames: allFrames[:ObservedFrames], Questions: questions, Programs: programs,
 			Difficulty: difficultyFor(programs, level),
 			Hint:       fmt.Sprintf("Track the %s first. %s", programs[0].ActorID, programs[0].Explanation),
-			Validation: Validation{FramesValid: true, OptionsUnique: true, ProgramsDeterministic: true, GeneratorVersion: GeneratorVersion},
+			Validation: Validation{PredictiveUnique: true, FramesValid: true, OptionsUnique: true, ProgramsDeterministic: true, GeneratorVersion: GeneratorVersion},
+		}
+		if err := verifyPredictiveUniqueness(puzzle); err != nil {
+			continue
 		}
 		puzzle.ID = puzzleID(puzzle)
 		return puzzle, nil
@@ -358,17 +361,23 @@ func Generate(settings Settings) (Bank, error) {
 		level string
 		count int
 	}{{"low", settings.Counts.Low}, {"medium", settings.Counts.Medium}, {"high", settings.Counts.High}} {
-		for index := 0; index < request.count; index++ {
-			puzzle, err := makePuzzle(request.level, index, rng)
+		produced := 0
+		for attempt := 0; produced < request.count && attempt < request.count*1000; attempt++ {
+			puzzle, err := makePuzzle(request.level, attempt, rng)
 			if err != nil {
 				return Bank{}, err
 			}
 			if seen[puzzle.ID] {
-				return Bank{}, fmt.Errorf("duplicate puzzle ID %s", puzzle.ID)
+				continue
 			}
 			seen[puzzle.ID] = true
 			bank.Puzzles = append(bank.Puzzles, puzzle)
+			produced++
 		}
+		if produced != request.count {
+			return Bank{}, fmt.Errorf("could not produce %d distinct %s puzzles", request.count, request.level)
+		}
+
 	}
 	if err := VerifyBank(bank); err != nil {
 		return Bank{}, fmt.Errorf("generated bank failed verification: %w", err)

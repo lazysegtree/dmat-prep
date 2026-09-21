@@ -6,7 +6,7 @@ const (
 	PredictedFrames  = 2
 	OptionsPerFrame  = 3
 	FormatVersion    = 1
-	GeneratorVersion = 1
+	GeneratorVersion = 2
 )
 
 type Position struct {
@@ -68,6 +68,7 @@ type Difficulty struct {
 }
 
 type Validation struct {
+	PredictiveUnique      bool `json:"predictiveUnique"`
 	FramesValid           bool `json:"framesValid"`
 	OptionsUnique         bool `json:"optionsUnique"`
 	ProgramsDeterministic bool `json:"programsDeterministic"`

@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"reflect"
+	"slices"
 )
 
 func equalFrame(left, right Frame) bool {
@@ -22,11 +24,24 @@ func VerifyPuzzle(puzzle Puzzle) error {
 		return fmt.Errorf("expected four observed and two predicted frames")
 	}
 	actorIDs := map[string]bool{}
+	actorShapes := map[string]bool{}
 	for index, actor := range puzzle.Actors {
-		if actor.ID == "" || actor.Shape == "" || actorIDs[actor.ID] || puzzle.Programs[index].ActorID != actor.ID {
+		if actor.ID == "" || !slices.Contains(shapes, actor.Shape) || actorIDs[actor.ID] || actorShapes[actor.Shape] || puzzle.Programs[index].ActorID != actor.ID {
 			return fmt.Errorf("invalid actor %d", index)
 		}
 		actorIDs[actor.ID] = true
+		actorShapes[actor.Shape] = true
+		if !validProgram(puzzle.Programs[index]) {
+			return fmt.Errorf("program outside supported grammar")
+		}
+	}
+	for index, frame := range puzzle.ObservedFrames {
+		if !equalFrame(frame, frameAt(puzzle.Programs, index)) {
+			return fmt.Errorf("observed frame does not match programs")
+		}
+	}
+	if err := verifyPredictiveUniqueness(puzzle); err != nil {
+		return err
 	}
 	frames := append([]Frame(nil), puzzle.ObservedFrames...)
 	for index, question := range puzzle.Questions {
@@ -43,6 +58,11 @@ func VerifyPuzzle(puzzle Puzzle) error {
 			if keys[key] || !framesValid([]Frame{option}, len(puzzle.Actors)) {
 				return fmt.Errorf("question %d has duplicate or illegal options", index)
 			}
+			for i, figure := range option.Figures {
+				if figure.ActorID != puzzle.Actors[i].ID || !slices.Contains(colors, figure.Color) || !slices.Contains([]int{0, 90, 180, 270}, figure.Rotation) {
+					return fmt.Errorf("invalid option appearance or actor")
+				}
+			}
 			keys[key] = true
 		}
 		frames = append(frames, correct)
@@ -56,7 +76,10 @@ func VerifyPuzzle(puzzle Puzzle) error {
 	if puzzle.Difficulty.Level != "low" && puzzle.Difficulty.Level != "medium" && puzzle.Difficulty.Level != "high" {
 		return fmt.Errorf("invalid difficulty level")
 	}
-	if !puzzle.Validation.FramesValid || !puzzle.Validation.OptionsUnique || !puzzle.Validation.ProgramsDeterministic || puzzle.Validation.GeneratorVersion != GeneratorVersion {
+	if !reflect.DeepEqual(puzzle.Difficulty, difficultyFor(puzzle.Programs, puzzle.Difficulty.Level)) {
+		return fmt.Errorf("invalid difficulty metadata")
+	}
+	if !puzzle.Validation.PredictiveUnique || !puzzle.Validation.FramesValid || !puzzle.Validation.OptionsUnique || !puzzle.Validation.ProgramsDeterministic || puzzle.Validation.GeneratorVersion != GeneratorVersion {
 		return fmt.Errorf("validation metadata is incomplete")
 	}
 	return nil
