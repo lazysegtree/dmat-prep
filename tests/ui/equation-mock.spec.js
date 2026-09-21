@@ -25,7 +25,7 @@ for (const [level, mix] of Object.entries(mixes)) {
     await expect(page.getByRole('heading', { name: 'Question 1 of 20' })).toBeVisible();
     await expect(page.locator('#timer-value')).toHaveText('25:00');
     page.once('dialog', dialog => dialog.accept());
-    await page.getByRole('button', { name: 'Submit Full Mock' }).click();
+    await page.getByRole('button', { name: 'End Subtest' }).click();
     const saved = await page.evaluate(key => JSON.parse(localStorage.getItem(key))[0], key);
     expect(saved.difficulty).toBe(level);
     expect(new Set(saved.questionIds).size).toBe(20);

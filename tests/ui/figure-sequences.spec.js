@@ -53,8 +53,8 @@ test('drill keeps both choices through navigation, hides feedback and guards lea
  await expect(page.getByRole('heading', { name: 'Sequence 1 of 10' })).toBeVisible();
  await page.locator('[data-frame="0"][data-option="0"]').click();
  await page.locator('[data-frame="1"][data-option="1"]').click();
- await page.getByRole('button', { name: 'Next', exact: true }).click();
- await page.getByRole('button', { name: 'Previous', exact: true }).click();
+ await page.getByRole('button', { name: 'Save and forward' }).click();
+ await page.getByRole('button', { name: 'Save and back' }).click();
  await expect(page.locator('[data-frame="0"][data-option="0"]')).toHaveAttribute('aria-pressed', 'true');
  await expect(page.locator('[data-frame="1"][data-option="1"]')).toHaveAttribute('aria-pressed', 'true');
  await expect(page.locator('.sequence-option.correct')).toHaveCount(0);
@@ -62,7 +62,7 @@ test('drill keeps both choices through navigation, hides feedback and guards lea
  page.once('dialog', (dialog) => dialog.dismiss());
  await page.getByRole('button', { name: 'Leave session' }).click();
  await expect(page.getByRole('heading', { name: 'Sequence 1 of 10' })).toBeVisible();
- await page.getByRole('button', { name: 'Submit Speed Drill' }).click();
+ await page.getByRole('button', { name: 'End Subtest' }).click();
  const saved = await page.evaluate((key) => JSON.parse(localStorage.getItem(key))[0], key);
  expect(saved.questionCount).toBe(10);
  expect(new Set(saved.questionIds).size).toBe(10);
@@ -74,7 +74,7 @@ test('mock expires once with paired partial credit and bounded time', async ({ p
  await page.goto('/figure-sequences/mock/');
  await page.getByRole('button', { name: 'Start Mock' }).click();
  await expect(page.getByRole('heading', { name: 'Sequence 1 of 20' })).toBeVisible();
- const id = await page.locator('.play-header .small').textContent();
+ const id = await page.locator('[data-question-id]').getAttribute('data-question-id');
  const first = bank.puzzles.find((question) => question.id === id);
  await page.locator(`[data-frame="0"][data-option="${first.questions[0].answerIndex}"]`).click();
  await page.clock.fastForward(1560000);

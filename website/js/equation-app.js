@@ -1,3 +1,4 @@
+import { examMarkup, examNavigator, bindExamControls, setExamMode, numberKeyboardMarkup, bindNumberKeyboard } from './exam-ui.js';
 import { transferMarkup, bindTransfer } from './data-transfer.js';
 import { SessionClock, TARGET_SECONDS, formatTime, median } from './session.js';
 
@@ -238,36 +239,31 @@ function renderQuestion() {
   const session = activeSession;
   const question = session.questions[session.current];
   const timed = session.mode !== 'learn';
-  const timerLabel = session.mode === 'mock' ? 'Time remaining' : 'Time elapsed';
-  app.innerHTML = `
-    <section>
-      <div class="play-header">
-        <div><p class="eyebrow">${MODE_NAMES[session.mode]}${session.mode === 'mock' ? ` · ${sessionDifficultyName(session)}` : ''} · ${DIFFICULTY_NAMES[question.difficulty.level]}</p><h2>${session.questions.length === 1 ? 'System' : `Question ${session.current + 1} of ${session.questions.length}`}</h2><p class="small muted">Question ID: ${question.id}</p></div>
-        ${timed ? `<div class="timer"><span class="timer-label">${timerLabel}</span><strong class="timer-value" id="timer-value">${session.mode === 'mock' ? '25:00' : '0:00'}</strong></div>` : ''}
-      </div>
-      <div class="equation-play-layout">
-        <div class="equation-card">
-          <div class="equation-list" aria-label="System of equations">${question.equations.map((equation) => `<p>${escapeHtml(equation.display)}</p>`).join('')}</div>
-          <div class="answer-fields" aria-label="Your values">${question.variables.map((variable) => `
-            <label><span>${variable}</span><input type="number" inputmode="numeric" min="1" max="20" step="1" autocomplete="off" data-variable="${variable}" value="${escapeHtml(session.answers[session.current][variable])}" aria-label="Value of ${variable}" /></label>`).join('')}</div>
-          <p class="small muted">Use integers from 1 to 20. Your entries are answers, not a scratchpad.</p>
-        </div>
-        <aside class="side-panel">
-          ${session.questions.length > 1 ? `<h3>Questions</h3><div class="navigator" aria-label="Question navigator">${session.questions.map((item, index) => {
-            const answered = answerComplete(item, session.answers[index]);
-            return `<button class="nav-question${answered ? ' answered' : ''}${index === session.current ? ' current' : ''}" type="button" data-question="${index}" aria-label="Question ${index + 1}, ${answered ? 'answered' : 'unanswered'}" ${index === session.current ? 'aria-current="true"' : ''}>${index + 1}</button>`;
-          }).join('')}</div><div class="legend"><span class="legend-item answered">Answered</span><span class="legend-item">Unanswered</span></div>` : '<p class="muted">Solve the system mentally, then enter every letter value.</p>'}
-          ${session.mode === 'learn' ? '<div id="hint-area"></div>' : ''}
-          <div class="session-actions">
-            ${session.mode === 'learn' ? '<button class="button secondary" id="show-hint" type="button">Show strategy hint</button>' : ''}
-            ${session.questions.length > 1 ? `<div class="button-row"><button class="button secondary" id="previous-question" type="button" ${session.current === 0 ? 'disabled' : ''}>Previous</button><button class="button secondary" id="next-question" type="button" ${session.current === session.questions.length - 1 ? 'disabled' : ''}>Next</button></div>` : ''}
-            <button class="button" id="submit-session" type="button">${session.mode === 'learn' ? 'Check answers' : `Submit ${MODE_NAMES[session.mode]}`}</button>
-            <button class="button secondary" id="leave-session" type="button">Leave session</button>
-          </div>
-        </aside>
-      </div>
-    </section>`;
+  setExamMode(true);
+  app.innerHTML = examMarkup({
+    task: 'Mathematical Equations',
+    modeName: MODE_NAMES[session.mode],
+    heading: session.questions.length === 1 ? 'System' : `Question ${session.current + 1} of ${session.questions.length}`,
+    instructions: `<strong>Which integers do the unknowns replace?</strong>
+      <p>Each unknown (e.g., “A”) in the equations replaces a positive integer between 1 and 20.</p>
+      <p>Click onto the input boxes with the mouse.</p>
+      <p>Type in the correct answers into the input boxes (using either the virtual keyboard OR your computer keyboard).</p>`,
+    content: `<div class="exam-equation-layout">
+      <section class="exam-column"><h2>Equations</h2><div class="equation-list" aria-label="System of equations">${question.equations.map((equation) => `<p>${escapeHtml(equation.display)}</p>`).join('')}</div></section>
+      <section class="exam-column"><h2>Solutions</h2><div class="exam-answer-fields" aria-label="Your values">${question.variables.map((variable) => `<label><span>${variable} =</span><input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="off" data-variable="${variable}" value="${escapeHtml(session.answers[session.current][variable])}" aria-label="Value of ${variable}" /></label>`).join('')}</div></section>
+      <section class="exam-column"><h2>Virtual keyboard</h2>${numberKeyboardMarkup()}</section>
+    </div>`,
+    navigator: examNavigator(session.questions, session.current, (item, index) => answerComplete(item, session.answers[index])),
+    current: session.current,
+    count: session.questions.length,
+    timerLabel: timed ? (session.mode === 'mock' ? 'Time remaining' : 'Time elapsed') : null,
+    timerValue: formatTime(session.mode === 'mock' ? Math.max(0, 1500 - (clock?.elapsed() || 0)) : clock?.elapsed() || 0),
+    learnActions: session.mode === 'learn' ? '<button class="button secondary" id="show-hint" type="button">Show strategy hint</button>' : '',
+  });
+  bindExamControls(app);
+  bindNumberKeyboard(app);
   app.querySelectorAll('[data-variable]').forEach((input) => input.addEventListener('input', () => {
+    input.value = input.value.replace(/\D/g, '').slice(0, 2);
     session.answers[session.current][input.dataset.variable] = input.value;
     updateNavigator();
   }));
@@ -355,6 +351,7 @@ function resultMetrics(result) {
 }
 
 function renderResults(result, reviewIndex = null) {
+  setExamMode(false);
   const slowest = result.questionTimes.map((time, index) => ({ time, index })).sort((a, b) => b.time - a.time).slice(0, 3);
   app.innerHTML = `
     <section>

@@ -1,3 +1,4 @@
+import { examMarkup, examNavigator, bindExamControls, setExamMode } from './exam-ui.js';
 import { transferMarkup, bindTransfer } from './data-transfer.js';
 import { PuzzleUI } from './puzzle-ui.js';
 import {
@@ -247,52 +248,25 @@ function renderPlay() {
   const session = activeSession;
   const puzzle = session.puzzles[session.current];
   const timed = session.mode !== 'learn';
-  const timerLabel = session.mode === 'mock' ? 'Time remaining' : 'Time elapsed';
-
-  app.innerHTML = `
-    <section>
-      <div class="play-header">
-        <div>
-          <p class="eyebrow">${MODE_NAMES[session.mode]} · ${QUESTION_TYPE_NAMES[session.questionType]}${session.difficulty ? ` · ${DIFFICULTY_NAMES[session.difficulty]}` : ''}</p>
-          <h2>${session.puzzles.length === 1 ? 'Puzzle' : `Question ${session.current + 1} of ${session.puzzles.length}`}</h2>
-          <p class="small muted">Puzzle ID: ${puzzle.id}</p>
-        </div>
-        ${timed ? `<div class="timer"><span class="timer-label">${timerLabel}</span><strong class="timer-value" id="timer-value">${session.mode === 'mock' ? '25:00' : '0:00'}</strong></div>` : ''}
-      </div>
-      <div class="play-layout">
-        <div class="grid-wrap">
-          <div id="puzzle-grid"></div>
-          <div class="symbol-pad" aria-label="Enter a symbol">
-            ${SYMBOLS.map((symbol) => `<button class="symbol-key" type="button" data-symbol="${symbol}">${symbol}</button>`).join('')}
-            <button class="symbol-key clear" type="button" data-clear aria-label="Clear selected cell">Clear</button>
-          </div>
-        </div>
-        <aside class="side-panel">
-          <p class="muted">Answer only the ? cell. Keep intermediate deductions in your head.</p>
-          ${session.puzzles.length > 1 ? `
-            <h3>Questions</h3>
-            <div class="navigator" aria-label="Question navigator">
-              ${session.puzzles.map((item, index) => {
-                const answered = editableComplete(item, session.answers[index], session.questionType);
-                return `<button class="nav-question${answered ? ' answered' : ''}${index === session.current ? ' current' : ''}" type="button" data-question="${index}" aria-label="Question ${index + 1}${answered ? ', answered' : ', unanswered'}" ${index === session.current ? 'aria-current="true"' : ''}>${index + 1}</button>`;
-              }).join('')}
-            </div>
-            <div class="legend"><span class="legend-item answered">Answered</span><span class="legend-item">Unanswered</span></div>
-          ` : '<p class="small muted">You can use the A–E keys. Backspace or Delete clears the answer.</p>'}
-          ${session.mode === 'learn' ? '<div id="hint-area"></div>' : ''}
-          <div class="session-actions">
-            ${session.mode === 'learn' ? '<button class="button secondary" id="show-hint" type="button">Show a hint</button>' : ''}
-            ${session.puzzles.length > 1 ? `
-              <div class="button-row">
-                <button class="button secondary" id="previous-question" type="button" ${session.current === 0 ? 'disabled' : ''}>Previous</button>
-                <button class="button secondary" id="next-question" type="button" ${session.current === session.puzzles.length - 1 ? 'disabled' : ''}>Next</button>
-              </div>` : ''}
-            <button class="button" id="submit-session" type="button">${session.mode === 'learn' ? 'Check answer' : `Submit ${MODE_NAMES[session.mode]}`}</button>
-            <button class="button secondary" id="leave-session" type="button">Leave session</button>
-          </div>
-        </aside>
-      </div>
-    </section>`;
+  setExamMode(true);
+  app.innerHTML = examMarkup({
+    task: 'Latin Squares',
+    modeName: MODE_NAMES[session.mode],
+    heading: session.puzzles.length === 1 ? 'Puzzle' : `Question ${session.current + 1} of ${session.puzzles.length}`,
+    instructions: `<strong>Which symbol belongs in the question mark cell?</strong><p>Each row and column contains each of the symbols A–E exactly once.</p><p>Answer only the ? cell. Select a symbol below or use the A–E keys on your keyboard.</p><p>Backspace or Delete clears the answer. Keep intermediate deductions in your head.</p>`,
+    content: `<div class="exam-latin-layout">
+      <section class="exam-column"><h2>Latin square</h2><div class="grid-wrap"><div id="puzzle-grid"></div></div></section>
+      <section class="exam-column"><h2>Your answer</h2><div class="symbol-pad" aria-label="Enter a symbol">${SYMBOLS.map((symbol) => `<button class="symbol-key" type="button" data-symbol="${symbol}">${symbol}</button>`).join('')}<button class="symbol-key clear" type="button" data-clear aria-label="Clear selected cell">Clear</button></div></section>
+    </div>`,
+    navigator: examNavigator(session.puzzles, session.current, (item, index) => editableComplete(item, session.answers[index], session.questionType)),
+    current: session.current,
+    count: session.puzzles.length,
+    timerLabel: timed ? (session.mode === 'mock' ? 'Time remaining' : 'Time elapsed') : null,
+    timerValue: formatTime(session.mode === 'mock' ? Math.max(0, 1500 - (clock?.elapsed() || 0)) : clock?.elapsed() || 0),
+    checkLabel: 'Check answer',
+    learnActions: session.mode === 'learn' ? '<button class="button secondary" id="show-hint" type="button">Show a hint</button>' : '',
+  });
+  bindExamControls(app);
 
   puzzleUi = new PuzzleUI(app.querySelector('#puzzle-grid'), {
     puzzle,
@@ -399,6 +373,7 @@ function resultMetrics(result) {
 }
 
 function renderResults(result, reviewIndex = null) {
+  setExamMode(false);
   const title = result.mode === 'mock' ? `${result.correct} out of 20` : result.correct === result.questionCount ? 'All correct' : `${result.correct} of ${result.questionCount} correct`;
   const slowest = result.questionTimes
     .map((time, index) => ({ time, index }))

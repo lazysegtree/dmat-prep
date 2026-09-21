@@ -1,3 +1,4 @@
+import { examMarkup, examNavigator, bindExamControls, setExamMode } from './exam-ui.js';
 import { answerComplete, answerStatus, frameCorrectCount, validateFigureBank } from './figure-sequence-session.js';
 import { transferMarkup, bindTransfer } from './data-transfer.js';
 import { SessionClock, TARGET_SECONDS, formatTime, median } from './session.js';
@@ -210,16 +211,23 @@ function renderQuestion() {
  const session = activeSession;
  const question = session.questions[session.current];
  const timed = session.mode !== 'learn';
- app.innerHTML = `<section><div class="play-header"><div><p class="eyebrow">${MODE_NAMES[session.mode]} · ${DIFFICULTY_NAMES[question.difficulty.level]}</p><h2>Sequence ${session.current + 1} of ${session.questions.length}</h2><p class="small muted">${question.id}</p></div>
- ${timed ? `<div class="timer"><span class="timer-label">${session.mode === 'mock' ? 'Time remaining' : 'Time elapsed'}</span><strong class="timer-value" id="timer-value">${formatTime(session.mode === 'mock' ? Math.max(0, 1500 - (clock?.elapsed() || 0)) : clock?.elapsed() || 0)}</strong></div>` : ''}</div>
- <p class="sequence-instruction">Study the four matrices, then choose both missing frames.</p>
- ${sequenceMarkup(question, session.answers[session.current])}
- ${session.questions.length > 1 ? `<h3>Sequences</h3><div class="navigator" aria-label="Sequence navigator">${session.questions.map((item, index) => `<button class="nav-question${answerComplete(item, session.answers[index]) ? ' answered' : ''}${index === session.current ? ' current' : ''}" data-question="${index}" aria-label="Sequence ${index + 1}, ${answerComplete(item, session.answers[index]) ? 'answered' : 'unanswered'}" ${index === session.current ? 'aria-current="true"' : ''}>${index + 1}</button>`).join('')}</div>` : ''}
- ${session.mode === 'learn' ? `<div id="hint-area">${session.hintUsed ? `<div class="hint-box">${escapeHtml(question.hint)}</div>` : ''}</div>` : ''}
- <div class="button-row sequence-actions">
- ${session.mode === 'learn' ? `<button class="button secondary" id="show-hint" ${session.hintUsed ? 'disabled' : ''}>Show strategy hint</button>` : `<button class="button secondary" id="previous-question" ${session.current === 0 ? 'disabled' : ''}>Previous</button><button class="button secondary" id="next-question" ${session.current === session.questions.length - 1 ? 'disabled' : ''}>Next</button>`}
- <button class="button" id="submit-session" ${session.mode === 'learn' && !answerComplete(question, session.answers[session.current]) ? 'disabled' : ''}>${session.mode === 'learn' ? 'Check answers' : `Submit ${MODE_NAMES[session.mode]}`}</button>
- <button class="button secondary" id="leave-session">Leave session</button></div></section>`;
+ setExamMode(true);
+ app.innerHTML = examMarkup({
+  task: 'Figure Sequences',
+  modeName: MODE_NAMES[session.mode],
+  heading: `Sequence ${session.current + 1} of ${session.questions.length}`,
+  instructions: '<strong>Which figures continue the sequence?</strong><p>Study the four matrices, then choose both missing frames.</p><p>Select one answer for Frame 5 and one answer for Frame 6.</p>',
+  content: `<div class="exam-sequence-layout" data-question-id="${question.id}">${sequenceMarkup(question, session.answers[session.current])}</div>`,
+  navigator: examNavigator(session.questions, session.current, (item, index) => answerComplete(item, session.answers[index]), 'Sequence'),
+  current: session.current,
+  count: session.questions.length,
+  timerLabel: timed ? (session.mode === 'mock' ? 'Time remaining' : 'Time elapsed') : null,
+  timerValue: formatTime(session.mode === 'mock' ? Math.max(0, 1500 - (clock?.elapsed() || 0)) : clock?.elapsed() || 0),
+  checkDisabled: session.mode === 'learn' && !answerComplete(question, session.answers[session.current]),
+  learnActions: session.mode === 'learn' ? `<button class="button secondary" id="show-hint" type="button" ${session.hintUsed ? 'disabled' : ''}>Show strategy hint</button>` : '',
+ });
+ bindExamControls(app);
+ if (session.mode === 'learn' && session.hintUsed) app.querySelector('#hint-area').innerHTML = `<div class="hint-box">${escapeHtml(question.hint)}</div>`;
  app.querySelectorAll('[data-frame]').forEach((button) => button.addEventListener('click', () => {
   session.answers[session.current][Number(button.dataset.frame)] = Number(button.dataset.option);
   renderQuestion();
@@ -301,6 +309,7 @@ function resultMetrics(result) {
 }
 
 function renderResults(result, reviewIndex = null) {
+  setExamMode(false);
   const slowest = result.questionTimes.map((time, index) => ({ time, index })).sort((a, b) => b.time - a.time).slice(0, 3);
   app.innerHTML = `
     <section>

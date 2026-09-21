@@ -6,6 +6,7 @@ The test suite covers:
 - `unit/data-transfer.test.js` checks backup round trips, merge conflicts, limits, legacy files, validation, and storage rollback.
 - `ui/data-transfer.spec.js` checks downloads, imports, replacement confirmation, error feedback, and progress refresh.
 - `ui/basic-flow.spec.js` checks the home page and one short Learn interaction in Chromium.
+- `ui/exam-interface.spec.js` checks physical and virtual equation input, answer retention, exam controls, submission, and mobile navigation across all three task types. It saves screenshots under `/tmp/dmat-exam-*.png`.
 
 ## Run
 
