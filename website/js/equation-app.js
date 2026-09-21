@@ -9,6 +9,12 @@ const FORMAT_VERSION = 3;
 const STORAGE_KEY = 'dmat-equations-progress-v1';
 const MODE_NAMES = { learn: 'Learn', drill: 'Speed Drill', mock: 'Full Mock' };
 const DIFFICULTY_NAMES = { low: 'Low', medium: 'Medium', high: 'High', extreme: 'Extreme' };
+const MOCK_LEVELS = {
+  easy: { name: 'Easy', mix: { low: 10, medium: 8, high: 2 } },
+  normal: { name: 'Normal', mix: { low: 6, medium: 8, high: 6 } },
+  hard: { name: 'Hard', mix: { medium: 10, high: 10 } },
+  extreme: { name: 'Extreme', mix: { medium: 5, high: 10, extreme: 5 } },
+};
 const ROUTES = {
   home: 'mathematical-equations/',
   learn: 'mathematical-equations/learn/',
@@ -109,17 +115,47 @@ function renderSetup(mode, difficulty) {
   focusMain();
 }
 
+function mockLevelFromUrl() {
+  const url = new URL(window.location.href);
+  const level = url.searchParams.get('difficulty');
+  if (Object.hasOwn(MOCK_LEVELS, level)) return level;
+  if (level !== null) {
+    url.searchParams.delete('difficulty');
+    window.history.replaceState(null, '', url);
+  }
+  return 'normal';
+}
+
+function sessionDifficultyName(session) {
+  if (session.mode === 'mock') return MOCK_LEVELS[session.difficulty]?.name || 'Normal';
+  return DIFFICULTY_NAMES[session.difficulty] || 'Mixed difficulty';
+}
+
+function mockMixDescription(level) {
+  return Object.entries(MOCK_LEVELS[level].mix)
+    .map(([difficulty, count]) => `${count} ${DIFFICULTY_NAMES[difficulty]}`).join(', ');
+}
+
 function renderMockIntro() {
+  const level = mockLevelFromUrl();
   app.innerHTML = `
     <section class="panel">
       <p class="eyebrow">Mathematical Equations · Full Mock</p>
       <h1>20 systems. 25 minutes.</h1>
       <p class="muted">This matches the official question count, time limit, integer range, and no-notes constraint.</p>
-      <ul><li>All systems are selected before the timer starts.</li><li>The training mix is 6 Low, 8 Medium, and 6 High.</li><li>The mock submits automatically when time expires.</li></ul>
+      <ul><li>All systems are selected before the timer starts.</li><li id="mock-mix">The training mix is ${mockMixDescription(level)}.</li><li>The mock submits automatically when time expires.</li></ul>
       <p class="small muted">The difficulty mix is a trainer choice; the official material does not publish the exam's difficulty distribution.</p>
+      <div class="field"><label for="mock-level">Mock difficulty</label><select id="mock-level">${Object.entries(MOCK_LEVELS).map(([key, value]) => `<option value="${key}"${key === level ? ' selected' : ''}>${value.name}</option>`).join('')}</select></div>
       <div class="button-row"><button class="button" id="start-mock" type="button">Start Mock</button><a class="button secondary" href="${routeUrl('home')}">Back</a></div>
     </section>`;
-  app.querySelector('#start-mock').addEventListener('click', () => startSession('mock'));
+  const select = app.querySelector('#mock-level');
+  select.addEventListener('change', () => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('difficulty', select.value);
+    window.history.replaceState(null, '', url);
+    app.querySelector('#mock-mix').textContent = `The training mix is ${mockMixDescription(select.value)}.`;
+  });
+  app.querySelector('#start-mock').addEventListener('click', () => startSession('mock', select.value));
   focusMain();
 }
 
@@ -135,11 +171,9 @@ function shuffle(values) {
 function chooseQuestions(mode, difficulty) {
   if (mode === 'learn') return shuffle(bank.filter((question) => question.difficulty.level === difficulty)).slice(0, 1);
   if (mode === 'drill') return shuffle(bank.filter((question) => question.difficulty.level === difficulty)).slice(0, 10);
-  return shuffle([
-    ...shuffle(bank.filter((question) => question.difficulty.level === 'low')).slice(0, 6),
-    ...shuffle(bank.filter((question) => question.difficulty.level === 'medium')).slice(0, 8),
-    ...shuffle(bank.filter((question) => question.difficulty.level === 'high')).slice(0, 6),
-  ]);
+  const mix = MOCK_LEVELS[difficulty || 'normal'].mix;
+  return shuffle(Object.entries(mix).flatMap(([level, count]) =>
+    shuffle(bank.filter((question) => question.difficulty.level === level)).slice(0, count)));
 }
 
 function emptyEquationAnswer(question) {
@@ -208,7 +242,7 @@ function renderQuestion() {
   app.innerHTML = `
     <section>
       <div class="play-header">
-        <div><p class="eyebrow">${MODE_NAMES[session.mode]} · ${DIFFICULTY_NAMES[question.difficulty.level]}</p><h2>${session.questions.length === 1 ? 'System' : `Question ${session.current + 1} of ${session.questions.length}`}</h2><p class="small muted">Question ID: ${question.id}</p></div>
+        <div><p class="eyebrow">${MODE_NAMES[session.mode]}${session.mode === 'mock' ? ` · ${sessionDifficultyName(session)}` : ''} · ${DIFFICULTY_NAMES[question.difficulty.level]}</p><h2>${session.questions.length === 1 ? 'System' : `Question ${session.current + 1} of ${session.questions.length}`}</h2><p class="small muted">Question ID: ${question.id}</p></div>
         ${timed ? `<div class="timer"><span class="timer-label">${timerLabel}</span><strong class="timer-value" id="timer-value">${session.mode === 'mock' ? '25:00' : '0:00'}</strong></div>` : ''}
       </div>
       <div class="equation-play-layout">
@@ -324,7 +358,7 @@ function renderResults(result, reviewIndex = null) {
   const slowest = result.questionTimes.map((time, index) => ({ time, index })).sort((a, b) => b.time - a.time).slice(0, 3);
   app.innerHTML = `
     <section>
-      <p class="eyebrow">Mathematical Equations · ${MODE_NAMES[result.mode]} results</p>
+      <p class="eyebrow">Mathematical Equations · ${MODE_NAMES[result.mode]}${result.mode === 'mock' ? ` · ${sessionDifficultyName(result)}` : ''} results</p>
       <h1>${result.mode === 'mock' ? `${result.correct} out of 20` : result.correct === result.questionCount ? 'All correct' : `${result.correct} of ${result.questionCount} correct`}</h1>
       <p class="lede">${result.automatic ? 'Time expired, so the mock was submitted automatically.' : 'Review the exact substitution chain and where accuracy or time was lost.'}</p>
       <div class="results-summary">${resultMetrics(result)}</div>
@@ -393,7 +427,7 @@ function renderProgress() {
   app.innerHTML = `
     <section><p class="eyebrow">Mathematical Equations · Progress</p><h1>Your recent training</h1><p class="notice">Progress is stored only in this browser on this device. Up to 50 completed equation sessions are kept.</p>
       <div class="metrics"><div class="metric"><span>Latest mock</span><strong>${summary.latestMock === null ? '—' : `${summary.latestMock}/20`}</strong></div><div class="metric"><span>Best mock</span><strong>${summary.bestMock === null ? '—' : `${summary.bestMock}/20`}</strong></div><div class="metric"><span>Recent accuracy</span><strong>${percent(summary.accuracy)}</strong></div><div class="metric"><span>Median system time</span><strong>${summary.medianTime === null ? '—' : formatTime(summary.medianTime)}</strong></div><div class="metric"><span>Within 75 seconds</span><strong>${percent(summary.withinTarget)}</strong></div></div>
-      <h2>Recent sessions</h2>${sessions.length ? `<div class="session-list">${sessions.map((session) => `<div class="session-row"><div><strong>${MODE_NAMES[session.mode]}</strong><br /><span class="small muted">${session.difficulty ? DIFFICULTY_NAMES[session.difficulty] : 'Mixed difficulty'}</span></div><strong>${session.correct}/${session.questionCount}</strong><time class="small muted" datetime="${session.date}">${new Date(session.date).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })} · ${formatTime(session.totalTime)}</time></div>`).join('')}</div>` : '<p class="empty">Complete an equation session to see progress here.</p>'}
+      <h2>Recent sessions</h2>${sessions.length ? `<div class="session-list">${sessions.map((session) => `<div class="session-row"><div><strong>${MODE_NAMES[session.mode]}</strong><br /><span class="small muted">${sessionDifficultyName(session)}</span></div><strong>${session.correct}/${session.questionCount}</strong><time class="small muted" datetime="${session.date}">${new Date(session.date).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })} · ${formatTime(session.totalTime)}</time></div>`).join('')}</div>` : '<p class="empty">Complete an equation session to see progress here.</p>'}
       <div class="button-row"><button class="button danger" id="delete-progress" type="button" ${sessions.length ? '' : 'disabled'}>Delete equation progress</button><a class="button secondary" href="${routeUrl('home')}">Equations home</a></div>
     </section>`;
   app.insertAdjacentHTML('beforeend', transferMarkup());

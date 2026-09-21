@@ -18,7 +18,7 @@ function validateSessions(sessions, task) {
       || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$/.test(session.date)
       || !Number.isFinite(Date.parse(session.date))
       || !['learn', 'drill', 'mock'].includes(session.mode)
-      || (session.difficulty != null && !difficulties.includes(session.difficulty))
+      || (session.difficulty != null && !(task === 'mathematical-equations' && session.mode === 'mock' ? [...difficulties, 'easy', 'normal', 'hard'] : difficulties).includes(session.difficulty))
       || (session.task != null && session.task !== task)
       || (session.questionType != null && !['target', 'full'].includes(session.questionType))
       || !Number.isSafeInteger(session.questionCount) || session.questionCount < 1
