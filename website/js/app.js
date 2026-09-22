@@ -40,7 +40,6 @@ let bank = [];
 let activeSession = null;
 let puzzleUi = null;
 let clock = null;
-let lastResult = null;
 
 function stopInteractiveState() {
   puzzleUi?.destroy();
@@ -392,12 +391,16 @@ function finishSession(automatic) {
     solutions: session.puzzles.map((puzzle) => puzzle.solution),
     startingGrids: session.puzzles.map((puzzle) => puzzle.grid),
     targets: session.puzzles.map((puzzle) => puzzle.target),
+    reviewPuzzles: session.puzzles.map((puzzle) => ({
+      target: puzzle.target,
+      difficulty: puzzle.difficulty,
+      bestMethod: puzzle.bestMethod,
+    })),
     statuses,
     hintUsed: session.hintUsed,
     automatic,
   };
   progressStore.add(result);
-  lastResult = result;
   stopInteractiveState();
   activeSession = null;
   renderResults(result, result.mode === 'learn' ? 0 : null);
@@ -435,12 +438,13 @@ function renderResults(result, reviewIndex = null) {
         ${result.statuses.map((status, index) => `
           <div class="review-row">
             <strong>Q${index + 1}</strong>
-            <div><span class="status ${status}">${status[0].toUpperCase() + status.slice(1)}</span><br /><span class="small muted">${result.puzzleIds[index]} · ${formatTime(result.questionTimes[index])}</span></div>
+            <div><span class="status ${status}">${status[0].toUpperCase() + status.slice(1)}</span><br /><span class="small muted">${escapeHtml(result.puzzleIds[index])} · ${formatTime(result.questionTimes[index])}</span></div>
             <button class="button secondary" type="button" data-review="${index}">Review</button>
           </div>`).join('')}
       </div>
       <div id="review-detail"></div>
       <div class="button-row">
+        <a class="button secondary" href="${routeUrl('progress')}">Back to progress</a>
         <button class="button" id="repeat-mode" type="button">${result.mode === 'mock' ? 'Take another mock' : `New ${MODE_NAMES[result.mode]}`}</button>
         <button class="button secondary" id="results-home" type="button">Home</button>
       </div>
@@ -511,7 +515,7 @@ function reviewMethodMarkup(puzzle) {
           <h3 id="review-method-title">Efficient solution path</h3>
           <p class="small muted">The lowest-effort chain found using the trainer’s supported deduction rules.</p>
         </div>
-        <p class="inference-summary"><strong>${method.length} deduction${method.length === 1 ? '' : 's'}</strong><span>${escapeHtml(level)} · score ${puzzle.difficulty.score}</span></p>
+        <p class="inference-summary"><strong>${method.length} deduction${method.length === 1 ? '' : 's'}</strong><span>${escapeHtml(level)} · score ${escapeHtml(puzzle.difficulty.score)}</span></p>
       </div>
       <ol class="inference-steps">
         ${method.map((inference, step) => {
@@ -521,7 +525,7 @@ function reviewMethodMarkup(puzzle) {
             <li class="inference-step${isTarget ? ' target' : ''}">
               <div class="inference-step-heading">
                 <span class="inference-step-number" aria-hidden="true">${step + 1}</span>
-                <strong>${cellName(placement)} = ${escapeHtml(placement.value)}</strong>
+                <strong>${escapeHtml(cellName(placement))} = ${escapeHtml(placement.value)}</strong>
                 ${isTarget ? '<span class="target-badge">Target</span>' : ''}
               </div>
               <p>${escapeHtml(inference.details)}</p>
@@ -535,12 +539,12 @@ function showReviewDetail(result, index) {
   const detail = app.querySelector('#review-detail');
   const questionType = result.questionType || 'full';
   const target = questionType === 'target' ? result.targets[index] : null;
-  const puzzle = target ? bank.find((candidate) => candidate.id === result.puzzleIds[index]) : null;
+  const puzzle = target ? (result.reviewPuzzles?.[index] ?? bank.find((candidate) => candidate.id === result.puzzleIds[index])) : null;
   const selectedAnswer = target ? result.answers[index][target.row][target.column] : null;
   detail.className = 'review-detail';
   detail.innerHTML = `
     <h2>Question ${index + 1}</h2>
-    <p class="small muted">${result.puzzleIds[index]} · ${formatTime(result.questionTimes[index])}</p>
+    <p class="small muted">${escapeHtml(result.puzzleIds[index])} · ${formatTime(result.questionTimes[index])}</p>
     ${target ? `<p><strong>Your answer:</strong> ${selectedAnswer || 'Unanswered'} &nbsp; <strong>Correct answer:</strong> ${target.value}</p>` : ''}
     ${target ? reviewMethodMarkup(puzzle) : ''}
     <div class="review-grids">
@@ -550,7 +554,20 @@ function showReviewDetail(result, index) {
   detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function renderProgress() {
+function hasSavedReview(session) {
+  const count = session.questionCount;
+  const complete = (key) => Array.isArray(session[key]) && session[key].length === count;
+  const grid = (value) => Array.isArray(value) && value.length === 5
+    && value.every((row) => Array.isArray(row) && row.length === 5 && row.every((cell) => !cell || SYMBOLS.includes(cell)));
+  return ['statuses', 'puzzleIds', 'questionTimes', 'answers', 'solutions', 'startingGrids'].every(complete)
+    && session.statuses.every((status) => ['correct', 'incorrect', 'unanswered'].includes(status))
+    && ['answers', 'solutions', 'startingGrids'].every((key) => session[key].every(grid))
+    && (session.questionType !== 'target' || (complete('targets') && session.targets.every((target) =>
+      target && Number.isInteger(target.row) && target.row >= 0 && target.row < 5
+      && Number.isInteger(target.column) && target.column >= 0 && target.column < 5 && SYMBOLS.includes(target.value))));
+}
+
+function renderProgress(notice = '') {
   const sessions = progressStore.all();
   const summary = summarizeProgress(sessions);
   const value = (number, suffix = '') => number === null ? '—' : `${Math.round(number)}${suffix}`;
@@ -567,11 +584,13 @@ function renderProgress() {
         <div class="metric"><span>? within 75 seconds</span><strong>${value(summary.withinTarget, '%')}</strong></div>
       </div>
       <h2>Recent sessions</h2>
+      ${notice ? `<p class="notice">${notice}</p>` : ''}
       ${sessions.length ? `<div class="session-list">${sessions.map((session) => `
-        <div class="session-row">
+        <div class="session-row saved-session-row">
           <div><strong>${MODE_NAMES[session.mode]}</strong><br /><span class="small muted">${QUESTION_TYPE_NAMES[session.questionType || 'full']} · ${sessionDifficultyName(session)}</span></div>
           <strong>${session.correct}/${session.questionCount}</strong>
           <time class="small muted" datetime="${session.date}">${new Date(session.date).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })} · ${formatTime(session.totalTime)}</time>
+          ${hasSavedReview(session) ? `<a class="button secondary" href="${escapeHtml(routeUrl('progress', { session: session.id }))}">View results</a>` : '<span class="small muted">Question details were not saved for this session.</span>'}
         </div>`).join('')}</div>` : '<p class="empty">Complete a Learn puzzle, Speed Drill, or Full Mock to see progress here.</p>'}
       <div class="button-row">
         <button class="button danger" id="delete-progress" type="button" ${sessions.length ? '' : 'disabled'}>Delete all progress</button>
@@ -660,6 +679,16 @@ function renderInitialPage() {
     return;
   }
   if (INITIAL_PAGE === 'progress') {
+    const sessionId = new URL(window.location.href).searchParams.get('session');
+    if (sessionId) {
+      const result = progressStore.all().find((session) => session.id === sessionId);
+      if (result && hasSavedReview(result)) {
+        renderResults(result, result.mode === 'learn' ? 0 : null);
+      } else {
+        renderProgress(result ? 'Question details were not saved for this session.' : 'This saved session is no longer available.');
+      }
+      return;
+    }
     renderProgress();
     return;
   }

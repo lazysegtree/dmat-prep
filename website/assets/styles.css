@@ -321,6 +321,7 @@ select { width: 100%; padding: 11px 12px; border: 1px solid var(--strong-line); 
 
 .session-list { display: grid; gap: 10px; margin: 18px 0 32px; }
 .session-row { display: grid; grid-template-columns: 1fr auto auto; gap: 18px; padding: 15px 17px; border: 1px solid var(--line); border-radius: 9px; background: white; }
+.saved-session-row > .button, .saved-session-row > span { grid-column: 1 / -1; justify-self: start; }
 .empty { padding: 30px; border: 1px dashed var(--line); border-radius: 10px; color: var(--muted); text-align: center; }
 .notice { padding: 14px 16px; border-radius: 8px; background: #e9ece9; color: #465249; }
 .loading, .error { margin-top: 60px; text-align: center; color: var(--muted); }
