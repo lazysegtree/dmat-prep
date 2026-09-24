@@ -21,6 +21,7 @@ func run(arguments []string) error {
 	out := flags.String("out", "", "figure-sequence bank output path")
 	verify := flags.Bool("verify", false, "verify an existing bank")
 	seed := flags.Uint64("seed", 20260818, "deterministic generator seed")
+	retain := flags.String("retain", "", "existing bank to retain; counts specify final totals")
 	low := flags.Int("count-low", 12, "number of low puzzles")
 	medium := flags.Int("count-medium", 12, "number of medium puzzles")
 	high := flags.Int("count-high", 12, "number of high puzzles")
@@ -41,6 +42,7 @@ func run(arguments []string) error {
 	}
 	bank, err := figureseq.Generate(figureseq.Settings{
 		Seed:   *seed,
+		Retain: *retain,
 		Counts: figureseq.Counts{Low: *low, Medium: *medium, High: *high, Extreme: *extreme},
 	})
 	if err != nil {

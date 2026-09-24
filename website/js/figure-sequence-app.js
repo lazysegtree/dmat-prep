@@ -1,7 +1,8 @@
 import { examMarkup, examNavigator, bindExamControls, setExamMode } from './exam-ui.js';
-import { answerComplete, answerStatus, frameCorrectCount, validateFigureBank } from './figure-sequence-session.js';
+import { answerComplete, answerStatus, frameCorrectCount, validateFigureBank, selectDiversePuzzles } from './figure-sequence-session.js';
 import { transferMarkup, bindTransfer } from './data-transfer.js';
 import { SessionClock, TARGET_SECONDS, formatTime, median } from './session.js';
+import { COLORS, shapeMarkup } from './figure-sequence-shapes.js';
 
 const app = document.querySelector('#app');
 const homeButton = document.querySelector('#figure-home-button');
@@ -24,15 +25,6 @@ const ROUTES = {
   progress: 'figure-sequences/progress/',
 };
 
-const COLORS = { teal: '#16866f', magenta: '#c64f82', amber: '#f0b429', ink: '#27332b' };
-function shapeMarkup(shape, color) {
-  const common = `fill="${color}" stroke="#17211b" stroke-width="2" stroke-linejoin="round"`;
-  if (shape === 'arrow') return `<path ${common} d="M-11-6H1v-6L12 0 1 12V6h-12Z" />`;
-  if (shape === 'triangle') return `<path ${common} d="M0-12 11 10h-22Z" />`;
-  if (shape === 'corner') return `<path ${common} d="M-10-11h7v13h13v8h-20Z" />`;
-  return `<path ${common} d="M-11-8-2 0-11 8-5 12 10 0-5-12Z" />`;
-}
-
 function frameDescription(frame) {
   return frame.figures.map((figure) => (
     `${figure.actorId} at row ${figure.row + 1}, column ${figure.column + 1}, ${figure.color}, rotated ${figure.rotation} degrees`
@@ -47,7 +39,7 @@ function frameSVG(frame, puzzle) {
   const figures = frame.figures.map((figure) => {
     const x = figure.column * 25 + 12.5;
     const y = figure.row * 25 + 12.5;
-    return `<g transform="translate(${x} ${y}) rotate(${figure.rotation}) scale(.72)">${shapeMarkup(actorShapes.get(figure.actorId), COLORS[figure.color])}</g>`;
+    return `<g data-shape="${actorShapes.get(figure.actorId)}" transform="translate(${x} ${y}) rotate(${figure.rotation}) scale(.72)">${shapeMarkup(actorShapes.get(figure.actorId), COLORS[figure.color])}</g>`;
   }).join('');
   return `<svg class="sequence-matrix" viewBox="0 0 100 100" aria-hidden="true">
     <rect width="100" height="100" fill="#fff" />
@@ -203,10 +195,10 @@ function shuffle(values) {
 
 function chooseQuestions(mode, difficulty) {
   if (mode === 'learn') return shuffle(bank.filter((question) => question.difficulty.level === difficulty)).slice(0, 1);
-  if (mode === 'drill') return shuffle(bank.filter((question) => question.difficulty.level === difficulty)).slice(0, 10);
+  if (mode === 'drill') return selectDiversePuzzles(bank.filter((question) => question.difficulty.level === difficulty), 10);
   const mix = MOCK_LEVELS[difficulty || 'normal'].mix;
   return shuffle(Object.entries(mix).flatMap(([level, count]) =>
-    shuffle(bank.filter((question) => question.difficulty.level === level)).slice(0, count)));
+    selectDiversePuzzles(bank.filter((question) => question.difficulty.level === level), count)));
 }
 
 function emptyFigureAnswer() { return [null, null]; }

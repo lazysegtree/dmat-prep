@@ -7,6 +7,50 @@ const answers = async (page, question) => {
  for (let frame = 0; frame < 2; frame++) await page.locator(`[data-frame="${frame}"][data-option="${question.questions[frame].answerIndex}"]`).click();
 };
 
+test('every silhouette renders in a playable sequence with distinct options', async ({ page }) => {
+ const errors = [];
+ page.on('pageerror', (error) => errors.push(error.message));
+ const low = bank.puzzles.filter((puzzle) => puzzle.difficulty.level === 'low');
+ const shapes = [...new Set(low.flatMap((puzzle) => puzzle.actors.map((actor) => actor.shape)))];
+ expect(shapes).toHaveLength(18);
+ for (const shape of shapes) {
+  const question = low.find((puzzle) => puzzle.actors[0].shape === shape);
+  await page.goto(`/figure-sequences/learn/?question=${question.id}`);
+  await expect(page.locator(`[data-shape="${shape}"]`)).toHaveCount(10);
+  await expect(page.locator(`[data-shape="${shape}"]`).first()).toBeVisible();
+  const sizes = await page.locator(`[data-shape="${shape}"]`).evaluateAll((elements) => elements.map((element) => {
+   const { width, height } = element.getBBox();
+   return { width, height };
+  }));
+  expect(sizes.every(({ width, height }) => width > 0 && width <= 28 && height > 0 && height <= 28)).toBe(true);
+  await answers(page, question);
+  await page.getByRole('button', { name: 'Check answers' }).click();
+  await expect(page.getByRole('heading', { name: 'All correct' })).toBeVisible();
+ }
+ expect(errors).toEqual([]);
+});
+
+test('new movement and rotation patterns can be answered and reviewed', async ({ page }) => {
+ const cases = [
+  (program) => program.motion === 'stationary',
+  (program) => program.motion === 'small-square' && program.direction === 1 && program.path[0].row === 1 && program.path[0].column === 1,
+  (program) => program.motion === 'small-square' && program.direction === -1,
+  (program) => program.motion === 'diagonal-bounce' && program.path.length === 4,
+  (program) => program.motion === 'perimeter' && program.direction === -1 && program.stepMode === 'increasing' && program.stepSize === 2,
+  (program) => program.rotationIncreasing && program.rotationStep === -90,
+ ];
+ for (const matches of cases) {
+  const question = bank.puzzles.find((puzzle) => puzzle.programs.some(matches));
+  expect(question).toBeDefined();
+  await page.goto(`/figure-sequences/learn/?question=${question.id}`);
+  await expect(page.getByRole('heading', { name: 'Sequence 1 of 1' })).toBeVisible();
+  await answers(page, question);
+  await page.getByRole('button', { name: 'Check answers' }).click();
+  await expect(page.getByRole('heading', { name: 'All correct' })).toBeVisible();
+  await expect(page.locator('.inference-steps')).toContainText(question.programs.find(matches).explanation);
+ }
+});
+
 test('learn, review, persistence and three-trainer backup round trip on mobile', async ({ page }) => {
  const errors = [];
  page.on('pageerror', (error) => errors.push(error.message));

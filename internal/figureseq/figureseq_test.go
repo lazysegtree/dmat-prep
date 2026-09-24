@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -92,7 +93,7 @@ func TestAmbiguousContinuationIsRejected(t *testing.T) {
 	// Four positions along the top row fit both a horizontal bounce and a
 	// perimeter traversal. They disagree at frame five.
 	program := Program{ActorID: "arrow figure", Motion: "horizontal-bounce", Path: pathFor("horizontal-bounce", 0), Direction: 1, StepMode: "constant", StepSize: 1, Colors: []string{"teal"}}
-	puzzle := Puzzle{Programs: []Program{program}}
+	puzzle := Puzzle{Actors: []Actor{{ID: program.ActorID, Shape: "arrow"}}, Programs: []Program{program}}
 	for frame := 0; frame < ObservedFrames; frame++ {
 		puzzle.ObservedFrames = append(puzzle.ObservedFrames, frameAt(puzzle.Programs, frame))
 	}
@@ -150,5 +151,91 @@ func TestNegativeExtremeCountRejected(t *testing.T) {
 	settings.Counts.Extreme = -1
 	if _, err := Generate(settings); err == nil {
 		t.Fatal("accepted negative count")
+	}
+}
+
+func TestShapeCoverageAcrossSeeds(t *testing.T) {
+	for _, seed := range []uint64{1, 24, 20260924} {
+		bank, err := Generate(Settings{Seed: seed, Counts: Counts{Low: len(shapeCatalog), Medium: 18, High: 24, Extreme: 18}})
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, level := range []string{"low", "medium", "high", "extreme"} {
+			seen := map[string]bool{}
+			rotating := map[string]bool{}
+			for _, puzzle := range bank.Puzzles {
+				if puzzle.Difficulty.Level != level {
+					continue
+				}
+				for index, actor := range puzzle.Actors {
+					seen[actor.Shape] = true
+					if puzzle.Programs[index].RotationStep != 0 {
+						rotating[actor.Shape] = true
+						if shapePeriod(actor.Shape) != 360 {
+							t.Fatalf("invisible rotation track: %s", actor.Shape)
+						}
+					}
+				}
+			}
+			for _, shape := range shapeCatalog {
+				if level == "extreme" && shape.Period < 360 {
+					continue
+				}
+				if !seen[shape.Name] {
+					t.Errorf("seed %d %s never uses %s", seed, level, shape.Name)
+				}
+			}
+			if level != "low" && len(rotating) < 8 {
+				t.Errorf("seed %d %s rotates only %d silhouettes", seed, level, len(rotating))
+			}
+		}
+	}
+}
+
+func TestVisuallyIdenticalDistractorsRejected(t *testing.T) {
+	bank, err := Generate(Settings{Seed: 24, Counts: Counts{Low: len(shapeCatalog)}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, puzzle := range bank.Puzzles {
+		period := shapePeriod(puzzle.Actors[0].Shape)
+		if period == 360 {
+			continue
+		}
+		question := &puzzle.Questions[0]
+		duplicate := cloneFrame(question.Options[question.AnswerIndex])
+		duplicate.Figures[0].Rotation = mod(duplicate.Figures[0].Rotation+period, 360)
+		question.Options[(question.AnswerIndex+1)%OptionsPerFrame] = duplicate
+		puzzle.ID = puzzleID(puzzle)
+		if err := VerifyPuzzle(puzzle); err == nil || !strings.Contains(err.Error(), "duplicate") {
+			t.Fatalf("%s: expected visual duplicate rejection, got %v", puzzle.Actors[0].Shape, err)
+		}
+	}
+}
+
+func TestRetainedBankPreservesSavedQuestionIDs(t *testing.T) {
+	retained, err := Generate(testSettings())
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "retained.json")
+	if err := WriteBank(path, retained); err != nil {
+		t.Fatal(err)
+	}
+	settings := Settings{Seed: 25, Retain: path, Counts: Counts{Low: 3, Medium: 3, High: 3, Extreme: 3}}
+	expanded, err := Generate(settings)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for index, puzzle := range retained.Puzzles {
+		before, _ := json.Marshal(puzzle)
+		after, _ := json.Marshal(expanded.Puzzles[index])
+		if !bytes.Equal(before, after) {
+			t.Fatal("retained puzzle changed")
+		}
+	}
+	settings.Counts.Low = 1
+	if _, err := Generate(settings); err == nil {
+		t.Fatal("accepted total below retained count")
 	}
 }

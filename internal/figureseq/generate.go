@@ -4,11 +4,12 @@ import (
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
+	"os"
+	"strings"
 )
 
 var (
-	shapes = []string{"arrow", "triangle", "corner", "chevron"}
-	colors = []string{"teal", "magenta", "amber", "ink"}
+	colors = []string{"teal", "magenta", "amber", "ink", "yellow", "white"}
 )
 
 type splitMix64 struct{ state uint64 }
@@ -43,10 +44,12 @@ func pathFor(kind string, lane int) []Position {
 	case "vertical-bounce":
 		return []Position{{0, lane}, {1, lane}, {2, lane}, {3, lane}, {2, lane}, {1, lane}}
 	case "diagonal-bounce":
-		if lane%2 == 0 {
-			return []Position{{0, 0}, {1, 1}, {2, 2}, {3, 3}, {2, 2}, {1, 1}}
-		}
-		return []Position{{3, 0}, {2, 1}, {1, 2}, {0, 3}, {1, 2}, {2, 1}}
+		return diagonalPaths()[lane]
+	case "stationary":
+		return []Position{{lane / Size, lane % Size}}
+	case "small-square":
+		row, column := lane/(Size-1), lane%(Size-1)
+		return []Position{{row, column}, {row, column + 1}, {row + 1, column + 1}, {row + 1, column}}
 	case "perimeter":
 		return []Position{
 			{0, 0}, {0, 1}, {0, 2}, {0, 3},
@@ -146,23 +149,44 @@ func mutatePosition(frame Frame, programs []Program, actorIndex, frameIndex, dir
 	}
 	for distance := 1; distance < len(program.Path); distance++ {
 		position := program.Path[mod(current+direction*distance, len(program.Path))]
-		if !occupied[position] {
+		if position != program.Path[current] && !occupied[position] {
 			mutated.Figures[actorIndex].Row = position.Row
 			mutated.Figures[actorIndex].Column = position.Column
 			return mutated, frameKey(mutated) != frameKey(frame)
 		}
 	}
+	// A stationary actor has no alternative cell on its path. A wrong-position
+	// option is still useful, and must use an empty cell inside the matrix.
+	if program.Motion == "stationary" {
+		for cell := 0; cell < Size*Size; cell++ {
+			position := Position{cell / Size, cell % Size}
+			if position != program.Path[current] && !occupied[position] {
+				mutated.Figures[actorIndex].Row = position.Row
+				mutated.Figures[actorIndex].Column = position.Column
+				return mutated, true
+			}
+		}
+	}
 	return Frame{}, false
 }
 
-func mutateAppearance(frame Frame, actorIndex int) Frame {
+func mutateAppearance(frame Frame, actors []Actor, actorIndex int) Frame {
 	mutated := cloneFrame(frame)
 	figure := &mutated.Figures[actorIndex]
-	figure.Rotation = mod(figure.Rotation+90, 360)
+	if shapePeriod(actors[actorIndex].Shape) == 360 {
+		figure.Rotation = mod(figure.Rotation+90, 360)
+	} else {
+		for _, color := range colors {
+			if color != figure.Color {
+				figure.Color = color
+				break
+			}
+		}
+	}
 	return mutated
 }
 
-func makeQuestion(programs []Program, correct Frame, frameIndex, variant int) (Question, error) {
+func makeQuestion(actors []Actor, programs []Program, correct Frame, frameIndex, variant int) (Question, error) {
 	actorCount := len(programs)
 	firstActor := mod(variant+frameIndex, actorCount)
 	secondActor := mod(firstActor+1, actorCount)
@@ -172,16 +196,16 @@ func makeQuestion(programs []Program, correct Frame, frameIndex, variant int) (Q
 	}
 	var second Frame
 	if actorCount > 1 || programs[secondActor].RotationStep != 0 || len(programs[secondActor].Colors) > 1 {
-		second = mutateAppearance(correct, secondActor)
+		second = mutateAppearance(correct, actors, secondActor)
 	} else {
 		second, ok = mutatePosition(correct, programs, secondActor, frameIndex, -1)
 		if !ok {
 			return Question{}, fmt.Errorf("could not create second distractor")
 		}
 	}
-	if !framesValid([]Frame{first, second}, actorCount) || frameKey(first) == frameKey(second) || frameKey(second) == frameKey(correct) {
+	if !framesValid([]Frame{first, second}, actorCount) || visualFrameKey(first, actors) == visualFrameKey(second, actors) || visualFrameKey(second, actors) == visualFrameKey(correct, actors) {
 		second, ok = mutatePosition(correct, programs, secondActor, frameIndex, -1)
-		if !ok || frameKey(first) == frameKey(second) || frameKey(second) == frameKey(correct) {
+		if !ok || visualFrameKey(first, actors) == visualFrameKey(second, actors) || visualFrameKey(second, actors) == visualFrameKey(correct, actors) {
 			return Question{}, fmt.Errorf("could not create distinct legal distractors")
 		}
 	}
@@ -206,14 +230,19 @@ func explanation(program Program) string {
 		"vertical-bounce":   "moves vertically and bounces at the top and bottom edges",
 		"diagonal-bounce":   "moves on one diagonal and reverses at its endpoints",
 		"perimeter":         "moves around the outer border",
+		"small-square":      "moves around a square of four neighbouring cells",
+		"stationary":        "stays in the same cell",
 	}[program.Motion]
-	if program.Direction < 0 && program.Motion == "perimeter" {
+	circuit := program.Motion == "perimeter" || program.Motion == "small-square"
+	if program.Direction < 0 && circuit {
 		motion += " counter-clockwise"
-	} else if program.Motion == "perimeter" {
+	} else if circuit {
 		motion += " clockwise"
 	}
-	if program.StepMode == "increasing" {
-		motion += " by one additional cell on each transition"
+	if program.Motion == "stationary" {
+		// There is no movement step to explain.
+	} else if program.StepMode == "increasing" {
+		motion += fmt.Sprintf(" by %d, %d, %d, ... cells on successive transitions", program.StepSize, program.StepSize+1, program.StepSize+2)
 	} else if program.StepSize > 1 {
 		motion += fmt.Sprintf(" by %d cells at a time", program.StepSize)
 	} else {
@@ -221,14 +250,18 @@ func explanation(program Program) string {
 	}
 	changes := ""
 	if program.RotationStep != 0 {
+		direction := "clockwise"
+		if program.RotationStep < 0 {
+			direction = "counter-clockwise"
+		}
 		if program.RotationIncreasing {
-			changes += "; its quarter-turn count also increases on each transition"
+			changes += fmt.Sprintf("; it rotates %s by 90, 180, 270, 360, ... degrees on successive transitions", direction)
 		} else {
-			changes += fmt.Sprintf("; it rotates %d degrees on each transition", program.RotationStep)
+			changes += fmt.Sprintf("; it rotates 90 degrees %s on each transition", direction)
 		}
 	}
 	if len(program.Colors) > 1 {
-		changes += "; its colour follows a repeating cycle"
+		changes += "; its colour repeats " + strings.Join(program.Colors, " -> ")
 	}
 	return fmt.Sprintf("The %s %s%s.", program.ActorID, motion, changes)
 }
@@ -236,7 +269,10 @@ func explanation(program Program) string {
 func difficultyFor(programs []Program, level string) Difficulty {
 	components := DifficultyComponents{ActorTracking: len(programs)}
 	for _, program := range programs {
-		tracks := 1
+		tracks := 0
+		if program.Motion != "stationary" {
+			tracks++
+		}
 		if len(program.Colors) > 1 {
 			tracks++
 		}
@@ -255,27 +291,32 @@ func difficultyFor(programs []Program, level string) Difficulty {
 	return Difficulty{Level: level, Score: score, Provisional: true, Components: components}
 }
 
-func makePrograms(level string, variant int, rng *splitMix64) ([]Actor, []Program) {
+func makePrograms(level string, variant int, usage map[string]int, rng *splitMix64) ([]Actor, []Program) {
 	actorCount := map[string]int{"low": 1, "medium": 3, "high": 4, "extreme": 4}[level]
-	actors := make([]Actor, actorCount)
 	programs := make([]Program, actorCount)
-	motions := []string{"horizontal-bounce", "vertical-bounce", "diagonal-bounce", "perimeter"}
+	motions := []string{"horizontal-bounce", "vertical-bounce", "diagonal-bounce", "perimeter", "small-square"}
 	for index := 0; index < actorCount; index++ {
-		actorID := fmt.Sprintf("%s figure", shapes[index])
-		motion := motions[mod(index+variant, len(motions))]
-		program := Program{
-			ActorID: actorID, Motion: motion, Path: pathFor(motion, mod(index+variant, Size)),
-			StartIndex: rng.rangeN(len(pathFor(motion, mod(index+variant, Size)))),
-			Direction:  1, StepMode: "constant", StepSize: 1,
-			Colors: []string{colors[index]}, ColorStart: 0,
-			RotationStart: 90 * rng.rangeN(4),
+		colorIndex := rng.rangeN(len(colors))
+		colorCycle := func(count int) []string {
+			cycle := make([]string, count)
+			for i := range cycle {
+				cycle[i] = colors[(colorIndex+i)%len(colors)]
+			}
+			return cycle
 		}
-		if motion == "perimeter" && (index+variant)%2 == 1 {
-			program.Direction = -1
+		motion := motions[mod(index+variant, len(motions))]
+		if ((level == "medium" && index == 1) || (level == "high" && index == 2)) && rng.rangeN(3) == 0 {
+			motion = "stationary"
+		}
+		program := Program{
+			Motion:    motion,
+			Direction: 1, StepMode: "constant", StepSize: 1,
+			Colors: colorCycle(1), ColorStart: 0,
+			RotationStart: 90 * rng.rangeN(4),
 		}
 		if level == "medium" {
 			if index == 0 {
-				program.Colors = []string{colors[index], colors[(index+1)%len(colors)]}
+				program.Colors = colorCycle(2)
 			}
 			if index == 1 {
 				program.RotationStep = 90
@@ -285,26 +326,36 @@ func makePrograms(level string, variant int, rng *splitMix64) ([]Actor, []Progra
 			switch index {
 			case 0:
 				program.StepMode = "increasing"
+				program.StepSize = 1 + rng.rangeN(2)
 				program.RotationStep = 90
 				program.RotationIncreasing = true
 			case 1:
-				program.Colors = []string{colors[index], colors[(index+1)%len(colors)], colors[(index+2)%len(colors)]}
+				program.Colors = colorCycle(3)
 				program.RotationStep = 90
 			case 2:
 				program.RotationStep = -90
 			case 3:
 				program.StepSize = 2
-				program.Colors = []string{colors[index], colors[(index+1)%len(colors)]}
+				program.Colors = colorCycle(2)
 			}
 		}
 		if level == "extreme" {
-			program.Colors = []string{colors[index], colors[(index+1)%len(colors)], colors[(index+2)%len(colors)]}
+			program.Colors = colorCycle(3)
 			program.RotationStep = 90
 			program.RotationIncreasing = index%2 == 0
 		}
-		program.Explanation = explanation(program)
-		actors[index] = Actor{ID: actorID, Shape: shapes[index]}
-		programs[index] = program
+		if program.RotationStep != 0 && rng.rangeN(2) == 0 {
+			program.RotationStep = -program.RotationStep
+		}
+		programs[index] = choosePath(program, usage, rng)
+	}
+	actors := chooseShapes(programs, usage, rng)
+	for index := range programs {
+		programs[index].ActorID = actors[index].ID
+		if shapePeriod(actors[index].Shape) < 360 {
+			programs[index].RotationStart = mod(programs[index].RotationStart, shapePeriod(actors[index].Shape))
+		}
+		programs[index].Explanation = explanation(programs[index])
 	}
 	return actors, programs
 }
@@ -313,12 +364,21 @@ func puzzleID(puzzle Puzzle) string {
 	puzzle.ID = ""
 	data, _ := json.Marshal(puzzle)
 	digest := sha256.Sum256(data)
-	return fmt.Sprintf("DMAT-FS-G%d-%X", GeneratorVersion, digest[:6])
+	return fmt.Sprintf("DMAT-FS-G%d-%X", puzzle.Validation.GeneratorVersion, digest[:6])
 }
 
-func makePuzzle(level string, variant int, rng *splitMix64) (Puzzle, error) {
+func makePuzzle(level string, variant int, usage map[string]int, rng *splitMix64) (Puzzle, error) {
 	for attempt := 0; attempt < 1000; attempt++ {
-		actors, programs := makePrograms(level, variant+attempt, rng)
+		actors, programs := makePrograms(level, variant+attempt, usage, rng)
+		observable := true
+		for _, program := range programs {
+			if program.Motion != "stationary" && !hasPositionChange(program) {
+				observable = false
+			}
+		}
+		if !observable {
+			continue
+		}
 		allFrames := make([]Frame, ObservedFrames+PredictedFrames)
 		for frame := range allFrames {
 			allFrames[frame] = frameAt(programs, frame)
@@ -329,7 +389,7 @@ func makePuzzle(level string, variant int, rng *splitMix64) (Puzzle, error) {
 		questions := make([]Question, PredictedFrames)
 		valid := true
 		for index := range questions {
-			question, err := makeQuestion(programs, allFrames[ObservedFrames+index], ObservedFrames+index, variant)
+			question, err := makeQuestion(actors, programs, allFrames[ObservedFrames+index], ObservedFrames+index, variant)
 			if err != nil {
 				valid = false
 				break
@@ -362,13 +422,45 @@ func Generate(settings Settings) (Bank, error) {
 	rng := &splitMix64{state: settings.Seed}
 	bank := Bank{FormatVersion: FormatVersion, GeneratorVersion: GeneratorVersion, Settings: settings, Puzzles: []Puzzle{}}
 	seen := map[string]bool{}
+	if settings.Retain != "" {
+		data, err := os.ReadFile(settings.Retain)
+		if err != nil {
+			return Bank{}, err
+		}
+		var retained Bank
+		if err := json.Unmarshal(data, &retained); err != nil {
+			return Bank{}, err
+		}
+		if err := VerifyBank(retained); err != nil {
+			return Bank{}, fmt.Errorf("retained bank: %w", err)
+		}
+		bank.Puzzles = append(bank.Puzzles, retained.Puzzles...)
+		for _, puzzle := range retained.Puzzles {
+			seen[puzzle.ID] = true
+		}
+	}
 	for _, request := range []struct {
 		level string
 		count int
 	}{{"low", settings.Counts.Low}, {"medium", settings.Counts.Medium}, {"high", settings.Counts.High}, {"extreme", settings.Counts.Extreme}} {
 		produced := 0
+		usage := map[string]int{}
+		for _, puzzle := range bank.Puzzles {
+			if puzzle.Difficulty.Level == request.level {
+				produced++
+				for _, actor := range puzzle.Actors {
+					usage[actor.Shape]++
+				}
+				for _, program := range puzzle.Programs {
+					usage[motionCoverageKey(program)]++
+				}
+			}
+		}
+		if produced > request.count {
+			return Bank{}, fmt.Errorf("retained %s count exceeds requested total", request.level)
+		}
 		for attempt := 0; produced < request.count && attempt < request.count*1000; attempt++ {
-			puzzle, err := makePuzzle(request.level, attempt, rng)
+			puzzle, err := makePuzzle(request.level, attempt, usage, rng)
 			if err != nil {
 				return Bank{}, err
 			}
@@ -377,6 +469,12 @@ func Generate(settings Settings) (Bank, error) {
 			}
 			seen[puzzle.ID] = true
 			bank.Puzzles = append(bank.Puzzles, puzzle)
+			for _, actor := range puzzle.Actors {
+				usage[actor.Shape]++
+			}
+			for _, program := range puzzle.Programs {
+				usage[motionCoverageKey(program)]++
+			}
 			produced++
 		}
 		if produced != request.count {

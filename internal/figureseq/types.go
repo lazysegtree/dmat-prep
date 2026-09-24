@@ -6,7 +6,7 @@ const (
 	PredictedFrames  = 2
 	OptionsPerFrame  = 3
 	FormatVersion    = 1
-	GeneratorVersion = 2
+	GeneratorVersion = 4
 )
 
 type Position struct {
@@ -98,6 +98,7 @@ type Counts struct {
 type Settings struct {
 	Seed   uint64 `json:"seed"`
 	Counts Counts `json:"counts"`
+	Retain string `json:"retain,omitempty"`
 }
 
 type Bank struct {

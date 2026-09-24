@@ -26,13 +26,19 @@ func VerifyPuzzle(puzzle Puzzle) error {
 	actorIDs := map[string]bool{}
 	actorShapes := map[string]bool{}
 	for index, actor := range puzzle.Actors {
-		if actor.ID == "" || !slices.Contains(shapes, actor.Shape) || actorIDs[actor.ID] || actorShapes[actor.Shape] || puzzle.Programs[index].ActorID != actor.ID {
+		if actor.ID == "" || shapePeriod(actor.Shape) == 0 || actorIDs[actor.ID] || actorShapes[actor.Shape] || puzzle.Programs[index].ActorID != actor.ID {
 			return fmt.Errorf("invalid actor %d", index)
 		}
 		actorIDs[actor.ID] = true
 		actorShapes[actor.Shape] = true
 		if !validProgram(puzzle.Programs[index]) {
 			return fmt.Errorf("program outside supported grammar")
+		}
+		if puzzle.Validation.GeneratorVersion >= 4 && puzzle.Programs[index].Motion != "stationary" && !hasPositionChange(puzzle.Programs[index]) {
+			return fmt.Errorf("moving figure has no observed position change")
+		}
+		if shapePeriod(actor.Shape) < 360 && puzzle.Programs[index].RotationStep != 0 {
+			return fmt.Errorf("symmetric figure cannot carry a rotation track")
 		}
 	}
 	for index, frame := range puzzle.ObservedFrames {
@@ -54,8 +60,11 @@ func VerifyPuzzle(puzzle Puzzle) error {
 		}
 		keys := map[string]bool{}
 		for _, option := range question.Options {
-			key := frameKey(option)
-			if keys[key] || !framesValid([]Frame{option}, len(puzzle.Actors)) {
+			if !framesValid([]Frame{option}, len(puzzle.Actors)) {
+				return fmt.Errorf("question %d has illegal options", index)
+			}
+			key := visualFrameKey(option, puzzle.Actors)
+			if keys[key] {
 				return fmt.Errorf("question %d has duplicate or illegal options", index)
 			}
 			for i, figure := range option.Figures {
@@ -85,14 +94,14 @@ func VerifyPuzzle(puzzle Puzzle) error {
 			return fmt.Errorf("extreme puzzle does not meet the structural gate")
 		}
 	}
-	if !puzzle.Validation.PredictiveUnique || !puzzle.Validation.FramesValid || !puzzle.Validation.OptionsUnique || !puzzle.Validation.ProgramsDeterministic || puzzle.Validation.GeneratorVersion != GeneratorVersion {
+	if !puzzle.Validation.PredictiveUnique || !puzzle.Validation.FramesValid || !puzzle.Validation.OptionsUnique || !puzzle.Validation.ProgramsDeterministic || !slices.Contains([]int{2, 3, GeneratorVersion}, puzzle.Validation.GeneratorVersion) {
 		return fmt.Errorf("validation metadata is incomplete")
 	}
 	return nil
 }
 
 func VerifyBank(bank Bank) error {
-	if bank.FormatVersion != FormatVersion || bank.GeneratorVersion != GeneratorVersion {
+	if bank.FormatVersion != FormatVersion || !slices.Contains([]int{2, 3, GeneratorVersion}, bank.GeneratorVersion) {
 		return fmt.Errorf("unsupported bank version")
 	}
 	seen := map[string]bool{}

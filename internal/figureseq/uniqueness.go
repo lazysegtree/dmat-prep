@@ -8,11 +8,19 @@ import (
 
 // The finite grammar is deliberately independent of difficulty and the stored
 // solution: every lane, phase, direction, and step rule is considered.
-func motionCandidates() []Program {
+var allMotionCandidates = buildMotionCandidates()
+
+func motionCandidates() []Program { return allMotionCandidates }
+
+func buildMotionCandidates() []Program {
 	var candidates []Program
-	for _, motion := range []string{"horizontal-bounce", "vertical-bounce", "diagonal-bounce", "perimeter"} {
-		for lane := 0; lane < Size; lane++ {
+	for _, motion := range []string{"horizontal-bounce", "vertical-bounce", "diagonal-bounce", "perimeter", "small-square", "stationary"} {
+		for lane := 0; lane < pathCount(motion); lane++ {
 			path := pathFor(motion, lane)
+			if motion == "stationary" {
+				candidates = append(candidates, Program{Motion: motion, Path: path, Direction: 1, StepMode: "constant", StepSize: 1})
+				continue
+			}
 			for start := range path {
 				for _, direction := range []int{-1, 1} {
 					for _, mode := range []string{"constant", "increasing"} {
@@ -54,6 +62,7 @@ func validProgram(p Program) bool {
 func verifyPredictiveUniqueness(puzzle Puzzle) error {
 	candidates := motionCandidates()
 	for actorIndex, program := range puzzle.Programs {
+		period := shapePeriod(puzzle.Actors[actorIndex].Shape)
 		observed := make([]FigureState, ObservedFrames)
 		for frame := range observed {
 			observed[frame] = puzzle.ObservedFrames[frame].Figures[actorIndex]
@@ -83,7 +92,7 @@ func verifyPredictiveUniqueness(puzzle Puzzle) error {
 				candidate := Program{RotationStart: observed[0].Rotation, RotationStep: step, RotationIncreasing: increasing}
 				matches := true
 				for frame, state := range observed {
-					if rotationAt(candidate, frame) != state.Rotation {
+					if mod(rotationAt(candidate, frame), period) != mod(state.Rotation, period) {
 						matches = false
 						break
 					}
@@ -92,7 +101,7 @@ func verifyPredictiveUniqueness(puzzle Puzzle) error {
 					continue
 				}
 				for frame := ObservedFrames; frame < ObservedFrames+PredictedFrames; frame++ {
-					if rotationAt(candidate, frame) != rotationAt(program, frame) {
+					if mod(rotationAt(candidate, frame), period) != mod(rotationAt(program, frame), period) {
 						return fmt.Errorf("ambiguous rotation continuation for %s", program.ActorID)
 					}
 				}
