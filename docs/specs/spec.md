@@ -195,7 +195,7 @@ The Latin Squares module home presents exactly four primary actions:
 
 - A notice explains that each generated puzzle asks for one `?` cell and intermediate deductions remain mental.
 - Learn has a `Training difficulty` selector: Easy, Exam Standard, Hard, or Extreme.
-- Speed Drill has `Questions`, `Time limit`, `Distribution`, and a contextual `Mix` or `Training difficulty` selector. `Minutes` appears only for Custom time. A summary shows the question count and total time before starting.
+- Speed Drill has `Questions`, `Time limit`, `Distribution`, and a contextual `Mix` or `Training difficulty` selector. Custom time reveals a compact `Minutes` input within the Time limit field, keeping Distribution and Mix together. The selected difficulty percentages are shown below the controls, with a rounding note for short mixed drills. A summary shows the question count and total time before starting.
 - `Start Learn` or `Start Speed Drill` button.
 - `Back` button.
 - No question-type selector.

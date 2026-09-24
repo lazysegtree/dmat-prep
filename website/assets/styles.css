@@ -161,6 +161,9 @@ a.task-card:hover { border-color: var(--accent); transform: translateY(-2px); }
 .drill-setup-grid .field { min-width: 0; margin: 0; }
 .drill-setup-grid input { width: 100%; padding: 11px 12px; border: 1px solid var(--strong-line); border-radius: 8px; background: white; color: inherit; font: inherit; }
 .drill-setup-grid .small { margin: 8px 0 0; }
+.drill-custom-time { display: flex; align-items: center; gap: 12px; margin-top: 12px; }
+.drill-custom-time label { margin: 0; font-size: 0.88rem; }
+.drill-custom-time input { width: 100px; }
 select { width: 100%; padding: 11px 12px; border: 1px solid var(--strong-line); border-radius: 8px; background: white; }
 .button-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 

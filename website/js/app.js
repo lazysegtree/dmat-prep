@@ -160,8 +160,13 @@ function renderDrillSetup() {
       <form id="drill-setup">
         <div class="drill-setup-grid">
           <div class="field"><label for="question-count">Questions</label><select id="question-count"><option value="5">5 questions</option><option value="10">10 questions</option></select></div>
-          <div class="field"><label for="drill-timer">Time limit</label><select id="drill-timer"><option value="pace">75 seconds per question</option><option value="custom">Custom time</option><option value="none">No limit — stopwatch</option></select></div>
-          <div class="field" id="custom-time-field" hidden><label for="drill-minutes">Minutes</label><input id="drill-minutes" type="number" min="0.25" max="180" step="0.25" required /><p class="small muted">Use increments of 0.25 minutes (15 seconds).</p></div>
+          <div class="field">
+            <label for="drill-timer">Time limit</label><select id="drill-timer"><option value="pace">75 seconds per question</option><option value="custom">Custom time</option><option value="none">No limit — stopwatch</option></select>
+            <div id="custom-time-field" hidden>
+              <div class="drill-custom-time"><label for="drill-minutes">Minutes</label><input id="drill-minutes" type="number" min="0.25" max="180" step="0.25" aria-describedby="drill-time-help" required /></div>
+              <p class="small muted" id="drill-time-help">0.25 min = 15 seconds</p>
+            </div>
+          </div>
           <div class="field"><label for="drill-distribution">Distribution</label><select id="drill-distribution"><option value="mixed">Mixed</option><option value="single">Single difficulty</option></select></div>
           <div class="field"><label for="difficulty" id="drill-level-label">Mix</label><select id="difficulty" aria-describedby="drill-mix-description"></select></div>
         </div>
@@ -196,9 +201,10 @@ function renderDrillSetup() {
     app.querySelector('#custom-time-field').hidden = timer.value !== 'custom';
     minutes.disabled = timer.value !== 'custom';
     const mix = DRILL_MIXES[current.difficulty];
-    app.querySelector('#drill-mix-description').textContent = !mix ? 'Every question uses the selected difficulty.'
-      : current.difficulty === 'mixed-all' ? 'Easy, Medium, Hard, and Extreme are mixed as evenly as possible, in a random order.'
-      : `Uses the ${current.difficulty === 'mixed-medium' ? 'Normal' : mix.name} full mock proportions, scaled to your question count and shuffled. Short drills round to whole questions.`;
+    const weights = Object.entries(mix?.mix || { [current.difficulty]: 1 });
+    const totalWeight = weights.reduce((sum, [, weight]) => sum + weight, 0);
+    const proportions = weights.map(([level, weight]) => `${100 * weight / totalWeight}% ${level === 'exam' ? 'Medium' : DIFFICULTY_NAMES[level]}`).join(' · ');
+    app.querySelector('#drill-mix-description').textContent = `${proportions}.${mix ? ' Short drills round to whole questions; question order is random.' : ''}`;
     app.querySelector('#drill-summary').textContent = `${current.questionCount} questions · ${current.timeLimit === null ? `Stopwatch, with a ${formatTime(current.questionCount * TARGET_SECONDS)} pace target.` : `${formatTime(current.timeLimit)} total. The drill submits when time runs out.`} Work out intermediate deductions mentally.`;
     if (!minutes.validity.valid) return;
     const url = new URL(window.location.href);
