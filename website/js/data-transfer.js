@@ -1,3 +1,5 @@
+import { DRILL_DIFFICULTIES } from './latin-drill.js';
+
 export const PROGRESS_KEYS = {
   'latin-squares': 'dmat-latin-progress-v1',
   'mathematical-equations': 'dmat-equations-progress-v1',
@@ -18,7 +20,8 @@ function validateSessions(sessions, task) {
       || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$/.test(session.date)
       || !Number.isFinite(Date.parse(session.date))
       || !['learn', 'drill', 'mock'].includes(session.mode)
-      || (session.difficulty != null && !(session.mode === 'mock' ? [...difficulties, 'easy', 'normal', 'hard'] : difficulties).includes(session.difficulty))
+      || (session.difficulty != null && !(session.mode === 'mock' ? [...difficulties, 'easy', 'normal', 'hard']
+        : task === 'latin-squares' && session.mode === 'drill' ? DRILL_DIFFICULTIES : difficulties).includes(session.difficulty))
       || (session.task != null && session.task !== task)
       || (session.questionType != null && !['target', 'full'].includes(session.questionType))
       || !Number.isSafeInteger(session.questionCount) || session.questionCount < 1
@@ -29,6 +32,15 @@ function validateSessions(sessions, task) {
       throw new Error(`Invalid session in ${task}. No data was imported.`);
     }
     if (task === 'figure-sequences') validateFigureSession(session);
+    if (task === 'latin-squares' && session.mode === 'drill') {
+      if ((session.timeLimit != null && (!Number.isInteger(session.timeLimit) || session.timeLimit < 15 || session.timeLimit > 10800 || session.timeLimit % 15 !== 0))
+        || (session.drillTimer != null && !['pace', 'none', 'custom'].includes(session.drillTimer))
+        || (session.drillTimer === 'pace' && session.timeLimit !== session.questionCount * 75)
+        || (session.drillTimer === 'none' && session.timeLimit != null)
+        || (session.drillTimer === 'custom' && session.timeLimit == null)) {
+        throw new Error('Invalid Latin Squares drill timer. No data was imported.');
+      }
+    }
   }
   return sessions;
 }

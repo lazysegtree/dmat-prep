@@ -37,7 +37,7 @@ Every published puzzle uses the same fixed rules:
 - Candidate notes, pencil marks, and intermediate-cell entry are unavailable.
 - The starting grid has exactly one complete solution.
 
-Users do not configure grid size, symbols, rules, question type, or session length.
+Users do not configure grid size, symbols, rules, or question type. Speed Drill allows a choice of session length and time limit; Full Mock remains fixed.
 
 ## 3. Training modes
 
@@ -55,12 +55,16 @@ Purpose: develop solving technique without time pressure.
 
 ### 3.2 Speed Drill
 
-Purpose: develop consistent speed over 10 target-cell questions.
+Purpose: develop speed over a short session of 5 or 10 target-cell questions.
 
-- The user selects a training difficulty.
-- All 10 puzzles are selected before the drill begins.
-- A timer counts upward.
-- The target is 12 minutes 30 seconds: 75 seconds per question.
+- Default: 5 questions, Mixed / All difficulties, and a 6:15 countdown.
+- Choose 5 or 10 questions.
+- Choose the time limit: 75 seconds per question (6:15 or 12:30), Custom time (0.25–180 minutes in 0.25-minute increments), or No limit (a stopwatch).
+- Choose Distribution first: Single difficulty or Mixed. Single difficulty offers All Easy, All Medium, All Hard, and All Extreme. Medium uses the existing `exam` / Exam Standard tier.
+- Mixed offers All difficulties, Easy, Medium, Hard, and Extreme. All difficulties balances the four tiers as evenly as possible. The other mixes use the existing Easy, Normal, Hard, and Extreme full mock proportions respectively.
+- Mixed proportions are scaled to the selected question count using largest-remainder rounding, with random tie-breaking. Short drills therefore approximate the full mock proportions.
+- Puzzles are selected without repeats before the drill begins and shuffled. The upcoming difficulty, per-question difficulty, hints, and correctness feedback are hidden during play.
+- A time limit counts down and submits automatically at zero. No limit counts upward without automatic submission; the pace target remains 75 seconds per question.
 - No correctness feedback is shown during the drill.
 - Users can move between questions.
 - Results and solutions appear only after submission.
@@ -69,6 +73,7 @@ Results include:
 
 - Correct, incorrect, and unanswered counts.
 - Total time.
+- Selected distribution, time limit (or pace target for stopwatch drills), and remaining time for countdown drills.
 - Median time per question.
 - Number of questions taking more than 75 seconds.
 - The three slowest questions.
@@ -162,6 +167,8 @@ Progress is stored only in the user's browser using local storage. Store at most
 - Percentage of target-cell questions completed within 75 seconds.
 - Recent sessions with date, mode, score, difficulty, and time.
 
+Latin Squares drill results retain the difficulty mix, question count, and timer settings in saved results and backups. `New Speed Drill` restores those settings. Existing drill results without timer metadata repeat with the original stopwatch behavior.
+
 Users can export all saved Latin Squares, Mathematical Equations, and Figure Sequences progress as a version 3 JSON backup from the home or progress pages, and import it in Merge or Replace mode. Merge deduplicates by session ID, keeping the existing record on conflicts. Replace overwrites the trainers included in the backup after confirmation. Both modes keep the newest 50 sessions per trainer. Legacy single-trainer exports and version 2 two-trainer backups remain supported and affect only the trainers they contain. Invalid files are rejected before any saved progress changes. No separate user profile is stored. Figure Sequences persists paired-answer sessions and supports the same backup controls; see [Figure Sequences trainer](figure-sequence-poc.md). Users can also delete locally stored progress from each trainer. The interface states that progress remains on the current browser and device.
 
 Streaks are not a primary metric because readiness depends on accuracy and speed, not merely opening the application.
@@ -187,7 +194,8 @@ The Latin Squares module home presents exactly four primary actions:
 ### 7.3 Learn and Speed Drill setup
 
 - A notice explains that each generated puzzle asks for one `?` cell and intermediate deductions remain mental.
-- `Training difficulty` selector: Easy, Exam Standard, Hard, or Extreme.
+- Learn has a `Training difficulty` selector: Easy, Exam Standard, Hard, or Extreme.
+- Speed Drill has `Questions`, `Time limit`, `Distribution`, and a contextual `Mix` or `Training difficulty` selector. `Minutes` appears only for Custom time. A summary shows the question count and total time before starting.
 - `Start Learn` or `Start Speed Drill` button.
 - `Back` button.
 - No question-type selector.
@@ -197,7 +205,7 @@ The Latin Squares module home presents exactly four primary actions:
 - Clearly states `20 Find the ? questions` and `25 minutes`.
 - `Start Mock` button.
 - `Back` button.
-- No configuration controls.
+- `Mock difficulty` selector: Easy, Normal, Hard, or Extreme. Question count and time remain fixed.
 
 ### 7.5 Puzzle screen
 
@@ -239,10 +247,11 @@ Browser-delivered files live under `website/`. The repository root is served or 
 - `/website/latin-squares/learn/?difficulty=hard`: Learn setup with the selected difficulty.
 - `/website/latin-squares/learn/?puzzle=DMAT-G1-296A8A48AD3F`: immediately opens that exact untimed puzzle.
 - `/website/latin-squares/speed-drill/?difficulty=hard`: Speed Drill setup with the selected difficulty.
+- `/website/latin-squares/speed-drill/?difficulty=mixed-all&count=5&timer=custom&minutes=5`: a five-question mixed drill with a five-minute limit.
 - `/website/latin-squares/mock/`: Full Mock introduction.
 - `/website/latin-squares/progress/`: locally stored Latin-square progress.
 
-For Learn and Speed Drill, the supported `difficulty` values are `easy`, `exam`, `hard`, and `extreme`. Mock URLs instead accept `easy`, `normal`, `hard`, and `extreme`, defaulting to `normal` when absent or invalid. An invalid difficulty is removed and falls back to `exam`. An unknown puzzle ID produces a visible error and never silently substitutes another puzzle. When both `puzzle` and `difficulty` are present, the exact puzzle takes precedence. Opening a Speed Drill or Full Mock URL never starts its timer; the user must explicitly start the session.
+Learn accepts `difficulty=easy|exam|hard|extreme`, defaulting to `exam` and removing invalid values. Speed Drill accepts those four values plus `mixed-all`, `mixed-easy`, `mixed-medium`, `mixed-hard`, and `mixed-extreme`; `count=5|10`; and `timer=pace|none|custom`. Custom timing uses `minutes`. Missing or invalid drill settings fall back to Mixed / All difficulties, 5 questions, pace timing, and 5 custom minutes. Valid settings survive reloads. Mock URLs accept `easy`, `normal`, `hard`, and `extreme`, defaulting to `normal` when absent or invalid. An unknown Learn puzzle ID produces a visible error and never silently substitutes another puzzle. In Learn, an exact `puzzle` takes precedence over `difficulty`. Opening a Speed Drill or Full Mock URL never starts its timer; the user must explicitly start the session.
 
 Starting a random Learn puzzle replaces the setup URL with its exact `puzzle` URL so it can be refreshed or shared. Random Drill and Mock selections are not encoded in the URL, and results remain transient session screens rather than shareable routes.
 
@@ -268,6 +277,7 @@ website/
   js/app.js
   js/puzzle-ui.js
   js/session.js
+  js/latin-drill.js
   data/latin-squares/puzzles.json
   data/mathematical-equations/questions.json
   mathematical-equations/
@@ -300,6 +310,7 @@ The Mathematical Equations module adds `website/js/equation-app.js`, `cmd/equati
 - `app.js` loads and validates the generated bank, reads the entry page and query parameters, then controls navigation and application state.
 - `puzzle-ui.js` renders the target-cell grid and handles input.
 - `session.js` controls timers, target scoring, and progress storage.
+- `latin-drill.js` holds the existing Latin mock proportions, short-drill settings, proportional allocation, and shuffled sampling without repeats.
 - `website/data/latin-squares/puzzles.json` contains the validated generated puzzle bank and solutions.
 - `cmd/puzzle-generator` generates or verifies the two JSON data files; it is not a runtime dependency.
 

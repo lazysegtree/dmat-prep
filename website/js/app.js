@@ -1,6 +1,7 @@
 import { examMarkup, examNavigator, bindExamControls, updateExamNavigator, setExamMode } from './exam-ui.js';
 import { transferMarkup, bindTransfer } from './data-transfer.js';
 import { PuzzleUI } from './puzzle-ui.js';
+import { MOCK_LEVELS, DRILL_MIXES, drillSettings, chooseDrillPuzzles } from './latin-drill.js';
 import {
   SYMBOLS,
   TARGET_SECONDS,
@@ -26,12 +27,6 @@ const ROUTE_PATHS = {
   progress: 'latin-squares/progress/',
 };
 const MODE_NAMES = { learn: 'Learn', drill: 'Speed Drill', mock: 'Full dMAT Mock' };
-const MOCK_LEVELS = {
-  easy: { name: 'Easy', mix: { easy: 10, exam: 8, hard: 2 } },
-  normal: { name: 'Normal', mix: { easy: 6, exam: 8, hard: 6 } },
-  hard: { name: 'Hard', mix: { exam: 8, hard: 10, extreme: 2 } },
-  extreme: { name: 'Extreme', mix: { exam: 5, hard: 10, extreme: 5 } },
-};
 const DIFFICULTY_NAMES = { easy: 'Easy', exam: 'Exam Standard', hard: 'Hard', extreme: 'Extreme' };
 const QUESTION_TYPE_NAMES = { target: 'Find the ?', full: 'Complete the grid' };
 const PUZZLE_FORMAT_VERSION = 1;
@@ -90,7 +85,7 @@ function renderHome() {
         </a>
         <a class="mode-card" href="${routeUrl('drill')}">
           <strong>Speed Drill</strong>
-          <span>Practise 10 generated target-cell questions at pace.</span>
+          <span>Choose 5 or 10 questions, a time limit, and a single or mixed difficulty.</span>
         </a>
         <a class="mode-card" href="${routeUrl('mock')}">
           <strong>Full Mock</strong>
@@ -123,14 +118,13 @@ function updateDifficultyUrl(difficulty) {
   window.history.replaceState(null, '', url);
 }
 
-function renderSetup(mode, difficulty = 'exam') {
-  const isLearn = mode === 'learn';
+function renderLearnSetup(difficulty = 'exam') {
   app.innerHTML = `
     <section class="panel">
-      <p class="eyebrow">${MODE_NAMES[mode]}</p>
-      <h1>${isLearn ? 'Practise a deduction.' : 'Build a steady pace.'}</h1>
-      <p class="muted">${isLearn ? 'Take as long as you need. A hint is available if you get stuck.' : 'Complete 10 questions with no feedback until the end.'}</p>
-      <p class="notice">Each generated puzzle asks for one <strong>?</strong> cell. Work out any intermediate deductions mentally.${isLearn ? '' : ' The 10-question target is 12:30.'}</p>
+      <p class="eyebrow">Learn</p>
+      <h1>Practise a deduction.</h1>
+      <p class="muted">Take as long as you need. A hint is available if you get stuck.</p>
+      <p class="notice">Each generated puzzle asks for one <strong>?</strong> cell. Work out any intermediate deductions mentally.</p>
       <div class="field">
         <label for="difficulty">Training difficulty</label>
         <select id="difficulty">
@@ -142,7 +136,7 @@ function renderSetup(mode, difficulty = 'exam') {
         <p class="small muted">“Exam Standard” is a provisional label and is not officially calibrated.</p>
       </div>
       <div class="button-row">
-        <button class="button" id="start-session" type="button">Start ${MODE_NAMES[mode]}</button>
+        <button class="button" id="start-session" type="button">Start Learn</button>
         <a class="button secondary" href="${routeUrl('home')}">Back</a>
       </div>
     </section>`;
@@ -150,8 +144,82 @@ function renderSetup(mode, difficulty = 'exam') {
   difficultySelect.addEventListener('change', () => updateDifficultyUrl(difficultySelect.value));
   app.querySelector('#start-session').addEventListener('click', () => {
     updateDifficultyUrl(difficultySelect.value);
-    startSession(mode, difficultySelect.value);
+    startSession('learn', difficultySelect.value);
   });
+  focusMain();
+}
+
+function renderDrillSetup() {
+  const settings = drillSettings(new URL(window.location.href).searchParams);
+  const mixed = Object.hasOwn(DRILL_MIXES, settings.difficulty);
+  app.innerHTML = `
+    <section class="panel">
+      <p class="eyebrow">Speed Drill</p>
+      <h1>Build a steady pace.</h1>
+      <p class="muted">Choose a short session. Answers and puzzle difficulties are revealed only after submission.</p>
+      <form id="drill-setup">
+        <div class="drill-setup-grid">
+          <div class="field"><label for="question-count">Questions</label><select id="question-count"><option value="5">5 questions</option><option value="10">10 questions</option></select></div>
+          <div class="field"><label for="drill-timer">Time limit</label><select id="drill-timer"><option value="pace">75 seconds per question</option><option value="custom">Custom time</option><option value="none">No limit — stopwatch</option></select></div>
+          <div class="field" id="custom-time-field" hidden><label for="drill-minutes">Minutes</label><input id="drill-minutes" type="number" min="0.25" max="180" step="0.25" required /><p class="small muted">Use increments of 0.25 minutes (15 seconds).</p></div>
+          <div class="field"><label for="drill-distribution">Distribution</label><select id="drill-distribution"><option value="mixed">Mixed</option><option value="single">Single difficulty</option></select></div>
+          <div class="field"><label for="difficulty" id="drill-level-label">Mix</label><select id="difficulty" aria-describedby="drill-mix-description"></select></div>
+        </div>
+        <p class="small muted" id="drill-mix-description"></p>
+        <p class="small muted">Medium uses the existing Exam Standard tier. These training levels are not officially calibrated.</p>
+        <p class="notice" id="drill-summary" aria-live="polite"></p>
+        <div class="button-row"><button class="button" type="submit">Start Speed Drill</button><a class="button secondary" href="${routeUrl('home')}">Back</a></div>
+      </form>
+    </section>`;
+  const form = app.querySelector('#drill-setup');
+  const count = form.querySelector('#question-count');
+  const timer = form.querySelector('#drill-timer');
+  const minutes = form.querySelector('#drill-minutes');
+  const distribution = form.querySelector('#drill-distribution');
+  const difficulty = form.querySelector('#difficulty');
+  count.value = settings.questionCount;
+  timer.value = settings.timer;
+  minutes.value = settings.minutes;
+  distribution.value = mixed ? 'mixed' : 'single';
+  const populateLevels = (selected) => {
+    const isMixed = distribution.value === 'mixed';
+    const levels = isMixed ? Object.fromEntries(Object.entries(DRILL_MIXES).map(([key, value]) => [key, value.name]))
+      : { easy: 'All Easy', exam: 'All Medium', hard: 'All Hard', extreme: 'All Extreme' };
+    app.querySelector('#drill-level-label').textContent = isMixed ? 'Mix' : 'Training difficulty';
+    difficulty.innerHTML = Object.entries(levels).map(([key, name]) => `<option value="${key}">${name}</option>`).join('');
+    difficulty.value = Object.hasOwn(levels, selected) ? selected : isMixed ? 'mixed-all' : 'exam';
+  };
+  populateLevels(settings.difficulty);
+  const readSettings = () => drillSettings(new URLSearchParams({ difficulty: difficulty.value, count: count.value, timer: timer.value, minutes: minutes.value }));
+  const update = () => {
+    const current = readSettings();
+    app.querySelector('#custom-time-field').hidden = timer.value !== 'custom';
+    minutes.disabled = timer.value !== 'custom';
+    const mix = DRILL_MIXES[current.difficulty];
+    app.querySelector('#drill-mix-description').textContent = !mix ? 'Every question uses the selected difficulty.'
+      : current.difficulty === 'mixed-all' ? 'Easy, Medium, Hard, and Extreme are mixed as evenly as possible, in a random order.'
+      : `Uses the ${current.difficulty === 'mixed-medium' ? 'Normal' : mix.name} full mock proportions, scaled to your question count and shuffled. Short drills round to whole questions.`;
+    app.querySelector('#drill-summary').textContent = `${current.questionCount} questions · ${current.timeLimit === null ? `Stopwatch, with a ${formatTime(current.questionCount * TARGET_SECONDS)} pace target.` : `${formatTime(current.timeLimit)} total. The drill submits when time runs out.`} Work out intermediate deductions mentally.`;
+    if (!minutes.validity.valid) return;
+    const url = new URL(window.location.href);
+    url.searchParams.delete('puzzle');
+    url.searchParams.set('difficulty', current.difficulty);
+    url.searchParams.set('count', current.questionCount);
+    url.searchParams.set('timer', current.timer);
+    if (current.timer === 'custom') url.searchParams.set('minutes', current.minutes);
+    else url.searchParams.delete('minutes');
+    window.history.replaceState(null, '', url);
+  };
+  distribution.addEventListener('change', () => populateLevels());
+  form.addEventListener('input', update);
+  form.addEventListener('change', update);
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    update();
+    const current = readSettings();
+    startSession('drill', current.difficulty, null, current);
+  });
+  update();
   focusMain();
 }
 
@@ -168,6 +236,7 @@ function mockLevelFromUrl() {
 
 function sessionDifficultyName(session) {
   if (session.mode === 'mock') return MOCK_LEVELS[session.difficulty]?.name || 'Previous mix (3 Easy, 11 Exam Standard, 6 Hard)';
+  if (session.mode === 'drill' && Object.hasOwn(DRILL_MIXES, session.difficulty)) return `Mixed · ${DRILL_MIXES[session.difficulty].name}`;
   return DIFFICULTY_NAMES[session.difficulty] || 'Mixed difficulty';
 }
 
@@ -220,17 +289,16 @@ function puzzleDifficulty(puzzle) {
 
 function choosePuzzles(mode, difficulty) {
   if (mode !== 'mock') {
-    const count = mode === 'learn' ? 1 : 10;
-    return shuffle(bank.filter((puzzle) => puzzleDifficulty(puzzle) === difficulty)).slice(0, count);
+    return shuffle(bank.filter((puzzle) => puzzleDifficulty(puzzle) === difficulty)).slice(0, 1);
   }
   const mix = MOCK_LEVELS[difficulty || 'normal'].mix;
   return shuffle(Object.entries(mix).flatMap(([level, count]) =>
     shuffle(bank.filter((puzzle) => puzzleDifficulty(puzzle) === level)).slice(0, count)));
 }
 
-function startSession(mode, difficulty = null, selectedPuzzles = null) {
+function startSession(mode, difficulty = null, selectedPuzzles = null, drill = null) {
   stopInteractiveState();
-  const puzzles = selectedPuzzles || choosePuzzles(mode, difficulty);
+  const puzzles = selectedPuzzles || (mode === 'drill' ? chooseDrillPuzzles(bank, difficulty, drill.questionCount) : choosePuzzles(mode, difficulty));
   if (mode === 'learn') {
     const puzzleUrl = new URL(routeUrl('learn'));
     puzzleUrl.searchParams.set('puzzle', puzzles[0].id);
@@ -239,6 +307,8 @@ function startSession(mode, difficulty = null, selectedPuzzles = null) {
   activeSession = {
     mode,
     difficulty,
+    timeLimit: mode === 'mock' ? 25 * 60 : drill?.timeLimit ?? null,
+    drillTimer: drill?.timer,
     questionType: 'target',
     puzzles,
     answers: puzzles.map(emptyAnswer),
@@ -252,12 +322,11 @@ function startSession(mode, difficulty = null, selectedPuzzles = null) {
   activeSession.savedAnswers = structuredClone(activeSession.answers);
   renderPlay();
 
-  if (mode === 'drill') {
-    clock = new SessionClock({ onTick: (display) => updateTimer(display, false) });
-  } else if (mode === 'mock') {
+  if (mode !== 'learn') {
+    const duration = activeSession.timeLimit;
     clock = new SessionClock({
-      duration: 25 * 60,
-      onTick: (display) => updateTimer(display, display <= 60),
+      duration,
+      onTick: (display) => updateTimer(display, duration !== null && display <= 60),
       onExpire: () => finishSession(true),
     });
   }
@@ -295,8 +364,8 @@ function renderPlay() {
     navigator: examNavigator(session.puzzles, session.current, (item, index) => editableComplete(item, session.savedAnswers[index], session.questionType), 'Question', session.reviewFlags),
     current: session.current,
     count: session.puzzles.length,
-    timerLabel: timed ? (session.mode === 'mock' ? 'Time remaining' : 'Time elapsed') : null,
-    timerValue: formatTime(session.mode === 'mock' ? Math.max(0, 1500 - (clock?.elapsed() || 0)) : clock?.elapsed() || 0),
+    timerLabel: timed ? (session.timeLimit !== null ? 'Time remaining' : 'Time elapsed') : null,
+    timerValue: formatTime(session.timeLimit !== null ? Math.max(0, session.timeLimit - (clock?.elapsed() || 0)) : clock?.elapsed() || 0),
     checkLabel: 'Check answer',
     learnActions: session.mode === 'learn' ? '<button class="button secondary" id="show-hint" type="button">Show a hint</button>' : '',
   });
@@ -356,8 +425,8 @@ function changeQuestion(index) {
   renderPlay();
   if (clock) {
     const elapsed = clock.elapsed();
-    const display = activeSession.mode === 'mock' ? 25 * 60 - elapsed : elapsed;
-    updateTimer(display, activeSession.mode === 'mock' && display <= 60);
+    const display = activeSession.timeLimit !== null ? activeSession.timeLimit - elapsed : elapsed;
+    updateTimer(display, activeSession.timeLimit !== null && display <= 60);
   }
 }
 
@@ -378,7 +447,7 @@ function finishSession(automatic) {
   const session = activeSession;
   const elapsed = clock ? clock.stop() : Math.floor((Date.now() - session.startedAt) / 1000);
   clock = null;
-  const totalTime = session.mode === 'mock' ? Math.min(25 * 60, elapsed) : elapsed;
+  const totalTime = session.timeLimit !== null ? Math.min(session.timeLimit, elapsed) : elapsed;
   const statuses = session.puzzles.map((puzzle, index) => answerStatus(puzzle, session.answers[index], session.questionType));
   const correct = statuses.filter((status) => status === 'correct').length;
   const incorrect = statuses.filter((status) => status === 'incorrect').length;
@@ -388,13 +457,14 @@ function finishSession(automatic) {
     date: new Date().toISOString(),
     mode: session.mode,
     difficulty: session.difficulty,
+    ...(session.mode === 'drill' ? { timeLimit: session.timeLimit, drillTimer: session.drillTimer } : {}),
     questionType: session.questionType,
     questionCount: session.puzzles.length,
     correct,
     incorrect,
     unanswered,
     totalTime,
-    timeRemaining: session.mode === 'mock' ? Math.max(0, 25 * 60 - totalTime) : null,
+    timeRemaining: session.timeLimit !== null ? Math.max(0, session.timeLimit - totalTime) : null,
     questionTimes: session.questionTimes.map((value) => Math.round(value)),
     puzzleIds: session.puzzles.map((puzzle) => puzzle.id),
     answers: session.answers,
@@ -426,7 +496,8 @@ function resultMetrics(result) {
   return `${common}
     <div class="metric"><span>Median / question</span><strong>${formatTime(median(result.questionTimes))}</strong></div>
     <div class="metric"><span>Over 75 seconds</span><strong>${result.questionTimes.filter((time) => time > TARGET_SECONDS).length}</strong></div>
-    ${result.mode === 'mock' ? `<div class="metric"><span>Time remaining</span><strong>${formatTime(result.timeRemaining)}</strong></div>` : '<div class="metric"><span>Target total</span><strong>12:30</strong></div>'}`;
+    ${result.mode === 'drill' ? `<div class="metric"><span>${result.timeLimit == null ? 'Pace target' : 'Time limit'}</span><strong>${formatTime(result.timeLimit ?? result.questionCount * TARGET_SECONDS)}</strong></div>` : ''}
+    ${result.mode === 'mock' || result.timeLimit != null ? `<div class="metric"><span>Time remaining</span><strong>${formatTime(result.timeRemaining)}</strong></div>` : ''}`;
 }
 
 function renderResults(result, reviewIndex = null) {
@@ -438,9 +509,9 @@ function renderResults(result, reviewIndex = null) {
     .slice(0, 3);
   app.innerHTML = `
     <section>
-      <p class="eyebrow">${MODE_NAMES[result.mode]}${result.mode === 'mock' ? ` · ${sessionDifficultyName(result)}` : ''} · ${QUESTION_TYPE_NAMES[result.questionType || 'full']} results</p>
+      <p class="eyebrow">${MODE_NAMES[result.mode]}${result.mode !== 'learn' ? ` · ${sessionDifficultyName(result)}` : ''} · ${QUESTION_TYPE_NAMES[result.questionType || 'full']} results</p>
       <h1>${title}</h1>
-      <p class="lede">${result.automatic ? 'Time expired, so the mock was submitted automatically.' : 'Review each answer and note where accuracy or time was lost.'}</p>
+      <p class="lede">${result.automatic ? `Time expired, so the ${result.mode === 'drill' ? 'drill' : 'mock'} was submitted automatically.` : 'Review each answer and note where accuracy or time was lost.'}</p>
       <div class="results-summary">${resultMetrics(result)}</div>
       ${result.mode !== 'learn' ? `<h2>Slowest questions</h2><p class="muted">${slowest.map((item) => `Q${item.index + 1} (${formatTime(item.time)})`).join(' · ')}</p>` : ''}
       <h2>Question review</h2>
@@ -461,7 +532,13 @@ function renderResults(result, reviewIndex = null) {
     </section>`;
   app.querySelectorAll('[data-review]').forEach((button) => button.addEventListener('click', () => showReviewDetail(result, Number(button.dataset.review))));
   app.querySelector('#repeat-mode').addEventListener('click', () => {
-    navigateTo(result.mode, result.difficulty ? { difficulty: result.difficulty } : {});
+    const parameters = result.difficulty ? { difficulty: result.difficulty } : {};
+    if (result.mode === 'drill') {
+      parameters.count = result.questionCount;
+      parameters.timer = result.drillTimer || (result.timeLimit == null ? 'none' : 'custom');
+      if (parameters.timer === 'custom') parameters.minutes = result.timeLimit / 60;
+    }
+    navigateTo(result.mode, parameters);
   });
   app.querySelector('#results-home').addEventListener('click', () => goHome());
   if (reviewIndex !== null) showReviewDetail(result, reviewIndex);
@@ -677,11 +754,11 @@ function renderInitialPage() {
       startSession('learn', puzzleDifficulty(puzzle), [puzzle]);
       return;
     }
-    renderSetup('learn', difficultyFromUrl());
+    renderLearnSetup(difficultyFromUrl());
     return;
   }
   if (INITIAL_PAGE === 'drill') {
-    renderSetup('drill', difficultyFromUrl());
+    renderDrillSetup();
     return;
   }
   if (INITIAL_PAGE === 'mock') {

@@ -40,3 +40,5 @@ continuations, and malformed programs/observations. Run `go test ./...`,
 `docs/specs/figure-sequence-poc.md`.
 
 Mock mix browser tests cover all four levels in Latin Squares, Mathematical Equations, and Figure Sequences, including exact counts without repeats, persistence, backup validation, repeat selection, and timeout.
+
+Latin Squares drill tests (`unit/latin-drill.test.js` and `ui/latin-drill.spec.js`) cover 5/10-question selection, all nine fixed/mixed distributions, proportional rounding and random tie-breaking, unique puzzles, hidden difficulty during play, custom countdown expiry, stopwatch timing, explicit answer saving, URL normalization, backup restoration, repeat settings, legacy results, and mobile setup layout. Setup screenshots are saved under `/tmp/dmat-latin-drill-setup-*.png`.

@@ -46,6 +46,7 @@ test('a learner can enter, clear, and request a hint', async ({ page }) => {
 test('Latin answer column aligns with the square and preserves the selected answer for scoring', async ({ page }) => {
   await page.setViewportSize({ width: 1600, height: 1100 });
   await page.goto('/latin-squares/speed-drill/');
+  await page.getByLabel('Questions', { exact: true }).selectOption('10');
   await page.getByRole('button', { name: 'Start Speed Drill' }).click();
   const grid = page.getByRole('grid', { name: 'Five by five Latin square' });
   const column = page.getByRole('group', { name: 'Answer column' });
