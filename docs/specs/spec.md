@@ -224,7 +224,8 @@ The Latin Squares module home presents exactly four primary actions:
 - One review row per question with status, puzzle ID, time, and `Review` button.
 - Target-cell review shows two grids: `Your answer` and `Solution`. The solution contains only the original clues and the selected path's deductions, without filling the complete square.
 - Native radio buttons select up to five solution paths, ordered by supported deduction cost, with `Solution 1` selected initially. Switching paths updates the same solution grid, deduction count, difficulty, score, and explanation; the submitted answer stays unchanged.
-- Deduced cells have a circled step number in their top-right corner, matching the selected explanation's order; no arrows are drawn.
+- Deduced cells have a circled step number in their top-right corner, matching the selected explanation's order. A short arrow runs from the badge toward the top-left for row-based deductions or toward the bottom-right for column-based deductions, staying inside the cell.
+- The arrow uses the structured row/column unit of the lowest-cost proof for that placement. If several proofs are available, this proof is listed first in the expanded explanation; equal-cost ties retain the solver's existing order.
 - The selected path's detailed explanations are inside a collapsed-by-default `Show detailed explanation` section, including alternative proofs of the same placement and a visibly identified target step.
 - The first path is the lowest-effort chain found using the trainer's supported rules; alternatives are not described as equally minimal or as the fewest possible deductions.
 - The target cell remains visually identified.

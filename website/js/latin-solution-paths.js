@@ -15,7 +15,7 @@ export function enumerateDeductions(grid) {
         ? { row: offset, column: cell.column } : { row: cell.row, column: offset })
         .find(({ row, column }) => grid[row][column] === value);
       const add = (rule, cell, value, details) => deductions.push({
-        rule, weight: empty.length, placement: { ...cell, value }, details,
+        rule, unit: { type, index }, weight: empty.length, placement: { ...cell, value }, details,
       });
       if (empty.length === 1 && missing.length === 1) {
         add('single-missing-cell', empty[0], missing[0], `${unit} has one empty cell and is missing ${missing[0]}, so ${cellName(empty[0])} is ${missing[0]}.`);
@@ -53,12 +53,13 @@ function groupedDeductions(grid) {
     else {
       previous.reasons.push(deduction);
       if (deduction.weight < previous.weight) {
-        previous.weight = deduction.weight;
-        previous.details = deduction.details;
+        Object.assign(previous, deduction);
       }
     }
   }
-  return [...groups.values()];
+  return [...groups.values()].map((group) => ({
+    ...group, reasons: group.reasons.sort((a, b) => a.weight - b.weight),
+  }));
 }
 
 export function findSolutionPaths(puzzle) {

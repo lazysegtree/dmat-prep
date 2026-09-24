@@ -31,8 +31,23 @@ test('groups row and column proofs without duplicating the placement path', () =
   const { paths } = findSolutionPaths({ grid, target: { row: 0, column: 0 }, difficulty: { score: 3 }, bestMethod: [{}] });
   assert.equal(paths.length, 1);
   assert.equal(paths[0][0].reasons.length, 2);
+  assert.deepEqual(paths[0][0].unit, { type: 'row', index: 0 });
+  assert.deepEqual(paths[0][0].reasons.map((reason) => reason.unit.type), ['row', 'column']);
   assert.match(paths[0][0].reasons[0].details, /Row 1/);
   assert.match(paths[0][0].reasons[1].details, /Column 1/);
+});
+
+test('a cheaper column proof supplies the direction and appears before its row alternative', () => {
+  const grid = [
+    ['D', '', 'B', 'E', ''], ['B', 'E', '', '', 'D'], ['C', 'A', 'E', 'D', ''],
+    ['', '', 'A', 'B', ''], ['', 'B', 'D', '', ''],
+  ];
+  const { paths } = findSolutionPaths({ grid, target: { row: 3, column: 0, value: 'E' }, difficulty: { score: 4 }, bestMethod: [{}] });
+  const step = paths[0][0];
+  assert.deepEqual(step.unit, { type: 'column', index: 0 });
+  assert.deepEqual(step.reasons.map((reason) => [reason.unit.type, reason.weight]), [['column', 2], ['row', 3]]);
+  assert.equal(step.details, step.reasons[0].details);
+  assert.equal(step.rule, step.reasons[0].rule);
 });
 
 test('all bank paths replay legally, retain the best score, and respect the bounds', () => {
@@ -48,6 +63,9 @@ test('all bank paths replay legally, retain the best score, and respect the boun
       if (path.length === puzzle.bestMethod.length + 1) similarLengthAlternative = true;
       const grid = puzzle.grid.map((row) => [...row]);
       for (const step of path) {
+        assert.deepEqual(step.unit, step.reasons[0].unit);
+        assert.equal(step.rule, step.reasons[0].rule);
+        assert.equal(step.weight, step.reasons[0].weight);
         assert.equal(grid[puzzle.target.row][puzzle.target.column], '');
         const { row, column, value } = step.placement;
         assert.equal(grid[row][column], '');

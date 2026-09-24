@@ -44,6 +44,11 @@ test('review switches up to five paths in one solution grid with collapsed expla
       value: cell.querySelector('.cell-value')?.textContent ?? cell.textContent,
       number: cell.querySelector('.deduction-number')?.textContent ?? null,
     })))).toEqual(expected);
+    for (const step of paths[index]) {
+      const cell = solution.getByRole('gridcell').nth(step.placement.row * 5 + step.placement.column);
+      await expect(cell.locator('.deduction-direction')).toHaveClass(`deduction-direction ${step.unit.type}`);
+      await expect(cell).toHaveAttribute('aria-label', new RegExp(`based on ${step.unit.type} ${step.unit.index + 1}`));
+    }
     for (const step of paths[index]) for (const reason of step.reasons) await expect(explanation).toContainText(reason.details);
     expect(await answer.innerHTML()).toBe(originalAnswer);
   }

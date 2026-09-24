@@ -319,9 +319,16 @@ select { width: 100%; padding: 11px 12px; border: 1px solid var(--strong-line); 
 .inference-summary span { color: var(--muted); font-size: 0.82rem; }
 .inference-grid { width: min(100%, 310px); margin-bottom: 16px; container-type: inline-size; }
 .inference-grid .cell { position: relative; cursor: default; font-size: clamp(16px, 7cqw, 24px); }
-.inference-grid .cell.deduction-cell { background: var(--accent-soft); color: var(--accent-dark); }
+.inference-grid .cell.deduction-cell { --deduction-badge-size: clamp(16px, 6cqw, 20px); background: var(--accent-soft); color: var(--accent-dark); }
 .inference-grid .cell-value { position: absolute; left: 40%; top: 60%; transform: translate(-50%, -50%); line-height: 1; }
-.inference-grid .deduction-number { position: absolute; top: 2px; right: 2px; display: grid; place-items: center; width: clamp(16px, 6cqw, 20px); aspect-ratio: 1; border-radius: 50%; background: var(--accent); color: white; font-size: 11px; font-weight: 750; line-height: 1; }
+.inference-grid .deduction-number { position: absolute; top: 2px; right: 2px; display: grid; place-items: center; width: var(--deduction-badge-size); aspect-ratio: 1; border-radius: 50%; background: var(--accent); color: white; font-size: 11px; font-weight: 750; line-height: 1; }
+.inference-grid .deduction-direction { position: absolute; color: var(--accent); background: currentColor; pointer-events: none; }
+.inference-grid .deduction-direction::after { position: absolute; width: 0; height: 0; content: ""; }
+.inference-grid .deduction-direction.row { top: calc(2px + var(--deduction-badge-size) / 2 - 1px); left: 5px; right: calc(2px + var(--deduction-badge-size)); height: 2px; }
+.inference-grid .deduction-direction.row::after { left: -1px; top: -3px; border-top: 4px solid transparent; border-bottom: 4px solid transparent; border-right: 6px solid currentColor; }
+.inference-grid .deduction-direction.column { right: calc(2px + var(--deduction-badge-size) / 2 - 1px); top: calc(2px + var(--deduction-badge-size)); bottom: 5px; width: 2px; }
+.inference-grid .deduction-direction.column::after { bottom: -1px; left: -3px; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 6px solid currentColor; }
+.deduction-legend { margin: 8px 0 0; }
 .latin-review { max-width: 800px; }
 .latin-review .review-grid { max-width: 310px; container-type: inline-size; }
 .latin-review .cell { font-size: clamp(16px, 7cqw, 24px); }

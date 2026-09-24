@@ -505,8 +505,9 @@ function readonlyGrid(values, givens, statuses = null, label = 'Latin square', t
       if (statuses?.[rowIndex]?.[columnIndex]) classes.push(statuses[rowIndex][columnIndex]);
       const step = deductions.findIndex(({ placement }) => placement.row === rowIndex && placement.column === columnIndex);
       if (step >= 0) {
+        const unit = deductions[step].unit;
         classes.push('deduction-cell');
-        return `<div class="${classes.join(' ')}" role="gridcell" aria-label="Row ${rowIndex + 1}, column ${columnIndex + 1}, ${value}, deduction ${step + 1}${isTarget ? ', target' : ''}"><span class="cell-value" aria-hidden="true">${value}</span><span class="deduction-number" aria-hidden="true">${step + 1}</span></div>`;
+        return `<div class="${classes.join(' ')}" role="gridcell" aria-label="Row ${rowIndex + 1}, column ${columnIndex + 1}, ${value}, deduction ${step + 1}, based on ${unit.type} ${unit.index + 1}${isTarget ? ', target' : ''}"><span class="cell-value" aria-hidden="true">${value}</span><span class="deduction-direction ${unit.type}" aria-hidden="true"></span><span class="deduction-number" aria-hidden="true">${step + 1}</span></div>`;
       }
       return `<div class="${classes.join(' ')}" role="gridcell">${value || (isTarget && showQuestionMark ? '?' : '')}</div>`;
     })).join('')}
@@ -532,7 +533,7 @@ function reviewPathGrid(puzzle, method, pathIndex) {
   for (const { placement } of method) {
     values[placement.row][placement.column] = placement.value;
   }
-  return `<div class="inference-grid">${readonlyGrid(values, puzzle.grid, null, `Solution ${pathIndex + 1} deduction order`, puzzle.target, false, method)}</div>`;
+  return `<div class="inference-grid">${readonlyGrid(values, puzzle.grid, null, `Solution ${pathIndex + 1} deduction order`, puzzle.target, false, method)}</div><p class="deduction-legend small muted">← Row-based · ↓ Column-based</p>`;
 }
 
 function reviewExplanationMarkup(puzzle, method) {
