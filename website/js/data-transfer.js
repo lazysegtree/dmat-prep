@@ -1,4 +1,4 @@
-import { DRILL_DIFFICULTIES } from './latin-drill.js';
+import { LATIN_DRILL, STANDARD_DRILL } from './speed-drill.js';
 
 export const PROGRESS_KEYS = {
   'latin-squares': 'dmat-latin-progress-v1',
@@ -12,7 +12,8 @@ const nonnegative = (value) => Number.isFinite(value) && value >= 0;
 
 function validateSessions(sessions, task) {
   if (!Array.isArray(sessions)) throw new Error(`Missing session list for ${task}.`);
-  const difficulties = task === 'latin-squares' ? ['easy', 'exam', 'hard', 'extreme'] : ['low', 'medium', 'high', 'extreme'];
+  const drill = task === 'latin-squares' ? LATIN_DRILL : STANDARD_DRILL;
+  const difficulties = drill.levels;
   for (const session of sessions) {
     if (!isObject(session)
       || typeof session.id !== 'string' || !session.id.trim()
@@ -21,7 +22,7 @@ function validateSessions(sessions, task) {
       || !Number.isFinite(Date.parse(session.date))
       || !['learn', 'drill', 'mock'].includes(session.mode)
       || (session.difficulty != null && !(session.mode === 'mock' ? [...difficulties, 'easy', 'normal', 'hard']
-        : task === 'latin-squares' && session.mode === 'drill' ? DRILL_DIFFICULTIES : difficulties).includes(session.difficulty))
+        : session.mode === 'drill' ? drill.difficulties : difficulties).includes(session.difficulty))
       || (session.task != null && session.task !== task)
       || (session.questionType != null && !['target', 'full'].includes(session.questionType))
       || !Number.isSafeInteger(session.questionCount) || session.questionCount < 1
@@ -32,13 +33,13 @@ function validateSessions(sessions, task) {
       throw new Error(`Invalid session in ${task}. No data was imported.`);
     }
     if (task === 'figure-sequences') validateFigureSession(session);
-    if (task === 'latin-squares' && session.mode === 'drill') {
+    if (session.mode === 'drill') {
       if ((session.timeLimit != null && (!Number.isInteger(session.timeLimit) || session.timeLimit < 15 || session.timeLimit > 10800 || session.timeLimit % 15 !== 0))
         || (session.drillTimer != null && !['pace', 'none', 'custom'].includes(session.drillTimer))
         || (session.drillTimer === 'pace' && session.timeLimit !== session.questionCount * 75)
         || (session.drillTimer === 'none' && session.timeLimit != null)
         || (session.drillTimer === 'custom' && session.timeLimit == null)) {
-        throw new Error('Invalid Latin Squares drill timer. No data was imported.');
+        throw new Error('Invalid drill timer. No data was imported.');
       }
     }
   }
@@ -47,8 +48,7 @@ function validateSessions(sessions, task) {
 
 function validateFigureSession(session) {
   const count = session.questionCount;
-  if ((session.mode === 'learn' && count !== 1) || (session.mode === 'drill' && count !== 10) || (session.mode === 'mock' && count !== 20)
-    || (session.difficulty != null && !(session.mode === 'mock' ? ['easy', 'normal', 'hard', 'extreme', 'low', 'medium', 'high'] : ['low', 'medium', 'high', 'extreme']).includes(session.difficulty))
+  if ((session.mode === 'learn' && count !== 1) || (session.mode === 'drill' && ![5, 10].includes(count)) || (session.mode === 'mock' && count !== 20)
     || !Number.isSafeInteger(session.frameCorrect) || session.frameCorrect < 2 * session.correct || session.frameCorrect > count + session.correct
     || !Array.isArray(session.answers) || session.answers.length !== count
     || !session.answers.every((answer) => Array.isArray(answer) && answer.length === 2 && answer.every((value) => value === null || (Number.isInteger(value) && value >= 0 && value < 3)))

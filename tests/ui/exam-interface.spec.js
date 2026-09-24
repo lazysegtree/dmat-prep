@@ -5,6 +5,8 @@ test('equation keyboard edits the focused answer and keeps answers through navig
   page.on('pageerror', error => errors.push(error.message));
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/mathematical-equations/speed-drill/');
+  await page.getByLabel('Questions', { exact: true }).selectOption('10');
+  await page.getByLabel('Distribution', { exact: true }).selectOption('single');
   await page.getByLabel('Training difficulty').selectOption('low');
   await page.getByRole('button', { name: 'Start Speed Drill' }).click();
   const first = page.locator('[data-variable]').first();

@@ -32,7 +32,7 @@ async function expectAnswer(page, task, value) {
 for (const [task, key] of trainers) {
   test(`${task}: only explicit saving retains answers across navigation and submission`, async ({ page }) => {
     await page.goto(`/${task}/speed-drill/`);
-    if (task === 'latin-squares') await page.getByLabel('Questions', { exact: true }).selectOption('10');
+    await page.getByLabel('Questions', { exact: true }).selectOption('10');
     await page.getByRole('button', { name: 'Start Speed Drill' }).click();
     const question = index => page.locator(`[data-question="${index}"]`);
     await enterAnswer(page, task);

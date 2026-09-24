@@ -122,7 +122,7 @@ Generation writes to a temporary file and replaces the destination only after fu
 ## 6. Session behavior
 
 - Learn: one untimed system at Low, Medium, High, or Extreme, with a strategy hint and immediate review.
-- Speed Drill: 10 systems at one selected difficulty, including Extreme, target `12:30`, no mid-session feedback.
+- Speed Drill: 5 or 10 distinct systems; Single difficulty (All Easy, Medium, Hard, or Extreme) or Mixed (All difficulties, Easy, Medium, Hard, or Extreme). Easy/Hard map to the existing Low/High tiers. Named mixes reuse the Full Mock proportions, with Medium using Normal; All difficulties balances the four tiers. Percentages are shown before starting, rounded to whole questions, then shuffled with difficulty hidden during play. Choose 75 seconds per question, a custom 0.25–180-minute limit in 0.25-minute steps, or an unlimited stopwatch. Default: 5 mixed questions with a 6:15 countdown. Custom Minutes stays inside the Time limit field. Countdown expiry scores saved answers automatically. Drill settings persist in URLs, results, backups, and repeat attempts; legacy results without timer metadata repeat as stopwatch sessions. No mid-session feedback.
 - Full Mock: 20 systems in `25:00`; selectable training mixes: Easy (10 Low, 8 Medium, 2 High), Normal (default: 6 Low, 8 Medium, 6 High), Hard (8 Medium, 10 High, 2 Extreme), Extreme (5 Medium, 10 High, 5 Extreme); automatic submission on expiry.
 - Progress: equation-only accuracy, median time, within-75-second rate, and mock scores in local browser storage.
 

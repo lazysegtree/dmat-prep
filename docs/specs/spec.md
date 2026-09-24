@@ -277,7 +277,8 @@ website/
   js/app.js
   js/puzzle-ui.js
   js/session.js
-  js/latin-drill.js
+  js/speed-drill.js
+  js/speed-drill-ui.js
   data/latin-squares/puzzles.json
   data/mathematical-equations/questions.json
   mathematical-equations/
@@ -310,7 +311,8 @@ The Mathematical Equations module adds `website/js/equation-app.js`, `cmd/equati
 - `app.js` loads and validates the generated bank, reads the entry page and query parameters, then controls navigation and application state.
 - `puzzle-ui.js` renders the target-cell grid and handles input.
 - `session.js` controls timers, target scoring, and progress storage.
-- `latin-drill.js` holds the existing Latin mock proportions, short-drill settings, proportional allocation, and shuffled sampling without repeats.
+- `speed-drill.js` holds shared mock proportions, short-drill settings, proportional allocation, repeat settings, and shuffled sampling without repeats. Its tier mappings retain each trainer's existing difficulty identifiers, and Figure Sequences supplies its diversity selector.
+- `speed-drill-ui.js` supplies the same setup controls, visible proportions, compact custom-time field, and timer result metrics to all three trainers.
 - `website/data/latin-squares/puzzles.json` contains the validated generated puzzle bank and solutions.
 - `cmd/puzzle-generator` generates or verifies the two JSON data files; it is not a runtime dependency.
 

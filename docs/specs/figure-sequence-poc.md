@@ -10,8 +10,7 @@ The task card opens `website/figure-sequences/`, with `learn/`,
 
 - Learn: one untimed sequence, an optional hint, and immediate review after
   submitting both answers. A `?question=ID` link opens a specific sequence.
-- Speed Drill: 10 distinct sequences at the selected difficulty, elapsed time,
-  and a 12:30 target. Review appears after session submission.
+- Speed Drill: 5 or 10 distinct sequences, using the same setup as Latin Squares and Mathematical Equations. Choose Single difficulty (All Easy, Medium, Hard, or Extreme) or Mixed (All difficulties, Easy, Medium, Hard, or Extreme). Easy/Hard map to Low/High; named mixes reuse Full Mock proportions, with Medium using Normal. All difficulties balances the four tiers. Percentages appear before starting, with whole-question rounding and shuffled order. Difficulty and feedback stay hidden until submission. Time options are 75 seconds per question, custom 0.25–180 minutes in 0.25-minute steps, or an unlimited stopwatch. Default: 5 mixed sequences and a 6:15 countdown. Custom Minutes stays within Time limit; expiry scores only saved answers. Settings persist in URLs, results, backups, and repeats. Legacy drills without timer metadata retain stopwatch timing when repeated.
 - Full Mock: 20 distinct sequences in 25 minutes; selectable mixes: Easy (10 Low, 8 Medium, 2 High), Normal (default: 6 Low, 8 Medium, 6 High), Hard (8 Medium, 10 High, 2 Extreme), and Extreme (5 Medium, 10 High, 5 Extreme). Free navigation preserves both selections. Timeout
   submits once. Hints and correctness feedback are withheld until submission.
 - Progress: recent sessions, complete-sequence and individual-frame accuracy,
@@ -47,10 +46,10 @@ use shapes with four visibly different quarter-turn orientations. Square and
 diamond-cross are unchanged by quarter-turns; hexagon repeats after a half-turn.
 These symmetric shapes practise movement/colour in Low, Medium, and High.
 Extreme retains its requirement that every figure visibly rotates, so uses the
-15 directional shapes. Drills and each mock difficulty group prefer the least
+15 directional shapes. Each drill and mock difficulty group prefers the least
 represented shapes in the session, then prefer less-practised movement paths,
 step patterns, rotations, and colour cycles among equally varied silhouettes.
-Randomized ties keep sessions fresh. Low drills show ten different silhouettes.
+Randomized ties keep sessions fresh. Single-difficulty Easy/Low drills show five or ten different silhouettes, matching the selected question count. Mixed drills retain this selection strategy within each difficulty group and shuffle the combined selection.
 
 Completed sessions are stored under `dmat-figures-progress-v1`, newest first,
 limited to 50. They include IDs, mode, difficulty, paired choices, per-sequence

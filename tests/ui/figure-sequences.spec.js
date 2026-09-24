@@ -94,6 +94,7 @@ test('learn, review, persistence and three-trainer backup round trip on mobile',
 test('drill keeps both choices through navigation, hides feedback and guards leaving', async ({ page }) => {
  await page.setViewportSize({ width: 1440, height: 900 });
  await page.goto('/figure-sequences/speed-drill/');
+ await page.getByLabel('Questions', { exact: true }).selectOption('10');
  await page.getByRole('button', { name: 'Start Speed Drill' }).click();
  await expect(page.getByRole('heading', { name: 'Sequence 1 of 10' })).toBeVisible();
  const frames = await page.locator('.exam-sequence-layout > .sequence-frame-card, .sequence-missing-frame').evaluateAll(elements => elements.map(element => {

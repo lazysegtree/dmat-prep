@@ -1,7 +1,8 @@
 import { examMarkup, examNavigator, bindExamControls, updateExamNavigator, setExamMode } from './exam-ui.js';
 import { transferMarkup, bindTransfer } from './data-transfer.js';
 import { PuzzleUI } from './puzzle-ui.js';
-import { MOCK_LEVELS, DRILL_MIXES, drillSettings, chooseDrillPuzzles } from './latin-drill.js';
+import { LATIN_DRILL, chooseDrillPuzzles, drillDifficultyName, drillRepeatParameters } from './speed-drill.js';
+import { renderDrillSetup as renderSharedDrillSetup, drillTimeMetrics } from './speed-drill-ui.js';
 import {
   SYMBOLS,
   TARGET_SECONDS,
@@ -27,6 +28,7 @@ const ROUTE_PATHS = {
   progress: 'latin-squares/progress/',
 };
 const MODE_NAMES = { learn: 'Learn', drill: 'Speed Drill', mock: 'Full dMAT Mock' };
+const MOCK_LEVELS = LATIN_DRILL.mockLevels;
 const DIFFICULTY_NAMES = { easy: 'Easy', exam: 'Exam Standard', hard: 'Hard', extreme: 'Extreme' };
 const QUESTION_TYPE_NAMES = { target: 'Find the ?', full: 'Complete the grid' };
 const PUZZLE_FORMAT_VERSION = 1;
@@ -150,83 +152,14 @@ function renderLearnSetup(difficulty = 'exam') {
 }
 
 function renderDrillSetup() {
-  const settings = drillSettings(new URL(window.location.href).searchParams);
-  const mixed = Object.hasOwn(DRILL_MIXES, settings.difficulty);
-  app.innerHTML = `
-    <section class="panel">
-      <p class="eyebrow">Speed Drill</p>
-      <h1>Build a steady pace.</h1>
-      <p class="muted">Choose a short session. Answers and puzzle difficulties are revealed only after submission.</p>
-      <form id="drill-setup">
-        <div class="drill-setup-grid">
-          <div class="field"><label for="question-count">Questions</label><select id="question-count"><option value="5">5 questions</option><option value="10">10 questions</option></select></div>
-          <div class="field">
-            <label for="drill-timer">Time limit</label><select id="drill-timer"><option value="pace">75 seconds per question</option><option value="custom">Custom time</option><option value="none">No limit — stopwatch</option></select>
-            <div id="custom-time-field" hidden>
-              <div class="drill-custom-time"><label for="drill-minutes">Minutes</label><input id="drill-minutes" type="number" min="0.25" max="180" step="0.25" aria-describedby="drill-time-help" required /></div>
-              <p class="small muted" id="drill-time-help">0.25 min = 15 seconds</p>
-            </div>
-          </div>
-          <div class="field"><label for="drill-distribution">Distribution</label><select id="drill-distribution"><option value="mixed">Mixed</option><option value="single">Single difficulty</option></select></div>
-          <div class="field"><label for="difficulty" id="drill-level-label">Mix</label><select id="difficulty" aria-describedby="drill-mix-description"></select></div>
-        </div>
-        <p class="small muted" id="drill-mix-description"></p>
-        <p class="small muted">Medium uses the existing Exam Standard tier. These training levels are not officially calibrated.</p>
-        <p class="notice" id="drill-summary" aria-live="polite"></p>
-        <div class="button-row"><button class="button" type="submit">Start Speed Drill</button><a class="button secondary" href="${routeUrl('home')}">Back</a></div>
-      </form>
-    </section>`;
-  const form = app.querySelector('#drill-setup');
-  const count = form.querySelector('#question-count');
-  const timer = form.querySelector('#drill-timer');
-  const minutes = form.querySelector('#drill-minutes');
-  const distribution = form.querySelector('#drill-distribution');
-  const difficulty = form.querySelector('#difficulty');
-  count.value = settings.questionCount;
-  timer.value = settings.timer;
-  minutes.value = settings.minutes;
-  distribution.value = mixed ? 'mixed' : 'single';
-  const populateLevels = (selected) => {
-    const isMixed = distribution.value === 'mixed';
-    const levels = isMixed ? Object.fromEntries(Object.entries(DRILL_MIXES).map(([key, value]) => [key, value.name]))
-      : { easy: 'All Easy', exam: 'All Medium', hard: 'All Hard', extreme: 'All Extreme' };
-    app.querySelector('#drill-level-label').textContent = isMixed ? 'Mix' : 'Training difficulty';
-    difficulty.innerHTML = Object.entries(levels).map(([key, name]) => `<option value="${key}">${name}</option>`).join('');
-    difficulty.value = Object.hasOwn(levels, selected) ? selected : isMixed ? 'mixed-all' : 'exam';
-  };
-  populateLevels(settings.difficulty);
-  const readSettings = () => drillSettings(new URLSearchParams({ difficulty: difficulty.value, count: count.value, timer: timer.value, minutes: minutes.value }));
-  const update = () => {
-    const current = readSettings();
-    app.querySelector('#custom-time-field').hidden = timer.value !== 'custom';
-    minutes.disabled = timer.value !== 'custom';
-    const mix = DRILL_MIXES[current.difficulty];
-    const weights = Object.entries(mix?.mix || { [current.difficulty]: 1 });
-    const totalWeight = weights.reduce((sum, [, weight]) => sum + weight, 0);
-    const proportions = weights.map(([level, weight]) => `${100 * weight / totalWeight}% ${level === 'exam' ? 'Medium' : DIFFICULTY_NAMES[level]}`).join(' · ');
-    app.querySelector('#drill-mix-description').textContent = `${proportions}.${mix ? ' Short drills round to whole questions; question order is random.' : ''}`;
-    app.querySelector('#drill-summary').textContent = `${current.questionCount} questions · ${current.timeLimit === null ? `Stopwatch, with a ${formatTime(current.questionCount * TARGET_SECONDS)} pace target.` : `${formatTime(current.timeLimit)} total. The drill submits when time runs out.`} Work out intermediate deductions mentally.`;
-    if (!minutes.validity.valid) return;
-    const url = new URL(window.location.href);
-    url.searchParams.delete('puzzle');
-    url.searchParams.set('difficulty', current.difficulty);
-    url.searchParams.set('count', current.questionCount);
-    url.searchParams.set('timer', current.timer);
-    if (current.timer === 'custom') url.searchParams.set('minutes', current.minutes);
-    else url.searchParams.delete('minutes');
-    window.history.replaceState(null, '', url);
-  };
-  distribution.addEventListener('change', () => populateLevels());
-  form.addEventListener('input', update);
-  form.addEventListener('change', update);
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    update();
-    const current = readSettings();
-    startSession('drill', current.difficulty, null, current);
+  renderSharedDrillSetup(app, {
+    config: LATIN_DRILL,
+    task: 'Latin Squares',
+    homeUrl: routeUrl('home'),
+    instruction: 'Work out intermediate deductions mentally.',
+    difficultyNote: 'Medium uses the existing Exam Standard tier.',
+    onStart: settings => startSession('drill', settings.difficulty, null, settings),
   });
-  update();
-  focusMain();
 }
 
 function mockLevelFromUrl() {
@@ -242,7 +175,7 @@ function mockLevelFromUrl() {
 
 function sessionDifficultyName(session) {
   if (session.mode === 'mock') return MOCK_LEVELS[session.difficulty]?.name || 'Previous mix (3 Easy, 11 Exam Standard, 6 Hard)';
-  if (session.mode === 'drill' && Object.hasOwn(DRILL_MIXES, session.difficulty)) return `Mixed · ${DRILL_MIXES[session.difficulty].name}`;
+  if (session.mode === 'drill') return drillDifficultyName(session.difficulty, LATIN_DRILL);
   return DIFFICULTY_NAMES[session.difficulty] || 'Mixed difficulty';
 }
 
@@ -502,8 +435,8 @@ function resultMetrics(result) {
   return `${common}
     <div class="metric"><span>Median / question</span><strong>${formatTime(median(result.questionTimes))}</strong></div>
     <div class="metric"><span>Over 75 seconds</span><strong>${result.questionTimes.filter((time) => time > TARGET_SECONDS).length}</strong></div>
-    ${result.mode === 'drill' ? `<div class="metric"><span>${result.timeLimit == null ? 'Pace target' : 'Time limit'}</span><strong>${formatTime(result.timeLimit ?? result.questionCount * TARGET_SECONDS)}</strong></div>` : ''}
-    ${result.mode === 'mock' || result.timeLimit != null ? `<div class="metric"><span>Time remaining</span><strong>${formatTime(result.timeRemaining)}</strong></div>` : ''}`;
+    ${drillTimeMetrics(result)}
+    ${result.mode === 'mock' ? `<div class="metric"><span>Time remaining</span><strong>${formatTime(result.timeRemaining)}</strong></div>` : ''}`;
 }
 
 function renderResults(result, reviewIndex = null) {
@@ -538,13 +471,7 @@ function renderResults(result, reviewIndex = null) {
     </section>`;
   app.querySelectorAll('[data-review]').forEach((button) => button.addEventListener('click', () => showReviewDetail(result, Number(button.dataset.review))));
   app.querySelector('#repeat-mode').addEventListener('click', () => {
-    const parameters = result.difficulty ? { difficulty: result.difficulty } : {};
-    if (result.mode === 'drill') {
-      parameters.count = result.questionCount;
-      parameters.timer = result.drillTimer || (result.timeLimit == null ? 'none' : 'custom');
-      if (parameters.timer === 'custom') parameters.minutes = result.timeLimit / 60;
-    }
-    navigateTo(result.mode, parameters);
+    navigateTo(result.mode, result.mode === 'drill' ? drillRepeatParameters(result) : { difficulty: result.difficulty });
   });
   app.querySelector('#results-home').addEventListener('click', () => goHome());
   if (reviewIndex !== null) showReviewDetail(result, reviewIndex);

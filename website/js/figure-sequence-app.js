@@ -1,3 +1,5 @@
+import { STANDARD_DRILL, chooseDrillPuzzles, drillDifficultyName, drillRepeatParameters } from './speed-drill.js';
+import { renderDrillSetup as renderSharedDrillSetup, drillTimeMetrics } from './speed-drill-ui.js';
 import { examMarkup, examNavigator, bindExamControls, setExamMode } from './exam-ui.js';
 import { answerComplete, answerStatus, frameCorrectCount, validateFigureBank, selectDiversePuzzles } from './figure-sequence-session.js';
 import { transferMarkup, bindTransfer } from './data-transfer.js';
@@ -11,12 +13,7 @@ const INITIAL_PAGE = document.body.dataset.figurePage || 'home';
 const STORAGE_KEY = 'dmat-figures-progress-v1';
 const MODE_NAMES = { learn: 'Learn', drill: 'Speed Drill', mock: 'Full Mock' };
 const DIFFICULTY_NAMES = { low: 'Low', medium: 'Medium', high: 'High', extreme: 'Extreme' };
-const MOCK_LEVELS = {
-  easy: { name: 'Easy', mix: { low: 10, medium: 8, high: 2 } },
-  normal: { name: 'Normal', mix: { low: 6, medium: 8, high: 6 } },
-  hard: { name: 'Hard', mix: { medium: 8, high: 10, extreme: 2 } },
-  extreme: { name: 'Extreme', mix: { medium: 5, high: 10, extreme: 5 } },
-};
+const MOCK_LEVELS = STANDARD_DRILL.mockLevels;
 const ROUTES = {
   home: 'figure-sequences/',
   learn: 'figure-sequences/learn/',
@@ -115,7 +112,7 @@ function renderHome() {
  <p class="lede">Follow position, colour, and rotation across four matrices, then choose frames 5 and 6.</p>
  <div class="home-actions" aria-label="Training modes">
  <a class="mode-card" href="${routeUrl('learn')}"><strong>Learn</strong><span>One untimed sequence with a hint and an explanation for each figure.</span></a>
- <a class="mode-card" href="${routeUrl('drill')}"><strong>Speed Drill</strong><span>10 sequences with a target pace of 75 seconds each.</span></a>
+ <a class="mode-card" href="${routeUrl('drill')}"><strong>Speed Drill</strong><span>Choose 5 or 10 sequences, a time limit, and a single or mixed difficulty.</span></a>
  <a class="mode-card" href="${routeUrl('mock')}"><strong>Full Mock</strong><span>20 sequences in 25 minutes. Review after submission.</span></a>
  <a class="mode-card" href="${routeUrl('progress')}"><strong>Progress</strong><span>Track complete sequences, individual frames, and speed.</span></a></div>
  <p class="notice">Difficulty labels are provisional training levels, not calibrated exam difficulty. Scores count a sequence as correct only when both frames are correct; individual-frame accuracy is shown separately.</p>
@@ -144,6 +141,17 @@ function renderSetup(mode, difficulty) {
  focusMain();
 }
 
+function renderDrillSetup() {
+  renderSharedDrillSetup(app, {
+    config: STANDARD_DRILL,
+    task: 'Figure Sequences',
+    homeUrl: routeUrl('home'),
+    instruction: 'Choose both missing frames for each sequence.',
+    difficultyNote: 'Easy and Hard use the existing Low and High question tiers.',
+    onStart: settings => startSession('drill', settings.difficulty, null, settings),
+  });
+}
+
 function mockLevelFromUrl() {
   const url = new URL(window.location.href);
   const level = url.searchParams.get('difficulty');
@@ -157,6 +165,7 @@ function mockLevelFromUrl() {
 
 function sessionDifficultyName(session) {
   if (session.mode === 'mock') return MOCK_LEVELS[session.difficulty]?.name || 'Normal';
+  if (session.mode === 'drill') return drillDifficultyName(session.difficulty, STANDARD_DRILL);
   return DIFFICULTY_NAMES[session.difficulty] || 'Mixed difficulty';
 }
 
@@ -195,7 +204,6 @@ function shuffle(values) {
 
 function chooseQuestions(mode, difficulty) {
   if (mode === 'learn') return shuffle(bank.filter((question) => question.difficulty.level === difficulty)).slice(0, 1);
-  if (mode === 'drill') return selectDiversePuzzles(bank.filter((question) => question.difficulty.level === difficulty), 10);
   const mix = MOCK_LEVELS[difficulty || 'normal'].mix;
   return shuffle(Object.entries(mix).flatMap(([level, count]) =>
     selectDiversePuzzles(bank.filter((question) => question.difficulty.level === level), count)));
@@ -203,9 +211,11 @@ function chooseQuestions(mode, difficulty) {
 
 function emptyFigureAnswer() { return [null, null]; }
 
-function startSession(mode, difficulty = null, selectedQuestions = null) {
+function startSession(mode, difficulty = null, selectedQuestions = null, drill = null) {
   stopClock();
-  const questions = selectedQuestions || chooseQuestions(mode, difficulty);
+  const questions = selectedQuestions || (mode === 'drill'
+    ? chooseDrillPuzzles(bank, difficulty, drill.questionCount, { config: STANDARD_DRILL, getDifficulty: question => question.difficulty.level, selectPool: selectDiversePuzzles })
+    : chooseQuestions(mode, difficulty));
   if (!questions.length) {
     app.innerHTML = '<p class="error">No questions are available for this selection.</p>';
     return;
@@ -218,6 +228,8 @@ function startSession(mode, difficulty = null, selectedQuestions = null) {
   activeSession = {
     mode,
     difficulty,
+    timeLimit: mode === 'mock' ? 25 * 60 : drill?.timeLimit ?? null,
+    drillTimer: drill?.timer,
     questions,
     answers: questions.map(emptyFigureAnswer),
     reviewFlags: questions.map(() => false),
@@ -229,8 +241,10 @@ function startSession(mode, difficulty = null, selectedQuestions = null) {
   };
   activeSession.savedAnswers = structuredClone(activeSession.answers);
   renderQuestion();
-  if (mode === 'drill') clock = new SessionClock({ onTick: (seconds) => updateTimer(seconds, false) });
-  if (mode === 'mock') clock = new SessionClock({ duration: 25 * 60, onTick: (seconds) => updateTimer(seconds, seconds <= 60), onExpire: () => finishSession(true) });
+  if (mode !== 'learn') {
+    const duration = activeSession.timeLimit;
+    clock = new SessionClock({ duration, onTick: seconds => updateTimer(seconds, duration !== null && seconds <= 60), onExpire: () => finishSession(true) });
+  }
 }
 
 function updateTimer(seconds, urgent) {
@@ -242,7 +256,7 @@ function updateTimer(seconds, urgent) {
 
 function recordQuestionTime() {
   if (!activeSession) return;
-  const now = activeSession.mode === 'mock' ? Math.min(Date.now(), activeSession.startedAt + 25 * 60 * 1000) : Date.now();
+  const now = activeSession.timeLimit !== null ? Math.min(Date.now(), activeSession.startedAt + activeSession.timeLimit * 1000) : Date.now();
   activeSession.questionTimes[activeSession.current] += Math.max(0, now - activeSession.enteredQuestionAt) / 1000;
   activeSession.enteredQuestionAt = now;
 }
@@ -261,8 +275,8 @@ function renderQuestion() {
   navigator: examNavigator(session.questions, session.current, (item, index) => answerComplete(item, session.savedAnswers[index]), 'Sequence', session.reviewFlags),
   current: session.current,
   count: session.questions.length,
-  timerLabel: timed ? (session.mode === 'mock' ? 'Time remaining' : 'Time elapsed') : null,
-  timerValue: formatTime(session.mode === 'mock' ? Math.max(0, 1500 - (clock?.elapsed() || 0)) : clock?.elapsed() || 0),
+  timerLabel: timed ? (session.timeLimit !== null ? 'Time remaining' : 'Time elapsed') : null,
+  timerValue: formatTime(session.timeLimit !== null ? Math.max(0, session.timeLimit - (clock?.elapsed() || 0)) : clock?.elapsed() || 0),
   checkDisabled: session.mode === 'learn' && !answerComplete(question, session.answers[session.current]),
   learnActions: session.mode === 'learn' ? `<button class="button secondary" id="show-hint" type="button" ${session.hintUsed ? 'disabled' : ''}>Show strategy hint</button>` : '',
  });
@@ -299,8 +313,8 @@ function changeQuestion(index) {
   renderQuestion();
   if (clock) {
     const elapsed = clock.elapsed();
-    const display = activeSession.mode === 'mock' ? 25 * 60 - elapsed : elapsed;
-    updateTimer(display, activeSession.mode === 'mock' && display <= 60);
+    const display = activeSession.timeLimit !== null ? activeSession.timeLimit - elapsed : elapsed;
+    updateTimer(display, activeSession.timeLimit !== null && display <= 60);
   }
 }
 
@@ -318,7 +332,7 @@ function finishSession(automatic) {
   const session = activeSession;
   const elapsed = clock ? clock.stop() : Math.floor((Date.now() - session.startedAt) / 1000);
   clock = null;
-  const totalTime = session.mode === 'mock' ? Math.min(25 * 60, elapsed) : elapsed;
+  const totalTime = session.timeLimit !== null ? Math.min(session.timeLimit, elapsed) : elapsed;
   const statuses = session.questions.map((question, index) => answerStatus(question, session.answers[index]));
   const result = {
     id: `${Date.now()}-${session.mode}`,
@@ -326,13 +340,14 @@ function finishSession(automatic) {
     task: 'figure-sequences',
     mode: session.mode,
     difficulty: session.difficulty,
+    ...(session.mode === 'drill' ? { timeLimit: session.timeLimit, drillTimer: session.drillTimer } : {}),
     questionCount: session.questions.length,
     frameCorrect: session.questions.reduce((sum, question, index) => sum + frameCorrectCount(question, session.answers[index]), 0),
     correct: statuses.filter((status) => status === 'correct').length,
     incorrect: statuses.filter((status) => status === 'incorrect').length,
     unanswered: statuses.filter((status) => status === 'unanswered').length,
     totalTime,
-    timeRemaining: session.mode === 'mock' ? Math.max(0, 25 * 60 - totalTime) : null,
+    timeRemaining: session.timeLimit !== null ? Math.max(0, session.timeLimit - totalTime) : null,
     questionTimes: session.questionTimes.map(Math.round),
     questionIds: session.questions.map((question) => question.id),
     answers: session.answers,
@@ -354,7 +369,7 @@ function resultMetrics(result) {
     <div class="metric"><span>Unanswered</span><strong>${result.unanswered}</strong></div>
     <div class="metric"><span>Individual frames</span><strong>${result.frameCorrect}/${result.questionCount * 2}</strong></div><div class="metric"><span>Total time</span><strong>${formatTime(result.totalTime)}</strong></div>
     ${result.mode === 'learn' ? '' : `<div class="metric"><span>Median / sequence</span><strong>${formatTime(median(result.questionTimes))}</strong></div><div class="metric"><span>Over 75 seconds</span><strong>${result.questionTimes.filter((time) => time > TARGET_SECONDS).length}</strong></div>`}
-    ${result.mode === 'mock' ? `<div class="metric"><span>Time remaining</span><strong>${formatTime(result.timeRemaining)}</strong></div>` : result.mode === 'drill' ? '<div class="metric"><span>Target total</span><strong>12:30</strong></div>' : ''}`;
+    ${result.mode === 'mock' ? `<div class="metric"><span>Time remaining</span><strong>${formatTime(result.timeRemaining)}</strong></div>` : drillTimeMetrics(result)}`;
 }
 
 function renderResults(result, reviewIndex = null) {
@@ -362,9 +377,9 @@ function renderResults(result, reviewIndex = null) {
   const slowest = result.questionTimes.map((time, index) => ({ time, index })).sort((a, b) => b.time - a.time).slice(0, 3);
   app.innerHTML = `
     <section>
-      <p class="eyebrow">Figure Sequences · ${MODE_NAMES[result.mode]}${result.mode === 'mock' ? ` · ${sessionDifficultyName(result)}` : ''} results</p>
+      <p class="eyebrow">Figure Sequences · ${MODE_NAMES[result.mode]}${result.mode !== 'learn' ? ` · ${sessionDifficultyName(result)}` : ''} results</p>
       <h1>${result.mode === 'mock' ? `${result.correct} out of 20` : result.correct === result.questionCount ? 'All correct' : `${result.correct} of ${result.questionCount} correct`}</h1>
-      <p class="lede">${result.automatic ? 'Time expired, so the mock was submitted automatically.' : 'Review each figure’s movement, colour, and rotation.'}</p>
+      <p class="lede">${result.automatic ? `Time expired, so the ${result.mode === 'drill' ? 'drill' : 'mock'} was submitted automatically.` : 'Review each figure’s movement, colour, and rotation.'}</p>
       <div class="results-summary">${resultMetrics(result)}</div>
       ${result.mode === 'learn' ? '' : `<h2>Slowest sequences</h2><p class="muted">${slowest.map((item) => `Q${item.index + 1} (${formatTime(item.time)})`).join(' · ')}</p>`}
       <h2>Question review</h2>
@@ -373,7 +388,7 @@ function renderResults(result, reviewIndex = null) {
       <div class="button-row"><button class="button" id="repeat-mode" type="button">${result.mode === 'mock' ? 'Take another mock' : `New ${MODE_NAMES[result.mode]}`}</button><button class="button secondary" id="results-home" type="button">Figure Sequences home</button></div>
     </section>`;
   app.querySelectorAll('[data-review]').forEach((button) => button.addEventListener('click', () => showReview(result, Number(button.dataset.review))));
-  app.querySelector('#repeat-mode').addEventListener('click', () => navigateTo(result.mode, result.difficulty ? { difficulty: result.difficulty } : {}));
+  app.querySelector('#repeat-mode').addEventListener('click', () => navigateTo(result.mode, result.mode === 'drill' ? drillRepeatParameters(result) : { difficulty: result.difficulty }));
   app.querySelector('#results-home').addEventListener('click', () => navigateTo('home'));
   if (reviewIndex !== null) showReview(result, reviewIndex);
   focusMain();
@@ -384,7 +399,7 @@ function showReview(result, index) {
  const detail = app.querySelector('#review-detail');
  detail.className = 'review-detail';
  if (!question) { detail.textContent = 'This sequence is no longer in the current bank. Its saved score is still included in progress.'; return; }
- detail.innerHTML = `<h2>Sequence ${index + 1}</h2>${sequenceMarkup(question, result.answers[index], true)}
+ detail.innerHTML = `<h2>Sequence ${index + 1}</h2><p class="small muted">Difficulty: ${STANDARD_DRILL.names[question.difficulty.level]}</p>${sequenceMarkup(question, result.answers[index], true)}
  <h3>Rule explanation</h3><ol class="inference-steps">${question.programs.map((program) => `<li class="inference-step"><strong>${escapeHtml(program.actorId)}</strong><p>${escapeHtml(program.explanation)}</p></li>`).join('')}</ol>`;
  detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -453,7 +468,7 @@ function renderInitialPage() {
     }
     return renderSetup('learn', difficultyFromUrl());
   }
-  if (INITIAL_PAGE === 'drill') return renderSetup('drill', difficultyFromUrl());
+  if (INITIAL_PAGE === 'drill') return renderDrillSetup();
   if (INITIAL_PAGE === 'mock') return renderMockIntro();
   if (INITIAL_PAGE === 'progress') return renderProgress();
   return renderHome();
