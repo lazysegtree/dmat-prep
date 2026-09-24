@@ -317,6 +317,24 @@ select { width: 100%; padding: 11px 12px; border: 1px solid var(--strong-line); 
 .inference-summary { flex: 0 0 auto; text-align: right; }
 .inference-summary strong, .inference-summary span { display: block; }
 .inference-summary span { color: var(--muted); font-size: 0.82rem; }
+.inference-grid { width: min(100%, 310px); margin-bottom: 16px; container-type: inline-size; }
+.inference-grid .cell { position: relative; cursor: default; font-size: clamp(16px, 7cqw, 24px); }
+.inference-grid .cell.deduction-cell { background: var(--accent-soft); color: var(--accent-dark); }
+.inference-grid .cell-value { position: absolute; left: 40%; top: 60%; transform: translate(-50%, -50%); line-height: 1; }
+.inference-grid .deduction-number { position: absolute; top: 2px; right: 2px; display: grid; place-items: center; width: clamp(16px, 6cqw, 20px); aspect-ratio: 1; border-radius: 50%; background: var(--accent); color: white; font-size: 11px; font-weight: 750; line-height: 1; }
+.latin-review { max-width: 800px; }
+.latin-review .review-grid { max-width: 310px; container-type: inline-size; }
+.latin-review .cell { font-size: clamp(16px, 7cqw, 24px); }
+.latin-review .inference-grid { margin-bottom: 0; }
+.latin-review .inference-summary { margin: 14px 0; text-align: left; }
+.solution-picker { min-width: 0; margin: 20px 0; padding: 0; border: 0; }
+.solution-picker legend { padding: 0; font-weight: 700; }
+.solution-options { display: flex; flex-wrap: wrap; gap: 4px 20px; }
+.solution-options label { display: flex; align-items: center; gap: 7px; min-height: 44px; cursor: pointer; }
+.solution-options input { margin: 0; accent-color: var(--accent); }
+.solution-explanation { padding: 14px 16px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+.solution-explanation > summary { cursor: pointer; font-weight: 600; }
+.solution-explanation .inference-steps { margin-top: 16px; }
 .inference-steps { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; }
 .inference-step { padding: 13px 15px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); }
 .inference-step.target { border-color: #8bb8a4; background: var(--accent-soft); }
@@ -614,6 +632,3 @@ body.exam-mode {
   .exam-column { padding-right: 12px; padding-left: 12px; }
   .exam-column h2 { font-size: calc(clamp(22px, 6.67vw, 26px) * var(--exam-scale)); }
 }
-
-.solution-alternatives { margin-top: 20px; padding: 16px; border: 1px solid var(--line); border-radius: 8px; }
-.solution-alternatives > summary { cursor: pointer; font-weight: 600; }

@@ -3,9 +3,9 @@ import fs from 'node:fs';
 import { findSolutionPaths } from '../../website/js/latin-solution-paths.js';
 
 const bank = JSON.parse(fs.readFileSync(new URL('../../website/data/latin-squares/puzzles.json', import.meta.url))).puzzles;
-const puzzle = bank.find((item) => findSolutionPaths(item).paths.length > 3);
+const puzzle = bank.find((item) => findSolutionPaths(item).paths.length > 5);
 
-test('review shows the best path and at most two collapsed alternatives', async ({ page }) => {
+test('review switches up to five paths in one solution grid with collapsed explanations', async ({ page }) => {
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('/latin-squares/progress/');
@@ -19,21 +19,46 @@ test('review shows the best path and at most two collapsed alternatives', async 
   }, puzzle);
   await page.goto('/latin-squares/progress/?session=alternatives');
   await page.getByRole('button', { name: 'Review', exact: true }).click();
-  await expect(page.getByRole('heading', { name: 'Efficient solution paths', exact: true })).toBeVisible();
-  const paths = findSolutionPaths(puzzle).paths.slice(0, 3);
-  await expect(page.locator('.solution-alternative')).toHaveCount(paths.length);
-  await expect(page.locator('.solution-alternative').first()).toBeVisible();
-  await expect(page.locator('.solution-alternative').nth(1)).toBeHidden();
-  await expect(page.locator('.solution-alternative').nth(2)).toBeHidden();
-  await page.getByText('Show 2 alternative paths', { exact: true }).click();
+  const paths = findSolutionPaths(puzzle).paths.slice(0, 5);
+  const radios = page.getByRole('radio');
+  const solution = page.locator('#review-solution-grid');
+  const explanation = page.locator('#review-solution-explanation');
+  const answer = page.getByRole('grid', { name: 'Your answer', exact: true });
+  const originalAnswer = await answer.innerHTML();
+  await expect(radios).toHaveCount(5);
+  await expect(page.getByRole('radio', { name: 'Solution 1', exact: true })).toBeChecked();
+  await expect(page.locator('#review-detail').getByRole('grid')).toHaveCount(2);
+  await expect(page.getByRole('heading', { name: 'Complete solution', exact: true })).toHaveCount(0);
+  await expect(explanation).toBeHidden();
+  await page.getByText('Show detailed explanation', { exact: true }).click();
   for (let index = 0; index < paths.length; index++) {
-    const printed = page.locator('.solution-alternative').nth(index);
-    await expect(printed).toBeVisible();
-    await expect(printed.locator('.inference-step')).toHaveCount(paths[index].length);
-    for (const step of paths[index]) for (const reason of step.reasons) await expect(printed).toContainText(reason.details);
+    await page.getByRole('radio', { name: `Solution ${index + 1}`, exact: true }).check();
+    await expect(solution.getByRole('grid', { name: `Solution ${index + 1} deduction order` })).toBeVisible();
+    await expect(page.locator('#review-detail').getByRole('grid')).toHaveCount(2);
+    await expect(explanation.locator('.inference-step')).toHaveCount(paths[index].length);
+    const expected = puzzle.grid.flat().map((value) => ({ value, number: null }));
+    paths[index].forEach(({ placement }, step) => {
+      expected[placement.row * 5 + placement.column] = { value: placement.value, number: String(step + 1) };
+    });
+    expect(await solution.getByRole('gridcell').evaluateAll((cells) => cells.map((cell) => ({
+      value: cell.querySelector('.cell-value')?.textContent ?? cell.textContent,
+      number: cell.querySelector('.deduction-number')?.textContent ?? null,
+    })))).toEqual(expected);
+    for (const step of paths[index]) for (const reason of step.reasons) await expect(explanation).toContainText(reason.details);
+    expect(await answer.innerHTML()).toBe(originalAnswer);
   }
-  await page.setViewportSize({ width: 390, height: 844 });
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
-  await page.screenshot({ path: '/tmp/latin-solution-paths-mobile.png', fullPage: true });
+  await page.getByText('Show detailed explanation', { exact: true }).click();
+  await page.getByRole('radio', { name: 'Solution 1', exact: true }).focus();
+  await page.keyboard.press('ArrowRight');
+  await expect(page.getByRole('radio', { name: 'Solution 2', exact: true })).toBeChecked();
+  await expect(solution.getByRole('grid', { name: 'Solution 2 deduction order' })).toBeVisible();
+  await expect(explanation).toBeHidden();
+  for (const width of [390, 320]) {
+    await page.setViewportSize({ width, height: 844 });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  }
+  await page.locator('#review-detail').screenshot({ path: '/tmp/latin-solution-selector-mobile.png' });
+  await page.setViewportSize({ width: 1280, height: 1000 });
+  await page.locator('#review-detail').screenshot({ path: '/tmp/latin-solution-selector-desktop.png' });
   expect(errors).toEqual([]);
 });

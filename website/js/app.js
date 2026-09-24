@@ -495,7 +495,7 @@ function cellStatusGrid(result, index) {
   }));
 }
 
-function readonlyGrid(values, givens, statuses = null, label = 'Latin square', target = null, showQuestionMark = false) {
+function readonlyGrid(values, givens, statuses = null, label = 'Latin square', target = null, showQuestionMark = false, deductions = []) {
   return `<div class="latin-grid${target ? ' target-mode' : ''}" role="grid" aria-label="${label}">
     ${values.flatMap((row, rowIndex) => row.map((value, columnIndex) => {
       const classes = ['cell'];
@@ -503,6 +503,11 @@ function readonlyGrid(values, givens, statuses = null, label = 'Latin square', t
       if (givens?.[rowIndex]?.[columnIndex]) classes.push('given');
       if (isTarget) classes.push('target-cell');
       if (statuses?.[rowIndex]?.[columnIndex]) classes.push(statuses[rowIndex][columnIndex]);
+      const step = deductions.findIndex(({ placement }) => placement.row === rowIndex && placement.column === columnIndex);
+      if (step >= 0) {
+        classes.push('deduction-cell');
+        return `<div class="${classes.join(' ')}" role="gridcell" aria-label="Row ${rowIndex + 1}, column ${columnIndex + 1}, ${value}, deduction ${step + 1}${isTarget ? ', target' : ''}"><span class="cell-value" aria-hidden="true">${value}</span><span class="deduction-number" aria-hidden="true">${step + 1}</span></div>`;
+      }
       return `<div class="${classes.join(' ')}" role="gridcell">${value || (isTarget && showQuestionMark ? '?' : '')}</div>`;
     })).join('')}
   </div>`;
@@ -522,28 +527,16 @@ function cellName(cell) {
   return `R${cell.row + 1}C${cell.column + 1}`;
 }
 
-function reviewMethodMarkup(puzzle) {
-  if (!puzzle?.bestMethod?.length) {
-    return `
-      <section class="inference-path" aria-labelledby="review-method-title">
-        <h3 id="review-method-title">Efficient solution paths</h3>
-        <p class="muted">The deduction path is unavailable for this puzzle.</p>
-      </section>`;
+function reviewPathGrid(puzzle, method, pathIndex) {
+  const values = puzzle.grid.map((row) => [...row]);
+  for (const { placement } of method) {
+    values[placement.row][placement.column] = placement.value;
   }
-  const { paths } = findSolutionPaths(puzzle);
-  const visiblePaths = paths.slice(0, 3);
-  const level = DIFFICULTY_NAMES[puzzle.difficulty.targetCell] || puzzle.difficulty.targetCell;
+  return `<div class="inference-grid">${readonlyGrid(values, puzzle.grid, null, `Solution ${pathIndex + 1} deduction order`, puzzle.target, false, method)}</div>`;
+}
+
+function reviewExplanationMarkup(puzzle, method) {
   return `
-    <section class="inference-path" aria-labelledby="review-method-title">
-      <div class="inference-path-header">
-        <div>
-          <h3 id="review-method-title">Efficient solution paths</h3>
-          <p class="small muted">The best path, with up to two alternatives below. Alternative proofs of the same placement are listed together.</p>
-        </div>
-        <p class="inference-summary"><strong>${visiblePaths.length} path${visiblePaths.length === 1 ? '' : 's'}</strong><span>${escapeHtml(level)} · best score ${escapeHtml(puzzle.difficulty.score)}</span></p>
-      </div>
-      ${visiblePaths.map((method, pathIndex) => `${pathIndex === 1 ? `<details class="solution-alternatives"><summary>Show ${visiblePaths.length - 1} alternative path${visiblePaths.length > 2 ? 's' : ''}</summary>` : ''}<section class="solution-alternative">
-      <h4>Path ${pathIndex + 1} · ${method.length} deduction${method.length === 1 ? '' : 's'} · score ${method.reduce((sum, step) => sum + step.weight + 2, 0)}</h4>
       <ol class="inference-steps">
         ${method.map((inference, step) => {
           const placement = inference.placement;
@@ -558,8 +551,7 @@ function reviewMethodMarkup(puzzle) {
               ${inference.reasons.map((reason) => `<p>${escapeHtml(reason.details)}</p>`).join('')}
             </li>`;
         }).join('')}
-      </ol></section>${pathIndex === visiblePaths.length - 1 && pathIndex > 0 ? '</details>' : ''}`).join('')}
-    </section>`;
+      </ol>`;
 }
 
 function showReviewDetail(result, index) {
@@ -567,17 +559,42 @@ function showReviewDetail(result, index) {
   const questionType = result.questionType || 'full';
   const target = questionType === 'target' ? result.targets[index] : null;
   const puzzle = target ? (result.reviewPuzzles?.[index] ?? bank.find((candidate) => candidate.id === result.puzzleIds[index])) : null;
+  const reviewPuzzle = puzzle ? { ...puzzle, grid: result.startingGrids[index] } : null;
+  const paths = reviewPuzzle?.bestMethod?.length ? findSolutionPaths(reviewPuzzle).paths.slice(0, 5) : [];
   const selectedAnswer = target ? result.answers[index][target.row][target.column] : null;
   detail.className = 'review-detail';
   detail.innerHTML = `
     <h2>Question ${index + 1}</h2>
     <p class="small muted">${escapeHtml(result.puzzleIds[index])} · ${formatTime(result.questionTimes[index])}</p>
     ${target ? `<p><strong>Your answer:</strong> ${selectedAnswer || 'Unanswered'} &nbsp; <strong>Correct answer:</strong> ${target.value}</p>` : ''}
-    ${target ? reviewMethodMarkup(puzzle ? { ...puzzle, grid: result.startingGrids[index] } : null) : ''}
-    <div class="review-grids">
-      <div class="review-grid"><h3>Your answer</h3>${readonlyGrid(result.answers[index], result.startingGrids[index], cellStatusGrid(result, index), 'Your answer', target, true)}</div>
-      <div class="review-grid"><h3>Complete solution</h3>${readonlyGrid(result.solutions[index], result.startingGrids[index], null, 'Complete solution', target)}</div>
-    </div>`;
+    <section class="latin-review">
+      ${paths.length ? `<fieldset class="solution-picker">
+        <legend>Solution path</legend>
+        <div class="solution-options">${paths.map((_, pathIndex) => `<label><input type="radio" name="review-solution" value="${pathIndex}" aria-controls="review-solution-grid review-solution-explanation"${pathIndex === 0 ? ' checked' : ''}> Solution ${pathIndex + 1}</label>`).join('')}</div>
+      </fieldset>` : ''}
+      <div class="review-grids">
+        <div class="review-grid"><h3>Your answer</h3>${readonlyGrid(result.answers[index], result.startingGrids[index], cellStatusGrid(result, index), 'Your answer', target, true)}</div>
+        <div class="review-grid"><h3>Solution</h3><div id="review-solution-grid">${paths.length ? '' : target ? '<p class="muted">The deduction path is unavailable for this puzzle.</p>' : readonlyGrid(result.solutions[index], result.startingGrids[index], null, 'Solution')}</div></div>
+      </div>
+      ${paths.length ? `<p id="review-solution-summary" class="inference-summary small muted" aria-live="polite"></p>
+      <details class="solution-explanation">
+        <summary>Show detailed explanation</summary>
+        <div id="review-solution-explanation"></div>
+      </details>` : ''}
+    </section>`;
+  const selectSolution = (pathIndex) => {
+    const method = paths[pathIndex];
+    const level = DIFFICULTY_NAMES[puzzle.difficulty.targetCell] || puzzle.difficulty.targetCell;
+    detail.querySelector('#review-solution-grid').innerHTML = reviewPathGrid(reviewPuzzle, method, pathIndex);
+    detail.querySelector('#review-solution-summary').textContent = `Solution ${pathIndex + 1} · ${method.length} deduction${method.length === 1 ? '' : 's'} · ${level} · score ${method.reduce((sum, step) => sum + step.weight + 2, 0)}`;
+    detail.querySelector('#review-solution-explanation').innerHTML = reviewExplanationMarkup(reviewPuzzle, method);
+  };
+  if (paths.length) {
+    selectSolution(0);
+    detail.querySelectorAll('input[name="review-solution"]').forEach((radio) => radio.addEventListener('change', () => {
+      if (radio.checked) selectSolution(Number(radio.value));
+    }));
+  }
   detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
