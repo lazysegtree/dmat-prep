@@ -1,3 +1,4 @@
+import { findSolutionPaths } from './latin-solution-paths.js';
 import { examMarkup, examNavigator, bindExamControls, updateExamNavigator, setExamMode } from './exam-ui.js';
 import { transferMarkup, bindTransfer } from './data-transfer.js';
 import { PuzzleUI } from './puzzle-ui.js';
@@ -525,21 +526,23 @@ function reviewMethodMarkup(puzzle) {
   if (!puzzle?.bestMethod?.length) {
     return `
       <section class="inference-path" aria-labelledby="review-method-title">
-        <h3 id="review-method-title">Efficient solution path</h3>
+        <h3 id="review-method-title">Efficient solution paths</h3>
         <p class="muted">The deduction path is unavailable for this puzzle.</p>
       </section>`;
   }
-  const method = puzzle.bestMethod;
+  const { paths, maxScore, maxSteps } = findSolutionPaths(puzzle);
   const level = DIFFICULTY_NAMES[puzzle.difficulty.targetCell] || puzzle.difficulty.targetCell;
   return `
     <section class="inference-path" aria-labelledby="review-method-title">
       <div class="inference-path-header">
         <div>
-          <h3 id="review-method-title">Efficient solution path</h3>
-          <p class="small muted">The lowest-effort chain found using the trainer’s supported deduction rules.</p>
+          <h3 id="review-method-title">Efficient solution paths</h3>
+          <p class="small muted">All non-redundant placement paths using the trainer’s rules, up to ${maxSteps} deductions and score ${maxScore} (best score + 3). Alternative proofs of the same placement are listed together; scores use the lowest-effort proof at each step.</p>
         </div>
-        <p class="inference-summary"><strong>${method.length} deduction${method.length === 1 ? '' : 's'}</strong><span>${escapeHtml(level)} · score ${escapeHtml(puzzle.difficulty.score)}</span></p>
+        <p class="inference-summary"><strong>${paths.length} path${paths.length === 1 ? '' : 's'}</strong><span>${escapeHtml(level)} · best score ${escapeHtml(puzzle.difficulty.score)}</span></p>
       </div>
+      ${paths.map((method, pathIndex) => `<section class="solution-alternative">
+      <h4>Path ${pathIndex + 1} · ${method.length} deduction${method.length === 1 ? '' : 's'} · score ${method.reduce((sum, step) => sum + step.weight + 2, 0)}</h4>
       <ol class="inference-steps">
         ${method.map((inference, step) => {
           const placement = inference.placement;
@@ -551,10 +554,10 @@ function reviewMethodMarkup(puzzle) {
                 <strong>${escapeHtml(cellName(placement))} = ${escapeHtml(placement.value)}</strong>
                 ${isTarget ? '<span class="target-badge">Target</span>' : ''}
               </div>
-              <p>${escapeHtml(inference.details)}</p>
+              ${inference.reasons.map((reason) => `<p>${escapeHtml(reason.details)}</p>`).join('')}
             </li>`;
         }).join('')}
-      </ol>
+      </ol></section>`).join('')}
     </section>`;
 }
 
@@ -569,7 +572,7 @@ function showReviewDetail(result, index) {
     <h2>Question ${index + 1}</h2>
     <p class="small muted">${escapeHtml(result.puzzleIds[index])} · ${formatTime(result.questionTimes[index])}</p>
     ${target ? `<p><strong>Your answer:</strong> ${selectedAnswer || 'Unanswered'} &nbsp; <strong>Correct answer:</strong> ${target.value}</p>` : ''}
-    ${target ? reviewMethodMarkup(puzzle) : ''}
+    ${target ? reviewMethodMarkup(puzzle ? { ...puzzle, grid: result.startingGrids[index] } : null) : ''}
     <div class="review-grids">
       <div class="review-grid"><h3>Your answer</h3>${readonlyGrid(result.answers[index], result.startingGrids[index], cellStatusGrid(result, index), 'Your answer', target, true)}</div>
       <div class="review-grid"><h3>Complete solution</h3>${readonlyGrid(result.solutions[index], result.startingGrids[index], null, 'Complete solution', target)}</div>
