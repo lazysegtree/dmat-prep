@@ -530,18 +530,19 @@ function reviewMethodMarkup(puzzle) {
         <p class="muted">The deduction path is unavailable for this puzzle.</p>
       </section>`;
   }
-  const { paths, maxScore, maxSteps } = findSolutionPaths(puzzle);
+  const { paths } = findSolutionPaths(puzzle);
+  const visiblePaths = paths.slice(0, 3);
   const level = DIFFICULTY_NAMES[puzzle.difficulty.targetCell] || puzzle.difficulty.targetCell;
   return `
     <section class="inference-path" aria-labelledby="review-method-title">
       <div class="inference-path-header">
         <div>
           <h3 id="review-method-title">Efficient solution paths</h3>
-          <p class="small muted">All non-redundant placement paths using the trainer’s rules, up to ${maxSteps} deductions and score ${maxScore} (best score + 3). Alternative proofs of the same placement are listed together; scores use the lowest-effort proof at each step.</p>
+          <p class="small muted">The best path, with up to two alternatives below. Alternative proofs of the same placement are listed together.</p>
         </div>
-        <p class="inference-summary"><strong>${paths.length} path${paths.length === 1 ? '' : 's'}</strong><span>${escapeHtml(level)} · best score ${escapeHtml(puzzle.difficulty.score)}</span></p>
+        <p class="inference-summary"><strong>${visiblePaths.length} path${visiblePaths.length === 1 ? '' : 's'}</strong><span>${escapeHtml(level)} · best score ${escapeHtml(puzzle.difficulty.score)}</span></p>
       </div>
-      ${paths.map((method, pathIndex) => `<section class="solution-alternative">
+      ${visiblePaths.map((method, pathIndex) => `${pathIndex === 1 ? `<details class="solution-alternatives"><summary>Show ${visiblePaths.length - 1} alternative path${visiblePaths.length > 2 ? 's' : ''}</summary>` : ''}<section class="solution-alternative">
       <h4>Path ${pathIndex + 1} · ${method.length} deduction${method.length === 1 ? '' : 's'} · score ${method.reduce((sum, step) => sum + step.weight + 2, 0)}</h4>
       <ol class="inference-steps">
         ${method.map((inference, step) => {
@@ -557,7 +558,7 @@ function reviewMethodMarkup(puzzle) {
               ${inference.reasons.map((reason) => `<p>${escapeHtml(reason.details)}</p>`).join('')}
             </li>`;
         }).join('')}
-      </ol></section>`).join('')}
+      </ol></section>${pathIndex === visiblePaths.length - 1 && pathIndex > 0 ? '</details>' : ''}`).join('')}
     </section>`;
 }
 

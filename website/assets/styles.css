@@ -614,3 +614,6 @@ body.exam-mode {
   .exam-column { padding-right: 12px; padding-left: 12px; }
   .exam-column h2 { font-size: calc(clamp(22px, 6.67vw, 26px) * var(--exam-scale)); }
 }
+
+.solution-alternatives { margin-top: 20px; padding: 16px; border: 1px solid var(--line); border-radius: 8px; }
+.solution-alternatives > summary { cursor: pointer; font-weight: 600; }

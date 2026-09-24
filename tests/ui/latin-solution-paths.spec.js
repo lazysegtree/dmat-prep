@@ -3,9 +3,9 @@ import fs from 'node:fs';
 import { findSolutionPaths } from '../../website/js/latin-solution-paths.js';
 
 const bank = JSON.parse(fs.readFileSync(new URL('../../website/data/latin-squares/puzzles.json', import.meta.url))).puzzles;
-const puzzle = bank.find((item) => item.difficulty.targetCell === 'exam' && findSolutionPaths(item).paths.length === 2);
+const puzzle = bank.find((item) => findSolutionPaths(item).paths.length > 3);
 
-test('review prints every alternative and its proofs, including on mobile', async ({ page }) => {
+test('review shows the best path and at most two collapsed alternatives', async ({ page }) => {
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('/latin-squares/progress/');
@@ -20,10 +20,15 @@ test('review prints every alternative and its proofs, including on mobile', asyn
   await page.goto('/latin-squares/progress/?session=alternatives');
   await page.getByRole('button', { name: 'Review', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Efficient solution paths', exact: true })).toBeVisible();
-  const paths = findSolutionPaths(puzzle).paths;
+  const paths = findSolutionPaths(puzzle).paths.slice(0, 3);
   await expect(page.locator('.solution-alternative')).toHaveCount(paths.length);
+  await expect(page.locator('.solution-alternative').first()).toBeVisible();
+  await expect(page.locator('.solution-alternative').nth(1)).toBeHidden();
+  await expect(page.locator('.solution-alternative').nth(2)).toBeHidden();
+  await page.getByText('Show 2 alternative paths', { exact: true }).click();
   for (let index = 0; index < paths.length; index++) {
     const printed = page.locator('.solution-alternative').nth(index);
+    await expect(printed).toBeVisible();
     await expect(printed.locator('.inference-step')).toHaveCount(paths[index].length);
     for (const step of paths[index]) for (const reason of step.reasons) await expect(printed).toContainText(reason.details);
   }
