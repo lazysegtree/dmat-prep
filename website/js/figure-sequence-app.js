@@ -124,7 +124,7 @@ function difficultyFromUrl() {
   const url = new URL(window.location.href);
   const difficulty = url.searchParams.get('difficulty');
   if (!difficulty) return 'medium';
-  if (Object.hasOwn(DIFFICULTY_NAMES, difficulty)) return difficulty;
+  if (difficulty === 'random' || Object.hasOwn(DIFFICULTY_NAMES, difficulty)) return difficulty;
   url.searchParams.delete('difficulty');
   window.history.replaceState(null, '', url);
   return 'medium';
@@ -134,7 +134,7 @@ function renderSetup(mode, difficulty) {
  app.innerHTML = `<section class="panel"><p class="eyebrow">Figure Sequences · ${MODE_NAMES[mode]}</p>
  <h1>${mode === 'learn' ? 'Follow each figure.' : 'Build a clean pace.'}</h1>
  <p class="muted">${mode === 'learn' ? 'One untimed sequence. Hints are available before checking both answers.' : '10 sequences. Target: 12:30. Feedback appears after submission.'}</p>
- <div class="field"><label for="difficulty">Training difficulty</label><select id="difficulty">${Object.entries(DIFFICULTY_NAMES).map(([key, label]) => `<option value="${key}" ${key === difficulty ? 'selected' : ''}>${label}</option>`).join('')}</select></div>
+ <div class="field"><label for="difficulty">Training difficulty</label><select id="difficulty">${Object.entries(DIFFICULTY_NAMES).map(([key, label]) => `<option value="${key}" ${key === difficulty ? 'selected' : ''}>${label}</option>`).join('')}<option value="random"${difficulty === 'random' ? ' selected' : ''}>Random — 25% per difficulty</option></select></div>
  <p class="small muted">Difficulty is provisional and reflects the number of figures and changing properties.</p>
  <div class="button-row"><button class="button" id="start-session">Start ${MODE_NAMES[mode]}</button><a class="button secondary" href="${routeUrl('home')}">Back</a></div></section>`;
  app.querySelector('#start-session').addEventListener('click', () => startSession(mode, app.querySelector('#difficulty').value));
@@ -166,7 +166,7 @@ function mockLevelFromUrl() {
 function sessionDifficultyName(session) {
   if (session.mode === 'mock') return MOCK_LEVELS[session.difficulty]?.name || 'Normal';
   if (session.mode === 'drill') return drillDifficultyName(session.difficulty, STANDARD_DRILL);
-  return DIFFICULTY_NAMES[session.difficulty] || 'Mixed difficulty';
+  return session.difficulty === 'random' ? 'Random' : DIFFICULTY_NAMES[session.difficulty] || 'Mixed difficulty';
 }
 
 function mockMixDescription(level) {
@@ -203,7 +203,11 @@ function shuffle(values) {
 }
 
 function chooseQuestions(mode, difficulty) {
-  if (mode === 'learn') return shuffle(bank.filter((question) => question.difficulty.level === difficulty)).slice(0, 1);
+  if (mode === 'learn') {
+    const levels = Object.keys(DIFFICULTY_NAMES);
+    if (difficulty === 'random') difficulty = levels[Math.floor(Math.random() * levels.length)];
+    return shuffle(bank.filter((question) => question.difficulty.level === difficulty)).slice(0, 1);
+  }
   const mix = MOCK_LEVELS[difficulty || 'normal'].mix;
   return shuffle(Object.entries(mix).flatMap(([level, count]) =>
     selectDiversePuzzles(bank.filter((question) => question.difficulty.level === level), count)));

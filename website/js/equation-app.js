@@ -76,7 +76,7 @@ function difficultyFromUrl() {
   const url = new URL(window.location.href);
   const difficulty = url.searchParams.get('difficulty');
   if (!difficulty) return 'medium';
-  if (Object.hasOwn(DIFFICULTY_NAMES, difficulty)) return difficulty;
+  if (difficulty === 'random' || Object.hasOwn(DIFFICULTY_NAMES, difficulty)) return difficulty;
   url.searchParams.delete('difficulty');
   window.history.replaceState(null, '', url);
   return 'medium';
@@ -97,6 +97,7 @@ function renderSetup(mode, difficulty) {
           <option value="medium"${difficulty === 'medium' ? ' selected' : ''}>Medium — linked substitution or elimination</option>
           <option value="high"${difficulty === 'high' ? ' selected' : ''}>High — multi-step cancellation and memory load</option>
           <option value="extreme"${difficulty === 'extreme' ? ' selected' : ''}>Extreme — four-letter, multi-stage mental work</option>
+          <option value="random"${difficulty === 'random' ? ' selected' : ''}>Random — 25% per difficulty</option>
         </select>
         <p class="small muted">The labels come from a transparent mental-work score applied after generation; they are not official psychometric calibration.</p>
       </div>
@@ -138,7 +139,7 @@ function mockLevelFromUrl() {
 function sessionDifficultyName(session) {
   if (session.mode === 'mock') return MOCK_LEVELS[session.difficulty]?.name || 'Normal';
   if (session.mode === 'drill') return drillDifficultyName(session.difficulty, STANDARD_DRILL);
-  return DIFFICULTY_NAMES[session.difficulty] || 'Mixed difficulty';
+  return session.difficulty === 'random' ? 'Random' : DIFFICULTY_NAMES[session.difficulty] || 'Mixed difficulty';
 }
 
 function mockMixDescription(level) {
@@ -179,7 +180,11 @@ function shuffle(values) {
 }
 
 function chooseQuestions(mode, difficulty) {
-  if (mode === 'learn') return shuffle(bank.filter((question) => question.difficulty.level === difficulty)).slice(0, 1);
+  if (mode === 'learn') {
+    const levels = Object.keys(DIFFICULTY_NAMES);
+    if (difficulty === 'random') difficulty = levels[Math.floor(Math.random() * levels.length)];
+    return shuffle(bank.filter((question) => question.difficulty.level === difficulty)).slice(0, 1);
+  }
   const mix = MOCK_LEVELS[difficulty || 'normal'].mix;
   return shuffle(Object.entries(mix).flatMap(([level, count]) =>
     shuffle(bank.filter((question) => question.difficulty.level === level)).slice(0, count)));

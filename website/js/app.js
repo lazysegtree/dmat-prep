@@ -107,7 +107,7 @@ function difficultyFromUrl() {
   const url = new URL(window.location.href);
   const difficulty = url.searchParams.get('difficulty');
   if (!difficulty) return 'exam';
-  if (Object.hasOwn(DIFFICULTY_NAMES, difficulty)) return difficulty;
+  if (difficulty === 'random' || Object.hasOwn(DIFFICULTY_NAMES, difficulty)) return difficulty;
   url.searchParams.delete('difficulty');
   window.history.replaceState(null, '', url);
   return 'exam';
@@ -134,6 +134,7 @@ function renderLearnSetup(difficulty = 'exam') {
           <option value="exam"${difficulty === 'exam' ? ' selected' : ''}>Exam Standard — provisional training level</option>
           <option value="hard"${difficulty === 'hard' ? ' selected' : ''}>Hard — longer deduction chains</option>
           <option value="extreme"${difficulty === 'extreme' ? ' selected' : ''}>Extreme — deliberate overtraining</option>
+          <option value="random"${difficulty === 'random' ? ' selected' : ''}>Random — 25% per difficulty</option>
         </select>
         <p class="small muted">“Exam Standard” is a provisional label and is not officially calibrated.</p>
       </div>
@@ -176,7 +177,7 @@ function mockLevelFromUrl() {
 function sessionDifficultyName(session) {
   if (session.mode === 'mock') return MOCK_LEVELS[session.difficulty]?.name || 'Previous mix (3 Easy, 11 Exam Standard, 6 Hard)';
   if (session.mode === 'drill') return drillDifficultyName(session.difficulty, LATIN_DRILL);
-  return DIFFICULTY_NAMES[session.difficulty] || 'Mixed difficulty';
+  return session.difficulty === 'random' ? 'Random' : DIFFICULTY_NAMES[session.difficulty] || 'Mixed difficulty';
 }
 
 function mockMixDescription(level) {
@@ -228,6 +229,8 @@ function puzzleDifficulty(puzzle) {
 
 function choosePuzzles(mode, difficulty) {
   if (mode !== 'mock') {
+    const levels = Object.keys(DIFFICULTY_NAMES);
+    if (difficulty === 'random') difficulty = levels[Math.floor(Math.random() * levels.length)];
     return shuffle(bank.filter((puzzle) => puzzleDifficulty(puzzle) === difficulty)).slice(0, 1);
   }
   const mix = MOCK_LEVELS[difficulty || 'normal'].mix;
