@@ -249,6 +249,7 @@ function startSession(mode, difficulty = null, selectedPuzzles = null) {
     startedAt: Date.now(),
     hintUsed: false,
   };
+  activeSession.savedAnswers = structuredClone(activeSession.answers);
   renderPlay();
 
   if (mode === 'drill') {
@@ -291,7 +292,7 @@ function renderPlay() {
       <section class="exam-latin-square"><h2>Square</h2><div class="grid-wrap"><div id="puzzle-grid"></div></div></section>
       <section class="exam-latin-answers"><h2>Answer column</h2><div class="symbol-pad" role="group" aria-label="Answer column">${SYMBOLS.map((symbol) => `<button class="symbol-key" type="button" data-symbol="${symbol}" aria-pressed="false">${symbol}</button>`).join('')}</div><button class="latin-clear-answer" type="button" data-clear aria-label="Clear answer" title="Backspace or Delete">Clear</button></section>
     </div>`,
-    navigator: examNavigator(session.puzzles, session.current, (item, index) => editableComplete(item, session.answers[index], session.questionType), 'Question', session.reviewFlags),
+    navigator: examNavigator(session.puzzles, session.current, (item, index) => editableComplete(item, session.savedAnswers[index], session.questionType), 'Question', session.reviewFlags),
     current: session.current,
     count: session.puzzles.length,
     timerLabel: timed ? (session.mode === 'mock' ? 'Time remaining' : 'Time elapsed') : null,
@@ -315,7 +316,7 @@ function renderPlay() {
   app.querySelector('[data-clear]').addEventListener('click', () => puzzleUi.clear());
   app.querySelectorAll('[data-question]').forEach((button) => button.addEventListener('click', () => changeQuestion(Number(button.dataset.question))));
   app.querySelector('#previous-question')?.addEventListener('click', () => changeQuestion(session.current - 1));
-  app.querySelector('#next-question')?.addEventListener('click', () => changeQuestion(session.current + 1));
+  app.querySelector('#next-question')?.addEventListener('click', saveAndNext);
   app.querySelector('#show-hint')?.addEventListener('click', showHint);
   app.querySelector('#submit-session').addEventListener('click', () => {
     if (session.mode === 'mock' && !window.confirm('Submit this mock now? You will not be able to change your answers.')) return;
@@ -336,13 +337,21 @@ function updateAnswerSelection() {
 function updateNavigatorState() {
   if (!activeSession || activeSession.puzzles.length === 1) return;
   const current = activeSession.current;
-  const answered = editableComplete(activeSession.puzzles[current], activeSession.answers[current], activeSession.questionType);
+  const answered = editableComplete(activeSession.puzzles[current], activeSession.savedAnswers[current], activeSession.questionType);
   updateExamNavigator(app, current, answered);
+}
+
+function saveAndNext() {
+  const session = activeSession;
+  session.savedAnswers[session.current] = structuredClone(session.answers[session.current]);
+  if (session.current < session.puzzles.length - 1) changeQuestion(session.current + 1);
+  else renderPlay();
 }
 
 function changeQuestion(index) {
   if (!activeSession || index < 0 || index >= activeSession.puzzles.length || index === activeSession.current) return;
   recordCurrentQuestionTime();
+  activeSession.answers[activeSession.current] = structuredClone(activeSession.savedAnswers[activeSession.current]);
   activeSession.current = index;
   renderPlay();
   if (clock) {
@@ -364,6 +373,7 @@ function showHint() {
 
 function finishSession(automatic) {
   if (!activeSession) return;
+  if (activeSession.mode !== 'learn') activeSession.answers = structuredClone(activeSession.savedAnswers);
   recordCurrentQuestionTime();
   const session = activeSession;
   const elapsed = clock ? clock.stop() : Math.floor((Date.now() - session.startedAt) / 1000);

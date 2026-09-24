@@ -53,7 +53,7 @@ export function examMarkup({ task, modeName, heading, instructions, content, nav
     <footer class="exam-footer">
       <div class="exam-brand"><span class="exam-brand-mark" aria-hidden="true">dM</span><div><strong>dMAT</strong><span>Practice trainer</span></div></div>
       <div class="exam-navigation">
-        ${count > 1 ? `<button class="exam-save" id="previous-question" type="button" ${current === 0 ? 'disabled' : ''}><span aria-hidden="true">←</span> Save and back</button>${navigator}<button class="exam-save" id="next-question" type="button" ${current === count - 1 ? 'disabled' : ''}>Save and forward <span aria-hidden="true">→</span></button>` : '<span class="exam-practice-note">Untimed practice</span>'}
+        ${count > 1 ? `<button class="exam-save" id="previous-question" type="button" ${current === 0 ? 'disabled' : ''}><span aria-hidden="true">←</span> Back</button>${navigator}<button class="exam-save" id="next-question" type="button">${current === count - 1 ? 'Save answer' : 'Save and Next'} <span aria-hidden="true">→</span></button>` : '<span class="exam-practice-note">Untimed practice</span>'}
       </div>
       <button class="exam-leave" id="leave-session" type="button">Leave session</button>
     </footer>

@@ -23,21 +23,21 @@ test('equation keyboard edits the focused answer and keeps answers through navig
   await first.pressSequentially('7');
   const fieldCount = await page.locator('[data-variable]').count();
   for (let index = 2; index < fieldCount; index++) await page.locator('[data-variable]').nth(index).fill('1');
-  await expect(page.locator('[data-question="0"]')).toHaveAttribute('aria-label', 'Question 1, answered');
-  await expect(page.getByRole('button', { name: 'Save and back' })).toBeDisabled();
+  await expect(page.locator('[data-question="0"]')).toHaveAttribute('aria-label', 'Question 1, unanswered');
+  await expect(page.getByRole('button', { name: 'Back', exact: true })).toBeDisabled();
   await page.screenshot({ path: '/tmp/dmat-exam-equations-desktop.png', fullPage: true });
 
   await page.getByRole('button', { name: 'Large text', exact: true }).click();
   await page.getByRole('button', { name: 'Hide instructions', exact: true }).click();
-  await page.getByRole('button', { name: 'Save and forward' }).click();
+  await page.getByRole('button', { name: 'Save and Next' }).click();
   await expect(page.locator('#exam-instruction-text')).toBeHidden();
   await expect(page.getByRole('button', { name: 'Large text', exact: true })).toHaveAttribute('aria-pressed', 'true');
-  await page.getByRole('button', { name: 'Save and back' }).click();
+  await page.getByRole('button', { name: 'Back', exact: true }).click();
   await expect(first).toHaveValue('7');
   await expect(second).toHaveValue('10');
   await page.locator('[data-question="9"]').click();
   await expect(page.locator('[data-question="9"]')).toBeInViewport();
-  await expect(page.getByRole('button', { name: 'Save and forward' })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Save answer', exact: true })).toBeEnabled();
   await expect(page.locator('#show-hint')).toHaveCount(0);
   await expect(page.locator('.status, .answer-comparison')).toHaveCount(0);
   await page.getByRole('button', { name: 'End Subtest' }).click();
@@ -69,13 +69,13 @@ for (const task of ['mathematical-equations', 'latin-squares', 'figure-sequences
       await page.locator('[data-frame="0"][data-option="0"]').click();
       await page.locator('[data-frame="1"][data-option="1"]').click();
     }
-    await expect(first).toHaveAttribute('aria-label', /, answered, marked for review$/);
+    await expect(first).toHaveAttribute('aria-label', /, unanswered, marked for review$/);
     await expect(review).toHaveAttribute('aria-pressed', 'true');
-    await page.getByRole('button', { name: 'Save and forward' }).click();
+    await page.getByRole('button', { name: 'Save and Next' }).click();
     await expect(review).toHaveAttribute('aria-pressed', 'false');
     await review.click();
     await expect(page.locator('.nav-question.marked-for-review')).toHaveCount(2);
-    await page.getByRole('button', { name: 'Save and back' }).click();
+    await page.getByRole('button', { name: 'Back', exact: true }).click();
     await expect(review).toHaveAttribute('aria-pressed', 'true');
     await page.getByRole('button', { name: 'Remove review mark', exact: true }).click();
     await expect(first).not.toHaveClass(/marked-for-review/);
@@ -105,8 +105,8 @@ for (const task of ['mathematical-equations', 'latin-squares', 'figure-sequences
     await page.locator('[data-question="19"]').click();
     await expect(page.locator('[data-question="19"]')).toHaveAttribute('aria-current', 'true');
     await expect(page.locator('[data-question="19"]')).toBeInViewport();
-    await expect(page.getByRole('button', { name: 'Save and forward' })).toBeDisabled();
-    await page.getByRole('button', { name: 'Save and back' }).click();
+    await expect(page.getByRole('button', { name: 'Save answer', exact: true })).toBeEnabled();
+    await page.getByRole('button', { name: 'Back', exact: true }).click();
     await expect(page.locator('[data-question="18"]')).toHaveAttribute('aria-current', 'true');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await page.screenshot({ path: `/tmp/dmat-exam-${task}-mobile.png`, fullPage: true });

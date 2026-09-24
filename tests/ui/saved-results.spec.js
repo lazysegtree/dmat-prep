@@ -6,7 +6,7 @@ test('saved drill results survive reload, backup restore, and puzzle bank change
   await page.getByRole('button', { name: 'Start Speed Drill' }).click();
   await page.getByRole('button', { name: 'C', exact: true }).click();
   await page.clock.fastForward(91000);
-  await page.getByRole('button', { name: 'Save and forward' }).click();
+  await page.getByRole('button', { name: 'Save and Next' }).click();
   await page.clock.fastForward(4000);
   await page.getByRole('button', { name: 'End Subtest' }).click();
   const summary = await page.locator('.results-summary').innerText();

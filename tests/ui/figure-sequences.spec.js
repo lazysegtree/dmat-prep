@@ -119,8 +119,8 @@ test('drill keeps both choices through navigation, hides feedback and guards lea
  }
  await page.locator('[data-frame="0"][data-option="0"]').click();
  await page.locator('[data-frame="1"][data-option="1"]').click();
- await page.getByRole('button', { name: 'Save and forward' }).click();
- await page.getByRole('button', { name: 'Save and back' }).click();
+ await page.getByRole('button', { name: 'Save and Next' }).click();
+ await page.getByRole('button', { name: 'Back', exact: true }).click();
  await expect(page.locator('[data-frame="0"][data-option="0"]')).toHaveAttribute('aria-pressed', 'true');
  await expect(page.locator('[data-frame="1"][data-option="1"]')).toHaveAttribute('aria-pressed', 'true');
  await page.locator('[data-frame="0"][data-option="2"]').press('Enter');
@@ -151,6 +151,7 @@ test('mock expires once with paired partial credit and bounded time', async ({ p
  const id = await page.locator('[data-question-id]').getAttribute('data-question-id');
  const first = bank.puzzles.find((question) => question.id === id);
  await page.locator(`[data-frame="0"][data-option="${first.questions[0].answerIndex}"]`).click();
+ await page.getByRole('button', { name: 'Save and Next' }).click();
  await page.clock.fastForward(1560000);
  await expect(page.getByText('Time expired, so the mock was submitted automatically.')).toBeVisible();
  await page.clock.fastForward(10000);

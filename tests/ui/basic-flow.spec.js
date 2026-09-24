@@ -69,9 +69,9 @@ test('Latin answer column aligns with the square and preserves the selected answ
   await page.keyboard.press('Backspace');
   await expect(page.locator('[data-symbol][aria-pressed="true"]')).toHaveCount(0);
   await page.getByRole('button', { name: 'C', exact: true }).click();
-  await page.getByRole('button', { name: 'Save and forward' }).click();
+  await page.getByRole('button', { name: 'Save and Next' }).click();
   await expect(page.locator('[data-symbol][aria-pressed="true"]')).toHaveCount(0);
-  await page.getByRole('button', { name: 'Save and back' }).click();
+  await page.getByRole('button', { name: 'Back', exact: true }).click();
   await expect(page.getByRole('button', { name: 'C', exact: true })).toHaveAttribute('aria-pressed', 'true');
   await expect(grid.getByRole('gridcell', { name: /target question/ })).toHaveText('?');
   await page.getByRole('heading', { name: 'Question 1 of 10' }).click();

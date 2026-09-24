@@ -84,7 +84,7 @@ Purpose: simulate the Latin-square portion of the examination.
 - All questions are selected before the mock begins.
 - The timer counts down and remains visible.
 - Users can move forward and backward between questions.
-- A navigator distinguishes the current, answered, and unanswered questions.
+- A navigator distinguishes the current, answered, and unanswered questions. In timed modes, only `Save and Next` (`Save answer` on the last question) records a response. Numbered navigation and `Back` discard unsaved edits and retain any previously saved response. Ending the subtest or timer expiry scores only saved responses; unsaved questions remain unanswered. Untimed practice uses `Check answer` as before.
 - No hints, solutions, or correctness feedback are available during the mock.
 - The mock submits automatically when time expires.
 - Manual submission requires confirmation.

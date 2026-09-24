@@ -227,6 +227,7 @@ function startSession(mode, difficulty = null, selectedQuestions = null) {
     startedAt: Date.now(),
     hintUsed: false,
   };
+  activeSession.savedAnswers = structuredClone(activeSession.answers);
   renderQuestion();
   if (mode === 'drill') clock = new SessionClock({ onTick: (seconds) => updateTimer(seconds, false) });
   if (mode === 'mock') clock = new SessionClock({ duration: 25 * 60, onTick: (seconds) => updateTimer(seconds, seconds <= 60), onExpire: () => finishSession(true) });
@@ -257,7 +258,7 @@ function renderQuestion() {
   heading: `Sequence ${session.current + 1} of ${session.questions.length}`,
   instructions: '<strong>Which pictures are missing in the row?</strong><p>The series of pictures has to be continued. Each picture consists of symbols, which can change in color, position, and orientation.</p><p>Below each question mark, there are three options. Click onto the two correct answers with the mouse. If you do not know an answer, please guess.</p>',
   content: examSequenceMarkup(question, session.answers[session.current]),
-  navigator: examNavigator(session.questions, session.current, (item, index) => answerComplete(item, session.answers[index]), 'Sequence', session.reviewFlags),
+  navigator: examNavigator(session.questions, session.current, (item, index) => answerComplete(item, session.savedAnswers[index]), 'Sequence', session.reviewFlags),
   current: session.current,
   count: session.questions.length,
   timerLabel: timed ? (session.mode === 'mock' ? 'Time remaining' : 'Time elapsed') : null,
@@ -274,7 +275,7 @@ function renderQuestion() {
  }));
  app.querySelectorAll('[data-question]').forEach((button) => button.addEventListener('click', () => changeQuestion(Number(button.dataset.question))));
  app.querySelector('#previous-question')?.addEventListener('click', () => changeQuestion(session.current - 1));
- app.querySelector('#next-question')?.addEventListener('click', () => changeQuestion(session.current + 1));
+ app.querySelector('#next-question')?.addEventListener('click', saveAndNext);
  app.querySelector('#show-hint')?.addEventListener('click', showHint);
  app.querySelector('#submit-session').addEventListener('click', () => {
   if (session.mode === 'mock' && !window.confirm('Submit this mock now? You will not be able to change your answers.')) return;
@@ -283,9 +284,17 @@ function renderQuestion() {
  app.querySelector('#leave-session').addEventListener('click', () => navigateTo('home'));
 }
 
+function saveAndNext() {
+  const session = activeSession;
+  session.savedAnswers[session.current] = structuredClone(session.answers[session.current]);
+  if (session.current < session.questions.length - 1) changeQuestion(session.current + 1);
+  else renderQuestion();
+}
+
 function changeQuestion(index) {
   if (!activeSession || index < 0 || index >= activeSession.questions.length || index === activeSession.current) return;
   recordQuestionTime();
+  activeSession.answers[activeSession.current] = structuredClone(activeSession.savedAnswers[activeSession.current]);
   activeSession.current = index;
   renderQuestion();
   if (clock) {
@@ -304,6 +313,7 @@ function showHint() {
 
 function finishSession(automatic) {
   if (!activeSession) return;
+  if (activeSession.mode !== 'learn') activeSession.answers = structuredClone(activeSession.savedAnswers);
   recordQuestionTime();
   const session = activeSession;
   const elapsed = clock ? clock.stop() : Math.floor((Date.now() - session.startedAt) / 1000);
