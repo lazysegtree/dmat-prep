@@ -151,7 +151,9 @@ Before showing Home, the application rejects a bank when:
 - any difficulty has fewer than 10 puzzles; or
 - the bank cannot supply the configured mock mixture.
 
-The checked-in version-one bank contains 48 puzzles: 12 each at Easy, Exam Standard, Hard, and Extreme. Every puzzle has exactly one solution and one generated target-cell hint.
+The checked-in version-one bank contains 480 puzzles: 120 each at Easy, Exam Standard, Hard, and Extreme. All original 48 puzzles and their IDs are retained unchanged. Every puzzle has exactly one solution and one generated target-cell hint.
+
+Learn, Speed Drill, and Full Mock prefer unseen puzzles within each requested difficulty, then reuse the least recently selected puzzles when needed to fill the session. Selection history is shared across these modes and saved in this browser when a session starts, including abandoned sessions. It is seeded from saved results, kept separately from the 50-result limit, and cleared by Delete all progress. Exact puzzle links still open the requested puzzle. The selection history itself is not included in progress backups; imported results seed history on the next page load.
 
 The offline generator and verifier are the only supported way to replace this bank. Its full generation, reproducibility, validation, catalogue, CLI, and JSON requirements are defined in `docs/specs/puzzle-generation-spec.md`.
 

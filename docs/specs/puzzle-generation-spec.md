@@ -315,6 +315,14 @@ Generation is all-or-nothing. The generator must produce every requested difficu
 
 ## 10. Acceptance checks
 
+Reproduce the checked-in 480-puzzle bank (120 per level), retaining the original
+48 puzzles through the same seed and generation settings:
+
+```sh
+go run ./cmd/puzzle-generator --puzzles-out website/data/latin-squares/puzzles.json --catalogue-out data/reduced-latin-squares.json --seed 42 --count-easy 120 --count-exam 120 --count-hard 120 --count-extreme 120 --max-attempts 100000 --max-search-depth 12
+go run ./cmd/puzzle-generator --verify --puzzles-out website/data/latin-squares/puzzles.json --catalogue-out data/reduced-latin-squares.json
+```
+
 Automated tests verify:
 
 - Generated complete grids obey Latin-square rules.

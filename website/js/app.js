@@ -1,4 +1,5 @@
 import { findSolutionPaths } from './latin-solution-paths.js';
+import { createPuzzleHistory } from './latin-puzzle-selection.js';
 import { examMarkup, examNavigator, bindExamControls, updateExamNavigator, setExamMode } from './exam-ui.js';
 import { transferMarkup, bindTransfer } from './data-transfer.js';
 import { PuzzleUI } from './puzzle-ui.js';
@@ -35,6 +36,7 @@ const QUESTION_TYPE_NAMES = { target: 'Find the ?', full: 'Complete the grid' };
 const PUZZLE_FORMAT_VERSION = 1;
 
 let bank = [];
+let puzzleHistory = null;
 let activeSession = null;
 let puzzleUi = null;
 let clock = null;
@@ -232,16 +234,19 @@ function choosePuzzles(mode, difficulty) {
   if (mode !== 'mock') {
     const levels = Object.keys(DIFFICULTY_NAMES);
     if (difficulty === 'random') difficulty = levels[Math.floor(Math.random() * levels.length)];
-    return shuffle(bank.filter((puzzle) => puzzleDifficulty(puzzle) === difficulty)).slice(0, 1);
+    return puzzleHistory.select(bank.filter((puzzle) => puzzleDifficulty(puzzle) === difficulty), 1);
   }
   const mix = MOCK_LEVELS[difficulty || 'normal'].mix;
   return shuffle(Object.entries(mix).flatMap(([level, count]) =>
-    shuffle(bank.filter((puzzle) => puzzleDifficulty(puzzle) === level)).slice(0, count)));
+    puzzleHistory.select(bank.filter((puzzle) => puzzleDifficulty(puzzle) === level), count)));
 }
 
 function startSession(mode, difficulty = null, selectedPuzzles = null, drill = null) {
   stopInteractiveState();
-  const puzzles = selectedPuzzles || (mode === 'drill' ? chooseDrillPuzzles(bank, difficulty, drill.questionCount) : choosePuzzles(mode, difficulty));
+  const puzzles = selectedPuzzles || (mode === 'drill'
+    ? chooseDrillPuzzles(bank, difficulty, drill.questionCount, { selectPool: puzzleHistory.select })
+    : choosePuzzles(mode, difficulty));
+  puzzleHistory.remember(puzzles);
   if (mode === 'learn') {
     const puzzleUrl = new URL(routeUrl('learn'));
     puzzleUrl.searchParams.set('puzzle', puzzles[0].id);
@@ -647,6 +652,7 @@ function renderProgress(notice = '') {
   app.querySelector('#delete-progress').addEventListener('click', () => {
     if (!window.confirm('Delete all locally stored progress? This cannot be undone.')) return;
     progressStore.clear();
+    puzzleHistory.clear();
     renderProgress();
   });
   focusMain();
@@ -757,6 +763,7 @@ fetch(new URL('../data/latin-squares/puzzles.json', import.meta.url))
   })
   .then((data) => {
     bank = validatePuzzleBank(data);
+    puzzleHistory = createPuzzleHistory(bank, progressStore.all());
     renderInitialPage();
   })
   .catch((error) => {
